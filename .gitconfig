@@ -1,0 +1,10 @@
+[user]
+	name = Sho Yokoi
+	email = sho.yokoi@gmail.com
+
+[core]
+	editor = emacsclient -nw
+[credential]
+	helper = osxkeychain
+[color]
+	ui = auto
