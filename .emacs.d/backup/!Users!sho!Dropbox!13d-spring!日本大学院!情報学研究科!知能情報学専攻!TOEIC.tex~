@@ -1,0 +1,13 @@
+\documentclass[]{jsarticle}
+\input{$HOME/Dropbox/tempdoc/tex-preamble-jsarticle}
+
+\title{TOEICスコア票 筆記試験当日に持参します}
+\author{横井 祥 (よこい しょう)\\
+京都大学 工学部 情報学科 計算機科学コース}
+%% \title{English IIA E2T01; Professor Hayashi, Brian\\Homework \#1}
+%% \author{Yokoi, Sho; 1029-23-2177} % ほか
+\date{\today}\西暦
+\begin{document}
+
+TOEICのスコア票、
+\maketitle

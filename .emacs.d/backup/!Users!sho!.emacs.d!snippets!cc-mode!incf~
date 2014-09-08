@@ -1,0 +1,5 @@
+# name: #include "..."
+# key: inch
+# --
+#include "$1.h"
+$0

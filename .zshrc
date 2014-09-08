@@ -173,7 +173,8 @@ autoload -Uz zmv
 alias zmv="noglob zmv -w"
 
 # 補完
-fpath=(/usr/local/share/zsh-completions $fpath)
+# fpath=(/usr/local/share/zsh-completions $fpath)
+fpath=(~/.zsh/zsh-completions $fpath)
 
 autoload -U compinit
 compinit

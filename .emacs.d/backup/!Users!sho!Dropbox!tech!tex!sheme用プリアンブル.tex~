@@ -1,0 +1,21 @@
+\lstdefinelanguage{Scheme}{%
+   morekeywords={begin,call-with-current-continuation,call/cc,%
+      call-with-input-file,call-with-output-file,case,cond,do,%
+      delay,else,force,for-each,if,lambda,let,let-syntax,let*,%
+      letrec,letrec-syntax,and,or,not,map,syntax,syntax-rules,%
+      with-mode,with-input-from-file,with-input-fromport,%
+      with-output-to-file,with-output-to-port,define%
+   },%
+   sensitive,%
+   alsodigit=-,%
+   morecomment=[l]{;},% 
+   morecomment=[s]{\#|}{|\#},% 
+   morestring=[b]{"}% 
+  }[keywords,comments,strings]%
+%
+\lstset{%
+ language=Scheme,%
+ basicstyle=\small,%
+ numbers=left,%
+ xleftmargin=4zw%
+}

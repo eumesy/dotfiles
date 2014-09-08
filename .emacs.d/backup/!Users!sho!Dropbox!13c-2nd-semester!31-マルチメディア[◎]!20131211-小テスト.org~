@@ -1,0 +1,13 @@
+;; This buffer is for notes you don't want to save, and for Lisp evaluation.
+;; If you want to create a file, visit that file with C-x C-f,
+;; then enter the text in that file's own buffer.
+
+両眼ステレオに関する以下の記述は正しいか誤りか、それぞれに答えよ
+
+1. 対応点の探索はエピ極線上のみを探索すれば十分である
+2. 注目点の周囲の輝度も対応点の探索に医療される
+-> ○
+3. エッジに基づく対応点探索では、画像平面上のエッジの位置関係から対応付けをおこなう
+-> ○
+1. エピ極線は
+   1. 

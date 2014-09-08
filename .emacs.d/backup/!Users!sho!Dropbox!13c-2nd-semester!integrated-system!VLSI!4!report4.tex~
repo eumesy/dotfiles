@@ -1,0 +1,238 @@
+\documentclass[]{jsarticle}
+%% \setlength{\textheight}{37\baselineskip} % 11pt
+%% \setlength{\textheight}{35\baselineskip} % 12pt
+
+%% font
+\usepackage[T1]{fontenc} % 8ビットエンコーディング <,|,> の直書き
+\usepackage{textcomp} % 文字種追加
+\usepackage[deluxe]{otf} % 文字種追加
+
+%% math
+\usepackage{amsmath,amssymb} % 数学記号の追加
+\usepackage{bm} % 数式の太字 \bm{}
+\usepackage{cancel} % 数式に打ち消し合いを示すための斜め線
+
+%% table
+\usepackage{array} % tabular拡張
+\usepackage{multirow}
+\usepackage{comment} % orgtbl
+
+%% figure
+\usepackage[dvipdfmx]{graphicx}
+\usepackage{float}
+
+\usepackage{listings}
+\lstset{
+%% language=Scheme,
+  basicstyle=\ttfamily\footnotesize,
+%  frame=tbrl, %枠を上下左右に表示
+  breaklines=true, % 行が長くなった場合に改行
+  numbers=left,
+  xleftmargin=2zw,
+}
+\usepackage{url}
+
+\catcode`@=\active
+\def@#1@{\texttt{#1}}
+
+%% レイアウト
+% title補正
+%% \addtolength{\textheight}{\topskip}
+%% \setlength{\voffset}{0pt}
+%% \setlength{\topmargin}{0pt}
+%% \setlength{\headheight}{0pt}
+%% \setlength{\headsep}{0pt}
+% \pagestyle{empty} % ページ番号非表示 
+\title{集積システム入門　SPICE実習(4)}
+\author{横井 祥（よこい しょう）\\
+学籍番号：\texttt{1029-23-2177}\\
+工学部 情報学科 計算機科学コース 3回生\\
+計算機のログインID：\texttt{a0088580}}
+%% \title{English IIA E2T01; Professor Hayashi, Brian\\Homework \#1}
+%% \author{Yokoi, Sho; 1029-23-2177} % ほか
+\date{2014年1月15日}\西暦
+\begin{document}
+\maketitle
+%% \tableofcontents % 目次の表示
+
+\section{課題4-1 貫通電流で失われるエネルギーと負荷の充放電で失われるエネルギー}
+
+
+
+
+\subsection{Elmore 則による時定数の近似}
+求める（イ）（ロ）は次の通り。
+
+\subsubsection{2段CR回路}
+（イ）
+\begin{eqnarray*}
+  \tau_{イ}
+  &=& R_1 C_1 + (R_1 + R_2) C_2\\
+  &=& 100 \times 100 \mathrm{p} + (100 + 100) \times 100 \mathrm{p}\\
+  &=& 300 \times 100 \mathrm{p}\\
+  &=& 30 \,\mathrm{[ns]}
+\end{eqnarray*}
+
+したがって Elmore 則で近似される1段CR回路の$C_1$の大きさは、
+$300 \times 100 \mathrm{p} / 100 = 300 \,\mathrm{[pF]}$。
+
+\subsubsection{3段CR回路}
+（ロ）
+\begin{eqnarray*}
+  \tau_{ロ}
+  &=& R_1 C_1 + (R_1 + R_2) C_2 + (R_1 + R_2 + R_3) C_3\\
+  &=& 600 \times 100 \mathrm{p}\\
+  &=& 60 \,\mathrm{[ns]}
+\end{eqnarray*}
+
+したがって Elmore 則で近似される1段CR回路の$C_1$の大きさは、
+$600 \times 100 \mathrm{p} / 100 = 600 \,\mathrm{[pF]}$。
+
+\subsection{波形の比較に基づく、Elmore 則による近似の有効性と限界についての考察}
+図\ref{fig:3-1-1}は、
+2段CR回路（破線）とそれを Elmore 則によって近似した1段CR回路（実線）
+のシミュレーションした結果である。
+
+同様に、
+図\ref{fig:3-1-2}は、
+3段CR回路（破線）とそれを Elmore 則によって近似した1段CR回路（実線）
+のシミュレーションした結果である。
+
+時定数付近の時刻
+\begin{itemize}
+\item （イ） $30 \,\mathrm{[ns]}$
+\item （ロ） $60 \,\mathrm{[ns]}$
+\end{itemize}
+での電位は、Elmore 則による近似回路によりよく近似できている。
+
+しかし一方で、立ち上がり直後の遅延はうまく近似できていない。特に段数が多い場合（3段の場合）に顕著である。
+
+したがって、今回のシミュレーションの範囲では、おおよその遅延時間についてはElmore 則による近似が有効だが、微小時間での電位の変化を追いたい場合にはElmore 則による近似は不適切であると言えるだろう。
+
+\begin{figure}[h]
+  \centering
+  %% \includegraphics{1/3-1-1.eps}
+  \caption{2段CR回路}
+  \label{fig:3-1-1}
+\end{figure}
+\begin{figure}[h]
+  \centering
+  %% \includegraphics{1/3-1-2.eps}
+  \caption{3段CR回路}
+  \label{fig:3-1-2}
+\end{figure}
+
+
+\newpage
+\subsection{SPICEファイル}
+シミュレーションに用いたSPICEファイルを以下に添付する。
+最後の \verb|.tran| 部を、時定数に合わせて都度変更した。
+% \verb|Top level simulation netlist|内を一部コメントアウトすることで、両方のシミュレーションを以下のファイルでおこなった。
+
+\lstinputlisting[
+% caption=inv8.cir
+breaklines=false, % 行が長くなった場合の改行
+]{3-1.cir}
+
+\section{課題3-2 配線遅延のシミュレーション $\pi$モデル, Tモデル, Lモデル}
+\subsection{区間数16でのシミュレーション結果を用いて遅延時間を確認}
+区間数16でのシミュレーション結果は 表\ref{tb:table1} の通り。
+
+\begin{table}[h]
+  \caption{区間数16でのシミュレーション}
+  \label{tb:table1}
+  \begin{center}
+    \setlength{\tabcolsep}{3pt}
+    \footnotesize
+% BEGIN RECEIVE ORGTBL table1
+\begin{tabular}{llrrrrr}
+\hline
+ &  & 立ち上がり & 立ち下がり & 立ち上がり遅延時間 & 立ち下がり遅延時間 & 平均遅延時間 \\
+\hline
+区間16 & piモデル & $3.670\times10^{-10}$ & $1.493\times10^{-09}$ & $2.17\times10^{-10}$ & $2.43\times10^{-10}$ & $2.3\times10^{-10}$ \\
+区間16 & Tモデル & $3.670\times10^{-10}$ & $1.492\times10^{-09}$ & $2.17\times10^{-10}$ & $2.42\times10^{-10}$ & $2.295\times10^{-10}$ \\
+区間16 & Lモデル & $3.720\times10^{-10}$ & $1.496\times10^{-09}$ & $2.22\times10^{-10}$ & $2.46\times10^{-10}$ & $2.34\times10^{-10}$ \\
+\hline
+\end{tabular}
+% END RECEIVE ORGTBL table1
+  \end{center}
+\end{table}%
+\begin{comment}
+#+ORGTBL: SEND table1 orgtbl-to-latex :efmt "$%s\\times10^{%s}$"
+|--------+----------+------------+------------+--------------------+--------------------+--------------|
+|        |          | 立ち上がり | 立ち下がり | 立ち上がり遅延時間 | 立ち下がり遅延時間 | 平均遅延時間 |
+|--------+----------+------------+------------+--------------------+--------------------+--------------|
+| 区間16 | piモデル |  3.670e-10 |  1.493e-09 |           2.17e-10 |           2.43e-10 |      2.3e-10 |
+| 区間16 | Tモデル  |  3.670e-10 |  1.492e-09 |           2.17e-10 |           2.42e-10 |    2.295e-10 |
+| 区間16 | Lモデル  |  3.720e-10 |  1.496e-09 |           2.22e-10 |           2.46e-10 |     2.34e-10 |
+|--------+----------+------------+------------+--------------------+--------------------+--------------|
+#+TBLFM: $5=$3-(1.500e-10)::$6=$4-(1.250e-09)::$7=($5+$6)/2
+\end{comment}
+遅延時間はどのモデルでもおおむね一致し、$2.34\times10^{-10} \,\mathrm{[sec]}$程度。
+
+\subsection{区間数1,2でのシミュレーション}
+区間数1,2でのシミュレーション結果は 表\ref{tb:table2}以下の通り。
+
+\begin{itemize}
+\item 同一の区間数では$\pi$モデルが最もよく近似できており、区間数2でもかなり良い（分割数16のLモデル程度の）精度となっている。
+\item Tモデルを用いた場合遅延時間が小さく見積もられる。
+\item Lモデルを用いた場合遅延時間が大きく見積もられる。誤差も他のモデルと比べて大きい。
+\end{itemize}
+ことが分かる。
+
+\begin{table}[h]
+  \caption{区間数1,2でのシミュレーション}
+  \label{tb:table2}
+  \begin{center}
+    \setlength{\tabcolsep}{3pt}
+    \footnotesize
+% BEGIN RECEIVE ORGTBL table2
+\begin{tabular}{llrrrrr}
+\hline
+ &  & 立ち上がり & 立ち下がり & 立ち上がり遅延時間 & 立ち下がり遅延時間 & 平均遅延時間 \\
+\hline
+区間1 & piモデル & $3.770\times10^{-10}$ & $1.499\times10^{-09}$ & $2.27\times10^{-10}$ & $2.49\times10^{-10}$ & $2.38\times10^{-10}$ \\
+区間2 & piモデル & $3.700\times10^{-10}$ & $1.495\times10^{-09}$ & $2.2\times10^{-10}$ & $2.45\times10^{-10}$ & $2.325\times10^{-10}$ \\
+\hline
+区間1 & Tモデル & $3.570\times10^{-10}$ & $1.478\times10^{-09}$ & $2.07\times10^{-10}$ & $2.28\times10^{-10}$ & $2.175\times10^{-10}$ \\
+区間2 & Tモデル & $3.640\times10^{-10}$ & $1.489\times10^{-09}$ & $2.14\times10^{-10}$ & $2.39\times10^{-10}$ & $2.265\times10^{-10}$ \\
+\hline
+区間1 & Lモデル & $4.520\times10^{-10}$ & $1.537\times10^{-09}$ & $3.02\times10^{-10}$ & $2.87\times10^{-10}$ & $2.945\times10^{-10}$ \\
+区間2 & Lモデル & $4.080\times10^{-10}$ & $1.518\times10^{-09}$ & $2.58\times10^{-10}$ & $2.68\times10^{-10}$ & $2.63\times10^{-10}$ \\
+\hline
+\end{tabular}
+% END RECEIVE ORGTBL table2
+  \end{center}
+\end{table}%
+\begin{comment}
+#+ORGTBL: SEND table2 orgtbl-to-latex :efmt "$%s\\times10^{%s}$"
+|-------+----------+------------+------------+--------------------+--------------------+--------------|
+|       |          | 立ち上がり | 立ち下がり | 立ち上がり遅延時間 | 立ち下がり遅延時間 | 平均遅延時間 |
+|-------+----------+------------+------------+--------------------+--------------------+--------------|
+| 区間1 | piモデル |  3.770e-10 |  1.499e-09 |           2.27e-10 |           2.49e-10 |     2.38e-10 |
+| 区間2 | piモデル |  3.700e-10 |  1.495e-09 |            2.2e-10 |           2.45e-10 |    2.325e-10 |
+|-------+----------+------------+------------+--------------------+--------------------+--------------|
+| 区間1 | Tモデル  |  3.570e-10 |  1.478e-09 |           2.07e-10 |           2.28e-10 |    2.175e-10 |
+| 区間2 | Tモデル  |  3.640e-10 |  1.489e-09 |           2.14e-10 |           2.39e-10 |    2.265e-10 |
+|-------+----------+------------+------------+--------------------+--------------------+--------------|
+| 区間1 | Lモデル  |  4.520e-10 |  1.537e-09 |           3.02e-10 |           2.87e-10 |    2.945e-10 |
+| 区間2 | Lモデル  |  4.080e-10 |  1.518e-09 |           2.58e-10 |           2.68e-10 |     2.63e-10 |
+|-------+----------+------------+------------+--------------------+--------------------+--------------|
+#+TBLFM: $5=$3-(1.500e-10)::$6=$4-(1.250e-09)::$7=($5+$6)/2
+\end{comment}
+
+\subsection{SPICEファイル}
+シミュレーションに用いたSPICEファイルを以下に添付する。
+矩形波の発生源をシミュレーションしたい回路の数だけ用意することで、
+すべてのシミュレーションを同時におこなった。
+
+\lstinputlisting[
+% caption=inv8.cir
+breaklines=false, % 行が長くなった場合の改行
+]{3-2.cir}
+
+\bigskip
+\begin{flushright}
+以上
+\end{flushright}
+\end{document}

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: reftable
+# key: reftable
+# --
+表\ref{tb:$1}

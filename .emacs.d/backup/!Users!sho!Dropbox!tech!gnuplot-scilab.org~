@@ -1,0 +1,38 @@
+* gnuplot
+** ref
+Gnuplot入門 第0.08版
+http://dsl4.eee.u-ryukyu.ac.jp/DOCS/gnuplot/gnuplot.html
+  - 点の大きさを変える
+  - 点の種類を変える
+
+GNUPLOTを用いたグラフ作成
+http://www.cse.kyoto-su.ac.jp/~oomoto/lecture/program/gnuplot/gnuplot.html
+
+gnuplotスクリプトの解説 - 米澤進吾 ホームページ
+http://www.ss.scphys.kyoto-u.ac.jp/person/yonezawa/contents/program/gnuplot/index.html
+
+GNUPLOTの第一歩
+http://lagendra.s.kanazawa-u.ac.jp/ogurisu/manuals/gnuplot-intro/
+
+** grammar
+# コメント行
+
+** usage
+$ gnuplot
+gnuplot> hogehoge
+gnuplot> hoge.plt
+
+$ gnuplot -p < hoge.plt
+
+sh - コマンドラインからgnuplotへのワンライナー - Qiita
+http://qiita.com/yuu116atlab/items/f3fcadb53801013c01d3
+
+2D
+> plot "hoge.dat"
+
+3D
+> plot "hoge.dat"
+
+
+pause -1 で出力されなくなる?
+

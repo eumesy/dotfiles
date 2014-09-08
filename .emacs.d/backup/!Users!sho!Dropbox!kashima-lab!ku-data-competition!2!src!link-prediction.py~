@@ -1,0 +1,17 @@
+# -*- coding: utf-8 -*-
+
+import numpy as np
+
+NUM_OF_DATA = 333 + 1
+
+data_train = np.genfromtxt('data_train.tsv', delimiter='\t', dtype=[int, int]).tolist()
+# TODO: ndarray を使わないのに genfromtxt を使っているのがばかばかしい
+
+# ===== localな特徴量を取り出す =====
+# \Gamma(v) (隣接するノードの集合) の抽出
+neighbors = [[] for i in range(NUM_OF_DATA)] # データ構造の代替案: 隣接行列
+for edge in data_train:
+    neighbors[edge[0]].append(edge[1])
+    neighbors[edge[1]].append(edge[0])
+
+print neighbors[0]

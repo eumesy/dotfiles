@@ -1,0 +1,3 @@
+import math
+
+int(math.sqrt(n))

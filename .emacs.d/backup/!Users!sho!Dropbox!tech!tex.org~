@@ -1,0 +1,566 @@
+* want to do
+- [ ] org-mode のように折りたたみをしたい
+- [ ] pdf側からクリックで戻りたい
+- [ ] Beamer
+- [ ] 証明は小さな枠に収めたい
+- [ ] itemizeの上側の余白広い
+- [ ] argmax_xのxをインラインモードでも下付きにしたい
+- [ ] jsbook…のフォントがどうにかなってさえいれば…
+- [ ] upLaTeX化
+BXjscls パッケージ ～XeLaTeX でまともな日本語文書レイアウトを～ [電脳世界の奥底にて]
+http://zrbabbler.sp.land.to/bxjscls.html
+upLaTeXを使おう [電脳世界の奥底にて]
+http://zrbabbler.sp.land.to/uplatex.html
+
+- AUCTeX
+  Ochiailab Tips: AUCTex + RefTexで快適論文作成
+  http://ochiailab.blogspot.jp/2013/01/auctex-reftex.html
+  AUCTeX の設定と便利な機能 | Amrta
+  http://skalldan.wordpress.com/2011/07/20/auctex-%E3%81%AE%E8%A8%AD%E5%AE%9A%E3%81%A8%E4%BE%BF%E5%88%A9%E3%81%AA%E6%A9%9F%E8%83%BD/
+  Emacs - AUCTeX で PDF をコマンド一つで生成する． - Qiita
+  http://qiita.com/tm_tn/items/cbc813028d7f5951b165
+
+- Snippets整える
+  my-snippets/latex-mode at master · Nyoho/my-snippets · GitHub
+  https://github.com/Nyoho/my-snippets/tree/master/latex-mode
+  uskanda/yatex-yasnippet · GitHub
+  https://github.com/uskanda/yatex-yasnippet
+
+- 体裁基本
+  中谷彰宏のサイバー研究室: LaTeXで簡単レポート(未完成)
+  http://tauros.ams.eng.osaka-u.ac.jp/mt/jp/archives/000024.html
+  - figure の使い方確認
+  - section を太字に
+
+- Skim <-> Emacs 相互連携
+
+gnuplotとLaTeXで「美しい」グラフを作ってみる - Qiita
+http://qiita.com/hmikisato/items/f5615f7f38038346efef
+
+diagrams - Nice scientific pictures show off - TeX - LaTeX Stack Exchange
+http://tex.stackexchange.com/questions/158668/nice-scientific-pictures-show-off
+
+使ってはいけない LaTeX のコマンド・パッケージ・作法 - Ichiro Maruta Homepage
+http://ichiro-maruta.blogspot.jp/2013/03/latex.html
+
+** マクロ
+完全攻略！ LaTeX のマクロ定義 - Qiita
+http://qiita.com/zr_tex8r/items/5067307890d36c0e4882
+
+* マクロ
+完全攻略！ LaTeX のマクロ定義 - Qiita
+http://qiita.com/zr_tex8r/items/5067307890d36c0e4882
+
+* 文書の分割/モジュール化 input/include
+\input
+  - 改ページされない
+  - ネスト可
+
+\include
+  - 改ページされる
+  - ネスト不可
+  - プリアンブルで \includeonly 可
+    - カンマで区切って複数指定可
+
+pathは
+$HOME/path/to/file
+/path/to/file
+など
+
+file名は.tex不要
+
+* ref
+- TeX Wiki
+  http://oku.edu.mie-u.ac.jp/~okumura/texwiki/
+- TeX Q & A
+  http://oku.edu.mie-u.ac.jp/~okumura/texfaq/qa/
+- TeX Forum
+  http://oku.edu.mie-u.ac.jp/tex/
+
+- En toi Pythmeni tes TeXnopoleos [電脳世界の奥底にて]
+  http://zrbabbler.sp.land.to/
+- マクロツイーター
+  http://d.hatena.ne.jp/zrbabbler/
+
+- TeX/LaTeX入門 - Wikibooks
+  http://ja.wikibooks.org/wiki/TeX/LaTeX%E5%85%A5%E9%96%80#TeX.2FLaTeX.E7.92.B0.E5.A2.83.E3.81.AE.E5.B0.8E.E5.85.A5
+
+- TeX & LaTeX Advent Calendar : ATND (2012)
+  http://atnd.org/events/34318
+- TeX & LaTeX Advent Calendar 2013 - Adventar
+  http://www.adventar.org/calendars/187
+
+
+- Amazon.co.jp： LaTeX2e辞典 用法・用例逆引きリファレンス (DESKTOP REFERENCE): 吉永 徹美: 本
+http://www.amazon.co.jp/dp/4798118141/
+
+- 美文書〜
+  # 編集のおともに
+  美文書付録Iについて思うことをグダグダ書き連ねるシリーズ (1) - マクロツイーター
+  http://d.hatena.ne.jp/zrbabbler/20120826/1345983256
+- 好き好きLaTeX2e
+
+- ~/Dropbox/pdf/tex に色々
+# マクロの話はここの「マクロ〜」がよい?
+
+- TeX Wiki
+http://oku.edu.mie-u.ac.jp/~okumura/texwiki/
+# インストール時資料として秀逸
+
+- TeX/LaTeX パッケージ一覧
+http://www.biwako.shiga-u.ac.jp/sensei/kumazawa/texindex.html
+
+* TeXは覚える価値のないアイテムである
+僕が TeX を使うのを辞めた3つの理由 - ++C++; // 管理人の日記
+http://d.hatena.ne.jp/ufcpp/20100216/1266337507
+僕が TeX を使うのを辞めた 10 の理由 - ++C++; // 管理人の日記
+http://d.hatena.ne.jp/ufcpp/20100219/1266594885
+TeXとWordの見分け方 - わさっき #学生のうちはWordでよい
+http://d.hatena.ne.jp/takehikom/20091219/1261174059
+
+私がTeXを使い続ける理由 - くるるの数学ノート
+http://d.hatena.ne.jp/kururu_goedel/20100220/1266648484
+論文を書くときにTeXを使う個人的な理由 - より良い環境を求めて
+http://d.hatena.ne.jp/n314/20100217/1266390268
+私がTeXを使い続ける1個+6個の理由 - わさっき
+http://d.hatena.ne.jp/takehikom/20100218/1266441239
+
+* 環境構築
+MacTex
+v utf-8
+v jarticle
+v package もろもろ
+
+* section,subsection,...
+sectionのカウンターのリセット
+\sectionの前に
+\setcounter{section}{-1} %→次のsection番号は0
+
+* フォント
+LaTeX/Fonts - Wikibooks, open books for an open world
+http://en.wikibooks.org/wiki/LaTeX/Fonts
+LaTeX の inconsolata がアレなので何とかする - マクロツイーター
+http://d.hatena.ne.jp/zrbabbler/20130421/1366560678
+TeX/LaTeX入門 - Wikibooks - 書式
+http://ja.wikibooks.org/wiki/TeX/LaTeX%E5%85%A5%E9%96%80#.E6.9B.B8.E5.BC.8F
+pLaTeX2e における和文フォントの扱いと多書体化の話
+http://www.geocities.co.jp/texuttex/jfontsettings.html
+LaTeX に新しいフォントを持ち込む話 - マクロツイーター
+http://d.hatena.ne.jp/zrbabbler/20110911/1315737566
+
+{\宣言型命令 hoge}
+\コマンド型命令{hoge}
+
+|      |            |               | 宣言型       | 宣言型2 | コマンド型 |
+|------+------------+---------------+--------------+---------+------------|
+| 和文 | 明朝体     |               | \mcfamily    |         | \textmc    |
+|      | ゴシック体 |               | \gtfamily    |         | \textgt    |
+|------+------------+---------------+--------------+---------+------------|
+| 欧文 | Roman      | 本文(default) | {\rmfamily } |         | \textrm{}  |
+|      | Boldface   | 見出し        |              |         | \textbf{}  |
+|      | Italic     | 強調,署名     |              |         | \textit{}  |
+|      | Slanted    | Italic の代用 |              |         | \textsl{}  |
+|      | Sans Serif | 見出し        | \sffamily    |         | \textsf{}  |
+|      | Typewriter |               | \ttfamily    |         | \texttt{}  |
+|      | Small Caps | 見出し        |              |         | \textsc{}  |
+
+- 宣言型2
+http://www.latex-cmd.com/style/style.html
+
+- コマンド型を使うべき?
+- ? 和文で \textbf 等を用いた場合の扱い?
+
+** inconsolataの利用
+http://www.tug.dk/FontCatalogue/inconsolata/
+
+* figure 図
+\includegraphics[]{fig.eps}
+
+[width=1.2\linewidth] ... 1段組、2段組によらず、段の幅いっぱい
+[width=0.5\textwidth, keepaspectratio=true] ... 文章幅の0.5倍、縦横比は同じ '=true'は省略可
+[width=0.9\textwidth,height=0.9\textheight,keepaspectratio] ... 少ない方に合わせて倍率調整?
+
+textheightの計算にはcaptionが含まれない?
+http://tex.stackexchange.com/questions/47184/height-of-figure-caption-textheight
+
+* 相互参照
+\caption直後に\labelを置く
+http://d.hatena.ne.jp/okmount/20090203/1233610213
+
+脚注
+\footnote{hogehoge}
+\tabularの中では変える?
+http://www.latex-cmd.com/struct/footnote.html
+
+* レイアウト
+LaTeX Templates
+http://www.latextemplates.com/
+- テンプレート集。論文用、とか色々ある
+
+** titleのスタイルを変更する方法
+How to format title and abstract? - TeX - LaTeX Stack Exchange
+http://tex.stackexchange.com/questions/84478/how-to-format-title-and-abstract
+
+* compile
+** Latexmk
+*** 参考サイト
+修論が終わってからlatexmkの存在に気がついた - ここにタイトルを入力|
+http://d.hatena.ne.jp/goth_wrist_cut/20120214/1329186414
+latexmk つかって LaTeX コンパイルしたら簡単すぎて身長が10cm伸びた - yamblog
+http://d.hatena.ne.jp/yambi/20091117/1258452926
+latexmkのインストールと設定 for OS X - もうカツ丼でいいよな
+http://d.hatena.ne.jp/Rion778/20091227/1261904217
+
+*** ダウンロード
+MacTex(TeXLive)に入ってる
+
+*** 設定ファイル
+~/.latexmkrc
+
+*** help
+$ latexmk -h
+
+or
+http://users.phys.psu.edu/~collins/software/latexmk-jcc/
+
+*** options
+   -c     - clean up (remove) all nonessential files, except
+            dvi, ps and pdf files.
+            This and the other clean-ups are instead of a regular make.
+   -C     - clean up (remove) all nonessential files
+            including aux, dep, dvi, postscript and pdf files
+            and file of database of file information
+
+** OMake
+- 都度makefileを作る必要あり
+- homebrew にはない
+
+OMake つかって LaTeX コンパイルしたら簡単すぎて身長が5cm伸びた - 日記を書く [・w・] はやみずさん
+http://d.hatena.ne.jp/hayamiz/20081208/1228727272
+OMake つかったらC言語でプログラム書く手間がバカみたいに減った - 日記を書く [・w・] はやみずさん
+http://d.hatena.ne.jp/hayamiz/20081203/1228296644
+OMakeの使い方復習 - Shogo's Blog
+http://shogo82148.github.com/blog/2012/08/09/omake/
+OMakeでハッピーTeXライフ！（おまけもあるよ） - ...ing logging 3.0
+http://d.hatena.ne.jp/haru-s/20090105/1231177343
+Leo's Chronicle: OMakeで快適に論文執筆：TeX編 (Cygwin)
+http://leoclock.blogspot.jp/2009/09/omaketex.html
+[卒論] LaTeXのビルドにOMakeを使ってみた / LiosK-free Blog
+http://liosk.blog103.fc2.com/blog-entry-171.html
+
+** 学校での手順
+platex hoge.tex // tex→dvi
+xdvi hoge.dvi // 閲覧
+dvipdfmx hoge.dvi // dvi→pdf
+lpr hoge.pdf // 印刷
+
+- labelを使うときは2回コンパイル。参照関係がうまくリンクしない
+- 面倒くせぇえええ
+
+* pdf viewer
+** Skim
+PDF ViewerのSkimでTeXのdviファイルを見る (dvipdfmxの場所の教え方)
+http://njet.oops.jp/wordpress/2011/01/27/pdf-viewer%E3%81%AEskim%E3%81%A7tex%E3%81%AEdvi%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E8%A6%8B%E3%82%8B/
+
+* want to do
+** Org-mode -> LaTeX
+Emacs - org-mode で日本語LaTeXを出力する方法 - Qiita
+http://qiita.com/kawabata/items/1b56ec8284942ff2646b
+Emacs org-modeを使ってみる: (14) LaTeXにエクスポート - 屯遁のパズルとプログラミングの日記
+http://d.hatena.ne.jp/tamura70/20100217/org
+日本語文を含む org ファイルを jsarticle クラスの LaTeX にエクスポートして PDF に変換する方法: tmishina's diary
+http://tmishina.cocolog-nifty.com/blog/2010/11/org-jsarticle-l.html
+# ちょっと面倒??
+# ワンクッション挟んでいるしな...
+# まずはYaTeX?
+# Skim との逆連携ができない!!
+Emacs + Org Export + TeXShop | Amrta
+http://skalldan.wordpress.com/2011/07/18/emacs-org-export-texshop/
+Org-Mode で日本語 PDF を出力できるようにする - MoreslowlyWiki
+http://www.moreslowly.jp/mw/index.php/Org-Mode_%E3%81%A7%E6%97%A5%E6%9C%AC%E8%AA%9E_PDF_%E3%82%92%E5%87%BA%E5%8A%9B%E3%81%A7%E3%81%8D%E3%82%8B%E3%82%88%E3%81%86%E3%81%AB%E3%81%99%E3%82%8B
+Emacs org-modeを使ってみる: (14) LaTeXにエクスポート - 屯遁のパズルとプログラミングの日記
+http://d.hatena.ne.jp/tamura70/20100217/org
+Emacs + Org Export + TeXShop | Amrta
+http://skalldan.wordpress.com/2011/07/18/emacs-org-export-texshop/
+インド学仏教学における UTF-8 による TeX 文書作成 (1) | Amrta
+http://skalldan.wordpress.com/2011/07/22/%E3%82%A4%E3%83%B3%E3%83%89%E5%AD%A6%E4%BB%8F%E6%95%99%E5%AD%A6%E3%81%AB%E3%81%8A%E3%81%91%E3%82%8B-utf-8-%E3%81%AB%E3%82%88%E3%82%8B-tex-%E6%96%87%E6%9B%B8%E4%BD%9C%E6%88%90-1/
+AWK Source Code Blocks in Org Mode
+http://orgmode.org/worg/org-contrib/babel/languages/ob-doc-awk.html
+でらうま倶楽部 : org-mode 8.0 画像入り日本語PDFをOSX10.8で出力するなら LuaTeX を使え！
+http://blog.livedoor.jp/tek_nishi/archives/7862119.html
+Emacs の Org ファイルを platex と dvipdfmx で PDF 化する設定． - Qiita
+http://qiita.com/tnoda_/items/6eb4d8d799e41ef3f15d
+Got Emacs?: Quickly Creating LaTeX Tables in Emacs
+http://emacsworld.blogspot.jp/2008/07/quickly-creating-latex-tables-in-emacs.html
+Emacs - orgmodeで卒論を書いたときの話 - Qiita
+http://qiita.com/PowerPC7450/items/b34b080dd941af689b56
+
+** Skim との相互連携
+Ochiailab Tips: EmacsとSkimの連携
+http://ochiailab.blogspot.jp/2012/10/emacsskim.html
+SourceForge.net: TeX and PDF Synchronization - skim-app
+http://sourceforge.net/apps/mediawiki/skim-app/index.php?title=TeX_and_PDF_Synchronization
+Skim Help: PDF-TeX synchronization
+http://skim-app.sourceforge.net/manual/SkimHelp_51.html
+EmacsとSkim.appでTeX・PDFシンクロ - my-misc.blog
+http://d.hatena.ne.jp/setoryohei/20110102/1294003836
+PDF ViewerのSkimでTeXのdviファイルを見る | Sukarabe's Easy Living
+http://njet.oops.jp/wordpress/2011/01/27/pdf-viewer%E3%81%AEskim%E3%81%A7tex%E3%81%AEdvi%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E8%A6%8B%E3%82%8B/
+LaTeX環境の構築 Oct. 2013 on OS X | Re: no subject
+http://henry.animeo.jp/wp/?p=1788
+** latex-math-preview
+** YaTeX?
+latexmkのインストールと設定 for OS X - もうカツ丼でいいよな
+http://d.hatena.ne.jp/Rion778/20091227/1261904217
+
+* ソースファイル/コード部品の埋め込み
+** verb
+*** 一行
+\verb||
+\verb*|| % 半角スペースに空白記号がつく
+
+*** 複数行
+\begin{verbatim}
+\end{verbatim}
+
+% 半角スペースに空白記号がつく
+\begin{verbatim*}
+\end{verbatim*}
+
+** lstlisting
+listings.sty: LaTeX パッケージ
+http://www.biwako.shiga-u.ac.jp/sensei/kumazawa/tex/listings.html
+Listings - MyTeXpert
+http://mytexpert.sourceforge.jp/index.php?Listings
+TeXでソースコードを埋め込む - Qiita
+http://qiita.com/ayihis@github/items/c779e4ab5cd7580f1f87
+texにCのソースコードを埋め込む | It is an apple.
+http://adcyuyo.wordpress.com/2011/12/29/tex%E3%81%ABc%E3%81%AE%E3%82%BD%E3%83%BC%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%89%E3%82%92%E5%9F%8B%E3%82%81%E8%BE%BC%E3%82%80/
+TeXでソースコードを綺麗に表示する | SanRin舎
+http://sanrinsha.lolipop.jp/blog/2011/03/tex%E3%81%A7%E3%82%BD%E3%83%BC%E3%82%B9%E3%82%B3%E3%83%BC%E3%83%89%E3%82%92%E7%B6%BA%E9%BA%97%E3%81%AB%E8%A1%A8%E7%A4%BA%E3%81%99%E3%82%8B.html
+
+日本語を含む場合は jlistings.sty が必要?
+
+*** option
+numbers=none % 行番号なし
+
+*** 外部ファイルのインポート
+\lstinputlisting[
+% breaklines=, % 行が長くなった場合の改行
+% label=,
+% caption=,
+]{hoge.scm}
+
+*** ソースコード or コマンドべた打ち
+\begin{lstlisting}
+hoge...
+\end{lstlisting}
+* 数学・数式
+http://en.wikibooks.org/wiki/LaTeX/Mathematics
+http://www.biwako.shiga-u.ac.jp/sensei/kumazawa/texindex3.html#formula
+http://www.latex-cmd.com/index.html#equation
+
+LaTeX for Logicians | Logic Matters
+http://www.logicmatters.net/latex-for-logicians/
+
+Latex Binary Relation Operators 演算子一覧
+http://access2science.com/latex/Binary.html
+
+** 文字種
+http://www.biwako.shiga-u.ac.jp/sensei/kumazawa/tex/mathbfbb.html
+
+** マクロ
+新しい演算子の定義
+http://www.biwako.shiga-u.ac.jp/sensei/kumazawa/tex/090.html
+
+平均 \bar \overline
+http://tex.stackexchange.com/questions/98028/bar-vs-overline-when-to-use-what-semantically
+http://tex.stackexchange.com/questions/22100/the-bar-and-overline-commands
+
+** 数式全般
+数式番号
+  http://www2.rikkyo.ac.jp/web/tokiwa/menu/bioLib/other_software/latex/how_to_use_latex.html
+
+インライン
+$$
+
+ディスプレイ, 数式番号あり, 1行
+\begin{equation}
+\end{equation}
+
+equationの中に
+- split
+- cases
+- aligned
+http://hwb.ecc.u-tokyo.ac.jp/current/applications/latex/math2/
+
+ディスプレイ, 数式番号なし, 1行(1数式番号)
+中に alined 環境を入れられる
+\begin{equation}
+\end{equation}
+
+ディスプレイ, 数式番号あり, 複数行
+& で位置をそろえる
+\begin{align}
+\end{align}
+x \begin{eqnarray}
+x \begin{eqnarray*}
+
+ディスプレイ, 数式番号なし, 複数行
+\[
+\]
+& で位置をそろえる
+\begin{align*}
+\end{align*}
+x \begin{displaymath}
+
+任意の数式番号
+\eqno{(1.1)}
+
+場合分け
+$\delta_{ij} = \begin{cases} & (i=j)  \\ 0 & (i\neq j) \end{cases}$
+
+数式中の文字
+\text{}
+x \mbox{}
+x \textrm{}
+
+複数の数式を&記号でそろえる
+
+分数
+\frac{1}{2} // 分子→分母
+
+** 括弧
+\left( \right) #可変
+
+** dots
+\ \ddots
+| \vdots
+/ \idots
+下 \ldots
+
+** 定義・定理・証明
+
+** 集合・写像
+集合
+http://www.latex-cmd.com/equation/set.html#list
+
+自然数全体の集合
+\mathbb{N}
+
+部分集合
+\subset
+\supset
+\subseteq
+\supseteq
+
+空集合
+\emptyset
+
+差集合
+\setminus
+
+写像
+\rightarrow
+\mapsto
+
+集合の|
+\mid
+伸張させたいとき
+\relmiddle|
+http://d.hatena.ne.jp/zrbabbler/20120411/1334151482
+
+** 論理
+LaTeX for Logicians | Logic Matters
+http://www.logicmatters.net/latex-for-logicians/
+List of logic symbols - Wikipedia, the free encyclopedia
+http://en.wikipedia.org/wiki/List_of_logic_symbols
+
+必要十分
+\iff
+
+意味論的帰結 \models 否定 \nvDash
+形式論的帰結 \vdash  否定 \nvdash
+
+矢印色々
+http://tex.stackexchange.com/questions/129277/latex-symbol-for-if-and-only-if
+
+** 解析
+偏微分
+\frac{\partial f}{\partial y}
+
+\mathrm{grad}
+\mathrm{div}
+\mathrm{rot}
+プリアンブルに入れても
+http://hooktail.org/computer/index.php?TeX%A5%C6%A5%F3%A5%D7%A5%EC%A1%BC%A5%C8
+\newcommand{\divergence}{\mathrm{div}\,}
+\newcommand{\grad}{\mathrm{grad}\,}
+\newcommand{\rot}{\mathrm{rot}\,}
+
+\nabla
+
+** ベクトル・行列・線型代数
+http://www.biwako.shiga-u.ac.jp/sensei/kumazawa/tex/vectors.html
+http://www.latex-cmd.com/equation/vector.html
+http://www.latex-cmd.com/equation/matrix.html
+
+ベクトル
+太字
+http://d.hatena.ne.jp/yascentur/20111215/1323879218
+定義し直した \bvec{} を使う
+
+縦ベクトル
+http://tex.stackexchange.com/questions/114797/vertical-dotted-line-in-column-vector-amsmath-matrix
+
+\begin{pmatrix}x_1\\ \vdots \\x_n\end{pmatrix}
+
+転置
+http://stickydiary.blog88.fc2.com/blog-entry-66.html
+http://stackroulette.com/tex/30619/what-is-the-best-symbol-for-vector-matrix-transpose
+http://tex.stackexchange.com/questions/30619/what-is-the-best-symbol-for-vector-matrix-transpose
+
+{}^t\!A
+A^{\mathrm{T}}
+
+行列式
+\mathrm{det}A
+|A|
+
+** ほか
+ブロック体
+\mathrm{p}
+
+総和・総積/総乗
+\sum_{}^{}
+\prod_{}^{}
+
+最適化問題
+http://www.mvkonnik.info/2012/10/optimization-and-other-advanced.html
+http://jcnts.wordpress.com/2009/11/11/formatting-optimization-problems-with-latex/
+
+* 擬似コード(pseudocode)
+LaTeX/Algorithms - Wikibooks, open books for an open world
+http://en.wikibooks.org/wiki/LaTeX/Algorithms_and_Pseudocode
+論文での疑似コードの書き方 - 大人になってからの再学習
+http://d.hatena.ne.jp/Zellij/20111114/p1
+
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+代入 $\gets$
+
+* 特殊文字
+hat ^
+http://tex.stackexchange.com/questions/77646/how-to-typset-the-symbol-caret-circumflex-hat
+
+アクセント一覧
+http://www002.upp.so-net.ne.jp/latex/accent.html
+
+* URL
+\usepackage{url}
+
+\url{http://hoge.com}
+
+* 空白
+\,

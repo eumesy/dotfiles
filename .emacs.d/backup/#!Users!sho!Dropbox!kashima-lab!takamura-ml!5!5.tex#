@@ -1,0 +1,595 @@
+\documentclass[]{jsarticle}
+\input{$HOME/Dropbox/tempdoc/tex-preamble-jsarticle}
+
+\newcommand*{\D}{\mathcal{D}}
+\newcommand*{\ALPHA}{\vect{\alpha}}
+\newcommand*{\BETA}{\vect{\beta}}
+\newcommand*{\THETA}{\vect{\theta}}
+\newcommand*{\PHI}{\vect{\phi}}
+
+\title{言語処理のための機械学習入門\\
+5章 系列ラベリング}
+\author{Sho Yokoi}
+%% \title{English IIA E2T01; Professor Hayashi, Brian\\Homework \#1}
+%% \author{Yokoi, Sho; 1029-23-2177} % ほか
+\date{\today}\西暦
+\begin{document}
+\maketitle
+
+%% \setcounter{tocdepth}{3} % 0:chapterまで, 1:sectionまで, 2:subsectionまで, 3:subsubsectionまで
+%% \tableofcontents % 目次の表示
+%% \newpage
+
+機械学習は何を目的とする学問分野で，機械学習の方法論は何を達成しているのだろうか．例えば機械学習の典型的問題である\termj{回帰}は，入力と出力の組の集合である教師データから入力と出力の関係性を見つけ，未知の入力に対しする出力を予測することを目的とする問題群であるが，回帰問題を解くための活動は，現象あるいは経験から背後に隠れる法則を見つけて何らかの科学的予測を導くことを目的とするという点で科学の営みそのものである．実際，機械学習において登場する様々な概念や考え方は，科学の方法論とくに\termj{帰納}と呼ばれる考え方に当てはめると見通しが良い．
+
+本稿ではまず，科学哲学において考えられてきた
+
+\section{科学の目的と方法}
+
+\termj{ハーシェル}によれば，科学の目的は第一に(1)現象を\termj{説明}すること，すなわち現象を生じさせている原因を指し示すことであり，それが適わないなら(2)現象を\termj{一般化}すること，すなわち多くの現象をある法則のもとに包括することである
+\footnote{ハーシェルの用いている説明—なぜそれが起きるのか—と一般化の区別に注意．例えば万有引力の知見によって多くの現象(落体，星の動きなど)を統一的に解釈することができる(一般化される)が，万有引力の法則は「なぜ」離れた物体間に力が働くのかという問いには答えない(説明しない)．}．
+機械学習は(2)「現象の一般化」のコンピュータサイエンスないし人工知能の文脈における方法論であると考えられる．
+\begin{comment}
+内井 p.23
+(2)の説明に「説明」って語を入れるのはもやもやするなぁ
+
+(1)は「統計的因果推論」?
+というか決定木の生成は(1)じゃね…?
+\end{comment}
+
+現象の一般化は，(2-1)現象を包括する法則の発見，(2-2)法則の検証の二段階に分けて考えられる．
+(2-1)，(2-2)において，科学者は各種の\termj{推論}をおこなう．ここではまず推論の類型を見る．
+\begin{comment}
+(1)は 法則発見→法則検証 の形を取らない?
+
+機械学習は?
+2-1  モデルの設定?
+2-2  ???
+\end{comment}
+
+\subsection{推論}
+いくつかの前提から結論を導くプロセスのことを\term{推論}{inference, reasoning}という\footnote{とくにその結果の言語的表現を\term{論証}{demonstration, proof}という．}．
+我々の多くが適切と感じる推論
+% ，特に科学という営みにおいて有効に働いていると考えられる推論
+にはいくつかの類型があると考えられている．ここではそれらの推論の妥当性，解釈について述べる．ここで述べるのはあくまで哲学的な論点である．数理論理学および確率論，統計学といった数学の諸分野は推論の哲学に有用な道具立てを与えるが，推論という行為の妥当性や解釈は与えない．
+
+%% 推論あるいは科学の営みが，仮説や理論を発見することと，その妥当性を説明することの二段階に分かれているとすれば，前者の例が「アブダクション」，後者の例が演繹，帰納である．
+さて，推論には\termj{演繹}，\termj{帰納}，\termj{アブダクション}という3つの主要な類型があると考えられている．
+演繹は仮説あるいは理論あるいは知識から何が言えるかを示す推論（$H \models O$），
+帰納は仮説が成り立っているとすれば観察できる筈の事例をいくつか観察した上で仮説を正しいとする推論（$H \models O$ のとき $O$ を満たす事例を多く観察することで $H$ が正しい筈だとする推論），
+% この枠組みで統計が述べられない…
+% 確率の枠組み: H(確率モデル,確率変数,確率分布)→O(実現値) で捉えて，Hを「推定」する??
+アブダクションは観察を最もよく説明する仮説を発見する推論の型と捉えると，
+特に科学的推論について考えるときに見通しが良い．
+以下でこれらの推論について述べる．
+
+\begin{comment}
+「仮説」「観察」に押し込めてしまって良いのか???
+科学的推論はこれを見ているのか??
+「科学」的推論にどうして興味があるかを書いておきたい
+  それはとても信用できそうだから??
+  なぜ推論は科学哲学の枠組みで捉えられるの??
+
+
+演繹と帰納
+- 確実な推論と，不確実性を伴う推論
+  - 特に，枚挙的帰納を指しての「帰納」
+- 理論→観察 と 観察→理論 (これが狭義の「演繹と帰納？」)
+\end{comment}
+
+\subsubsection{演繹}
+\term{演繹}{deduction}は前提と結論との関係が必然的な推論である．すなわち\termj{前提}がすべて正しければ\termj{結論}も必ず正しくなる推論である．
+たとえば「人間は皆死ぬ．ソクラテスは人間である．ゆえにソクラテスは死ぬ．」のような三段論法\footnote{ここでの推論を一般的な一階述語論理の記法で書けば $\forall x. P(x)\to Q(x), P(a) \vdash Q(a)$ となる．}は演繹的推論の典型例である．
+「論理的」という言葉はしばしばこの形の推論を指す．
+先の推論の正しさは言明の内容ではなくその形式によって保証されている．
+「日本人は皆同調圧力に屈する．オバマ大統領は日本人だ．ゆえにオバマ大統領は同調圧力に屈する．」が演繹的に妥当なのは，先のソクラテスの例と同様に言明が $\forall x. P(x)\to Q(x), P(a) \vdash Q(a)$ という形をしているからである．
+「人間は皆死ぬ」「日本人は皆同調圧力に屈する」「オバマ大統領は日本人だ」といった仮定の正しさと，推論としての正しさは別問題であり，ここでは推論としての正しさに注目していることに注意．
+\term{数理論理学}{mathematical logic}あるいは\term{記号論理学}{symbolic logic}は，演繹的推論，とくに数学の証明で用いられる\footnote{数学における知的活動が定理を思いつくこととそれを証明することに分かれるとすれば，数理論理学は後者についての形式化と言える．}演繹的推論の形式的正しさを検証するための数学的定式化であると考えられる．
+
+\begin{comment}
+- forall の導入は…
+- ここ，
+
+前提1
+前提2
+----
+結論
+
+のフォーマットにする
+\end{comment}
+
+\subsubsection{帰納}
+%% 我々が普段用いる推論は演繹的推論に限らない．
+非演繹的推論のことを\term{帰納}{induction}と呼ぶ．すなわち帰納とは，前提がすべて正しかったとしても結論が蓋然的にしか認められない推論である．
+代表例が\term{枚挙的帰納}{enumerative induction}である．
+例えば「おととい見たカラスは黒かった．昨日見たカラスも黒かった．今日見たカラスも皆黒かった．ゆえに全てのカラスは黒い．」といった推論を我々はしばしばおこなう\footnote{ここでの推論を一般的な一階述語論理の記法で書けば $P(a_1)\to Q(a_1),\dots,P(a_n)\to Q(a_n) \vdash_{?} \forall x, P(x)\to Q(x)$ となる．}．
+仮説を説明する観察をいくつか観察することで仮説の正しさを述べる推論であると捉えられる．
+この推論は，前提が全て正しいからといって結論が正しいとは限らない．演繹的推論を一般的規則から個別的事例を導く推論，帰納的推論を個別的事例から一般的規則を導く推論と捉えることもできる．\term{統計学}{statistics}は帰納的推論の数学的定式化と考えられる．
+
+\term{ヒューム}{David Hume, 1711-1776}は，帰納的推論の前提には\term{自然の斉一性}{the principle of the uniformity of nature}\footnote{「未調査の対象は重要な点で調査済の対象と類似している」という仮定．}がありこれを合理的に正当化することはできない\footnote{自然の斉一性の根拠を問われれば，「今までに我々が経験してきたこの例もこの例も自然の斉一性が成り立っていたから」と説明することができるだろうが，この説明には帰納法が用いられており，論点の先取である．}とした．
+
+\begin{comment}
+  \footnote{帰納という語は，枚挙的帰納を指す場合もあれば，非演繹的推論全体を指す場合もある．}
+\end{comment}
+
+\subsubsection{アブダクション}
+\term{アブダクション}{abduction}あるいは\term{最善の説明への推論}{inference to the best explanation; IBE}あるいは\term{仮説的推論}{abductive reasoning}とは，出来事 $X,Y,Z,\dots$ に対して複数の説明 $A,B,C,\dots$ が考えられるとき，出来事全体をもっとも「よく」説明できる仮説を採用する推論である．
+
+\subsection{科学の方法}
+
+
+\subsection{確率的推論}
+非演繹的推論は有用な道具立てだが，前提がすべて真であっても結論が真であるとは限らないという問題がある．しかし，確率の言葉を用いて「結論が真になる"確率が高い"」と考えるのはどうだろうか．
+
+\section{統計の哲学}
+具体的に得られた証拠や観察から，母集団(あるいは世界)全体の性質に関わる何らかの科学的仮説を推論する方法のひとつに\term{統計学}{statistics}がある．
+
+% 帰納的である
+
+統計学者の\termj{ロイヤル}は，統計学が答える問いを3種類に区別した．
+\begin{enumerate}
+\item 現在の証拠から何が分かるか (証拠に関する問い)
+\item 何を信じるべきか (受け入れに関する問い)
+\item 何をするべきか (行為に関する問い)
+\end{enumerate}
+
+\subsection{ベイズ主義}
+
+\begin{align}
+Pr(H|O)
+&= \frac{Pr(O|H)Pr(H)}{Pr(O)}\\
+&= \frac{Pr(O|H)Pr(H)}{\sum_i Pr(O|H_i)Pr(H_i)}
+\end{align}
+
+\begin{itemize}
+\item $Pr(O)$ : 観察の無条件確率．
+\item $Pr(H)$ : 仮説 $H$ の\termj{事前確率}．観察前に仮説 $H$ が持つ確率．
+\item $Pr(H|O)$ : 仮説 $H$ の\termj{事後確率}．
+\item $Pr(O|H)$ : 仮説 $H$ の\term{尤度}{likelihood}．
+\end{itemize}
+
+\begin{comment}
+- 証拠から世界を推論する方法の「ひとつ」?
+
+- 確率論は統計にどう関わる??
+  - 確率的推論，の説明が手前に必要?
+  - 最小二乗法は「統計学」ではない?
+  - 我々が世界を確率的にしか観察できないのはなぜ?
+    - 母集団の大きさ? (帰納的推論?)
+    - 確率的ノイズ?
+
+統計の哲学＝確率的推論の哲学 ???
+
+ロイヤルの問い
+- 現在の証拠から何が分かるか (証拠に関する問い) 「〜は〜の証拠か?」
+- 何を信じるべきか (受け入れに関する問い)
+- 何をするべきか (行為に関する問い)
+
+- 証拠
+- 推論
+- 合理性
+??? ソーバー p.13
+
+統計の哲学
+- 尤度主義 (尤度の法則) 「どの理論がその証拠によって最も裏付けられるのか」
+- ベイズ主義 「どの理論が真であることが確からしいのか」
+- 頻度主義 (モデル選択理論を使う?) 「どのモデルが最も予測正確性が良いのか」
+  - AIC: モデル選択基準
+  - 「予測正確性」と「意思決定」の間のもやっと感，，
+
+- 証拠に照らしてどのように推論すべきか
+- ×確率の意味論をめぐる論争
+
+人工知能研究
+- 
+- 
+- 合理的エージェント
+
+科学哲学の問い
+- 推論
+- 説明???
+- 意思決定
+\end{comment}
+
+
+
+\subsection{「ベイズ的」とは何か}
+\begin{comment}
+推論(科学哲学?)におけるベイズの定理の適用?
+
+統計の哲学 / 推論の哲学
+- 頻度主義
+- ベイズ主義
+- 尤度主義
+
+確率の哲学
+- 主観確率の意?
+
+機械学習
+- 「ベイズ推定をする」の意
+\end{comment}
+
+\section{確率}
+
+\section{統計}
+パラメータ $\THETA$ で決定づけられる何らかの確率モデルを仮定し，生成された\footnote{機械学習における教師あり学習においては，確率モデルとして条件付確率 $p(y|\vect{x})$ を考えるケース(識別モデル)も多い．この場合，条件付確率分布 $p(y|\vect{x})$ }データ $\D = \{\vect{x}^{(i)}\}$ からパラメータ $\THETA$ の推定値 $\hat{\THETA}$ を求めることを\term{推定}{estimation}という．ここでは機械学習でよく用いられるパラメータ推定の手法を3つ挙げる．
+
+\subsection{最尤推定}
+パラメータ $\THETA$ で決定付けられる確率モデルから生成された観測データ $\D = \{\vect{x}^{(i)}\}$ の同時\footnote{ここで「同時」としたのは，独立同分布の確率変数列 $\{\vect{X}_i\} \text{ i.i.d.}$ の実現値 $\{\vect{x}_i\}$ の「同時」確率密度の意である．想定している確率モデルが例えば $p(y|\vect{x})$ のような条件付確率分布で，データが $\D = \{(\vect{x}_i, y_i)\}$ の形で与えられているとすれば，尤度関数は $L(\THETA) = \prod_i p(y_i|\vect{x}_i;\THETA)$ となる．}確率密度
+ $p(\D;\THETA)$ を $\THETA$ の関数と見なすとき，これを「パラメータの尤もらしさの度合いを測る関数」の意味で\term{尤度関数}{likelihood function}といい $L(\THETA)$ と表す．またこの値をパラメータ $\THETA$ の\term{尤度}{likelihood}という．
+%% パラメータ $\THETA$ で決定付けられる確率モデルからデータ $\D$ が生成される確率 $p(\D;\THETA) = \prod_i p(\vect{x}_i;\THETA)$ を
+%% データ $\D$ が与えられたときのパラメータ $\THETA$ の\term{尤度}{likelihood}と呼び $L(\THETA)$ と表記する．
+\begin{align}
+L(\THETA)
+:=&\ p(\D;\THETA)\\
+ =&\ \prod_i p(\vect{x}_i;\THETA).
+\end{align}
+実用上\footnote{対数尤度は尤度に対して単調に増加するので，尤度と対数尤度のいずれを採用してもその最大値を実現する $\THETA$ の値は変わらない．対数尤度を採用すれば確率値の積の形が確率値の和の形に変わり，多くの場合，最適化問題としても尤度方程式としても扱いやすくなる．)を求めるは非負であるので，尤度が値として $0$ を取らなければ，尤度と大小関係の変わらない対数尤度}は対数をとった\term{対数尤度}{log-likelihood} $l(\THETA) := \log L(\THETA)$ がしばしば使われる．
+\begin{align}
+l(\THETA)
+:=&\ \log L(\THETA)\\
+ =&\ \log p(\D;\THETA)\\
+ =&\ \log \prod_i p(\vect{x}_i;\THETA)\\
+ =&\ \sum_i \log p(\vect{x}_i;\THETA).
+\end{align}
+
+尤度を最大にする $\THETA = \hat{\THETA}_{\mathrm{ML}}$ を $\THETA$ の\term{最尤推定量}{maximum likelihood estimator, ML estimator}といい，
+最尤推定量によるパラメータの推定を\term{最尤推定}{maximum likelihood estimation, MLE}という\footnote{とくに推定法(method of estimating)を指して\term{最尤法}{method of maximum likelihood}あるいは\termj{最尤推定法}とよぶことも多い}． 
+\begin{align}
+\hat{\THETA}_{\mathrm{ML}}
+&= \argmax_{\THETA} L(\THETA)\\
+&= \argmax_{\THETA} l(\THETA)\\
+&= \argmax_{\THETA} \sum_i \log p(\vect{x}_i;\THETA).
+\end{align}
+また，最尤推定量 $\hat{\THETA}_{\mathrm{ML}}$ は\term{尤度方程式}{likelihood equation}
+\begin{align}
+\pd{}{\THETA} l(\THETA) = \vect{0}
+\end{align}
+を満たす．
+
+一般には，尤度ないし対数尤度の最大化問題(最適化問題)を解くことで最尤推定量を求める．
+最尤推定量の満たす十分条件である尤度方程式が解析的に解けるなら，これを解くことで最尤推定をおこなうことができる．
+
+\begin{comment}
+? なぜ十分条件である尤度方程式を解くだけで求まる?
+? 最適化問題として解く(Lagrangeの未定常数法?)ケースと，尤度方程式を解くケースがある?
+
+- 統計学的な最尤推定
+  - 『自然科学の統計学』p.115-
+  - 『数理統計学ハンドブック』p.325-
+  - 金谷最適化 p.135-
+  - 『数理工学事典』p.11-
+    - データがひとつの場合を「尤度関数」と定義している
+    - 計算簡単
+    - 一致性
+    - x 不偏性
+    - x 分散最小
+    - 漸近正規性
+    - 漸近不偏性
+    - 漸近有効性
+- 機械学習における最尤推定
+\end{comment}
+
+\subsection{MAP推定}
+\term{MAP推定}{maximum a posteriori estimation, MAP estimation}
+%% 最大事後確率推定
+%% 事後確率最大化
+
+\begin{align}
+\hat{\THETA}_{\mathrm{MAP}}
+&= \argmax_{\THETA} p(\THETA|\D)\\
+&= \argmax_{\THETA} \frac{p(\D|\THETA)p(\THETA)}{p(\D)}\\
+&= \argmax_{\THETA} p(\D|\THETA)p(\THETA)\\
+&= \argmax_{\THETA} \left(\prod_i p(\vect{x}^{(i)}|\THETA)\right) p(\THETA)\\
+&= \argmax_{\THETA} \log \left(\left(\prod_i p(\vect{x}^{(i)}|\THETA)\right) p(\THETA)\right)\\
+&= \argmax_{\THETA} \left(\sum_i \log p(\vect{x}^{(i)}|\THETA)\right) + \log p(\THETA)
+\end{align}
+
+\subsection{ベイズ推定}
+パラメータ $\THETA$ を確率変数と捉え，この\termj{事後分布} $p(\THETA|\D)$ を求める．
+\begin{align}
+p(\THETA|\D)
+&= \frac{p(\D|\THETA)p(\THETA)}{p(\D)}
+\end{align}
+
+\begin{comment}
+- 推定量を hat で書くのと * で書くのはどう違う?
+\end{comment}
+
+\section{機械学習}
+\term{機械学習}{machine learning}とは，
+人間の持つ学習能力を機械に持たせることを目指す研究分野
+である．
+\term{人工知能}{artificial intelligence}研究の一領域として発展してきた．
+「学習」という語の定義の例として，Tom M. Mitchellによる次の形式的な定義
+\footnote{"A computer program is said to learn from experience E with respect to some class of tasks T and performance measure P, if its performance at tasks in T, as measured by P, improves with experience E." via. \url{http://en.wikipedia.org/wiki/Machine_learning}}
+がしばしば引用される．
+「タスクTにおけるコンピュータプログラムの性能を評価尺度Pにより評価したとき，これが経験Eによって改善されている場合に，コンピュータプログラムはタスクTと評価尺度Pに関して経験Eから"学習した"と言える」．
+
+%% 機械学習の扱うタスクには次のようなものがある．
+%% \begin{itemize}
+%% \item 回帰
+%% \item 分類
+%% \item クラスタリング
+%% \end{itemize}
+
+機械学習には2つの重要な基本問題がある．
+\term{教師付き学習}{supervised learning}\footnote{\termj{教師あり学習}ともいう．}問題は，入力とそれに対応する正しい出力の組の集まりである\term{訓練データ}{training data}\footnote{\termj{学習データ}あるいは\termj{教師データ}ともいう．}
+% $\D = \{(\vect{x}^{(i)}, y^{(i)})\}_{i=1}^N$
+を与え，背後に潜む入力と出力と間の関係性，すなわち未知の入力
+% $\vect{x}^{(N+1)}$
+に対してできるだけ正しい出力
+% $\hat{y}^{(N+1)} = f(\vect{x}^{(N+1)})$
+を返す関数あるいは決定規則を作ることを目的とする問題群である．
+% 「決定」規則は強いかな…
+\term{教師無し学習}{unsupervised learning}問題は，訓練データを見てその中に潜む何かしらのパターンを捉える問題群である．
+
+データの表現方法としては，実数値ベクトル(実数値の組)，タプル(離散値の組)，配列，グラフなどがある．統計的機械学習では主に実数値ベクトルを扱う．
+
+\subsection{機械学習の枠組み}
+機械学習は4つのに分けられる．
+
+ひとつめのプロセスはモデルの設定である．教師付き学習の場合は関数あるいは決定規則の形を設定し，そのうちどの部分を学習するかを決める．\termj{ハイパーパラメータ}\footnote{モデルを決定するパラメータのうち，「学習」段階で推定しないパラメータ．}を設定する．
+
+% \term{統計的機械学習}{statistical machine learning}においては，観測データは何らかの確率モデルから生成したものと考える． → これは違うっぽいな…
+ふたつめのプロセスは\termj{学習}である．文脈によっては，\termj{推論}あるいは\termj{パラメータ推定}あるいは\termj{訓練}ともよばれる．
+与えられたデータからモデルを決定するパラメータを推定するプロセスであり，統計的機械学習においてはここに統計的手法を用いる．多くの場合，
+% 多くの場合?! で合っているのか?!
+何らかの確率分布を決定するパラメータの推定問題と捉えることができる\footnote{生成の逆問題を解いていると言える．}．
+
+みっつめのプロセスは\termj{予測}である\footnote{\termj{復号}あるいは\termj{決定}とも呼ぶ．}．予測とはモデルを用いて未知データに対する値やラベルを決定するプロセスである．
+
+よっつめのプロセスは\termj{評価}である．学習した関数ないし決定規則の「よさ」で，設定したモデルの「よさ」を確かめる．
+
+\begin{comment}
+- 統計的機械学習??
+  - 山本先生資料
+    - 入力がタプル(離散値)が山本先生側，連続値側が河原先生側＝統計的機械学習?
+- 「パラメータ」という書き方，誤解生みそう(ノンパラは？と)
+\end{comment}
+
+\subsection{学習}
+モデルを決定するパラメータを決定するプロセスが学習である．
+統計的機械学習ではモデルとしてパラメータ $\THETA$ で決定づけられる何らかの確率モデルを用いることが多く，
+この場合学習とはデータからパラメータ $\THETA$ の推定量 $\hat{\THETA}$ を推定するプロセスであり，すなわち統計学の文脈での\term{推定}{estimation}そのものである．
+
+% 「そのもの」ほんと? 正則化は? 「利用」を考えているんじゃないの?
+
+%% データ $\D = \{\vect{x}_i\}_{i=1}^n$ がパラメータ $\THETA$ で決定づけられる確率モデルから独立に生成したと考える\footnote{与えられたデータ $\{\vect{x}_i\}_i$ を独立同分布の確率変数 $\{X_i\}_i$ の実現値と考える．}．
+
+\section{回帰}
+\termj{線形モデル}とは特徴量の線形和で $y$ を予測するモデルのこと．
+\begin{align}
+y(\vect{x}) = \transpose{\vect{w}}\vect{\phi}(\vect{x})
+\end{align}
+$\phi_i(\vect{x})$ は\termj{基底関数}．
+
+\term{一般化線形モデル}{generalized linear model} とは，パラメータ $\vect{w}$ による線形関数を非線形関数 $f(\cdot)$ によって変換して $y$ を予測するモデルのこと
+\begin{align}
+y(\vect{x}) = f(\transpose{\vect{w}}\vect{\phi}(\vect{x}))
+\end{align}
+%機械学習の分野では PRML 上 p.178
+$f(\cdot)$ を \term{活性化関数}{activation function} と呼ぶ．
+
+\section{分類}
+\subsection{定義}
+\term{分類}{classification, categorization}問題とは，与えられた教師データ$\{(\vect{x}^{(i)},c^{(i)})\}_i$を用いて，未知データの属する\term{クラス}{class}あるいは\term{カテゴリ}{category}を当てる問題群のこと．学習する関数は\term{分類器}{classifier}と呼ばれる．機械学習が扱う典型的な教師付き学習の問題．クラスの集合があらかじめ与えられているという点でクラスタリングとは異なる．
+
+\subsection{アプローチ}
+% 一旦2クラス分類問題(出力が$\{+1,-1\}$)を考える．
+分類問題へのアプローチは大きく次の3種類．
+
+\begin{itemize}
+\item \term{識別関数}{discriminant function}:
+
+〈学習〉教師データから，クラス毎に識別関数 $f_c:X\rightarrow \R$ を学習する．
+
+〈予測〉$f(\vect{x}) = \argmax_c{f_c(\vect{x})}$
+% $f(\vect{x})$の正負によって，未知データ$\vect{x}$に対応する$y\in\{+1,-1\}$を予測する．
+
+\item \term{識別モデル}{discriminative model}:
+
+〈学習〉教師データから，条件付確率分布 $p(c|\vect{x})$ を学習する．
+
+〈予測〉 $f(\vect{x}) = \argmax_c{p(c|\vect{x})}$
+
+\item \term{生成モデル}{generative model}:
+
+〈学習〉教師データから，同時確率分布 $p(x,c)=p(x|c)p(c)$ を学習する．
+
+〈予測〉 $f(\vect{x})
+= \argmax_c{p(c|\vect{x})}
+= \argmax_c{\frac{p(\vect{x},c)}{p(\vect{x})}}
+= \argmax_c{\frac{p(\vect{x}|c)p(c)}{p(\vect{x})}}
+= \argmax_c{p(\vect{x}|c)p(c)}$
+\end{itemize}
+
+\subsection{ロジスティック回帰}
+識別関数の出力を確率値として扱い，条件付確率 $p(c|\vect{x})$ をモデル化する．
+
+\subsubsection{2クラス分類問題におけるロジスティック回帰}
+2クラス分類問題のための識別関数 $f(\vect{x})$ (この関数の値の正負によってクラスを決定する)に対して，
+\begin{align}
+p(C_1|\vect{x}) = \sigma(f(\vect{x}))
+% \transpose{\vect{w}}\vect{\phi}(\vect{x})
+\end{align}
+とおく．ここで $\sigma(a) := \frac{1}{1+\exp (-a)}$ は \term{ロジスティックシグモイド関数}{logistic sigmoid function} と呼ばれる関数で，$(- \infty, \infty)$ の範囲の値を $(0,1)$ の範囲に圧縮する．
+
+識別関数を線形モデルとし，一般化線形モデルの活性化関数をロジスティックシグモイド関数として $p(C_k|\vect{x})$ を構成する分類問題へのアプローチを \term{ロジスティック回帰}{logistic regression} と言う．
+\begin{align}
+p(C_1|\vect{x}) = \sigma(\transpose{\vect{w}}\vect{\phi}(\vect{x}))
+\end{align}
+ロジスティック「回帰」という名だが、分類のための手法である．
+
+\subsubsection{多クラス分類問題におけるロジスティック回帰}
+多クラス分類問題のための識別関数 $f_k(\vect{x})$ に対して，
+\begin{align}
+p(C_k|\vect{x}) = \pi_k(\vect{x}) = \frac{\exp (f_k(\vect{x}))}{Z}
+\end{align}
+とおく．ここで $Z = \sum_i \exp (f_i(\vect{x}))$ は正規化項．$\pi_i$ を \term{ソフトマックス関数}{softmax function} と呼ぶ．
+とくに識別関数が線形モデルの場合を，(多クラス版の)ロジスティック回帰と言う．
+\begin{align}
+p(C_k|\vect{x}) = \pi_k(\vect{x}) = \frac{\exp ((\transpose{\vect{w}_k}\vect{\phi}(\vect{x}))}{Z}
+\end{align}
+
+\subsubsection{対数線形モデル}
+\termj{対数線形モデル}
+% カイ二乗検定云々の対数線形モデルは…??
+は，特徴量を「入力とクラスの組」に対して与えた上で多クラス版のロジスティック回帰を適用するモデルである．データ $x$ に対するクラス $c$ の条件付確率は，
+\begin{align}
+p(c|\vect{x}) = \frac{\exp ((\transpose{\vect{w}}\vect{\phi}(x,c))}{Z}
+\end{align}
+と表すことができる．ただし $Z = \sum_i \exp ((\ip{\vect{w}}{\vect{\phi}}(x,c_i))$ は正規化項．
+
+\section{系列ラベリング}
+\term{系列ラベリング}{sequential labeling}とは，教師付き学習問題の一種で，\term{系列}{sequence} を入力とし同じ長さのラベル列を返す(系列内の各要素にラベルを付与する)関数の学習を目的とする問題である．
+
+以下，系列を $\vect{x}$ で，ラベル列を $\vect{y}$ で表す．系列 $\vect{x}$ の $i$ 文字目を $x_i$ と表す．
+
+訓練データを $\mathcal{D} = \{(\vect{x}^{(i)},\vect{y}^{(i)})\}$ とする．
+
+\subsection{隠れマルコフモデル(HMM)}
+\subsubsection{隠れマルコフモデル}
+\term{隠れマルコフモデル}{hidden Markov model, HMM}とは，記号列を生成するシステムがパラメータ未知のマルコフ過程であると仮定した確率モデルのこと．
+生成モデル．
+% 確率的な状態遷移と確率的な記号出力を備えたオートマトンである．
+
+出力記号列 $\vect{x}$ と状態列 $\vect{y}$ についての同時確率，すなわちモデルから $(\vect{x},\vect{y})$ が生成する確率は次の通り:
+\begin{align}
+p(\vect{x},\vect{y})
+&= p(x_0,x_1,\dots,x_k,y_0,y_1,\dots,y_k) &\text{(ダミー要素 $x_0, y_0$ を導入)}\\
+&= p(x_k,y_k|x_{k-1},y_{k-1})\cdots p(x_1,y_1|x_0,y_0)\\
+&= \prod_i p(x_i,y_i|x_{i-1},y_{i-1})\\
+&= \prod_i p(x_i|y_i,x_{i-1},y_{i-1})p(y_i|x_{i-1},y_{i-1})\\
+% &\text{($x_i$ も $y_i$ も $x_{i-1}$ に依存しない)}\\
+&= \prod_i p(x_i|y_i)p(y_i|y_{i-1}) &\text{($x_i$ は $y_i$ にのみ依存，$y_i$ は $y_{i-1}$ にのみ依存)}\\
+&= \prod_i p_{x_i|y_i}q_{y_i|y_{i-1}}.
+\end{align}
+
+パラメータは次の通り:
+\begin{itemize}
+\item 各状態 $y_i$ から記号 $x_i$ が生成される確率 $p_{x_i|y_i} := p(x_i|y_i)$ ．
+
+(出力記号は現状態のみに依存する．)
+\item 状態 $y_{i-1}$ から $y_i$ への遷移確率 $q_{y_i|y_{i-1}} := p(y_i|y_{i-1})$．
+
+(状態は前状態のみに依存する．マルコフ性．)
+\end{itemize}
+
+\subsubsection{隠れマルコフモデルの学習}
+パラメータ集合を $\THETA$ とおく．
+一般に隠れマルコフモデルでは，出力記号列 $\vect{x}$ のみを観測すると仮定するので，$\vect{x}$ から隠れ変数 $\vect{y}$ とパラメータ $\THETA$ を同時に推定する問題となる．
+学習にはEMアルゴリズムである \termj{Baum-Weichアルゴリズム} が用いられる．
+
+\subsubsection{状態列が観測される隠れマルコフモデル}
+系列ラベリングの文脈では，隠れマルコフモデルの出力記号＝系列の要素，状態＝対応するラベル，と捉える．
+本来の隠れマルコフモデルは状態列が観測できないことを仮定したモデルであり，系列ラベリングのように教師データとして出力記号列(系列)と対応する状態列(ラベル列)が与えられている場合に隠れマルコフモデルと呼ぶのは不適切であるが，自然言語処理の文脈ではこの呼称が定着している．
+
+\subsubsection{状態列が観測される隠れマルコフモデルの学習}
+状態列が観測される隠れマルコフモデルのパラメータは，最尤推定により学習することができる．未知パラメータは$\D$より次の通り求まる:
+\begin{align}
+p_{x|y} &= \frac{n((x,y),\D)}{\sum_x n((x,y),\D)}
+\ (\forall (x,y))\\
+q_{y|y'} &= \frac{n((y,y'),\D)}{\sum_y n((y,y'),\D)}
+\ (\forall (y,y')).
+\end{align}
+
+計算は以下の通り．
+パラメータ集合を $\vect{\theta}$ とすると，対数尤度は
+\begin{align}
+L(\THETA)
+&= \log p(\D|\THETA)\\
+&= \sum_{i} \log p(\vect{x}^{(i)},\vect{y}^{(i)})\\
+&= \sum_{i} \log \prod_j p(x_j^{(i)}|y_j^{(i)})p(y_j^{(i)}|y_{j-1}^{(i)})\\
+&= \sum_{i} \sum_j \left(\log p(x_j^{(i)}|y_j^{(i)}) + \log p(y_j^{(i)}|y_{j-1}^{(i)})\right)\\
+&= \sum_{x\in \{\text{出力記号全体}\}}\sum_{y\in \{\text{状態全体}\}} n((x,y),\D)\log p(x|y) + \sum_{y,y'}n((y,y'),\D)\log p(y|y')\\
+&= \sum_{x,y} n((x,y),\D)\log p_{x|y} + \sum_{y,y'}n((y,y'),\D)\log q_{y|y'}.
+\end{align}
+
+と求められるので，解くべき最適化問題は:
+\begin{align}
+\text{max.} &\ L(\THETA) = \log p(\D|\THETA)\\
+\text{s.t.} &\ \forall y. \sum_x p_{x|y} = 1\\
+ &\ \forall y'. \sum_y q_{y|y'} = 1.
+\end{align}
+これをLagrangeの未定常数法で解くと，Lagrange関数は:
+\begin{align}
+L(\THETA,\ALPHA,\BETA)
+=& \sum_{x,y} n((x,y),\D)\log p_{x|y} + \sum_{y,y'}n((y,y'),\D)\log q_{y|y'}\\
+&+ \sum_y   \alpha_y   \left(\sum_x p_{x|y} - 1\right) 
++ \sum_{y'} \beta_{y'} \left(\sum_y q_{y|y'} - 1\right)
+\end{align}
+したがって，
+\begin{align}
+&\frac{\partial L(\THETA,\ALPHA,\BETA)}{\partial p_{x|y}}
+= \frac{n((x,y),\D)}{p_{x|y}} + \alpha_y = 0
+\ (\forall (x,y))\\
+&\frac{\partial L(\THETA,\ALPHA,\BETA)}{\partial q_{y|y'}}
+= \frac{n((y,y'),\D)}{q_{y|y'}} + \beta_y = 0
+\ (\forall (y,y')).
+\end{align}
+これと制約条件をあわせてLagrange乗数 $\ALPHA, \BETA$ を消去し，パラメータ $p_{x|y}, q_{y|y'}$ について解けば良い．
+
+\subsubsection{隠れマルコフモデルによる予測}
+未知の系列 $\vect{x}$ に対応するラベル列 $\vect{y}$ は次のように予測できる．
+\begin{align}
+\argmax_{\vect{y}} p(\vect{x},\vect{y})
+&= \argmax_{\vect{y}} \prod_i p_{x_i|y_i}q_{y_i|y_{i-1}}\\
+&= \argmax_{\vect{y}} \sum_i \log (p_{x_i|y_i} q_{y_i|y_{i-1}})
+\end{align}
+可能なラベル列 $\vect{y}$ すべてについて $p(\vect{x},\vect{y})$ を計算して比較すると計算量が膨大になる\footnote{系列ラベリング問題は選択肢が膨大なクラス分け問題と捉えることができる．}．
+しかし隠れマルコフモデルの問題設定では，$i$ 番目に割り当てるべき最適なラベルは $i-1$ 番目のラベルのみ(と系列の $i$ 文字目)のみに依存するため，動的計画法で最適解を求めることができる．
+ここで用いる動的計画法は\term{ビタビアルゴリズム}{Viterbi algorithm}と呼ばれている．
+\begin{algorithm}                      
+\caption{Viterbi algorithm}
+\label{alg1}                          
+\begin{algorithmic}                  
+\REQUIRE $\vect{x}$
+\FOR{$j=2$ \TO $|\vect{x}|$}
+\FORALL{$y_j$}
+\STATE \COMMENT{$j$文字目のラベルが$y_j$だった場合の最大スコアおよび最大スコアを達成する$j-1$文字目のラベルを保存}
+\STATE $\mathtt{max\_val}(j,y_j) \gets \max_{y_{j-1}}\left\{\log p(x_j,y_j|x_{j-1},y_{j-1}) + \mathtt{max\_val}(j-1,y_{j-1})\right\}$
+\STATE $\mathtt{prev\_y\_for\_max\_val}(j,y_j) \gets \argmax_{y_{j-1}}\left\{\log p(x_j,y_j|x_{j-1},y_{j-1}) + \mathtt{max\_val}(j-1,y_{j-1})\right\}$
+\ENDFOR
+\ENDFOR
+
+\STATE{\COMMENT{ポインタを逆向きに辿る}}
+\STATE{$\mathtt{y}(|\vect{x}|) \gets \argmax_{y}\mathtt{max\_val}(|\vect{x}|,y)$}
+\FOR{$j = |\vect{x}| - 1$ \TO $1$}
+\STATE{$\mathtt{y}(j) \gets \mathtt{prev\_y\_for\_max\_val}(j+1,\mathtt{y}(j+1))$}
+\ENDFOR
+\ENSURE{$\mathtt{y}$}
+\end{algorithmic}
+\end{algorithm}
+
+\subsection{条件付確率場(CRF)}
+\subsubsection{条件付確率場}
+\term{条件付確率場}{conditional random fields, CRF, CRFs}とは，入力 $\vect{x}$ と出力 $\vect{y}$ がともに構造を持っているときの条件付確率 $p(\vect{y}|\vect{x})$ を表現する確率モデル．
+% 入力変数と出力変数の依存関係と，出力変数間の依存関係を無向グラフで表したグラフィカルモデル．
+% 識別モデルの一種．
+
+特に系列ラベリングの文脈では，\termj{linear-chain CRFs} (出力 $\vect{y}$ が一本の鎖になっている場合)を扱う．
+
+基底関数を  $\phi_k(\vect{x},\vect{y}) = \sum_i \phi_k(\vect{x},y_i,y_{i-1})$ ，すなわち $(\vect{x},\vect{y})$ 中の $(\vect{x}, y_i, y_{i-1})$ 内に閉じた適当な組合わせ(たとえば「名詞の次に名詞が来る」「"しい"で終わる単語は形容詞」)の発生回数を表すと見れば対数線形モデルを適用できる．
+
+\subsubsection{条件付確率場の学習}
+$p(\vect{y}|\vect{x};\vect{w})$ のパラメータ $\vect{w}$ の対数尤度 $l(\vect{w})$ を最大化する．
+\begin{align}
+l(\vect{w})
+&= \sum_i \log p(\vect{y}^{(i)}|\vect{x}^{(i)};\vect{w})\\
+&= \sum_i \left(\log \exp(\ip{\vect{w}}{\PHI(\vect{x},\vect{y})}) - \log Z \right)
+\end{align}
+
+
+
+\subsubsection{条件付確率場による予測}
+未知の系列 $\vect{x}$ に対応するラベル列 $\vect{y}$ は次のように予測できる．
+\begin{align}
+\argmax_{\vect{y}} p(\vect{y}|\vect{x})
+&= \argmax_{\vect{y}} \frac{\exp(\ip{\vect{w}}{\PHI(\vect{x},\vect{y})})}{Z}\\
+&= \argmax_{\vect{y}} \ip{\vect{w}}{\PHI(\vect{x},\vect{y})}\\
+&= \argmax_{\vect{y}} \sum_i \ip{\vect{w}}{\PHI(\vect{x},y_i,y_{i-1})}
+\end{align}
+隠れマルコフモデル同様，$i$ 番目に割り当てるべき最適なラベルが $i-1$ 番目のラベルのみ(と入力系列全体)のみに依存するため，動的計画法(Viterbi algorithm)で最適解を求めることができる．
+
+\end{document}

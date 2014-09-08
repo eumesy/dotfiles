@@ -1,0 +1,53 @@
+{
+let reservedWords = [
+  (* Keywords *)
+  ("else", Parser.ELSE);
+  ("false", Parser.FALSE);
+  ("if", Parser.IF);
+  ("then", Parser.THEN);
+  ("true", Parser.TRUE);
+
+  (* Ex.3.4 let¿Î∏¿,letº∞ *)
+  ("in", Parser.IN);
+  ("let", Parser.LET);
+
+  (* Ex.3.8 fun *)
+  ("fun", Parser.FUN);
+
+  (* Ex.3.14 let rec¿Î∏¿,let recº∞ *)
+  ("rec", Parser.REC);
+] 
+}
+
+rule main = parse
+  (* ignore spacing and newline characters *)
+  [' ' '\009' '\012' '\n']+     { main lexbuf }
+
+| "-"? ['0'-'9']+
+    { Parser.INTV (int_of_string (Lexing.lexeme lexbuf)) }
+
+| "(" { Parser.LPAREN }
+| ")" { Parser.RPAREN }
+| ";;" { Parser.SEMISEMI }
+| "+" { Parser.PLUS }
+| "*" { Parser.MULT }
+| "<" { Parser.LT }
+
+(* Ex.3.4 let¿Î∏¿,letº∞ *)
+| "=" { Parser.EQ }
+
+(* Ex.3.8 fun *)
+| "->" { Parser.RARROW }
+    
+(* Ex.3.3 *)
+| "&&" { Parser.AND } 
+| "||" { Parser.OR }
+
+| ['a'-'z'] ['a'-'z' '0'-'9' '_' '\'']*
+    { let id = Lexing.lexeme lexbuf in
+      try 
+        List.assoc id reservedWords
+      with
+      _ -> Parser.ID id
+     }
+| eof { exit 0 }

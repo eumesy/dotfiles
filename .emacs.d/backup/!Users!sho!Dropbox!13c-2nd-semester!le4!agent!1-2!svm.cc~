@@ -1,0 +1,432 @@
+#include <iostream>
+#include <sstream>
+#include <string>
+#include <vector>
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+#include "QuadProg++.hh"
+
+using namespace std;
+
+// kernel
+int kernel; // カーネルの種類
+int param_d; // 多項式カーネルのパラメータd
+double param_s; // Gaussカーネルのパラメータ\sigma
+double param_a; // シグモイドカーネルのパラメータa
+double param_b; // シグモイドカーネルのパラメータb
+
+// 学習データ
+int data_set_size; // 学習データの個数
+int data_set_dim; // 特徴ベクトル空間の次元
+
+// quadratic programming problem
+const double diag_component_rev = 1.0e-7; // QuadProg++ に与えるGの対角成分の補正値
+const double sv_threshold = 1.0e-8; // Lagrange乗数を無視する閾値
+
+// 予測精度の評価
+const int num_of_parts = 10; // 学習データの分割数
+
+
+// calc vector
+double inner_product_v(vector<double>& v1, vector<double>& v2);
+vector<double> c_v(double c, vector<double>& v);
+vector<double> plus_v(vector<double>& v1, vector<double>& v2);
+vector<double> minus_v(vector<double>& v1, vector<double>& v2);
+double norm_square_v(vector<double>& v);
+
+// calc kernel
+double kernel_0(vector<double>& x1, vector<double>& x2);
+double kernel_1(vector<double>& x1, vector<double>& x2);
+double kernel_2(vector<double>& x1, vector<double>& x2);
+double kernel_3(vector<double>& x1, vector<double>& x2);
+double (*kernel_func[4])(vector<double>&, vector<double>&) =
+{ kernel_0, kernel_1, kernel_2, kernel_3 };
+
+// read data
+void read_data(vector<vector<double> >& x, vector<int>& y);
+void alert_arg();
+
+// solve quadratic programming problem
+void solve_quad_problem(vector<vector<double> >& x, vector<int>& y, vector<double>& alph);
+
+// calc theta
+double calc_theta(vector<vector<double> >& x, vector<int>& y, vector<double>& alph);
+
+// discriminant function
+int disc_func(vector<vector<double> >& x_training, vector<int>& y_training, vector<double>& alph, double theta, vector<double>& x);
+
+// print function
+void print_function(vector<vector<double> >& x, vector<int>& y, vector<double>& alph, double theta);
+
+// cross validation
+double cross_validation(vector<vector<double> >& x, vector<int>& y);
+
+
+int main(int argc, char *const argv[]) {
+  // check params
+  if (argc < 1+1) {
+	alert_arg();
+  }
+  kernel = atoi(argv[1]);
+  switch (kernel) {
+  case 0: { // 線形カーネル
+	break;
+  }
+  case 1: { // 多項式カーネル
+	if (argc != 3) alert_arg();
+	param_d = atoi(argv[2]);
+	break;
+  }
+  case 2: { // Gaussカーネル
+	if (argc != 3) alert_arg();
+	param_s = atoi(argv[2]);
+	break;
+  }
+  case 3: { // シグモイドカーネル
+	if (argc != 4) alert_arg();
+	param_a = atoi(argv[2]);
+	param_b = atoi(argv[3]);
+	break;
+  }
+  } // switch
+
+  // read data
+  vector<vector<double> > x;
+  vector<int> y;
+  read_data(x, y);
+  data_set_size = x.size(); // 学習データの個数
+  data_set_dim = x[0].size(); // 特徴ベクトル空間の次元
+
+  // 1-2
+  // cross validation
+  printf ("%f\n", cross_validation(x, y));
+
+  // 1-1
+  // // solve quadratic programming problem
+  // vector<double> alph(data_set_size);
+  // solve_quad_problem(x, y, alph);
+  // // make discriminant function
+  // double theta = calc_theta(x, y, alph);
+  // // print function
+  // print_function(x, y, alph, theta);
+
+  return 0;
+}
+
+// calc vector
+double inner_product_v(vector<double>& v1, vector<double>& v2) {
+  int dim_v1 = v1.size();
+  int dim_v2 = v2.size();
+  int dim = min(dim_v1, dim_v2);
+
+  double ret = 0;
+  for (int i=0; i<dim; i++)	{
+	ret += v1[i] * v2[i];
+  }
+  return ret;
+}
+vector<double> c_v(double c, vector<double>& v) {
+  int dim = v.size();
+  vector<double> vec(dim);
+  
+  for (int i=0; i<dim; i++) vec[i] = c * v[i];
+  return vec;
+}
+vector<double> plus_v(vector<double>& v1, vector<double>& v2) {
+  int dim_v1 = v1.size();
+  int dim_v2 = v2.size();
+  int dim = min(dim_v1, dim_v2);
+
+  vector<double> vec(dim);
+  for (int i=0; i<dim; i++) vec[i] = v1[i] + v2[i];
+  return vec;
+}  
+vector<double> minus_v(vector<double>& v1, vector<double>& v2) {
+  int dim_v1 = v1.size();
+  int dim_v2 = v2.size();
+  int dim = min(dim_v1, dim_v2);
+
+  vector<double> vec(dim);
+  for (int i=0; i<dim; i++) vec[i] = v1[i] - v2[i];
+  return vec;
+}
+double norm_square_v(vector<double>& v) {
+  int dim = v.size();
+  double sum = 0.0;
+  for (int i=0; i<dim; i++) sum += v[i] * v[i];
+  return sum;
+}
+
+// calc kernel
+double kernel_0(vector<double>& x1, vector<double>& x2) {
+  return inner_product_v(x1, x2);
+}
+double kernel_1(vector<double>& x1, vector<double>& x2) {
+  double inner = 1 + inner_product_v(x1, x2);
+  double product = 1.0;
+  for (int i=0; i<param_d; i++) {
+	product = product * inner;
+  }
+  return product;
+}
+double kernel_2(vector<double>& x1, vector<double>& x2) {
+  vector<double> v;
+  v = minus_v(x1, x2);
+  return exp(- norm_square_v(v) / (2.0 * param_s * param_s));
+}
+double kernel_3(vector<double>& x1, vector<double>& x2) {
+  return tanh(param_a * inner_product_v(x1, x2) + param_b);
+}
+
+// read data
+void read_data(vector<vector<double> >& x, vector<int>& y) {
+  string line;
+  double d;
+  vector<double> vec;
+  int dim; // 特徴ベクトル空間の次元
+
+  dim = 0;
+  while (getline(cin, line)) {
+	vec.clear();
+	istringstream iss(line);
+
+	if (dim == 0) {	// 1行目
+	  while (iss >> d) {
+		vec.push_back(d);
+	  }
+	  dim = vec.size() - 1;
+	  y.push_back(vec[dim]);
+	  vec.pop_back();
+	  x.push_back(vec);
+	}
+	else {
+	  for (int i=0; i<dim; i++) {
+		iss >> d;
+		vec.push_back(d);
+	  }
+	  x.push_back(vec);
+
+	  iss >> d;
+	  y.push_back(d);
+	}
+  }
+}
+void alert_arg() {
+  fprintf(stderr, "第1引数でカーネルの種類を、以後の引数でパラメータを過不足なく指定して実行してください\n");
+  fprintf(stderr, "- 線型カーネル (内積. カーネルトリック無し)\n");
+  fprintf(stderr, "    ===> 第1引数:0\n");
+  fprintf(stderr, "- 多項式カーネル\n");
+  fprintf(stderr, "    ===> 第1引数:1, 第2引数:パラメータd\n");
+  fprintf(stderr, "- Gaussカーネル\n");
+  fprintf(stderr, "    ===> 第1引数:1, 第2引数:パラメータ\\sigma\n");
+  fprintf(stderr, "- シグモイドカーネル\n");
+  fprintf(stderr, "    ===> 第1引数:1, 第2引数:パラメータa, 第3引数:パラメータb\n");
+  exit(1);
+}
+
+// solve quadquadratic programming problem
+void solve_quad_problem(vector<vector<double> >& x, vector<int>& y, vector<double>& alph) {
+  double G[MATRIX_DIM][MATRIX_DIM], g0[MATRIX_DIM], 
+	CE[MATRIX_DIM][MATRIX_DIM], ce0[MATRIX_DIM], 
+	CI[MATRIX_DIM][MATRIX_DIM], ci0[MATRIX_DIM],
+	alph_arr[MATRIX_DIM];
+  int n; // 未知数(Lagrange乗数)の数 = 学習データの数
+  int m; // 制約条件(等式)の本数
+  int p; // 制約条件(不等式)の本数
+  double sum = 0.0;
+
+  n = x.size(); // 未知数(Lagrange乗数)の次元
+
+  // G
+  for (int i=0; i<n; i++) {
+	for (int j=0; j<n; j++) {
+	  G[i][j] = y[i] * y[j] * (kernel_func[kernel])(x[i], x[j]);
+	  if (i == j) G[i][j] += diag_component_rev;
+	}
+  }
+
+  // g0
+  for (int i=0; i < n; i++)
+	g0[i] = -1.0;
+
+  // 制約条件(等式)
+  m = 1; // 制約条件(等式)の本数
+  // CE
+  for (int i=0; i < n; i++) {
+	for (int j=0; j < m; j++) {
+	  CE[i][j] = y[i];
+	}
+  }
+  // ce0
+  for (int j=0; j < m; j++)
+	ce0[j] = 0.0;
+
+  // 制約条件(不等式)
+  p = n; // 制約条件(不等式)の本数
+  // CI
+  for (int i = 0; i < n; i++) {
+	for (int j = 0; j < p; j++) {
+	  if (i == j) CI[i][j] = 1.0;
+	  else  CI[i][j] = 0.0;
+	}
+  }
+  // ci0
+  for (int j = 0; j < p; j++)
+	ci0[j] = 0.0;
+
+  double f;
+  f = solve_quadprog(G, g0, n, CE, ce0, m, CI, ci0, p, alph_arr);
+  // fprintf(stderr, "f: %f\n", f);
+
+  for (int i=0; i<n; i++)
+	alph[i] = alph_arr[i];
+}
+
+// calc theta
+double calc_theta(vector<vector<double> >& x, vector<int>& y, vector<double>& alph) {
+  int set_size = min(min(x.size(), y.size()), alph.size());
+
+  // suport vector
+  int sv_index = 0;
+  for (int i=0; i<set_size; i++)
+	if (alph[i] > alph[sv_index]) sv_index = i;
+
+  // theta
+  double theta = 0.0;
+  for (int i=0; i<set_size; i++) {
+	if (fabs(alph[i]) > sv_threshold) {
+	  theta += alph[i] * y[i] * (kernel_func[kernel])(x[i], x[sv_index]);
+	}
+  }
+  theta -= y[sv_index];
+
+  return theta;
+}
+
+// discriminant function
+int disc_func(vector<vector<double> >& x_training, vector<int>& y_training, vector<double>& alph, double theta, vector<double>& x) {
+  int training_data_size = min(min(x_training.size(), y_training.size()), alph.size());
+  
+  double f = 0.0;
+  for (int i=0; i<training_data_size; i++) {
+  	if (fabs(alph[i]) > sv_threshold) {
+  	  f += alph[i] * y_training[i] * (kernel_func[kernel])(x_training[i], x);
+  	}
+  }
+  f -= theta;
+  return (f >= 0) ? 1 : -1;
+}
+
+// cross validation
+double cross_validation(vector<vector<double> >& x, vector<int>& y) {
+  vector<vector<vector<double> > > x_divided;
+  vector<vector<int> > y_divided;
+  vector<int> part_begin(num_of_parts); // partition begining index
+  for (int i=0; i<=num_of_parts; i++)
+  	part_begin[i] = (data_set_size * i) / num_of_parts;
+  part_begin.push_back(data_set_size);
+  
+  vector<vector<double> > x_training;
+  vector<vector<double> > x_testing;
+  vector<int> y_training;
+  vector<int> y_testing;
+  int training_data_set_size;
+  int testing_data_set_size;
+
+  vector<double> alph;
+  double theta;
+
+  int discrim_success = 0;
+  
+  for (int i=0; i<num_of_parts; i++) {
+	// make a temporal training set and a temporal testing set
+    testing_data_set_size = part_begin[i+1] - part_begin[i];
+    training_data_set_size = data_set_size - testing_data_set_size;
+	
+	// division x
+	x_training.clear();
+	x_testing.clear();
+	
+	x_training.insert(x_training.end(),  x.begin(),                   x.begin() + part_begin[i]);
+	x_testing.insert( x_testing.begin(), x.begin() + part_begin[i],   x.begin() + part_begin[i+1]);
+	x_training.insert(x_training.end(),  x.begin() + part_begin[i+1], x.end());
+
+	// division y
+	y_training.clear();
+	y_testing.clear();
+	
+	y_training.insert(y_training.end(),  y.begin(),                   y.begin() + part_begin[i]);
+	y_testing.insert( y_testing.begin(), y.begin() + part_begin[i],   y.begin() + part_begin[i+1]);
+	y_training.insert(y_training.end(),  y.begin() + part_begin[i+1], y.end());
+
+	// make a discriminal function
+	// solve quadratic programming problem with tempral training set
+	alph.clear();
+	alph.resize(training_data_set_size);
+	solve_quad_problem(x_training, y_training, alph);
+
+	theta = calc_theta(x_training, y_training, alph);
+
+	// check the discriminal function with tempral testing set
+	for (int j=0; j<testing_data_set_size; j++) {
+	  if (disc_func(x_training, y_training, alph, theta, x_testing[j]) == y_testing[j])
+		discrim_success++;
+	}
+  }
+  
+  return discrim_success / (data_set_size * 1.0);
+}
+
+// print function
+void print_function(vector<vector<double> >& x, vector<int>& y, vector<double>& alph, double theta) {
+  vector<double> alpha_y(data_set_size);
+  for (int i=0; i<data_set_size; i++)
+	alpha_y[i] = alph[i] * y[i];
+
+  printf("f(x,y) = ");
+  switch (kernel) {
+  case 0: { // 線形カーネル
+	for (int i=0; i<data_set_size; i++) {
+	  if (fabs(alph[i]) > sv_threshold) {
+		printf("(%.15e) * ((%.15e) * x + (%.15e) * y) + \\\n", alpha_y[i], x[i][0], x[i][1]);
+	  }
+	}
+	
+	break;
+  }
+  case 1: { // 多項式カーネル
+	for (int i=0; i<data_set_size; i++) {
+	  if (fabs(alph[i]) > sv_threshold) {
+		printf("(%.15e) * (1 + (%.15e) * x + (%.15e) * y)**%d + \\\n", alpha_y[i], x[i][0], x[i][1], param_d);
+	  }
+	}
+	break;
+  }
+  case 2: { // Gaussカーネル
+	double denom = 2.0 * param_s * param_s;
+	for (int i=0; i<data_set_size; i++) {
+	  if (fabs(alph[i]) > sv_threshold) {
+		printf("(%.15e) * exp( - (((%.15e) - x)**2 + ((%.15e) - y)**2) / %.15e) + \\\n", alpha_y[i], x[i][0], x[i][1], denom);
+	  }
+	}
+	break;
+  }
+  case 3: { // シグモイドカーネル
+	for (int i=0; i<data_set_size; i++) {
+	  if (fabs(alph[i]) > sv_threshold) {
+		printf("(%.15e) * tanh((%lf) * ((%.15e) * x + (%.15e) * y) + (%lf))  + \\\n", alpha_y[i], param_a, x[i][0], x[i][1], param_b);
+	  }
+	}
+	break;
+  }
+  } // switch
+  printf("(%.15e)\n", - theta);
+
+  for (int i=0; i<data_set_size; i++)
+	printf("# alph[%d] = %f\n", i, alph[i]);
+  
+  printf("# theta = %f\n", theta);
+}

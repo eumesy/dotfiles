@@ -1,0 +1,249 @@
+* ref
+** web
+C/C++ リファレンス
+http://www.cppll.jp/cppreference/
+cplusplus.com - The C++ Resources Network
+http://www.cplusplus.com/
+
+Robotics - NAIST::OnlineText
+http://robotics.naist.jp/edu/text/?Robotics#p3650ed9
+
+C++編（言語解説）
+http://www.geocities.jp/ky_webid/cpp/language/index.html
+C++編（標準ライブラリ）
+http://www.geocities.jp/ky_webid/cpp/library/
+
+C++最速マスター その1 - Yuta.Kikuchiの日記
+http://d.hatena.ne.jp/yutakikuchi/20120416/1334531754
+C++0x基礎文法最速マスター - Faith and Brave - C++で遊ぼう
+http://faithandbrave.hateblo.jp/entry/20100201/1264997004
+
+C++ — Watallica metallicus
+http://meme.biology.tohoku.ac.jp/students/iwasaki/cxx/index.html
+「boost」「めざせC++高速プログラム」など
+
+** 書籍
+C++参考書籍
+http://www.geocities.jp/ky_webid/book/cpp.html
+ロベールのＣ＋＋教室
+http://www7b.biglobe.ne.jp/~robe/cpphtml/index.html
+
+- 独習C++
+- オライリーの入門本 (クラスの導入に良さそう)
+
+*** 気になる
+Amazon.co.jp： C++プログラミング入門: グレゴリー サティア, ダウグ ブラウン, Gregory Satir, Doug Brown, 望月 康司, 谷口 功: 本
+http://www.amazon.co.jp/C-%E3%83%97%E3%83%AD%E3%82%B0%E3%83%A9%E3%83%9F%E3%83%B3%E3%82%B0%E5%85%A5%E9%96%80-%E3%82%B0%E3%83%AC%E3%82%B4%E3%83%AA%E3%83%BC-%E3%82%B5%E3%83%86%E3%82%A3%E3%82%A2/dp/4873110637/ref=pd_cp_b_3
+Amazon.co.jp： C++ライブラリクイックリファレンス: レイ リシュナー, Ray Lischner, クイープ: 本
+http://www.amazon.co.jp/C-%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA%E3%82%AF%E3%82%A4%E3%83%83%E3%82%AF%E3%83%AA%E3%83%95%E3%82%A1%E3%83%AC%E3%83%B3%E3%82%B9-%E3%83%AC%E3%82%A4-%E3%83%AA%E3%82%B7%E3%83%A5%E3%83%8A%E3%83%BC/dp/487311196X/ref=sr_1_sc_4?ie=UTF8&qid=1387561015&sr=8-4-spell&keywords=c%2B%2B+%E3%83%AC%E3%83%95%E3%82%A1%E3%83%AC%E3%83%B3%E3%82%B9
+Amazon.co.jp： C++標準ライブラリチュートリアル&リファレンス (ASCII Addison Wesley Programming Series): ニコライ・M. ジョスティス, Nicolai M. Josuttis, 吉川 邦夫: 本
+http://www.amazon.co.jp/%E6%A8%99%E6%BA%96%E3%83%A9%E3%82%A4%E3%83%96%E3%83%A9%E3%83%AA%E3%83%81%E3%83%A5%E3%83%BC%E3%83%88%E3%83%AA%E3%82%A2%E3%83%AB-%E3%83%AA%E3%83%95%E3%82%A1%E3%83%AC%E3%83%B3%E3%82%B9-Addison-Wesley-Programming/dp/4756137156/ref=pd_sxp_f_pt
+
+** blog
+本の虫
+http://cpplover.blogspot.jp/
+
+* compile
+g++ hoge.cc
+
+* pointer, 呼出し
+// define
+void fun((vector<int> *) vec);
+
+// usage
+fun(&vec);
+
+
+** 参照渡し
+// def
+void fun(vector<int>& vec) {
+  // do something
+  vec.
+}
+
+// usage
+fun(vec)
+
+* io
+** ref
+C++入出力
+http://www.cppll.jp/cppreference/cppio.html
+
+STL & iostream primer
+http://www.kab-studio.biz/Programing/STLiostream/
+
+#include <iostream>
+
+cout ... 標準出力を表すストリーム
+cin  ... 標準入力を表すストリーム
+
+** output 出力ストリーム
+std::cout << 100 << 'a' << std::endl;
+- データ型を問わない
+
+std::endl '\n'を出力した上でバッファをフラッシュ
+std::flush バッファをフラッシュ
+
+** input
+   >> は空白文字を読み飛ばす
+
+-  getline
+  - istream クラスのメンバー関数
+  cin.getline(line, sizeof(line));
+  
+  行を読んで空白で分割
+std::string line;
+while (std::getline(std::cin, line))
+{
+    std::cout << line << std::endl;
+}
+http://stackoverflow.com/questions/201992/how-to-read-until-eof-from-cin-in-c
+
+** format指定子
+C++ の iostream フォーマット指定早見表
+http://sla0.jp/2012/04/cpp%E3%81%AEiostream%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%83%E3%83%88%E6%8C%87%E5%AE%9A%E6%97%A9%E8%A6%8B%E8%A1%A8/
+** ファイルを開いたり閉じたり fstream
+C++編（標準ライブラリ）　第３３章　ファイルストリーム
+http://www.geocities.jp/ky_webid/cpp/library/033.html
+25.1.1 ファイルのオープンとクローズ
+http://www.wakhok.ac.jp/~kanayama/C/03/node172.html
+
+* sstream
+#+BEGIN_SRC c++
+#include <sstream>
+std::stringstream ss;
+#+END_SRC
+
+- クリア
+#+BEGIN_SRC c++
+ss.str("");
+ss.clear(stringstream::goodbit);
+#+END_SRC
+
+* vector
+C++ ベクタ(std::vector)
+http://www.cppll.jp/cppreference/cppvector.html
+
+- 0はじまり
+
+| .at(i)        | 要素アクセス. [i]より安全 |
+|---------------+---------------------------|
+| .size()       | 要素数を返す              |
+| .push_back(x) | 末尾に要素を追加          |
+| .pop_back()   | 末尾の要素を削除          |
+| .clear()      | すべての要素を削除        |
+
+//  vector<double> vec = vector<double>(99, 99.0);
+//                                      --size -initialize
+
+** 初期化・resize 中身指定
+二重配列の初期化
+#+BEGIN_SRC c++
+vector< vector<int> > Matrix(N, vector<int>(M, 0));
+vector< vector<int> > Matrix(N, vector<int>(M));
+
+vec.resize(N, vector<int>(M));
+#+END_SRC
+
+** メンバ削除
+- すべて
+vec.clear();
+
+- N番目の要素
+メモ - std::vectorにおいてN番目の要素を削除する - ブロードバンド対応日記
+http://d.hatena.ne.jp/matobow/20100316/p1
+
+- 特定の値
+hige.erase(std::remove(hige.begin(), hige.end(), 2), hige.end());
+
+std::remove
+  該当の値以外のものを先頭詰めで入れ直し、詰め終わった次の場所のイレテータを返す
+std::vector - erase
+  範囲の要素を削除する
+
+** 複製(copy)
+- forでpush_back
+- std::copy
+  #+BEGIN_SRC c++
+  result.resize(data.size());
+  std::copy(data.begin(), data.end(), result.begin());
+  #+END_SRC
+
+** 走査/loop/for
+http://stackoverflow.com/questions/409348/iteration-over-vector-in-c
+
+*** int i を v.size() までまわす
+
+*** for each index (自作)
+【C++】長いfor文とおさらばだ - 浮遊島
+http://kou-yeung.hatenablog.com/entry/2013/12/19/233000
+
+*** iterator を v.begin() から v.end() までまわす
+#+BEGIN_SRC C++
+vector<Type>::iterator it;
+for (it = vec.begin(); it != vec.end(); it++) {
+  cout << *it << endl;
+}
+
+for (vector<Type>::iterator it = L.begin(); it != L.end(); it++) {
+  cout << *it << endl;
+}
+#+END_SRC
+*** for each iterator C++11
+for(auto it : v)
+
+*** for_each (algorithm) map?
+#+BEGIN_SRC c++
+std::for_each(v.begin(),v.end(),func);
+#+END_SRC
+
+
+** insert
+1.
+iterator insert (iterator position, const value_type& val);
+
+2.
+void insert (iterator position, size_type n, const value_type& val);
+
+3.
+void insert (iterator position, InputIterator first, InputIterator last);
+posの直前に、firstからlast _のひとつ前_ の要素が挿入される
+   
+- 連結
+a.insert(a.end(), b.begin(), b.end());
+aの末尾にbの全範囲を追加
+
+** 文字列として連結
+#+BEGIN_SRC c++
+sstream ss;
+ss << vec[0];
+for i
+  ss << ", " << vec[i];
+ss.str()
+#+END_SRC
+が良さそう…
+
+** index -> iterator
+vector<Type>::iterator nth = v.begin() + index;
+
+** merge
+a.insert(a.end(),b.begin(),b.end());
+
+* class
+// struct Data {
+//   Data(Vec vec, int y) : vec(vec), y(y) {}
+//   Data() {}
+//   Vec vec;
+//   int y;
+// }
+
+* misc
+** 正負の無限大
+http://www.cplusplus.com/reference/limits/numeric_limits/
+
+#+BEGIN_SRC c++
+#include <limits>
+int inf = std::numeric_limits<int>::max();
+int infminus = std::numeric_limits<int>::min();
+// 好きな型を使う
+#+END_SRC

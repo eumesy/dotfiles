@@ -1,0 +1,5 @@
+set contour
+set view 0.0
+unset surface
+set cntrparam levels incremental -3, 1, 2
+splot [-100:100] [-100:100] x + y

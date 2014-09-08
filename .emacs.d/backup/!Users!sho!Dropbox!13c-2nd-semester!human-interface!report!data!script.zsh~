@@ -1,0 +1,3 @@
+grep -v ^Post-edit$ 1n | grep -v ^Reply | perl -pe 's/^ (\d+):.*?(English|Japanese).*?([\d\/]+).([\d:]+).*$/HEAD	\1	\2	\3	\4	/g' | perl -pe 's/
+/\@BREAK\@/g' | perl -pe 's/\@BREAK\@HEAD	/
+/g' | perl -pe 's/	\@BREAK\@/	/g' | perl -ple 's/\@BREAK\@$//g' | perl -pe 's/^HEAD	//' >! 1nn

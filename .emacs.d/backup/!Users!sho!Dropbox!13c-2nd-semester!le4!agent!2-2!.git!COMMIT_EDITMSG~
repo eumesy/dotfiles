@@ -1,0 +1,27 @@
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Committer: Sho Yokoi <sho@mba-2.local>
+#
+# On branch master
+# Changes to be committed:
+#	modified:   Makefile
+#	modified:   client.cc
+#	new file:   report/ex4-2-2-yokoi.aux
+#	new file:   report/ex4-2-2-yokoi.dvi
+#	new file:   report/ex4-2-2-yokoi.fdb_latexmk
+#	new file:   report/ex4-2-2-yokoi.fls
+#	new file:   report/ex4-2-2-yokoi.log
+#	new file:   report/ex4-2-2-yokoi.pdf
+#	new file:   report/ex4-2-2-yokoi.tex
+#	new file:   report/platex35340.fls
+#	modified:   strategy.cc
+#	modified:   strategy.hh
+#	modified:   svm.cc
+#	modified:   svm.hh
+#
+# Changes not staged for commit:
+#	deleted:    hoge
+#	deleted:    test.cc
+#

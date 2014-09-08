@@ -1,0 +1,18 @@
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Committer: Sho Yokoi <sho@mba-2.local>
+#
+# On branch master
+# Changes to be committed:
+#	modified:   svm.cc
+#	modified:   svm_scaling.cc
+#
+# Changes not staged for commit:
+#	deleted:    QuadProg++.o
+#	deleted:    strategy.cc
+#	deleted:    strategy.hh
+#	deleted:    svm.o
+#	deleted:    svm_scaling
+#

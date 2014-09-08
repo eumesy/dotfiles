@@ -1,0 +1,216 @@
+移行：
+- Coq 確認
+- Ocaml 確認
+- iPhoto !!
+
+- .recentf 直す
+- 外部ディスプレイ化
+- helm と yas 調整
+
+- zshの「とりあえずコマンド保存」コマンド
+
+- emacs中で「マーク」を付ける手法
+
+- auctex
+- verbはそのまま使うかー
+
+- gaussカーネルの\sigmaの値、元のデータの分散とる？
+
+- gnuplot-mode
+- \verb 中のunderbarをエスケープしなきゃいけないのが面倒くさい...
+
+- Maps.app
+- Contacts.app
+- Notes.app
+- Notes.app
+
+- エディタの導入 (sublime ...?)
+- time machine
+
+- ウィルス対策
+
+- 旧環境で旧tex compileできる?
+
+- emacs
+  - powerline
+    - 時間入れたい full-screen時
+
+- latex-math-preview.el 使えない?
+  - 自動コンパイルで十分な気も...
+
+- skim 連携使えない
+
+  [ ] yasnippet for tex mode
+  - Yasnippet
+
+  - template 自動読み出し (emacs)
+
+- [ ] terminal用フォント
+- [ ] Emacs C-M-Ret 登録...
+- [ ] 
+- [ ] 
+
+
+
+- brew update, cron で管理したい
+
+
+2013mid スペック
+http://applech2.com/archives/29136231.html
+---
+
+MacBook Air (11-Inch, Late 2010)
+http://support.apple.com/kb/SP617?viewlocale=ja_JP
+
+mag safe 形状比較
+http://gori.me/mac/17790
+
+■バックアップしないとどうしようもないもの
+・~ 以下
+・デスクトップ等
+・Mail.app のデータ
+
+■外付け電源環境
+・HyperJuice
+・MagicBox
+
+これも良さそう
+  Hyperjuice用の充電アダプターを注文しました｜korochanのつぶやき。
+    http://ameblo.jp/korochan0317/entry-11308956622.html
+  瀬戸弘司の「他者日記」 MagicBox不要！超簡単にハイパージュースでMacBookを「充電」する方法！
+    http://tasyanikki.blog115.fc2.com/blog-entry-538.html
+
+evernote
+　MiguMix 1M
+atok
+dropshortly
+coteditor
+    環境設定
+        一般
+            入力補完リスト
+                ファイルに出現する単語 + カラーリングスタイルからの候補
+    vタブを自動的に空白に変換
+    Migu 1M
+  カラーリング設定
+    Markdown http://wolfrosch.com/works/goodies/coteditor_syntax#Markdown
+Mou
+MarkdownNote
+firefox
+  firebug
+  Video DownloadHelper
+perian
+VLC
+
+lime chat
+  theme http://groups.google.com/group/limechatosx/web/themes?pli=1
+zaw 履歴同期
+
+cdto FinderからiTermを起動
+  http://sadoru.net/2011-08-17-2728/ #ツールバーにドロップ
+  http://taoyag.sakura.ne.jp/blog/2007/05/cdtofinderiterm.html #設定をterminal→itermに変更  
+  # 逆は、terminalでopen . でok
+
+
+Shupapan (〃)
+iExtractMP3 (flv→mp3(for iPod))
+flash...
+the unarchiver (app store)
+UnRarX
+リネームソフト
+  Name Mangler
+FileZilla (FTPクライアント)
+SeaShore
+cooViewer
+PastebotSync
+Switch (wma → mp3)
+
+■フォント
+http://mix-mplus-ipa.sourceforge.jp/
+MiguMix 1M
+Migu 1M
+http://yebo-blog.blogspot.com/2010/01/top10.html
+Inconsolata
+Deja Vu Sans Mono
+http://save.sys.t.u-tokyo.ac.jp/~yusa/fonts/ricty.html
+
+safari環境同期したい、、
+・ブックマーク
+
+atok
+sho.yokoi+atok@gmail.com
+使用者名：Sho Yokoi
+atokが遅くなる理由？
+https://discussionsjapan.apple.com/message/100586466
+
+Alfred ランチャー げ、すばらしい、、
+
+Google Notifier
+http://support.google.com/mail/answer/10966?hl=ja
+
+■ATOK
+
+■Safari
+環境設定
+  一般
+    デフォルトWebブラウザ：Chrome
+    新規ウィンドウ：空のページ
+　　ホーム：http://www.google.co.jp/
+　詳細
+　　Tabキーを押したときに→on
+　タブ
+　　ウィンドウのかわりにタブで開く→常に
+safari
+新規ページ：空白
+ホーム：google
+自動入力：全OFF
+
+SafariStandのActionMenu追加
+
+■Excel
+環境設定
+　全般
+　　フォント：ヒラギノ角ゴ14
+　　ユーザー名：user
+
+TeXShop
+  /Applications/UpTeX.app/teTeX/binにpath通す(ebbとか使えるようになる)
+  homebrewでghostscriptを入れた場合、
+  環境設定→パス設定→Distiller(Ghostscript)を、
+    /usr/local/Cellar/ghostscript/9.05/bin
+  などに変える
+
+Scilab
+  Lionでscilab.appを使う
+  http://togetter.com/li/193372
+
+ImageOptim
+  D&DでExif削除
+
+×Afloat
+  ウィンドウ最前面維持
+  SIMBL
+
+URLcollector
+  リンク先一括DL
+
+■Java実行環境導入
+参考
+・Mac OS X LionにJDK、eclipseをインストールする - モンテカットの開発日記
+    http://d.hatena.ne.jp/MonteCut/20111121/1321885785
+・La Thinking Motion. - [mac] Mac OS X LionにEclipseをインストールして日本語化までのメモ
+    http://www.la-nouveau.mydns.jp/wordpress/?p=1302
+    #eclipse.iniの編集についてはリンク先に飛ぶ必要なし
+・Intel ベースの Mac のプロセッサが 32 ビットか 64 ビットかを識別する方法
+    http://support.apple.com/kb/HT3696?viewlocale=ja_JP
+
+□bashとjavacをUTF-8に
+・44ATTACK｜[mac] Java のコンパイルで文字化けしたらすること
+  http://44attack.blogspot.jp/2011/06/mac-java.html
+  
+
+ウィルス対策
+Clamxav
+
+■Google Calendar
+Googleカレンダーの予定の通知につい...: Apple サポートコミュニティ
+https://discussionsjapan.apple.com/message/100798628#100798628

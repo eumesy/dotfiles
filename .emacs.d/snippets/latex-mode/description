@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: description
+# key: description
+# --
+\begin{description}
+  \item $0
+\end{description}

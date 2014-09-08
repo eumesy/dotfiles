@@ -1,0 +1,95 @@
+* grep
+
+** ref
+http://x68000.q-e-d.net/~68user/unix/pickup?grep
+http://linuxjm.sourceforge.jp/html/GNU_grep/man1/grep.1.html
+  
+** usage
+$ grep [options] pattern filename
+ファイルからpatternにmatchする行を抜き出す
+
+** options
+*** 正規表現の選択
+-E, -F, -G, -P
+
+*** .
+| -v | 指定したパターンを除く |
+|    |                        |
+
+
+* tr
+
+** whats this
+1文字置換
+
+** usage
+$ tr '\n' ',' < filename
+改行をカンマに変換
+
+$ tr -d '\n' < filename
+改行を削除
+
+
+* sed
+
+** ref 
+http://itpro.nikkeibp.co.jp/article/COLUMN/20060227/230879/
+http://shantiworks.info/2012/08/10/sed%E3%81%A7%E6%94%B9%E8%A1%8C%E3%82%92%E5%90%AB%E3%82%80%E8%A4%87%E6%95%B0%E8%A1%8C%E3%81%AE%E6%96%87%E5%AD%97%E5%88%97%E3%82%92%E7%BD%AE%E6%8F%9B/
+
+** ???
+パターンスペース
+ホールドスペース
+  
+** usage
+$ sed -e 's/検索パターン/置換文字列/g' target_file > output_file
+単語や文章を置換
+
+**** 末尾 options
+| g | global match             |
+| i | 大文字小文字を区別しない |
+
+- sed で改行めちゃ面倒くさい...
+
+* awk
+
+* perl
+
+** ref
+- 404 Blog Not Found:perl - ワンライナーの書き方入門
+http://blog.livedoor.jp/dankogai/archives/51026593.html
+- Perl one liner 集 perl 1行野郎
+http://sonic64.com/2003-06-04.html
+
+
+
+** usage
+- 置換
+$ perl -pe 's/\t/    /g' 
+
+*** options
+| -e | 文字列をスクリプトとして実行   |
+|----+--------------------------------|
+| -n | 1行毎に処理                    |
+| -p | 1行毎に処理->結果をprint       |
+|----+--------------------------------|
+| -l | ループの前で行末の改行文字削除 |
+|----+--------------------------------|
+| -i | 入力ファイルを書き換え         |
+|----+--------------------------------|
+| -w | warning ?                      |
+
+*** i opiton
+-i.bak
+オプションをつけると
+hoge.txt.bak
+というファイル名でバックアップが作成される。
+
+
+* 文字列の個数
+http://oshiete.goo.ne.jp/qa/198863.html
+http://q.hatena.ne.jp/1135146114
+
+
+* 一括処理
+Unix :: ファイル名の一括リネームいろいろ
+http://tm.root-n.com/unix:general:rename

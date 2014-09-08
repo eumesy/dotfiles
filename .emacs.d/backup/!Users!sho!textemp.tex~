@@ -1,0 +1,75 @@
+%12pt jp
+\documentclass[a4paper,12pt]{jsarticle}
+\setlength{\textheight}{37\baselineskip}
+
+%12pt en
+%\documentclass[a4paper,12pt]{article}
+%\setlength{\textheight}{45\baselineskip}
+%\renewcommand{\baselinestretch}{1.5}
+%\usepackage{indentfirst}
+
+%11pt jp
+%\documentclass[a4paper,11pt]{jsarticle}
+%\setlength{\textheight}{40\baselineskip}
+% setlength...を下に寄せた方が良いのかは不明
+
+%
+\usepackage{otf} %日本語
+\usepackage{listings}
+\usepackage{cancel}
+\usepackage{multirow}
+\usepackage{amsmath,amssymb}
+\usepackage{amsfonts}
+\usepackage{bm}
+\usepackage{url}
+%
+% http://hooktail.org/computer/index.php?TeX%A5%C6%A5%F3%A5%D7%A5%EC%A1%BC%A5%C8#content_1_3
+% http://oku.edu.mie-u.ac.jp/~okumura/jsclasses/
+%\setlength{\textheight}{37\baselineskip} ↑最上部
+\addtolength{\textheight}{\topskip}
+\setlength{\voffset}{-0.2in}
+\setlength{\topmargin}{0pt}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+%
+\lstdefinelanguage{Scheme}{%
+   morekeywords={begin,call-with-current-continuation,call/cc,%
+      call-with-input-file,call-with-output-file,case,cond,do,%
+      delay,else,force,for-each,if,lambda,let,let-syntax,let*,%
+      letrec,letrec-syntax,and,or,not,map,syntax,syntax-rules,%
+      with-mode,with-input-from-file,with-input-fromport,%
+      with-output-to-file,with-output-to-port,define%
+   },%
+   sensitive,%
+   alsodigit=-,%
+   morecomment=[l]{;},% 
+   morecomment=[s]{\#|}{|\#},% 
+   morestring=[b]{"}% 
+  }[keywords,comments,strings]%
+%
+\lstset{%
+ language=Scheme,%
+ basicstyle=\ttfamily,%
+ numbers=left,%
+ xleftmargin=4zw%
+}
+%
+%\pagestyle{empty} %ページ番号非表示
+\title{人工知能 (石田先生・松原先生)\\第1回演習課題　経路探索}
+\author{横井 祥（よこい しょう）　学籍番号：1029-23-2177\\工学部 情報学科 計算機科学コース 3回生}
+%\title{English IIA E2T01; Professor Hayashi, Brian\\Homework \#1}
+%\author{Yokoi, Sho; 1029-23-2177} %ほか
+\date{\today}\西暦
+\begin{document}
+\maketitle
+\catcode`@=\active
+\def@#1@{\texttt{#1}}
+
+%
+
+
+\bigskip
+\begin{flushright}
+以上
+\end{flushright}
+\end{document}

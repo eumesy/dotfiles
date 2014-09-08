@@ -1,0 +1,421 @@
+■本
+404 Blog Not Found:#define MUST_GET 1 /* - 書評 - Head First C */
+http://blog.livedoor.jp/dankogai/archives/51863661.html
+
+■le1
+コンパイル
+  cc file.c
+  gcc -Wall -Wextra file.c [-o file] // エラーが表示している
+
+強制停止
+  C-c
+  止まらなければkillする #how to?
+
+
+
+------------------------------
+プログラミングで応用力を付けよう  C言語入門
+http://www.geocities.jp/kuronishi_kakiteru/C/c_index.html
+
+* Google C++スタイルガイド
+
+http://www.henshi.net/k/hiki.cgi?GoogleCppStyleGuide
+http://www.textdrop.net/google-styleguide-ja/cppguide.xml
+
+* Cの参考書
+
+http://detail.chiebukuro.yahoo.co.jp/qa/question_detail/q1011840900
+http://okwave.jp/qa/q4385376.html
+
+■.h
+stdio.h
+stdlib.h <- これは現環境には無い模様
+
+---
+
+* 「;」までが文
+* 1行に複数文あってもOK
+
+// header fileをinclude
+
+// function prototype
+
+int main(void)
+{
+}
+
+型 func1(args)
+{
+}
+
+…
+
+■関数
+戻り値の型 関数名(仮引数リスト){
+  文…
+}
+
+・関数名に利用できるのは、英数_（一文字目数字は不可。一文字目アンダースコアはOK！)#よね？変数はOKなのだけど
+・大文字小文字は区別される
+
+・★main()関数の{はプログラムの実行開始点★
+・main()関数の}でプログラムが終了する
+・もしくはreturn文で(関数が)終了し、呼び出し元へ制御が戻る
+・★main()から0を返すことで、そのプログラムが正常に返した事を表す
+  ⇒だからint main()なのか…
+  
+・exit()
+  http://simd.jugem.jp/?eid=90
+  0で正常終了、1で異常終了
+  return 0; と exit(0); は同値?
+
+・戻り値を返さない関数の場合は、戻り値の型：void
+・「戻り値の型」を省略すると、intの扱いになる(非推奨)
+
+・引数をとらない関数の場合は、仮引数リスト：void
+・引数の数の上限はコンパイラで決まる
+・引数：関数に渡す「値」(変数でも渡せるけど)
+  仮引数：関数の内部で引数を受け取る「変数」
+・func(int x, int y) // カンマで区切る
+
+・★ユーザー定義関数は関数プロトタイプを宣言する必要がある
+  #順番は任意？
+  gcc r1.7.3.c のエラーが興味深い
+  #gcc 1.15.c 通っちゃったぞ…
+・ユーザー定義関数を呼び出し、}まで来ると、制御が呼び出し元に戻る
+
+・void型はreturn不要 #
+・return;でundefinedが返る。void型の関数を}の前に終わらせたいときによく使う
+
+■ライブラリ関数(library function)
+・プログラムをコンパイルすると、ライブラリ関数のコードが自動的にプログラムに組み込まれる
+・特にANSI C標準が規定しているライブラリ関数セットの事をC標準ライブラリ(C standard library)
+・#include (プロプロセッサ)ディレクティブ(preprocessor directive)
+・コンパイルの第一段階で、preprocessorというプログラムで、ソースコードに様々な操作を施す
+・ヘッダファイル .h
+#include <stdio.h> /* 入出力 */ /*セミコロン要らない*/
+standard i/o .h(header file)か！
+
+ctype.h
+文字操作
+
+■コンパイル前のファイル→ソースファイル
+コンパイル後の実行可能ファイル→オブジェクトファイル
+
+
+
+
+■printf
+#いつも hoge %d みたいに半角スペースが空いているけど、これはどういう習慣？
+
+■scanf
+scanf("%d", &num);
+%d キーボードから入力される整数を、第2引数に10進形式で受け取るように指示する
+#scanfは、「処理をキーボードに渡して入力を待つ」？
+
+#printf(hoge)
+#scanf(moga)
+#  // ここに出力で改行が入るのはなぜ？
+#printf(hogehoge)
+
+■演算子
+「-」は単項演算子として利用できる
+i = -i;
+
+□比較演算子
+>
+<
+>=
+<=
+==
+!=
+
+
+/* コメント */
+/*
+  複数行に分かれても
+  OK
+*/
+・コメントのネストは許されない
+・変数名や関数名の途中にコメントはNG
+・コメント化により一部のコードを一時的に機能させなくする行為を、コメントアウトと言う
+
+// この形式のコメントは、はANSI標準ではないが、C++標準であり、たいがいのコンパイラが認識する 
+
+{
+  hoge...
+  moga...
+}
+・コードブロック。一つの論理的な単位として単一の文と同じように取り扱うことができる＝ひとかたまりに扱う？
+・★ifとかelseでよく使われるけれど、どこに置いてもOK
+for() if() 文;
+は通るんだ…
+
+
+■if
+if(式) 文;
+
+if(式) 文1;
+else 文2;
+・「二者択一なら、ifを並べるよりelseを使った方がコンパイラが生成する機械語命令の数がはるかに少なくなり効率的」
+
+if
+else if
+else if
+else
+
+これは
+if
+else
+  if
+  else
+    if
+    else
+ということなのか
+
+ネストした場合、elseは最も近いifに対応する #{}するのが良いような…
+
+式:
+  0以外 … true (-1はtrue)
+  0 … false
+
+■switch
+switch(値) {
+  case 定数1:
+    文;
+    
+    break;
+  case ...
+  default:
+    
+    break;
+}
+・各文はコードブロックではない({}ではくくらない)
+・breakも都度無くても良いし、caseの中身が空文でも構わない(複数ケースをまとめて処理できる)
+・同じcaseは二度書けない
+・ネストされていれば switch(a) switch(b)など もちろんOK
+・★ひとつの変数を、int型またはchar型の定数と比較する
+
+■関係演算子(relational operator)
+  ==
+  <=
+  !=
+
+→結果は0/1で返るっぽい
+
+■論理演算子
+&& || !
+
+→これも結果は0/1で返るっぽい
+  !!3 // 1
+
+優先順位
+!
+<  系
+== 系
+&&
+||
+
+・★関係演算子と論理演算子は、結果として1/0を生成する
+
+排他的論理和(XOR)の実装
+0 0 → 0
+0 1 → 1
+1 0 → 1
+1 1 → 0
+(a || b) && !(a && b)
+
+■ループ
+□for
+for(初期設定; 条件判定(毎ループ開始時に判定(インクリメント後)); インクリメント(毎ループ終了時に実行)) 文;
+・★条件判定部に式が無いと、forはそれを真とする
+・★n回ループしたいときは、for(; n; n--)でOK！
+・無限ループを作る for(;;)
+・★i<10まで回した後、if(i==10)で例外判定ができる (ループを回して→インクリメント→判定)
+・★リストの最後の要素にヌル的なモノを入れておいて、条件判定に要素そのものを入れる手法
+
+□while
+while(条件判定(毎ループ開始時に判定)) 文;
+
+□do
+do {
+
+} while(条件判定(毎ループ終了時に判定)); ←★ここセミコロン
+・doの中身が必ず1回は実行される。
+
+・正しい(validな)選択肢を選ばせるのに便利
+・何か事象が起きるまで待機したい場合に便利
+
+□break
+・ループを抜ける
+・switch文を終了するときにも使う
+
+□continue
+ループの次の繰り返しへ(条件判定文まで飛ぶ)
+・do continueで「もっかいはじめから」な感じ
+
+■goto
+goto mylabel;
+mylabel: 文; //ここに飛ぶ
+・高速のルーチンを作る為にはgotoも必要
+・gotoが役立つのは、深くネストしたルーチンで致命的なエラーが発生して、そこから脱出しなければならないようなケースに限られます
+
+
+■インクリメント、デクリメント
+・i = i+1 よりも、コンパイラ後のコードのメモリの読み書きの回数が減る可能性がある
+・★i++は、事後
+i = 1;
+j = i++; // j=1, i=2
+
+i = 1;
+j = ++i; // j=2, i=2
+
+■エスケープ文字
+\n
+→Win CR+LF, UNIX LF, Mac CR
+Carriage Return
+Line Feed
+\a ベル(ビープ音) // 鳴った鳴った
+\t 水平タブ
+\v 垂直タブ
+\r 復帰(getche()でreturnがこれで確保される) // ←されない… 3.11 // gcc on MacOS Xだと、\nがとられる
+\b バックスペース // Ctrl+Hなら効くけど、deleteボタンは効かない…
+
+・エスケープ文字は文字定数扱い
+char ch;
+ch = '\t';
+・\8進数
+・\x16進数
+1バイト文字定数を文字コードを使って入力できる
+http://okwave.jp/qa/q3485681.html
+
+■keyword
+これらのキーワードとCの正規の構文がプログラミング言語としてのCを形作っている
+□標準キーワード
+auto
+break
+case
+char
+const
+continue
+default
+do
+double
+else
+enum
+extern
+float
+for
+goto
+if
+int
+long
+register
+return
+short
+signed
+sizeof
+static
+struct
+switch
+typedef
+union
+unsigned
+void
+volatile
+while
+□拡張キーワード
+asm
+_cs
+_ds
+_es
+_ss
+cdecl
+far
+huge
+interrupt
+near
+pascal
+
+■math.h
+sqrt(浮動小数点)⇒double // 平方(square root)
+・「求められている引数と実際代入する引数の型、戻り値と代入する変数の型 が一致しているかどうかは重要」
+
+■文字
+文字は色々ややこしい
+ch = getchar()
+  入力をenterまで待ち、1文字目をchに代入
+getche() // conio.h
+  他の標準入出力との併用不可？(なんぞ？)
+  ・★「入力された文字を読み取り表示する」関数（代入「も」行える）
+gconio.hを導入した
+  http://www.wence.vandermeersch.org/gconio/
+  http://oshiete.goo.ne.jp/qa/2313653.html
+
+□文字列
+文字型の配列+ヌル文字としての文字列
+
+・ヌル文字：'\0';
+
+宣言時に""で初期化しておいた方が良いのかな…
+char str[100] = ""; // r5.2.3.c
+
+・ヌル文字列：ヌル文字のみの文字列
+
+・★char str[] = ""; str[0]; // false!!
+
+参考になりそうなページ
+http://effy.ldw.jp/c/string4.html
+http://homepage1.nifty.com/toshio-k/prog/c/ (↑のサイトの旧版っぽい)
+
+gets()
+  入力された文字を変数に格納する
+  引数には文字配列 char str[100]とか を入れる
+  enterが入力されると、ヌル文字に置き換わる
+  配列要素数を越える文字数が入力されてもエラーしない
+  gets()はscanf()と違って、標準出力に自動で\nを吐かないっぽい
+  
+  scanf()とは互換性が無い(なぜだろう…) p140
+
+string.h
+strcpy() 代入
+strcat() 連結
+strcmp() 比較 // 一致する場合は0を返す
+strlen() 長さ // ヌル文字は数えない
+
+atoi() // "100"→100 <stdlib.h>
+
+出力
+  for (i) printf("%c", str[i]);
+  printf("%s", str);
+  printf(str); // 5.7.cには載ってたけどerror
+
+★""をそのまま条件文に入れても真 // なぜ？
+★→とりあえず、""の0文字目はfalse！(ヌル文字)
+strcmp(str, "")する
+"" == "" は真だけれど、
+char str[] = ""; str == "" は偽 // なぜ？
+
+文字は(のASCIIコードは)、整数
+%d で受け取れば整数が返る
+
+---
+画面二つに分けてやるアレ
+
+gcc hoge.c -o hoge
+を、
+gcc hoge.c
+で済ませたい
+
+(や"で閉じ部分を入力補完して欲しい
+
+bashでの入力を途中までで、過去分補完するのは何？
+
+丸め誤差とかいうの気持ち悪い
+
+ただ改行を求めるのはどうやるんだろう…(p15)
+
+3.11/r3.4.2うまく動かない getche
+---
+r1.5.2 なんで解答見本はfloat型なの？
+r3.2.9 この解答だとEnterがletter++されちゃうけど…

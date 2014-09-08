@@ -1,0 +1,106 @@
+* Basic.v
+binary (2,opt)
+boolean_functions (2,opt)
+decreasing
+
+* Induction.v
+beq_nat_refl_informal (2,opt)
+binary_commute (2,opt)
+binary_inverse (2,opt)
+destruct_induction (2,opt)
+even_b__oddb_Sn (2,opt)
+more_exercises *9 (2,opt)
+mult_comm (2,opt)
+plus_comm_informal (2,opt)
+plus_swap' (2,opt)
+
+* Lists.v
+- [X] snd_fst_is_swap (1)
+- [X] fst_swap_is_snd (1) *hw*
+- [X] list_funs (2) *hw*
+  - [X] nonzeros
+  - [X] oddmembers
+  - [X] countoddmembers
+- [ ] alternative (3)
+- [ ] bag_functions (3)
+  - [ ] count
+  - [ ] sum
+  - [ ] add
+  - [ ] member
+- [ ] bag_more_functions (3)
+  - [ ] remove_one
+  - [ ] remove_all
+  - [ ] subset
+- [ ] bag_theorem (3)
+
+** Reasoning About Lists
+- [X] list_exercises (3) *hw*
+  - [X] app_nil_end
+  - [X] rev_involutive # 自力で解き直せる気がしない...
+  - [X] app_assoc4
+  - [X] snoc_append
+  - [X] distr_rev
+  - [X] nonzeros_app
+- [ ] list_design (2)
+- [ ] bag_proofs (3)
+  - [ ] count_member_nonzero
+  - [ ] remove_decreases_count
+- [ ] bag_count_sum (3)
+- [ ] rev_injective (3)
+
+- [X] hd_opt (2) *hw* *4*
+- [X] optional_elim_hd (1) *4*
+
+- [X] beq_natlist (2) *hw*
+  - [X] beq_natlist
+  - [X] beq_natlist_refl
+
+** Dictionaries
+- [ ] dictionary_invariant1 (1)
+- [ ] dictionary_invariant2 (1)
+  
+* Poly.v (多相型/データとしての関数)
+- [ ] mumble_grumble (2)
+- [ ] baz_num_elts (2)
+
+- [ ] poly_exercises (2)
+  - [ ] repeat
+  - [ ] nil_app
+  - [ ] rev_snoc
+  - [ ] rev_involutive
+  - [ ] snoc_with_append
+
+*** Polymorphic Pairs
+- [ ] combine_checks (1)
+- [X] split (2) *hw*
+
+*** Polymorphic Options
+- [X] hd_opt_poly (1)
+
+** Functions as Data
+*** Highre-Order Functions
+*** Currying
+- [ ] currying (2)
+  - [ ] prod_uncurry
+  - [ ] uncurry_curry
+*** Filter
+*** Anonymous Functions
+- [X] filter_even_gt7 (2)
+- [X] partition (3) *hw*
+*** Map
+*** Map for Options
+- [ ] map_rev (3)
+- [X] flat_map (2) *hw*
+- [ ] implicit_args (2)
+*** Fold
+- [ ] fold_types_different (1)
+*** Functions for Constructing Functions
+    色々あるけど、全部 *5* っぽい
+
+** Additional Exercises
+    とりあえず *4* には載っていない模様
+
+
+
+
+

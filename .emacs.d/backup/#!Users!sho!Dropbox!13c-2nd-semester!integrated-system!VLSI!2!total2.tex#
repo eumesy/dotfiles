@@ -1,0 +1,158 @@
+% Created 2013-12-22 日 22:19
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\author{sho}
+\date{\today}
+\title{total2}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs 24.3.1 (Org mode 8.2.4)}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\begin{center}
+\begin{tabular}{llll}
+\textbf{F.O.(all)} & \textbf{L.E.(all)} & \textbf{Gain(all)} & \textbf{Gain/step}\\
+= Load-Cap. / Input-Cap & = prod(L.E.) & = F.O.(all) * L.E.(all) & = Gain(all) \^{} (1/num of steps)\\
+\hline
+20 & 2 & 40 & 3.419951893\\
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{llll}
+\textbf{F.O.(all)} & \textbf{L.E.(all)} & \textbf{Gain(all)} & \textbf{Gain/step}\\
+= Load-Cap. / Input-Cap & = prod(L.E.) & = F.O.(all) * L.E.(all) & = Gain(all) \^{} (1/num of steps)\\
+\hline
+20 & 3 & 60 & 3.914867641\\
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{llll}
+\textbf{F.O.(all)} & \textbf{L.E.(all)} & \textbf{Gain(all)} & \textbf{Gain/step}\\
+= Load-Cap. / Input-Cap & = prod(L.E.) & = F.O.(all) * L.E.(all) & = Gain(all) \^{} (1/num of steps)\\
+\hline
+20 & 2.222222222 & 44.44444444 & 3.542195231\\
+\end{tabular}
+\end{center}
+
+
+\begin{center}
+\begin{tabular}{lrrrrr}
+ &  & invin & nand4 & invfirst & invout\\
+\hline
+L.E. &  & 1.00 & 2.00 & 1.00 & 1.00\\
+Gain &  & 3.42 & 3.42 & 3.42 & 3.42\\
+F.O. &  & 3.42 & 1.71 & 3.42 & 3.42\\
+Input-Cap(um) &  & 6.00 & 20.52 & 35.09 & 120.00\\
+Load-Cap(um) & 6 & 20.52 & 35.09 & 120.00 & 410.39\\
+PMOS(ratio) &  & 2 & 2 & 2 & 2\\
+NMOS(ratio) &  & 1 & 4 & 1 & 1\\
+PMOS(um) &  & \textbf{4.00000} & \textbf{6.83990} & \textbf{23.39214} & \textbf{80.00000}\\
+NMOS(um) &  & \textbf{2.00000} & \textbf{13.67981} & \textbf{11.69607} & \textbf{40.00000}\\
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{lrrrrr}
+ &  & invin & invsecond & nor4 & invout\\
+\hline
+L.E. &  & 1.00 & 1.00 & 3.00 & 1.00\\
+Gain &  & 3.91 & 3.91 & 3.91 & 3.91\\
+F.O. &  & 3.91 & 3.91 & 1.30 & 3.91\\
+Input-Capacitance(um) &  & 6.00 & 23.49 & 91.96 & 120.00\\
+LoadCapacitance(um) & 6 & 23.49 & 91.96 & 120.00 & 469.78\\
+PMOS(ratio) &  & 2 & 2 & 8 & 2\\
+NMOS(ratio) &  & 1 & 1 & 1 & 1\\
+PMOS(um) &  & \textbf{4.00000} & \textbf{6.83990} & \textbf{93.56857} & \textbf{80.00000}\\
+NMOS(um) &  & \textbf{2.00000} & \textbf{3.41995} & \textbf{11.69607} & \textbf{40.00000}\\
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{lrrrrr}
+3 &  & invin & nand2 & nor2 & invout\\
+\hline
+L.E. &  & 1.00 & 1.33 & 1.67 & 1.00\\
+Gain &  & 3.54 & 3.54 & 3.54 & 3.54\\
+F.O. &  & 3.54 & 2.66 & 2.13 & 3.54\\
+Input-Capacitance(um) &  & 6.00 & 21.25 & 56.46 & 120.00\\
+Load-Capacitance(um) & 6 & 21.25 & 56.46 & 120.00 & 425.06\\
+PMOS(ratio) &  & 2 & 2 & 4 & 2\\
+NMOS(ratio) &  & 1 & 2 & 1 & 1\\
+PMOS(um) &  & \textbf{4.00000} & \textbf{6.83990} & \textbf{46.78428} & \textbf{80.00000}\\
+NMOS(um) &  & \textbf{2.00000} & \textbf{6.83990} & \textbf{11.69607} & \textbf{40.00000}\\
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{llrrrrr}
+ &  & time & v(X*) & time & v(F) & delay\\
+\hline
+XA & 立ち上がり & 1.05 E - 09 & 1.25\,(+00) & 1.43\,(-09) & 1.25\,(+00) & 3.80\,(-10)\\
+ & 立ち下がり & 5.15\,(-09) & 1.25\,(+00) & 5.45\,(-09) & 1.25\,(+00) & 3.00\,(-10)\\
+XB & 立ち上がり & 9.05\,(-09) & 1.25\,(+00) & 9.46\,(-09) & 1.25\,(+00) & 4.13\,(-10)\\
+ & 立ち下がり & 1.32\,(-08) & 1.25\,(+00) & 1.35\,(-08) & 1.25\,(+00) & 3.20\,(-10)\\
+XC & 立ち上がり & 1.71\,(-08) & 1.25\,(+00) & 1.75\,(-08) & 1.25\,(+00) & 4.40\,(-10)\\
+ & 立ち下がり & 2.12\,(-08) & 1.25\,(+00) & 2.15\,(-08) & 1.26\,(+00) & 3.30\,(-10)\\
+XD & 立ち上がり & 2.51\,(-08) & 1.25\,(+00) & 2.55\,(-08) & 1.25\,(+00) & \textbf{4.70E-10}\\
+ & 立ち下がり & 2.92\,(-08) & 1.25\,(+00) & 2.95\,(-08) & 1.24\,(+00) & 3.40\,(-10)\\
+\hline
+ &  &  &  &  &  & \textbf{4.7E-10}\\
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{llrrrrr}
+ &  & time & v(X*) & time & v(F) & delay\\
+\hline
+XA & 立ち上がり & 1.05\,(-09) & 1.25\,(+00) & 1.70\,(-09) & 1.25\,(+00) & \textbf{6.53E-10}\\
+ & 立ち下がり & 5.15\,(-09) & 1.25\,(+00) & 5.79\,(-09) & 1.25\,(+00) & 6.44\,(-10)\\
+XB & 立ち上がり & 9.05\,(-09) & 1.25\,(+00) & 9.70\,(-09) & 1.25\,(+00) & 6.48\,(-10)\\
+ & 立ち下がり & 1.32\,(-08) & 1.25\,(+00) & 1.38\,(-08) & 1.25\,(+00) & 6.10\,(-10)\\
+XC & 立ち上がり & 1.71\,(-08) & 1.25\,(+00) & 1.77\,(-08) & 1.25\,(+00) & 6.30\,(-10)\\
+ & 立ち下がり & 2.12\,(-08) & 1.25\,(+00) & 2.17\,(-08) & 1.25\,(+00) & 5.50\,(-10)\\
+XD & 立ち上がり & 2.51\,(-08) & 1.25\,(+00) & 2.57\,(-08) & 1.25\,(+00) & 6.00\,(-10)\\
+ & 立ち下がり & 2.92\,(-08) & 1.25\,(+00) & 2.96\,(-08) & 1.25\,(+00) & 4.70\,(-10)\\
+\hline
+ &  &  &  &  &  & \textbf{6.53E-10}\\
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{llrrrrr}
+ &  & time & v(X*) & time & v(F) & delay\\
+\hline
+XA & 立ち上がり & 1.05\,(-09) & 1.25\,(+00) & 1.49\,(-09) & 1.25\,(+00) & 4.37\,(-10)\\
+ & 立ち下がり & 5.15\,(-09) & 1.25\,(+00) & 5.51\,(-09) & 1.25\,(+00) & 3.63\,(-10)\\
+XB & 立ち上がり & 9.05\,(-09) & 1.25\,(+00) & 9.50\,(-09) & 1.25\,(+00) & \textbf{4.54E-10}\\
+ & 立ち下がり & 1.32\,(-08) & 1.25\,(+00) & 1.35\,(-08) & 1.25\,(+00) & 3.70\,(-10)\\
+XC & 立ち上がり & 1.71\,(-08) & 1.25\,(+00) & 1.75\,(-08) & 1.25\,(+00) & 4.20\,(-10)\\
+ & 立ち下がり & 2.12\,(-08) & 1.25\,(+00) & 2.15\,(-08) & 1.25\,(+00) & 3.30\,(-10)\\
+XD & 立ち上がり & 2.51\,(-08) & 1.25\,(+00) & 2.55\,(-08) & 1.25\,(+00) & 4.40\,(-10)\\
+ & 立ち下がり & 2.92\,(-08) & 1.25\,(+00) & 2.95\,(-08) & 1.25\,(+00) & 3.40\,(-10)\\
+\hline
+ &  &  &  &  &  & \textbf{4.54E-10}\\
+\end{tabular}
+\end{center}
+% Emacs 24.3.1 (Org mode 8.2.4)
+\end{document}

@@ -1,0 +1,173 @@
+
+** todo
+- [-] JUMAN/KNP のインストール
+  - [X] bitbucket, sign up
+  - [ ] で、どうするの…
+
+- [ ] インストール、シェルスクリプト化 (これを目的にするかー)
+
+- [ ] reed いずれ lotus に転送されるようになるっぽい lebyr の git clone の問題はとりあえず放置
+
+- [ ] ssh.org を github へ
+
+- [ ] バイナリを置く場所、普通どこ? local? 
+
+- [ ] NAS ?
+
+- [ ] tar のオプションまとめ
+  http://tukaikta.blog135.fc2.com/blog-entry-223.html
+  
+
+** →河原先生
+これは誰が使う? 特定の管理者? 誰でも?
+皆が使うのであれば、 bitbucket かどこかに up して、インストーラか何かを作るのを仮ゴールにしたい
+
+bitbucket の権限
+
+** usage
+*** 黒橋河原研環境
+- オフィシャルの .zshrc でpath通す
+- lotus -> basil* で作業
+
+*** 作業場所の作成
+作業場所 (どこでもよい) (必要ならディレクトリを作る)
+$ mkdir ~/work
+$ export WORK=~/work
+
+自分のバイナリのインストール先 (どこでもよい) (必要ならディレクトリを作る)
+~/local 以外の時は tx のインストール時に Makefile.PL の書き換えが必要
+$ mkdir ~/local
+$ export LOCAL=~/local
+
+*** [ ] JUMAN KNP のインストール
+juman knpを $LOCAL 以下にインストール
+
+*** lebyr を clone
+$ cd $WORK
+$ git clone reed:/share/service/git/lebyr.git
+- [ ] reed に ssh して
+  $ git clone /share/service/git/lebyr.git
+  なら可
+  basil* から
+  $ git clone reed:/share/service/git/lebyr.git
+  すると、パスワードを問われた後、
+  zsh: command not found: git-upload-pack
+  fatal: Could not read from remote repository.
+  
+  Please make sure you have the correct access rights
+  and the repository exists.
+
+*** txのインストール
+$ cd $WORK
+$ wget https://tx-trie.googlecode.com/files/tx-0.18.tar.gz
+$ tar xzf tx-0.18.tar.gz
+$ cd tx-0.18
+$ ./configure --prefix=~/local
+- [ ] configure: error: expected an absolute directory name for --prefix: ~/local と怒られる
+  export LOCAL=~/local
+  としておいて
+  $ ./configure --prefix=$LOCAL
+  とする
+- tx を ~/local 以外に入れる場合には，lebyr/tx/Makefile.PL 内のパスの変更が必要
+  our $tx_prefix = '$(HOME)/local'; # bad hack #< ここのパスを書き換える
+
+$ make
+$ make install
+
+- ここで、tx-0.18 の tar ボールと、ディレクトリを削除
+
+*** txのperlモジュールのインストール
+$ cd $WORK
+$ cd lebyr/tx
+
+- [ ] localeが転送されているとマズいので、
+  $ export LC_CTYPE=
+  をしておきたい (空にする)
+http://yano3.hatenablog.jp/entry/2012/11/25/234244
+http://d.hatena.ne.jp/kdoi/20120530/1338349982
+http://blog.livedoor.jp/kazu_fukuzawa/archives/26995378.html
+$ perl -v
+perl: warning: Setting locale failed.
+perl: warning: Please check that your locale settings:
+LANGUAGE = (unset),
+LC_ALL = (unset),
+LC_CTYPE = "UTF-8",
+LANG = "ja_JP.UTF-8"
+    are supported and installed on your system.
+perl: warning: Falling back to the standard locale ("C").
+と言われたらマズい
+
+$ perl Makefile.PL
+$ make
+
+*** モデルの入手
+$ cd $WORK/lebyr
+$ cp -r ~murawaki/research/lebyr/data .
+
+>
+> # JUMANのソースが ~/download/juman 以下にある場合
+> # BASEDIR=$WORK/lebyr
+>
+> $BASEDIR/unknown/makedic.pl --inputdir ~/download/juman/dic
+> --outputdir=$BASEDIR/data/dic
+> $BASEDIR/unknown/makedic.pl --inputdir ~/download/juman/wikipediadic
+> --outputdir=$BASEDIR/data/wikipediadic
+>
+> # prefs の書き換え
+> +{
+>    'standardformat-document.use-knp-annotation' => 0,
+>    'juman.rcfile' => '/home/murawaki/.jumanrc', # must be overridden
+> #書き換え> ~/.jumanrc.lebyr 等分ける方がおすすめ
+>    # 'knp.options' => '-tab -dpnd -check -timeout 600',
+>    'knp.options' => '-tab -assignf -timeout 600',
+>    'unknown-word-detector.rule-file' =>
+> '/home/murawaki/research/lebyr/data/undefRule.storable', #data
+> 以下にパスを書き換え
+>    'unknown-word-detector.decomposition-rule-file' =>
+> '/home/murawaki/research/lebyr/data/decomposition.storable',#書き換え
+>    'unknown-word-detector.repname-list' =>
+> '/home/murawaki/research/lebyr/data/cfRepname.storable',#書き換え
+>    'unknown-word-detector.repname-ngram' =>
+> '/home/murawaki/research/lebyr/data/repnameNgram.storable',#書き換え
+>    'context-acquirer.skip-extremities' => 1,
+>    'suffix-list.path' => '/home/murawaki/research/lebyr/data',#書き換え
+>    'main-dictionary.rc-path' => '/home/murawaki/.jumanrc.wikipedia',
+> #コピーしてきて，内容を書き換える
+> #    'main-dictionary.original-path' => '/home/murawaki/download/juman/dic',
+>    'main-dictionary.db-path' =>
+> ['/home/murawaki/research/lebyr/data/dic',
+> '/home/murawaki/research/lebyr/data/wikipediadic'], #書き換え
+>    'morpheme-variant-checker.unihan-db' =>
+> '/home/murawaki/research/lebyr/data/unihan.storable',#書き換え
+>    'analyzer-juman.jumanrc-autodic' =>
+> '/home/murawaki/.jumanrc.autodic', #コピーしてきて，内容を書き換える
+>    'morpheme-usage-monitor.fusana-model' =>
+> '/home/murawaki/research/lebyr/data/fusana.model', #書き換え
+> }
+>
+> #sequential.pl の書き換え
+> 25:    conf => "/home/murawaki/research/lebyr/prefs", #自分のパスに
+>
+> #postprocess.plの書き換え(使う場合)
+> 32,33行目のパス
+
+
+* log
+** 2014-08-19
+研究/基礎研究/未知語獲得
+http://nlp.ist.i.kyoto-u.ac.jp/local/index.php?cmd=read&page=%B8%A6%B5%E6%2F%B4%F0%C1%C3%B8%A6%B5%E6%2F%CC%A4%C3%CE%B8%EC%B3%CD%C6%C0
+
+担当者
+  1年前 村脇さんがやっていた
+  今 森田さんが見ている
+
+名詞の意味分類 → 人名/地名/組織名
+  推測して付与するプログラム
+
+- タスク
+  - [ ] 動作確認をし＋使えるように手順書を作る (ツールを引き継げるようにする)
+    - [ ] インストールメモを作る
+  - [ ] 精度を上げられれば挙げる (ツールの分析、改良 可能であれば)
+
+- 9/1(月) 17:00 に MTG
+- 事務的な書類は9月中旬に作る

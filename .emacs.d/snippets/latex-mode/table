@@ -1,0 +1,18 @@
+# -*- mode: snippet -*-
+# name: table
+# key: table
+# --
+\begin{table}[h]
+  \caption{$2}
+  \label{tb:$1}
+  \begin{center}
+    \setlength{\tabcolsep}{3pt}
+    \footnotesize
+% BEGIN RECEIVE ORGTBL $1
+% END RECEIVE ORGTBL $1
+  \end{center}
+\end{table}%
+\begin{comment}
+#+ORGTBL: SEND $1 orgtbl-to-latex :efmt "$%s\\\\times10^{%s}$"
+|$0 | |
+\end{comment}

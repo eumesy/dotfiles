@@ -1,0 +1,81 @@
+* doing
+TEXMFHOME は Dropbox からリンク張るかなぁ
+
+| 基本インストール | /usr/local/texlive/2013        |                 |
+|------------------+--------------------------------+-----------------|
+| TEXMFLOCAL       | /usr/local/texlive/texmf-local | 設定 ユーザ全員 |
+| TEXMFHOME        | ~/Library/texmf                | 設定 個人       |
+|------------------+--------------------------------+-----------------|
+|                  |                                |                 |
+
+$TEXMF の検索優先順位 の確認
+$ kpsewhich -var-value TEXMF
+
+一式アップデート (重)
+$ sudo tlmgr update --self --all
+
+旧ファイル: mba11 ... ~/Library/texmf/tex/latex/
+
+- 編集環境
+  - Emacs ...は必須だとして
+
+
+    - YaTeX
+
+YaTeX = 自動コンパイル + 補完?
+Latexmk + Yasnippetでよいのでは...
+
+初心者のための Emacs と YaTeX (+RefTeX) を使った文書作成のチュートリアル -基礎編 - 情報建築学って何さ?
+http://d.hatena.ne.jp/ckazu/20091226/1261825508
+2012-02-19 - my-misc.blog
+http://d.hatena.ne.jp/setoryohei/20120219
+
+> .emacs の tex-command を latexmk に書き変え
+http://d.hatena.ne.jp/kiririmode/20081203/p1
+
+  - Org-mode
+  - skim
+
+* LaTeX 
+- MacTeX インストール
+  http://oku.edu.mie-u.ac.jp/~okumura/texwiki/?Mac#f5466652
+  記載のミラーサイトより
+  # homebrew 経由は(homebrew的にも)非推奨
+  - インストール時
+    Customize -> Convert-IM: off 
+    # homebrew 経由でImageMagick導入
+
+- PATH通す /usr/texbin
+
+- 一式update
+$ sudo tlmgr update --self --all
+
+- texmf.cnf
+$ ln -s ~/Dropbox/texmf ~/Library/texmf
+$ sudo mktexlsr
+
+- 文字コード自動判別
+$ printf '\n%% guess input enc\nPTEX_IN_FILTER = /usr/local/bin/nkf -w\n' | sudo tee -a /usr/local/texlive/texmf-local/web2c/texmf.cnf
+$ sudo mktexlsr
+
+- ヒラギノ埋め込み
+  http://oku.edu.mie-u.ac.jp/~okumura/texwiki/?Mac#i9febc9b
+  ~/Dropbox/texmf/initfont.sh に入れた
+
+- 設定ファイル
+$ ln -s ~/Dropbox/dotfiles/.latexmkrc .latexmkrc
+
+* memo
+
+
+ghostscript
+  ps,epsファイルの解釈
+
+tex wiki mac
+
+- skim
+PDF ViewerのSkimでTeXのdviファイルを見る | Sukarabe's Easy Living
+http://njet.oops.jp/wordpress/2011/01/27/pdf-viewer%E3%81%AEskim%E3%81%A7tex%E3%81%AEdvi%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E8%A6%8B%E3%82%8B/
+
+macyex?
+latexmk?

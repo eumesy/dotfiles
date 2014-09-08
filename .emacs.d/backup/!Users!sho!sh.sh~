@@ -1,0 +1,1 @@
+perl -pe 's/a[a-c]*b[a-c]*c|a[a-c]*c[a-c]*b|b[a-c]*a[a-c]*c|b[a-c]*c[a-c]*a|c[a-c]*a[a-c]*b|c[a-c]*b[a-c]*a/g'

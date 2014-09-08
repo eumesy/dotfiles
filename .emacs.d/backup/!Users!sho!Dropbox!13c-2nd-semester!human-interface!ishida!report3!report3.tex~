@@ -1,0 +1,81 @@
+\documentclass[]{jsarticle}
+
+%% font
+\usepackage[T1]{fontenc} % 8ビットエンコーディング <,|,> の直書き
+\usepackage{textcomp} % 文字種追加
+\usepackage[deluxe]{otf} % 文字種追加. deluxe:日本語フォントが5書体(太細×明ゴ＋丸ゴ)使えるようになる
+
+%% math
+\usepackage{amsmath,amssymb} % 数学記号の追加
+\usepackage{bm} % 数式の太字 \bm{}
+\usepackage{cancel} % 数式に打ち消し合いを示すための斜め線
+
+%% table
+\usepackage{array} % tabular拡張
+\usepackage{comment}
+\usepackage{multirow}
+
+%% figure
+\usepackage[dvipdfmx]{graphicx}
+
+%% arrange tables or figures
+\usepackage{float}
+
+\usepackage{listings}
+\lstset{
+% language=Scheme,
+ basicstyle=\ttfamily\footnotesize,
+%  frame=tbrl, %枠を上下左右に表示
+ breaklines=true, % 行が長くなった場合に改行
+ numbers=left,
+ breaklines=true, %折り返し
+ xleftmargin=4zw
+}
+\usepackage{url}
+
+\catcode`@=\active
+\def@#1@{\texttt{#1}}
+
+%% レイアウト
+% title補正
+\addtolength{\textheight}{\topskip}
+\setlength{\voffset}{0pt}
+\setlength{\topmargin}{0pt}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+\pagestyle{empty} % ページ番号非表示
+
+\title{2013年度ヒューマンインタフェース課題: ユーザビリティ事例}
+\author{横井 祥（よこい しょう）\\
+学籍番号：1029-23-2177\\
+工学部 情報学科 計算機科学コース 3回生}
+%% \title{English IIA E2T01; Professor Hayashi, Brian\\Homework \#1}
+%% \author{Yokoi, Sho; 1029-23-2177} % ほか
+\date{\today}\西暦
+\begin{document}
+\maketitle
+
+%% \setcounter{tocdepth}{3} % 0:chapterまで, 1:sectionまで, 2:subsectionまで, 3:subsubsectionまで
+%% \tableofcontents % 目次の表示
+%% \newpage
+
+\section*{ユーザビリティ大賞 最優秀賞 推薦文}
+
+ユーザビリティ大賞の最優秀賞として「中部国際空港 "セントレア"」を推薦する。
+
+推薦理由として、案内所・総合案内の場所を示す大きな「？」マークの付いた案内板を挙げたい。実際の様子は資料内、図4「ビジュアルデザインを採用した明度差の大きなサイン」の写真後方を参照されたい。まず、空港という建物全体のデザインにおいて、困ったことがあったときに頼れる案内所の場所が分かりやすいことは \textbf{ユーザビリティ原理『ヘルプとマニュアル』}に照らして重要である。
+その上で、この看板は大変大きく、人間の\textbf{認知}、特に\textbf{注意}の観点から見つけやすいと考えられ、ヘルプとマニュアルの機能を担う案内所の目印として適切である。
+さらに「？」のマークは\textbf{デザイン原理『制約』}(ユニバーサルな文化的制約)に則っており、また看板全体のデザインもシンプルで、\textbf{ユーザビリティ原理『美しくて最小限のデザイン』}が達成されている。
+
+また、到着コンコースのデザインも評価したい。実際の様子は資料内、図5を参照されたい。はじめて利用する空港の場合、ユーザにはその全体の構成が分からないため、どちらに移動すれば良いかという情報は重要である。この空港の場合、コンコースの天井の照明や床の模様を見るだけで進むべき方向が分かり、\textbf{ユーザビリティ原理『覚えなくても見れば分かる』}に照らして適切である。
+
+以上、ユーザの\textbf{需要・要求の分析}(インタラクション設計の4段階)が十分と考えられ、かつユーザの需要を満たすデザインが実現されている本案件をユーザビリティ大賞の最優秀賞として推薦する。
+
+\bigskip
+※「講義で学習したキーワードや概念」を太字としました。
+
+\bigskip
+\begin{flushright}
+以上
+\end{flushright}
+\end{document}

@@ -1,0 +1,125 @@
+* 京大「確率論基礎」シラバス
+1. 確率 
+- 確率空間、確率の基本的性質（可算加法性）、確率事象、 
+- 試行と独立性、条件付き確率 
+
+2.  確率変数 
+- 確率変数、確率変数の定める分布、離散分布、連続分布、 
+- 多次元連続分布、平均、分散、モーメント、共分散、相関係数、 
+- 確率変数の独立性、チェビシェフの不等式 
+
+3. 確率分布 
+- 二項分布、ポアソン分布、幾何分布、一様分布、正規分布、指数分布、 
+- 多次元正規分布 
+
+4. 極限定理 
+- 大数の（弱）法則、Stirling の公式、中心極限定理 (de Moivre-Laplace) 
+
+5. ランダムウォークとマルコフ連鎖（時間の都合により省略することがある。）
+
+* 講義ページ
+確率・統計特論 - 九州大学 瀧本英二
+http://tlas.i.kyushu-u.ac.jp/~eiji/Stat/
+
+* 参考書の参考書
+エージェントアプローチ人工知能 第二版 p.994
+
+現在読んでいる確率論の書籍 - Life is beautiful.
+http://d.hatena.ne.jp/lambtani/20121130/1359280262
+
+Hirao氏によるおすすめ数学本 - Togetterまとめ
+http://togetter.com/li/39263
+
+理学部数学科向け確率・確率過程の教科書 - 数学 - 教えて！goo
+http://oshiete.goo.ne.jp/qa/199466.html
+
+* 教科書選定
+** 読み物
+Amazon.co.jp： はじめからの数学 (4) 確率と統計~不確実性の科学: ジョン タバク, John Tabak, 松浦 俊輔: 本
+http://www.amazon.co.jp/dp/4791791649/
+
+** 副読本
+Amazon.co.jp： キーポイント確率統計 (理工系数学のキーポイント 6): 和達 三樹, 十河 清: 本
+http://www.amazon.co.jp/dp/4000078666/
+
+Amazon.co.jp： 確率論へようこそ (シュプリンガー数学リーディングス): G.ブロム, 森 真: 本
+http://www.amazon.co.jp/dp/4621062697/
+特に離散的な問題を中心
+
+** 高校数学の延長レベル
+Amazon.co.jp： 確率・統計 (理工系の数学入門コース 7): 薩摩 順吉: 本
+http://www.amazon.co.jp/dp/4000077775/
+
+** 測度論を前面に出さず、確率変数・確率分布・独立性・極限定理（・確率過程）などを述べた本
+Amazon.co.jp： 確率論入門: Geoffrey Grimmett, Dominic Welsh, 藤曲 哲郎, 大西 誠: 本
+http://www.amazon.co.jp/dp/453578390X/
+
+Amazon.co.jp： 確率と統計―情報学への架橋: 渡辺 澄夫, 村田 昇: 本
+http://www.amazon.co.jp/dp/4339060771/
+
+Amazon.co.jp： 確率の基礎から統計へ: 吉田 伸生: 本
+http://www.amazon.co.jp/dp/4434165461/
+
+** 測度論をベースとした確率論
+Amazon.co.jp： 確率論 (新しい解析学の流れ): 熊谷 隆: 本
+http://www.amazon.co.jp/gp/product/toc/4320017315/ref=dp_toc?ie=UTF8&n=465392
+
+Amazon.co.jp： はじめての確率論 測度から確率へ: 佐藤 坦: 本
+http://www.amazon.co.jp/%E3%81%AF%E3%81%98%E3%82%81%E3%81%A6%E3%81%AE%E7%A2%BA%E7%8E%87%E8%AB%96-%E6%B8%AC%E5%BA%A6%E3%81%8B%E3%82%89%E7%A2%BA%E7%8E%87%E3%81%B8-%E4%BD%90%E8%97%A4-%E5%9D%A6/dp/4320014731
+
+Amazon.co.jp： 確率論の基礎 新版: 伊藤 清: 本
+http://www.amazon.co.jp/%E7%A2%BA%E7%8E%87%E8%AB%96%E3%81%AE%E5%9F%BA%E7%A4%8E-%E6%96%B0%E7%89%88-%E4%BC%8A%E8%97%A4-%E6%B8%85/dp/4000051946/ref=pd_sim_b_2?ie=UTF8&refRID=163EVPJM5RRHR5A0VAF8
+
+Amazon.co.jp： 確率論 講座数学の考え方 (20): 舟木 直久: 本
+http://www.amazon.co.jp/gp/product/toc/4254116004/ref=dp_toc?ie=UTF8&n=465392
+
+Amazon.co.jp： 統計と確率の基礎: 服部 哲弥: 本
+http://www.amazon.co.jp/dp/4873618428/
+  統計と確率の基礎，服部哲弥
+  http://web.econ.keio.ac.jp/staff/hattori/gakjutu.htm
+
+** 確率過程
+Amazon.co.jp： マルコフ連鎖から格子確率モデルへ: R.B.シナジ, 今野 紀雄, 林 俊一: 本
+http://www.amazon.co.jp/dp/4621062336
+
+** ハンドブック
+Amazon.co.jp： 確率論ハンドブック: 伊藤 清, 渡辺 信三, 重川 一郎: 本
+http://www.amazon.co.jp/dp/4621065173/
+確率論およびその関連分野
+
+Amazon.co.jp： 確率モデルハンドブック: D.P. Heyman, M.J. Sobel, 伊理 正夫, 今野 浩, 刀根 薫: 本
+http://www.amazon.co.jp/dp/425412189X/
+OR、確率過程の話がメイン?
+
+* 
+確率論と統計学のビブリオグラフィー [数学についてのwebノート]
+http://www.ne.jp/asahi/search-center/internationalrelation/mathWeb/BiblioPrbStatstcs.htm
+
+確率・統計学の哲学　（文献メモ） - 社会学徒の研究（？）日誌
+http://d.hatena.ne.jp/naokimed/20120825/1345885728
+
+■まとめ
+確率統計の参考書 - 数学 - 教えて！goo
+http://oshiete.goo.ne.jp/qa/4502114.html
+
+次の10年で一番熱い学問は統計学！統計学を勉強する上で参考になるサイト・書籍まとめ - NAVER まとめ
+http://matome.naver.jp/odai/2134521035124482601
+
+統計本の中でもよく知られたものだと思います。マンガでわかる系の中では、ストーリーと統計との関わりも結構しっかり描かれている印象。分野的にはマーケティング寄りかな。
+
+■個別
+O'Reilly Japan - Think Stats――プログラマのための統計入門
+http://www.oreilly.co.jp/books/9784873115726/
+
+Amazon.co.jp： 使える!確率的思考 (ちくま新書): 小島 寛之: 本
+http://www.amazon.co.jp/dp/4480062726
+
+Amazon.co.jp： イラスト・図解 確率・統計のしくみがわかる本―わからなかったことがよくわかる、確率・統計入門: 長谷川 勝也: 本
+http://www.amazon.co.jp/dp/4774109290
+
+Amazon.co.jp： 統計学を拓いた異才たち(日経ビジネス人文庫): デイヴィッド・サルツブルグ, 竹内惠行、熊谷悦生: 本
+http://www.amazon.co.jp/gp/product/453219539X/
+
+「統計学を拓いた異才たち」で触れる統計学史: ニュースの社会科学的な裏側
+http://www.anlyznews.com/2012/02/blog-post_08.html#more
+

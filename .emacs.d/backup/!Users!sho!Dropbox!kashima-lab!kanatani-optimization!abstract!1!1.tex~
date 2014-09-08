@@ -1,0 +1,431 @@
+\documentclass[]{jsarticle}
+
+%% font
+\usepackage[T1]{fontenc} % 8ビットエンコーディング <,|,> の直書き
+\usepackage{textcomp} % 文字種追加
+\usepackage[deluxe]{otf} % 文字種追加. deluxe:日本語フォントが5書体(太細×明ゴ＋丸ゴ)使えるようになる
+
+%% math
+\usepackage{amsmath,amssymb} % 数学記号の追加
+\usepackage{bm} % 数式の太字 \bm{}
+\usepackage{cancel} % 数式に打ち消し合いを示すための斜め線
+\usepackage{theorem}
+\newtheorem{thm}{Thm.}[section]
+\newtheorem{lem}[thm]{Lem.}
+\newtheorem{cor}[thm]{Cor.}
+\newtheorem{dfn}[thm]{Def.}
+\def\theequation{\thesection.\arabic{equation}} % 数式番号 http://www.h4.dion.ne.jp/~latexcat/intro/i31-r2.html
+  \makeatletter
+  \@addtoreset{equation}{section}
+  \makeatother
+
+%% table
+\usepackage{array} % tabular拡張
+\usepackage{comment}
+\usepackage{multirow}
+
+%% figure
+\usepackage[dvipdfmx]{graphicx}
+
+%% arrange tables or figures
+\usepackage{float}
+
+\usepackage{listings}
+\lstset{
+% language=Scheme,
+ basicstyle=\ttfamily\footnotesize,
+%  frame=tbrl, %枠を上下左右に表示
+ breaklines=true, % 行が長くなった場合に改行
+ numbers=left,
+ breaklines=true, %折り返し
+ xleftmargin=4zw
+}
+\usepackage{url}
+
+\catcode`@=\active
+\def@#1@{\texttt{#1}}
+
+%% レイアウト
+% title補正
+\addtolength{\textheight}{\topskip}
+\setlength{\voffset}{0pt}
+\setlength{\topmargin}{0pt}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+% \pagestyle{empty} % ページ番号非表示
+
+\title{金谷『これなら分かる最適化数学』\\第1章の要点}
+\author{Sho Yokoi}
+%% \title{English IIA E2T01; Professor Hayashi, Brian\\Homework \#1}
+%% \author{Yokoi, Sho; 1029-23-2177} % ほか
+\date{\today}\西暦
+\begin{document}
+\maketitle
+
+まず1.1節で、陰関数表示した曲線・曲面における、法線ベクトルおよび接線・接平面の方程式について述べる。
+
+次に1.2節、1.3節で、一般の2次形式が標準形に変形できること（1.3.3）、これを用いて実対称行列の定値性が2次形式で表現できること（1.3.4）、最後に半正値2次形式を最大化・最小化する単位ベクトルが係数行列の最大固有値に対応する固有ベクトルとなることを示す（1.3.5）。
+
+\setcounter{section}{-1}
+\section{数学的準備の準備}
+
+Kronecker deltaを $\delta_{ij} := \begin{cases} 1 & (i=j)  \\ 0 & (i\neq j) \end{cases}$ で表す。
+
+\subsection{ベクトル}
+ベクトル$\bm{x},\bm{y},\cdots$は実ベクトル空間$\mathbb{R}^n$の元とする。
+
+ベクトルの内積$(\cdot,\cdot)$は標準内積を用いる。
+\begin{equation*}
+(\bm{x},\bm{y}) := \bm{x}^{\mathrm{T}}\bm{y} = \sum_{i}^{}x_i y_i
+\end{equation*}
+
+ベクトル$\bm{x} = \begin{pmatrix}x_1\\ \vdots \\x_n \end{pmatrix}$のノルム$\|\bm{x}\|$はユークリッドノルムを用いる。
+\begin{equation*}
+\|\bm{x}\| := \sqrt{\sum_{i=1}^{n}x_{i}^{2}}
+\end{equation*}
+
+実ベクトル空間$\mathbb{R}^n$上のベクトルの組
+$\{\bm{u_1},\cdots,\bm{u_n}\}$
+が
+$\forall i,j \in \{1,\cdots,n\},\ (\bm{u_i},\bm{u_j}) = \delta_{ij}$
+を満たすとき、これらを正規直交系と言う。
+
+\subsection{行列}
+$m\times n$実行列全体の集合を$\mathrm{M}(m,n,\mathbb{R})$で表し、
+行列$A,B,\cdots$はこの元とする。
+
+行列$A$の行列式を$|A|$で表す。
+
+零行列を$O \in \mathrm{M}(m,n,\mathbb{R})$で表す。
+
+単位行列を$I \in \mathrm{M}(n,n,\mathbb{R})$で表す。
+
+\bigskip
+行列$A$の\emph{階数（rank）}を$\mathrm{rank} A$で表す。
+
+$\mathrm{rank} A$は、行列$A$を列ベクトルの組$A = (\bm{a_1},\cdots,\bm{a_n})$と見たとき、$\{\bm{a_1},\cdots,\bm{a_n}\}$の中で線形独立なものの最大個数に等しい。
+
+\bigskip
+正方行列$A \in \mathrm{M}(n,n,\mathbb{R})$の逆行列を$A^{-1} \in \mathrm{M}(n,n,\mathbb{R})$で表す。
+
+\begin{equation*}
+A^{-1}A = I
+\end{equation*}
+
+逆行列を持つ行列を\emph{正則行列}と言う。
+
+行列$A \in \mathrm{M}(n,n,\mathbb{R})$について、$A$が正則行列であること、$|A|\neq 0$であること、$\mathrm{rank} A = n$であることはそれぞれ同値。
+
+\bigskip
+行列$A$の転置を$A^{\mathrm{T}}$で表す。
+
+行列の転置は次の性質を満たす。
+\begin{equation*}
+\mathrm{rank} A = \mathrm{rank} A^\mathrm{T}
+\end{equation*}
+\begin{equation*}
+(AB)^{\mathrm{T}} = B^{\mathrm{T}}A^{\mathrm{T}} \eqno{(1.75)}
+\end{equation*}
+\begin{equation*}
+(A\bm{x},\bm{y}) = (\bm{x},A^{\mathrm{T}}\bm{y}) \eqno{(\mathrm{Thm}.1.7)(1.73)}
+\end{equation*}
+
+\bigskip
+転置が元の行列に等しい行列$A = A^{\mathrm{T}}$を\emph{対称行列}という。
+
+実対称行列の固有値はすべて実数である。
+
+\bigskip
+正規直交系$\{\bm{u_1},\cdots,\bm{u_n}\}$を横に並べた行列$U = (\bm{u_1},\cdots,\bm{u_n})\in \mathrm{M}(n,n,\mathbb{R})$を\emph{直交行列}という。
+
+直交行列$U$は次の性質を満たす。
+\begin{equation*}
+U^{\mathrm{T}}U = I \eqno{(1.114)}
+\end{equation*}
+\begin{equation*}
+U^{-1} = U^{\mathrm{T}} \eqno{(1.115)}
+\end{equation*}
+\begin{equation*}
+(U\bm{x},U\bm{y}) = (\bm{x},\bm{y})
+\end{equation*}
+（内積を保つ）
+
+\subsection{ベクトル解析}
+写像 $f:\mathbb{R}^n\rightarrow\mathbb{R};\ \begin{pmatrix}x_1\\ \vdots \\x_n\end{pmatrix}\mapsto f(x_1,\cdots,x_n)$ をスカラー場（scalar field）という。
+
+写像 $f:\mathbb{R}^n\rightarrow\mathbb{R}^n$ をベクトル場（vector field）という。一般に$n=2,3$。
+
+\bigskip
+微分可能なスカラー場$f:\mathbb{R}^n\rightarrow\mathbb{R}$に対して、
+ベクトル場 $\nabla f = \mathrm{grad} f = \begin{pmatrix}\frac{\partial f}{\partial x_1}\\ \vdots \\ \frac{\partial f}{\partial x_n}\end{pmatrix}$ を$f$の\emph{勾配（gradient）}という。微分演算子 $\nabla = \begin{pmatrix}\frac{\partial }{\partial x_1}\\ \vdots \\ \frac{\partial }{\partial x_n}\end{pmatrix}$はnablaと読む。
+
+スカラー場$f$の勾配ベクトル場$\nabla f$は、$f$の等高面に直交し、$f$が増大する方向を向く。
+
+すなわち、$\nabla f$は$f$の等高線に対する法線ベクトルを与える。
+
+\bigskip
+連続写像
+$l:[a,b]\rightarrow \mathbb{R}^n;\ t\mapsto (x_1(t),\cdots,x_n(t))$
+を\emph{曲線（curve）}という。
+とくに$l(a)=l(b)$のとき、これを\emph{閉曲線}という。
+
+連続写像
+$\mathbb{R}^2\rightarrow \mathbb{R}^n;\ (u,v)\mapsto (x_1(u,v),\cdots,x_n(u,v))$
+を\emph{曲面}という。
+
+\section{数学的準備}
+\subsection{曲線と曲面}
+\subsubsection{曲線の方程式}
+$\mathbb{R}^2$上の次の曲線を考える。
+\begin{equation*}
+f(x,y)=0 \eqno{(1.1)}
+\end{equation*}
+ただし、関数$f$は特異点を持たないとする。すなわち、$f$の等高面$f=0$を境に$f$の値の正負が必ず入れ替わるとする。
+
+\subsubsection{曲線の法線ベクトル}
+(1.1)式は$f:\mathbb{R}^2\rightarrow\mathbb{R}$をスカラー場と見たときの等高面($f=0$)であるので、
+曲線(1.1)の点 $\bar{\bm{x}}=\begin{pmatrix} \bar{x} \\ \bar{y} \end{pmatrix}$ における法線ベクトルは、
+\begin{equation*}
+(\nabla f)(\bar{\bm{x}}) \eqno{(\mathrm{Thm}.1.1)}
+\end{equation*}
+
+\subsubsection{曲線の接線}
+\begin{equation*}
+\alpha(x - a) + \beta(y - b) = 0 \eqno{(1.17)}
+\end{equation*}
+方程式(1.17)が、法線ベクトルが$\begin{pmatrix} \alpha \\ \beta \end{pmatrix}$で点$\begin{pmatrix} a \\ b \end{pmatrix}$を通る直線を表すことに注意すると、
+曲線(1.1)の点$\bar{\bm{x}}=\begin{pmatrix} \bar{x} \\ \bar{y} \end{pmatrix}$における接線の方程式は次の通り。
+\begin{equation*}
+\frac{\partial f}{\partial x}(\bar{x})\cdot (x-\bar{x}) +
+\frac{\partial f}{\partial y}(\bar{y})\cdot (y-\bar{y}) = 0 \eqno{(\mathrm{Thm}.1.2)(1.18)}
+\end{equation*}
+すなわち
+\begin{equation*}
+((\nabla f)(\bar{\bm{x}}), \bm{x} - \bar{\bm{x}}) = \bm{0}
+\end{equation*}
+
+\subsubsection{曲面の方程式}
+$\mathbb{R}^3$上の次の曲面を考える。
+\begin{equation*}
+f(x,y,z)=0 \eqno{(1.22)}
+\end{equation*}
+ただし、関数$f$は特異点を持たないとする。すなわち、$f$の等高面$f=0$を境に$f$の値の正負が必ず入れ替わるとする。
+
+\subsubsection{曲面の法線ベクトル}
+(1.22)式は$f:\mathbb{R}^3\rightarrow\mathbb{R}$をスカラー場と見たときの等高面($f=0$)であるので、
+曲面(1.22)の点 $\bar{\bm{x}}=\begin{pmatrix} \bar{x} \\ \bar{y} \\ \bar{z} \end{pmatrix}$ における法線ベクトルは、
+\begin{equation*}
+(\nabla f)(\bar{\bm{x}}) \eqno{(\mathrm{Thm}.1.3)}
+\end{equation*}
+
+\subsubsection{曲面の接平面}
+\begin{equation*}
+\alpha(x - a) + \beta(y - b) + \gamma(z - c) = 0 \eqno{(1.35)}
+\end{equation*}
+方程式(1.35)が、法線ベクトルが$\begin{pmatrix} \alpha \\ \beta \\ \gamma \end{pmatrix}$で点$\begin{pmatrix} a \\ b \\ c \end{pmatrix}$を通る直線を表すことに注意すると、
+曲面(1.22)の点$\bar{\bm{x}}=\begin{pmatrix} \bar{x} \\ \bar{y} \\ \bar{z} \end{pmatrix}$における接平面の方程式は次の通り。
+\begin{equation*}
+\frac{\partial f}{\partial x}(\bar{x})\cdot (x-\bar{x}) +
+\frac{\partial f}{\partial y}(\bar{y})\cdot (y-\bar{y}) +
+\frac{\partial f}{\partial z}(\bar{z})\cdot (z-\bar{z}) = 0 \eqno{(\mathrm{Thm}.1.4)(1.36)}
+\end{equation*}
+すなわち
+\begin{equation*}
+((\nabla f)(\bar{\bm{x}}), \bm{x} - \bar{\bm{x}}) = \bm{0}
+\end{equation*}
+
+\subsection{1次形式と2次形式}
+すべての項が同じ次数である多項式を、\emph{斉次式（斉次多項式, homogeneous polynomial）}という。
+
+\subsubsection{1次形式}
+1次斉次多項式を、\emph{1次形式（線形形式, 線形汎関数, linear functional）}という。
+\begin{eqnarray}
+\setcounter{equation}{40}
+f &=& \sum_{i}^{}a_i x_i \\
+\setcounter{equation}{42}
+  &=& (\bm{a}, \bm{x})
+\end{eqnarray}
+ここで
+\begin{eqnarray}
+\setcounter{equation}{45}
+\nabla f = \bm{a}
+\end{eqnarray}
+（辺々がベクトル場として等しい）に注意すると、
+\begin{equation*}
+\nabla (\bm{a},\bm{x}) = \bm{a} \eqno{(\mathrm{Thm}.1.5)(1.46)}
+\end{equation*}
+（辺々がベクトル場として等しい）
+
+\subsubsection{2次形式}
+2次斉次多項式を、\emph{2次形式（quadratic form）}という。
+\begin{equation*}
+f = \sum_{i=1}^{n} \sum_{j=1}^{n} a_{ij} x_{i} x_{j} \eqno{(1.48)}
+\end{equation*}
+ここで
+\begin{equation*}
+A = \begin{pmatrix} 
+ a_{1,1} & \cdots & a_{1,n} \\
+ \vdots  & \ddots & \vdots  \\
+ a_{n,1} & \cdots & a_{n,n}
+\end{pmatrix} \in \mathrm{M}(n,n,\mathbb{R}),
+\ 
+\bm{x} = \begin{pmatrix}x_1\\ \vdots \\x_n \end{pmatrix}
+\in \mathbb{R}^n
+\eqno{(1.49)}
+\end{equation*}
+とおけば、
+\begin{equation*}
+f = (\bm{x}, A\bm{x}) = \bm{x}^{\mathrm{T}}A\bm{x} \eqno{(1.50)}
+\end{equation*}
+と書ける。
+
+この実対称行列$A$を2次形式$f$の\emph{係数行列}という。
+
+\subsubsection{2次形式の微分}
+\begin{equation*}
+\frac{\partial f}{\partial x_i} = 2\sum_{j=1}^{n}a_{ij}x_j,\ i=1,\cdots,n \eqno{(1.63)}
+\end{equation*}
+に注意すると、
+\begin{equation*}
+(\nabla f)(\bm{x}) = 2A\bm{x} \eqno{(1.64)}
+\end{equation*}
+すなわち
+\begin{equation*}
+(\nabla (\bm{x},A\bm{x}))(\bm{x}) = (\nabla \bm{x}^{\mathrm{T}}A\bm{x})(\bm{x}) = 2A\bm{x} \eqno{(\mathrm{Thm}.1.6)(1.64)}
+\end{equation*}
+
+\subsubsection{双1次形式}
+すべての項が$x_i$についても$y_j$についても1次である関数$f:\mathbb{R}^m \times \mathbb{R}^m \rightarrow \mathbb{R};\ (\bm{x},\bm{y})\mapsto \sum_{i=1}^{m} \sum_{j=1}^{n} a_{ij} x_{i} y_{j}$を、\emph{双1次形式（双線形形式, bilinear form）}という。
+ここでは$m=n$の場合を考える。
+
+\begin{equation*}
+f = \sum_{i=1}^{n} \sum_{j=1}^{n} a_{ij} x_{i} y_{j} \eqno{(1.68)}
+\end{equation*}
+ここで
+\begin{equation*}
+A = \begin{pmatrix} 
+ a_{1,1} & \cdots & a_{1,n} \\
+ \vdots  & \ddots & \vdots  \\
+ a_{n,1} & \cdots & a_{n,n}
+\end{pmatrix} \in \mathrm{M}(n,n,\mathbb{R}),
+\ 
+\bm{x} = \begin{pmatrix}x_1\\ \vdots \\x_n \end{pmatrix},
+\ 
+\bm{y} = \begin{pmatrix}y_1\\ \vdots \\y_n \end{pmatrix}
+\in \mathbb{R}^n
+\eqno{(1.69)}
+\end{equation*}
+とおけば、
+\begin{equation*}
+f = (\bm{x}, A\bm{y}) = \bm{x}^{\mathrm{T}}A\bm{y} \eqno{(1.70)}
+\end{equation*}
+と書ける。
+
+この行列$A$を双1次形式$f$の\emph{係数行列}という。2次形式の場合と異なり、$A$は対称行列とは限らない。
+
+\subsection{2次形式の標準形}
+この小節では実対称行列が直交行列で対角化$U^{\mathrm{T}}AU$できることを用いて2次形式の標準形を求める。
+
+\subsubsection{固有値と固有ベクトル}
+行列$A$に対して、
+
+\begin{equation*}
+A\bm{x} = \lambda \bm{x} \eqno{(1.81)}
+\end{equation*}
+を満たす$\bm{0}$でないベクトル$\bm{x}$を$A$の\emph{固有ベクトル}、$\lambda$をその\emph{固有値}という。
+固有ベクトルには定数（$\neq 0$）倍の不定性がある。
+
+固有値は、\emph{固有方程式（特性方程式）}
+\begin{equation*}
+|\lambda I - A| = 0 \eqno{(1.84)}
+\end{equation*}
+の根として求めることができる。
+
+求めた固有値に対応する固有ベクトルは式(1.81)より求まる。
+
+\bigskip
+n次実対称行列は$n$個の実固有値$\lambda_1 \cdots \lambda_n$を持ち、対応する実固有ベクトル$\{\bm{u_1}\cdots\bm{u_n}\}$を正規直交系とできる。 $(\mathrm{Thm}.1.8)$
+
+実対称行列の固有値がすべて異なる場合、対応する固有ベクトルは全て直交している。
+固有方程式に重根があった場合、グラム・シュミットの直交化法等を用いて直交する固有ベクトル（対応する固有空間を生成する直交系）を作ることができる。
+
+各固有ベクトルをそのノルムで割る事で正規化できる。
+
+\subsubsection{対称行列の対角化}
+上で求めた実固有ベクトルの正規直交系$\{\bm{u_1}\cdots\bm{u_n}\}$を並べて作った直交行列$U = (\bm{u_1}\cdots\bm{u_n})$を用いて、実対称行列$A$を対角化することができる。
+
+\begin{equation*}
+U^{\mathrm{T}}AU = 
+\begin{pmatrix} 
+ \lambda_1 &  & \\
+  & \ddots & \\
+  &  & \lambda_n
+\end{pmatrix} \eqno{(1.117)}
+\end{equation*}
+
+すなわち、実対称行列$A$は次のように\emph{固有値分解（スペクトル分解）}することができる。
+\begin{equation*}
+A = U
+\begin{pmatrix} 
+ \lambda_1 &  & \\
+  & \ddots & \\
+  &  & \lambda_n
+\end{pmatrix}
+U^{\mathrm{T}}
+\eqno{(1.118)}
+\end{equation*}
+
+\subsubsection{2次形式の標準形}
+任意の2次形式$(\bm{x},A\bm{x})$は、
+\begin{eqnarray}
+\setcounter{equation}{121}
+\bm{x'} &=& U^{\mathrm{T}}\bm{x} \\
+\bm{x} &=& U\bm{x'}
+\end{eqnarray}
+のように正規直交系となる固有ベクトルを並べた直交行列の転置を用いて変数を変換することで、
+\begin{equation*}
+(\bm{x},A\bm{x})
+= (U\bm{x'},AU\bm{x'})
+= (\bm{x'},U^{\mathrm{T}}AU\bm{x'})
+= (\bm{x'}, 
+\begin{pmatrix} 
+ \lambda_1 &  & \\
+  & \ddots & \\
+  &  & \lambda_n
+\end{pmatrix}
+\bm{x'})
+= \sum_{i=1}^{n}\lambda_i {x'}_{i}^{2}
+\eqno{(1.123)}
+\end{equation*}
+と、固有値を係数とした変数の二乗和の形（2次形式の\emph{標準形}）に変形できる。 $(\mathrm{Thm}.1.9)$
+
+\subsubsection{正値対称行列}
+実対称行列のうち、
+固有値がすべて正であるものを\emph{正値（正定値）}対称行列、固有値がすべて非負のものを\emph{半正値（半正定値）}対称行列という。
+固有値がすべて負であるものを\emph{負値（負定値）}対称行列、固有値がすべて非正のものを\emph{半負値（半負定値）}対称行列という。
+
+式(1.123)（2次形式の標準形）より、
+
+実対称行列$A \in \mathrm{M}(n,n,K)$が正値であることは次と同値。 $(\mathrm{Thm}.1.10)$
+\begin{equation*}
+\forall \bm{x} \in \mathbb{R}^n, \bm{x} \neq \bm{0} \Rightarrow (\bm{x}, A\bm{x}) > 0 \eqno{(1.144)}
+\end{equation*}
+
+また、実対称行列$A \in \mathrm{M}(n,n,K)$が半正値であることは次と同値。 $(\mathrm{Thm}.1.11)$
+\begin{equation*}
+\forall \bm{x} \in \mathbb{R}^n, \bm{x} \neq \bm{0} \Rightarrow (\bm{x}, A\bm{x}) \geq 0 \eqno{(1.145)}
+\end{equation*}
+
+\subsubsection{正値2次形式}
+正値対称行列を係数行列とする2次形式を\emph{正値2次形式}と言う。
+
+半正値対称行列を係数行列とする2次形式を\emph{半正値2次形式}と言う。
+
+式(1.123)（2次形式の標準形）より、
+
+半正値2次形式$(\bm{x},A\bm{x})$を最大化する単位ベクトル$\bm{x} \in \mathrm{M}(n,n,\mathbb{R}), \|\bm{x}\| = 1$は係数行列$A$の最大固有値に対応する固有ベクトルであり、最大値は最大固有値に等しい。$(\mathrm{Thm}.1.12)$
+
+また、
+
+半正値2次形式$(\bm{x},A\bm{x})$を最小化する単位ベクトル$\bm{x} \in \mathrm{M}(n,n,\mathbb{R}), \|\bm{x}\| = 1$は係数行列$A$の最小固有値に対応する固有ベクトルであり、最小値は最小固有値に等しい。$(\mathrm{Thm}.1.13)$
+\end{document}

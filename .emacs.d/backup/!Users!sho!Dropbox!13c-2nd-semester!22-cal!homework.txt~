@@ -1,0 +1,16 @@
+*** Basic.v
+binary (2,opt)
+boolean_functions (2,opt)
+decreasing
+
+
+*** Induction.v
+beq_nat_refl_informal (2,opt)
+binary_commute (2,opt)
+binary_inverse (2,opt)
+destruct_induction (2,opt)
+even_b__oddb_Sn (2,opt)
+more_exercises *9 (2,opt)
+mult_comm (2,opt)
+plus_comm_informal (2,opt)
+plus_swap' (2,opt)

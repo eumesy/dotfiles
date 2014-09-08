@@ -1,0 +1,40 @@
+* ref
+GNU make 日本語訳(Coop編) - 目次
+http://www.ecoop.net/coop/translated/GNUMake3.77/make_toc.jp.html
+Makefile の書き方 (C 言語) — WTOPIA v1.0 documentation
+http://www.ie.u-ryukyu.ac.jp/~e085739/c.makefile.tuts.html
+- 自動化のためのGNU Make入門講座 - Makefileの基本：ルール
+http://objectclub.jp/community/memorial/homepage3.nifty.com/masarl/article/gnu-make/rule.html
+Makefileの解説
+http://www.am.sanken.osaka-u.ac.jp/~mukaigaw/misc/Makefile.html
+Make と Makefile の説明
+http://www.unixuser.org/~euske/doc/makefile/
+
+* usage
+** マクロ定義
+CC=gcc
+
+** レシピ
+target: 依存ファイル1 依存ファイル2 ...
+[TAB]コマンド
+[TAB]...
+
+** コメント
+# コメント行
+
+** マクロの利用
+| $(マクロ名) | マクロ参照                                                     |                  |
+| $@          | 生成しようとしているターゲット名そのもの                       | -o の後に入れる? |
+| $<          | 依存ファイルの最初のファイル                                   |                  |
+| $*          | ターゲット名からサフィックス(=拡張子?)を除いたものに展開される |                  |
+
+** 実行時にマクロ上書き (追加はできない?)
+make CXXFLAGSMAC='-arch i386'
+
+* ゴール
+- デフォルトのゴールは、一番上に書かれたターゲット
+
+* OMake
+1. ガイド — OMakeマニュアル 日本語訳
+http://omake-japanese.sourceforge.jp/
+

@@ -1,0 +1,161 @@
+- [ ] ポケゼミ聴講 断る?
+- [ ] 乾研の研究会の曜日に合わせて見学に行こう
+- [ ] いつ?→「JSTの業務で新しいUIが使えると嬉しい」
+- [ ] 次回もっと前に座ろう
+- [ ] デジタル言語処理学事典
+
+- 第1回
+
+- 来週のランチミーティングは火曜
+
+* schedule
+- 月昼 english lunch time
+- 月3 PR(MT)
+  # ?
+- 月4 JST-MT mtg
+- 火4 PR(FA/IR)
+- 金昼 ランチMTG
+- 金3-4 研究会 @会議室1
+
+- 新しい勉強会はまた別に
+
+RT read ... in turns 輪読 ?
+
+* CREST (情報分析系)
+** Texts are the basis of human knowledge representation
+  - data analysis results and interpretation by experts
+  - criticisms and opinions
+
+** 
+texts
+==> knowledge acquisition (知識獲得)
+  event schema
+==> improvement of NLP
+==> information access, organization, analysis
+ tsubaki, wisdom (一発の検索)
+ knowledge infrastructure (深くstatementの間の関係性を取り出したい)
+
+2周目
+
+** 
+日本語
+- 修飾の向きは一定
+- ただし語順自由
+- 省略解析が大変
+
+** improving NLP by exploiting big data
+- 15 Billion のコーパス
+- accurary of zero ana〜 が悲惨 "アナポラ"?
+  日本語はomittionが大きくてうまくいかない
+
+** predicate-argument structure
+- クロールで泳いでいる女の子を見た
+- 望遠鏡で泳いでいる女の子を見た
+ case frame で分かる
+
+
+Web
+15G sentences (3G pages)
+parsing filtering
+predicate-argument structures
+clustering
+
+2日 1000cpuぶんまわすと結構賢いことになる
+
+** distributional similarity
+
+** knowledge acquisition flow
+
+ちょっとずつ分かってくる
+
+"TSUBAKI"
+"WISDOM"
+electric toothbrush is good for teeth?
+
+** 
+(R-Subject 2) knowledge-omtemsob structual NLP
+テキストから知識を取り出せる、は、共起を取っているだけ?
+ひとつの文から取り出せる知識
+
+(R-Subject 3) Cross-document knowledge linking (inui)
+テキスト横断的な知識の関係づけ
+我々もやりたい
+
+- [ ] マップを作る
+  5年くらいの目標
+  はやしべ、もりた、しばた 先生
+
+* development of practical japanese-chinese MT for scientific documents (機械翻訳系)
+去年から5年間
+
+** background
+- japan and china have been producing many scientific documents written chinese or japanese
+- these are often referenced only within their respective countries
+- JST and kyoto U have launched a project to develop practical machine translation technology for promoting science and technology exchange between japan and china (2013-18)
+- this is an international joint project and several chinese institutes are participating, including ISTIC, CAS, BJTU, and HIT
+
+** overview of kyoto EBMT
+
+** why EBMT?
+- EBMT
+
+lattice でエンコードする
+一度しか出ないなどを表現できる
+- [ ] 正規表現じゃだめなの…? 圏論でも良いだろうし
+
+* デザイン学 はこれを2つ足したような事をやりたい
+ICT オリンピックで予算とってる 長尾先生音頭とってる
+
+* 映画の字幕をリソースに
+
+* 
+情報の構造か、信頼性、分析
+談話構造解析は、省略照応ができなきゃどうしようもない
+| 知識サイド | 解析サイド     |                                                         |
+|------------+----------------+---------------------------------------------------------|
+| 事態間関係 | 省略・照応解析 | ここがなかなか精度が出ない (この問題が解けないと嫌だな) |
+| 格フレーム | 構文・格解析   |                                                         |
+| 辞書       | 形態素解析     |                                                         |
+
+知識サイドに興味がある
+まず省略・照応
+乾先生が面白いことやってる
+が、乾先生も「省略・照応解析」ができないと厳しいと言っている
+
+
+ゴールデン・デリシャスという
+  リンゴは 黄色い
+韓国の
+  大統領は よく 自殺する
+
+知識獲得 コンテキストを見るという粒度で
+
+
+E == EBMT/SMT ==> J
+
+問題点
+- Ungrammatical
+- negation消失
+- modality不一致
+
+abstract, semantic representation
+側でサポートできないか
+全部これでできるわけがない
+  エスペラント
+
+* a step-wise method for inducing semantic frames and verb classes (河原先生)
+** knowledge aquisition and knowledge-based NLP
+
+semantic frames
+mary *ate* the salad _with a fork_
+mary ate *the salad* _with mashrooms_
+semantic frames が必要
+
+verb classes
+I observed birds
+I watched birds
+結局同じイベントを表している
+
+** our goal
+verb polysemy
+  動詞の多義性を考慮する必要がある

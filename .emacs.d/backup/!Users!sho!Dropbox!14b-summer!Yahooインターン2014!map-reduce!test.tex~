@@ -1,0 +1,53 @@
+% Created 2014-09-03 水 14:34
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\author{sho}
+\date{\today}
+\title{test}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs 24.3.1 (Org mode 8.2.4)}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\section{大規模分散処理システム}
+\label{sec-1}
+
+\begin{center}
+\begin{tabular}{ll}
+table & test\\
+\hline
+foo & baa\\
+hoge & moga\\
+\end{tabular}
+\end{center}
+
+\section{moga}
+\label{sec-2}
+
+\subsection{moga}
+\label{sec-2-1}
+hogehoge
+\subsection{foo}
+\label{sec-2-2}
+baa
+% Emacs 24.3.1 (Org mode 8.2.4)
+\end{document}

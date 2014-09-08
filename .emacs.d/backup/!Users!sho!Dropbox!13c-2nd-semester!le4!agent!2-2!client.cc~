@@ -1,0 +1,364 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netdb.h>
+#include <netinet/in.h>
+#include <sys/param.h>
+#include <sys/uio.h>
+#include <unistd.h>
+
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <string>
+#include <vector>
+
+#include "svm.hh"
+
+#define BUF_LEN 256 /* バッファのサイズ */
+
+using namespace std;
+
+void save_agent_names(char* buf, int read_size, vector<string>& agent_names);
+void save_dat_names(vector<string>& agent_names, int num_of_agents, int num_of_goods, int my_id,
+					vector<vector<string> >& dat_names);
+void make_fp_to_datfiles(int num_of_agents, int num_of_goods, int my_id,
+						 vector<vector<string> >& dat_names,
+						 vector<vector<FILE*> >& dat_fp);
+void make_disc_func(int num_of_agents, int num_of_goods, int my_id,
+					vector<vector<string> >& dat_names,	kernel k,
+					vector<vector<vector<double> > >& alph, vector<vector<double> >& theta);
+void decide_bid_price(int num_of_goods, char* bid_str);
+void save_bid_data(char* buf, int num_of_agents, int num_of_goods, int my_id,
+				   vector<vector<FILE*> >& dat_fp);
+
+
+int main(int argc, char *argv[]) {
+  char buf[BUF_LEN];
+  int read_size;
+  stringstream ss;
+
+  int s;                               /* ソケットのためのファイルディスクリプタ */
+  struct hostent *servhost;            /* ホスト名と IP アドレスを扱うための構造体 */
+  struct sockaddr_in server;           /* ソケットを扱うための構造体 */
+  // struct servent *service;             /* サービス (http など) を扱うための構造体 */
+  char *host = NULL;
+  // char host[BUF_LEN] = "127.0.0.1";    /* 接続するホスト名 */
+  // char path[BUF_LEN] = "/";            /* 要求するパス */
+  unsigned short port = 5000;             /* 接続するポート番号 */
+
+  char my_name[BUF_LEN];
+  int my_id;
+  vector<string> agent_names;
+  int num_of_agents;
+  int num_of_goods; 
+
+  vector<vector<FILE*> > dat_fp;
+  vector<vector<string> > dat_names;
+
+  vector<vector<vector<double> > > alph;
+  vector<vector<double> > theta;
+  
+
+  // check command line arguments
+  if (argc < 4) {
+    fprintf(stderr, "usage: $ ./client [hostname] [port number] [your name]\n");
+    exit(1);
+  }
+  host = (char *)argv[1];
+  port = atoi(argv[2]);
+  strcpy(my_name, argv[3]);
+
+  /* ホストの情報(IPアドレスなど)を取得 */
+  servhost = gethostbyname(host);
+  if (servhost == NULL) {
+    fprintf(stderr, "[%s] から IP アドレスへの変換に失敗しました。\n", host);
+	exit(1);
+  }
+  /* 構造体をゼロクリア */
+  bzero(&server, sizeof(server));
+  server.sin_family = AF_INET;
+  /* IPアドレスを示す構造体をコピー */
+  bcopy(servhost->h_addr, &server.sin_addr, servhost->h_length);
+  server.sin_port = htons(port);
+  /* ソケット生成 */
+  if ( ( s = socket(AF_INET, SOCK_STREAM, 0) ) < 0 ){
+    fprintf(stderr, "ソケットの生成に失敗しました。\n");
+	exit(1);
+  }
+  /* サーバに接続 */
+  if ( connect(s, (struct sockaddr *)&server, sizeof(server)) == -1 ){
+    fprintf(stderr, "connect に失敗しました。\n");
+	exit(1);
+  }
+
+  //-------------------------------------------------------
+  // send my name
+  //-------------------------------------------------------
+  // receive: "PLEASE INPUT YOUR NAME"
+  read_size = read(s, buf, BUF_LEN);
+  // send:    my name
+  sprintf(buf, "%s\n", my_name);
+  write(s, buf, strlen(buf));
+
+  //-------------------------------------------------------
+  // receive agent names
+  //-------------------------------------------------------
+  // receive: "a1:agent_name_1 a2:agent_name2 ..."
+  read_size = read(s, buf, BUF_LEN);
+  // save:    agent names
+  save_agent_names(buf, read_size, agent_names);
+  // print
+  puts("Agent Names:");
+  for (int i=0; i<(int)agent_names.size(); i++)
+	printf("  a%d: %s\n", i+1, agent_names[i].c_str());
+
+  //-------------------------------------------------------
+  // receive my id
+  //-------------------------------------------------------
+  // receive: "Your ID: n"
+  read_size = read(s, buf, BUF_LEN);
+  // save:    my id
+  my_id = atoi(string(buf).substr(9).c_str());
+  // print
+  if (read_size > 0)
+	write(1, buf, read_size);
+
+  //-------------------------------------------------------
+  // receive num of agents and num of goods
+  //-------------------------------------------------------
+  // receive: "m,n"
+  //   m: num of goods
+  //   n: num of agent
+  read_size = read(s, buf, BUF_LEN);
+  // save:    num of agents and num of goods to variables
+  num_of_goods = atoi(strtok(buf, " ,\n"));
+  num_of_agents = atoi(strtok(NULL, " ,\n"));
+  // print
+  printf("Num of Goods: %d\n", num_of_goods);
+  printf("Num of Agents: %d\n", num_of_agents);
+
+  //-------------------------------------------------------
+  // make dat files and file pointer to dat file
+  //-------------------------------------------------------
+  save_dat_names(agent_names, num_of_agents, num_of_goods, my_id, dat_names);
+  make_fp_to_datfiles(num_of_agents, num_of_goods, my_id, dat_names, dat_fp);
+
+  //-------------------------------------------------------
+  // make discriminant functions
+  //-------------------------------------------------------
+  alph.resize(num_of_agents, vector<vector<double> >(num_of_goods));
+  theta.resize(num_of_agents, vector<double>(num_of_goods));
+
+  kernel k = (struct ks *)malloc(sizeof(struct ks));
+  k->kernel_type = GAUSS;
+  k->param_s = 10;
+  
+  make_disc_func(num_of_agents, num_of_goods, my_id, dat_names, k, alph, theta);
+  
+  //-------------------------------------------------------
+  // I/O loop
+  //-------------------------------------------------------
+  
+  while (1) {
+	//-------------------------------------------------------
+	// send bid price
+	//-------------------------------------------------------
+	decide_bid_price(num_of_goods, buf);
+	// print
+	fputs(buf, stdout);
+	// send
+	write(s, buf, strlen(buf));
+
+	//-------------------------------------------------------
+	// receive bid data to dat files
+	//-------------------------------------------------------
+	// recieve: "g1:0 g2:0 a1:11 a2:10" 価格＋入札状況
+	read_size = read(s, buf, BUF_LEN);
+	// print
+	if (read_size > 0)
+	  write(1, buf, read_size);
+	// save to buf (_goods_price and _bid_data)
+	save_bid_data(buf, num_of_agents, num_of_goods, my_id, dat_fp);
+	
+	//-------------------------------------------------------
+	// receive present price or notice of auction-end
+	//-------------------------------------------------------
+	// receive: "g1:1 g2:0" or "end"
+	read_size = read(s, buf, BUF_LEN);
+	// print
+	if (read_size > 0)
+	  write(1, buf, read_size);
+	// if receive the notice of auction-end, break the while-loop
+	if (strcmp(buf, "end\n") == 0)
+	  break;
+  }
+
+  //-------------------------------------------------------
+  // finalize
+  //-------------------------------------------------------
+  // receive: "winner  g1:* g2:* ... " (最後空白あり)
+  read_size = read(s, buf, BUF_LEN);
+  // print
+  if (read_size > 0)
+	write(1, buf, read_size);
+  
+  // receive: "price   g1:* g2:* ... " (最後空白あり)
+  read_size = read(s, buf, BUF_LEN);
+  // print
+  if (read_size > 0)
+	write(1, buf, read_size);
+
+  for (int i=0; i<num_of_agents; i++) {
+	if (i == my_id-1) continue; // myself
+	for (int j=0; j<num_of_goods; j++)
+	  fclose(dat_fp[i][j]);
+  }
+  close(s);
+
+  return 0;
+}
+
+void save_agent_names(char* buf, int read_size, vector<string>& agent_names) {
+  char* tp;
+
+  buf[read_size] = '\0';
+  tp = strtok(buf, " :\n");  // agent_id
+  tp = strtok(NULL, " :\n"); // agent_name
+  agent_names.push_back(string(tp));
+  while (tp != NULL) {
+	tp = strtok(NULL, " :\n"); // agent_id
+	tp = strtok(NULL, " :\n"); // agent_name
+	if (tp != NULL) {
+	  agent_names.push_back(string(tp));
+	}
+  }
+};
+
+void save_dat_names(vector<string>& agent_names, int num_of_agents, int num_of_goods, int my_id,
+					vector<vector<string> >& dat_names) {
+
+  dat_names.resize(num_of_agents, vector<string>(num_of_goods));
+
+  char _datname[BUF_LEN];
+  for (int i=0; i<num_of_agents; i++) {
+	if (i == my_id-1) {
+	  continue; // myself
+	}
+	for (int j=0; j<num_of_goods; j++) {
+	  sprintf(_datname, "bid_%s_g%d.dat", agent_names[i].c_str(), j+1);
+	  dat_names[i][j] = string(_datname);
+	}
+  }
+}
+
+void make_fp_to_datfiles(int num_of_agents, int num_of_goods, int my_id,
+						 vector<vector<string> >& dat_names,
+						 vector<vector<FILE*> >& dat_fp) {
+
+  dat_fp.resize(num_of_agents, vector<FILE*>(num_of_goods));
+  
+  for (int i=0; i<num_of_agents; i++) {
+	if (i == my_id-1) continue; // myself
+	for (int j=0; j<num_of_goods; j++) {
+	  dat_fp[i][j] = fopen(dat_names[i][j].c_str(), "a");
+	  setvbuf(dat_fp[i][j], NULL, _IONBF, BUFSIZ); // バッファリング無し
+	}
+  }
+}
+
+void decide_bid_price(int num_of_goods, char* bid_str) {
+  stringstream ss;
+
+  vector<bool> _next_bid;
+  // decide bid price
+  // (g1にのみ入札)
+  _next_bid.clear();
+  _next_bid.push_back(true);
+  for (int i=1; i<num_of_goods; i++)
+	_next_bid.push_back(false);
+  // server送信用の文字列に変換
+  ss.str("");
+  ss.clear(stringstream::goodbit);
+  ss << (int)_next_bid[0];
+  for (int i=1; i<(int)_next_bid.size(); i++)
+	ss << (int)_next_bid[i];
+  ss << "\n";
+  strcpy(bid_str, ss.str().c_str());
+}
+
+void make_disc_func(int num_of_agents, int num_of_goods, int my_id,
+					vector<vector<string> >& dat_names,
+					kernel k,
+					vector<vector<vector<double> > >& alph, vector<vector<double> >& theta) {
+  ifstream ifs;
+
+  vector<vector<double> > _x_given;
+  vector<int> _y_given;
+  int _given_set_size;
+
+  printf("%s\n", "make discriminant functions...");
+  
+  for (int i=0; i<num_of_agents; i++) {
+	if (i == my_id-1) continue; // myself
+	for (int j=0; j<num_of_goods; j++) {
+	  ifs.open(dat_names[i][j].c_str());
+	  
+	  // read data
+	  read_data(_x_given, _y_given, ifs);
+	  _given_set_size = _x_given.size();
+	  alph[i][j].resize(_given_set_size);
+	  
+	  // make discriminant function
+	  if (_given_set_size != 0) {
+		solve_quad_problem(_x_given, _y_given, alph[i][j], k);
+		theta[i][j] = calc_theta(_x_given, _y_given, alph[i][j], k);
+		// print_function(_x_given, _y_given, alph[i][j], theta[i][j], k);
+	  }
+	  
+	  ifs.close();
+	}
+  }
+  printf("done.\n");
+}
+
+void save_bid_data(char* buf, int num_of_agents, int num_of_goods, int my_id, vector<vector<FILE*> >& dat_fp) {
+  char* tp;
+  stringstream ss;
+
+  vector<int> _goods_price(num_of_goods);
+  vector<vector<int> > _bid_data(num_of_agents, vector<int>(num_of_goods));
+  
+  tp = strtok(buf, " :\n");  // "g*"
+  tp = strtok(NULL, " :\n"); // 現在価格
+  _goods_price[0] = atoi(tp);
+  for (int i=1; i<num_of_goods; i++) {
+	tp = strtok(NULL, " :\n"); // "g*"
+	tp = strtok(NULL, " :\n"); // 現在価格
+	_goods_price[i] = atoi(tp);
+  }
+  for (int i=0; i<num_of_agents; i++) {
+	tp = strtok(NULL, " :\n"); // "a*" *:i
+	tp = strtok(NULL, " :\n"); // 入札内容
+	for (int j=0; j<num_of_goods; j++) {
+	  _bid_data[i][j] = (int)(tp[j] - '0');
+	}
+  }
+  // save to dat files
+  for (int i=0; i<num_of_agents; i++) {
+	if (i == my_id-1) continue; // myself
+	for (int j=0; j<num_of_goods; j++) {
+	  ss.str("");
+	  ss.clear(stringstream::goodbit);
+
+	  // format: "g1_price g2_price ... gn_price g*_bid?"
+	  for (int k=0; k<num_of_goods; k++)
+		ss << _goods_price[k] << " ";
+	  ss << (_bid_data[i][j] ? 1 : -1);
+		
+	  fprintf(dat_fp[i][j], "%s\n", ss.str().c_str());
+	}
+  }
+}

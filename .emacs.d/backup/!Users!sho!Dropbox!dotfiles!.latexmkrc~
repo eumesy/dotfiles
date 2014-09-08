@@ -1,0 +1,6 @@
+#!/usr/bin/perl
+$latex         = 'platex %O %S';
+$bibtex        = 'pbibtex %O %B';
+$dvipdf        = 'dvipdfmx %O %S';
+$pdf_mode      = 3; # generate a pdf version of the document from the dvi file
+$pdf_previewer = 'open -a Skim';

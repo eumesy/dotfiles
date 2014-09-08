@@ -1,0 +1,305 @@
+***********************************************************************
+* Set supply and library
+***********************************************************************
+.INCLUDE ../mos_model3
+.options temp=27
+.options post
+
+***********************************************************************
+* Define power supply
+***********************************************************************
+Vdd     Vdd      0       2.5
+
+***********************************************************************
+* Define Subcircuits
+***********************************************************************
+* MOSFETs General form: MXXXX ND NG NS NB MNAME <L=VAL> <W=VAL>
+
+* common
+.subckt invin In Out Vdd
+mp      Out In Vdd Vdd  cmosp l=0.25u w=64u
+mn      Out In 0 0      cmosn l=0.25u w=32u
+.ends
+.subckt invout In Out Vdd
+mp      Out In Vdd Vdd  cmosp l=0.25u w=4u
+mn      Out In 0 0      cmosn l=0.25u w=2u
+.ends
+
+.subckt Cout in
+c0    in   0    12f
+.ends
+
+* R_all = 320[ohm] (0.08[ohm/sq] x 2[mm] / 0.5[um])
+* C_all = 0.64[pF] (0.32[fF/um] x 2[mm])
+
+.subckt R1div in out
+r0    in   out   320
+.ends
+.subckt R2div in out
+r0    in   out   160
+.ends
+.subckt R4div in out
+r0    in   out   80
+.ends
+.subckt R8div in out
+r0    in   out   40
+.ends
+.subckt R16div in out
+r0    in   out   20
+.ends
+.subckt R32div in out
+r0    in   out   10
+.ends
+
+.subckt C1div in
+c0    in   0   0.64p
+.ends
+.subckt C2div in
+c0    in   0   0.32p
+.ends
+.subckt C4div in
+c0    in   0   0.16p
+.ends
+.subckt C8div in
+c0    in   0   0.08p
+.ends
+.subckt C16div in
+c0    in   0   0.04p
+.ends
+.subckt C32div in
+c0    in   0   0.02p
+.ends
+
+***********************************************************************
+* Stimulus
+***********************************************************************
+* Format of pulse input:
+* PULSE(v_initial v_final t_delay t_rise t_fall t_pulsewidth t_period)
+
+* div 16
+Vinp16     inp16     0       PULSE(0  2.5  0.1ns 0.1ns 0.1ns 1ns 3ns)
+VinT16     inT16     0       PULSE(0  2.5  0.1ns 0.1ns 0.1ns 1ns 3ns)
+VinL16     inL16     0       PULSE(0  2.5  0.1ns 0.1ns 0.1ns 1ns 3ns)
+
+* div 01
+Vinp01     inp01     0       PULSE(0  2.5  0.1ns 0.1ns 0.1ns 1ns 3ns)
+VinT01     inT01     0       PULSE(0  2.5  0.1ns 0.1ns 0.1ns 1ns 3ns)
+VinL01     inL01     0       PULSE(0  2.5  0.1ns 0.1ns 0.1ns 1ns 3ns)
+
+* div 02
+Vinp02     inp02     0       PULSE(0  2.5  0.1ns 0.1ns 0.1ns 1ns 3ns)
+VinT02     inT02     0       PULSE(0  2.5  0.1ns 0.1ns 0.1ns 1ns 3ns)
+VinL02     inL02     0       PULSE(0  2.5  0.1ns 0.1ns 0.1ns 1ns 3ns)
+
+***********************************************************************
+* Top level simulation netlist
+***********************************************************************
+
+* n = 16, pi
+xinvinp16  inp16  A00p16  Vdd     invin
+
+xR00p16  A00p16  A01p16  R16div
+xR01p16  A01p16  A02p16  R16div
+xR02p16  A02p16  A03p16  R16div
+xR03p16  A03p16  A04p16  R16div
+xR04p16  A04p16  A05p16  R16div
+xR05p16  A05p16  A06p16  R16div
+xR06p16  A06p16  A07p16  R16div
+xR07p16  A07p16  A08p16  R16div
+xR08p16  A08p16  A09p16  R16div
+xR09p16  A09p16  A10p16  R16div
+xR10p16  A10p16  A11p16  R16div
+xR11p16  A11p16  A12p16  R16div
+xR12p16  A12p16  A13p16  R16div
+xR13p16  A13p16  A14p16  R16div
+xR14p16  A14p16  A15p16  R16div
+xR15p16  A15p16  A16p16  R16div
+
+xC00p16  A00p16  C32div
+xC01p16  A01p16  C16div
+xC02p16  A02p16  C16div
+xC03p16  A03p16  C16div
+xC04p16  A04p16  C16div
+xC05p16  A05p16  C16div
+xC06p16  A06p16  C16div
+xC07p16  A07p16  C16div
+xC08p16  A08p16  C16div
+xC09p16  A09p16  C16div
+xC10p16  A10p16  C16div
+xC11p16  A11p16  C16div
+xC12p16  A12p16  C16div
+xC13p16  A13p16  C16div
+xC14p16  A14p16  C16div
+xC15p16  A15p16  C16div
+xC16p16  A16p16  C32div
+
+xinvoutp16  A16p16  outp16  Vdd    invout
+xCoutp16  outp16  Cout
+
+
+* n = 16, T
+xinvinT16  inT16  A00T16  Vdd     invin
+
+xR00T16	 A00T16	 A01T16  R32div
+xR01T16	 A01T16	 A02T16  R16div
+xR02T16	 A02T16	 A03T16  R16div
+xR03T16	 A03T16	 A04T16  R16div
+xR04T16	 A04T16	 A05T16  R16div
+xR05T16	 A05T16	 A06T16  R16div
+xR06T16	 A06T16	 A07T16  R16div
+xR07T16	 A07T16	 A08T16  R16div
+xR08T16	 A08T16	 A09T16  R16div
+xR09T16	 A09T16	 A10T16  R16div
+xR10T16	 A10T16	 A11T16  R16div
+xR11T16	 A11T16	 A12T16  R16div
+xR12T16	 A12T16	 A13T16  R16div
+xR13T16	 A13T16	 A14T16  R16div
+xR14T16	 A14T16	 A15T16  R16div
+xR15T16	 A15T16	 A16T16  R16div
+xR16T16	 A16T16	 A17T16  R32div
+
+xC01T16  A01T16  C16div
+xC02T16	 A02T16	 C16div
+xC03T16	 A03T16	 C16div
+xC04T16	 A04T16	 C16div
+xC05T16	 A05T16	 C16div
+xC06T16	 A06T16	 C16div
+xC07T16	 A07T16	 C16div
+xC08T16	 A08T16	 C16div
+xC09T16	 A09T16	 C16div
+xC10T16	 A10T16	 C16div
+xC11T16	 A11T16	 C16div
+xC12T16	 A12T16	 C16div
+xC13T16	 A13T16	 C16div
+xC14T16	 A14T16	 C16div
+xC15T16	 A15T16	 C16div
+xC16T16	 A16T16	 C16div
+
+xinvoutT16  A17T16  outT16  Vdd    invout
+xCoutT16  outT16  Cout
+
+
+* n = 16, L
+xinvinL16  inL16  A00L16  Vdd     invin
+
+xR00L16	 A00L16	 A01L16  R16div
+xR01L16	 A01L16	 A02L16  R16div
+xR02L16	 A02L16	 A03L16  R16div
+xR03L16	 A03L16	 A04L16  R16div
+xR04L16	 A04L16	 A05L16  R16div
+xR05L16	 A05L16	 A06L16  R16div
+xR06L16	 A06L16	 A07L16  R16div
+xR07L16	 A07L16	 A08L16  R16div
+xR08L16	 A08L16	 A09L16  R16div
+xR09L16	 A09L16	 A10L16  R16div
+xR10L16	 A10L16	 A11L16  R16div
+xR11L16	 A11L16	 A12L16  R16div
+xR12L16	 A12L16	 A13L16  R16div
+xR13L16	 A13L16	 A14L16  R16div
+xR14L16	 A14L16	 A15L16  R16div
+xR15L16	 A15L16	 A16L16  R16div
+
+xC01L16  A01L16  C16div
+xC02L16	 A02L16	 C16div
+xC03L16	 A03L16	 C16div
+xC04L16	 A04L16	 C16div
+xC05L16	 A05L16	 C16div
+xC06L16	 A06L16	 C16div
+xC07L16	 A07L16	 C16div
+xC08L16	 A08L16	 C16div
+xC09L16	 A09L16	 C16div
+xC10L16	 A10L16	 C16div
+xC11L16	 A11L16	 C16div
+xC12L16	 A12L16	 C16div
+xC13L16	 A13L16	 C16div
+xC14L16	 A14L16	 C16div
+xC15L16	 A15L16	 C16div
+xC16L16	 A16L16	 C16div
+
+xinvoutL16  A16L16  outL16  Vdd    invout
+xCoutL16  outL16  Cout
+
+
+* n = 01, pi
+xinvinp01  inp01  A00p01  Vdd     invin
+
+xR00p01  A00p01  A01p01  R1div
+
+xC00p01  A00p01  C2div
+xC01p01  A01p01  C2div
+
+xinvoutp01  A01p01  outp01  Vdd    invout
+xCoutp01  outp01  Cout
+
+
+* n = 01, T
+xinvinT01  inT01  A00T01  Vdd     invin
+
+xR00T01	 A00T01	 A01T01  R2div
+xR01T01	 A01T01	 A02T01  R2div
+
+xC01T01  A01T01  C1div
+
+xinvoutT01  A02T01  outT01  Vdd    invout
+xCoutT01  outT01  Cout
+
+
+* n = 01, L
+xinvinL01  inL01  A00L01  Vdd     invin
+
+xR00L01	 A00L01	 A01L01  R1div
+
+xC01L01  A01L01  C1div
+
+xinvoutL01  A01L01  outL01  Vdd    invout
+xCoutL01  outL01  Cout
+
+
+* n = 02, pi
+xinvinp02  inp02  A00p02  Vdd     invin
+
+xR00p02  A00p02  A01p02  R2div
+xR01p02	 A01p02	 A02p02	 R2div
+
+xC00p02  A00p02  C4div
+xC01p02  A01p02  C2div
+xC02p02  A02p02  C4div
+
+xinvoutp02  A02p02  outp02  Vdd    invout
+xCoutp02  outp02  Cout
+
+
+* n = 02, T
+xinvinT02  inT02  A00T02  Vdd     invin
+
+xR00T02	 A00T02	 A01T02  R4div
+xR01T02	 A01T02	 A02T02  R2div
+xR02T02	 A02T02	 A03T02  R4div
+
+xC01T02  A01T02  C2div
+xC02T02	 A02T02	 C2div
+
+xinvoutT02  A03T02  outT02  Vdd    invout
+xCoutT02  outT02  Cout
+
+
+* n = 02, L
+xinvinL02  inL02  A00L02  Vdd     invin
+
+xR00L02	 A00L02	 A01L02  R2div
+xR01L02	 A01L02	 A02L02  R2div
+
+xC01L02  A01L02  C2div
+xC02L02	 A02L02	 C2div
+
+xinvoutL02  A02L02  outL02  Vdd    invout
+xCoutL02  outL02  Cout
+
+
+.tran .001ns 2ns
+* .plot TRAN V(XA) V(XB) V(XC) V(XD) V(F)
+
+***********************************************************************
+* End of Deck
+***********************************************************************
+.end

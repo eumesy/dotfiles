@@ -1,0 +1,11 @@
+
+10時間くらい
+  emacsclient 関係設定全見直し
+  - e(emacsclient -nw), ee(emacsclient -c -n), ke(サーバ/クライアント全kill) の挙動調整
+  - ダブルクリックで e, ee 発生
+  - M-w でアラート無しで常に閉じられるように
+  - などなど
+
+---
+計 0時間00分
+

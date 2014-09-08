@@ -1,0 +1,437 @@
+\documentclass[]{jsarticle}
+%% \setlength{\textheight}{37\baselineskip} % 11pt
+%% \setlength{\textheight}{35\baselineskip} % 12pt
+
+%% font
+\usepackage[T1]{fontenc} % 8ビットエンコーディング <,|,> の直書き
+\usepackage{textcomp} % 文字種追加
+\usepackage[deluxe]{otf} % 文字種追加 
+
+%% math
+\usepackage{amsmath,amssymb} % 数学記号の追加
+\usepackage{bm} % 数式の太字 vector等 e.g. \bm{a}
+\usepackage{cancel} % 数式に打ち消し合いを示すための斜め線
+
+%% table
+\usepackage{array} % tabular拡張
+\usepackage{multirow}
+
+%% figure
+\usepackage{float}
+\usepackage[dvipdfmx]{graphicx}
+
+\usepackage{listings}
+\lstset{
+ language=C++,
+ basicstyle=\ttfamily,
+ numbers=none,
+ xleftmargin=4zw
+}
+\usepackage{url}
+
+\catcode`@=\active
+\def@#1@{\texttt{#1}}
+
+%% レイアウト
+
+%% title補正
+\addtolength{\textheight}{\topskip}
+\setlength{\voffset}{0pt}
+\setlength{\topmargin}{0pt}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+
+% \pagestyle{empty} % ページ番号非表示
+
+\title{計算機科学実験及演習4 - エージェント\\課題1-2 レポート}
+\author{工学部 情報学科 計算機科学コース 3回生
+\\横井 祥（よこい しょう）
+\\学籍番号：1029-23-2177}
+%% \title{English IIA E2T01; Professor Hayashi, Brian\\Homework \#1}
+%% \author{Yokoi, Sho; 1029-23-2177} % ほか
+\date{\today}\西暦
+\begin{document}
+\maketitle
+
+% \tableofcontents % 目次の表示
+% \newpage
+
+\section{プログラム概要}
+配布の \verb|client.c|をもとに、ネットワークを介してオークションに参加するクライアントを作成した。
+
+クライアントは次の機能を含む。
+\begin{itemize}
+\item サーバとの通信機能
+\item 入札額決定機能（現在は、常に商品g1にのみ入札をおこなう仕様としてある）
+\item サーバから与えられた入札結果の蓄積機能
+\item 蓄積された入札結果をSVMへの入力として識別器を作成する機能
+\end{itemize}
+
+\section{外部仕様}
+%% 生成される実行可能ファイル@svm@は、
+%% \begin{itemize}
+%% \item 学習データ（標準入力より）
+%% \item 交差検定時のデータ分割数 \verb|n|（コマンドライン引数より）
+%% \item カーネルの種類とそのパラメータ（コマンドライン引数より）
+%% \end{itemize}
+%% を受け取り、生成される識別関数の精度を出力する。
+
+%% 以下に詳細を記す。
+
+\subsection{ファイル構成}
+\begin{itemize}
+\item \verb|client.cc| : サーバとの通信、入札結果の蓄積をおこなう
+\item \verb|svm.cc, svm.hh| : 蓄積された入札結果を受け取り、線形識別器（$\alpha,\theta$の組）を生成する
+\item \verb|QuadProg++.cc, QuadProg++.hh| : 二次計画問題のソルバ
+\end{itemize}
+
+\subsection{コンパイル方法}
+同梱の \verb|Makefile| に従い\\
+\verb|$ make| \\
+にてコンパイルをおこなう。
+
+コンパイルが完了すると実行可能ファイル@client@が生成される。
+
+%% \subsection{入力ファイル}
+%% 実行可能ファイル@svm@は、学習データを入力ファイルとする。
+
+%% 学習データは、各行にm次元の特徴ベクトルとそのクラス（$1$または$-1$）がスペース区切りで記載されているものとする。
+
+%% 例えば\\
+%% @1 2 3 -1@\\
+%% は、特徴ベクトル$(1,2,3)^T$でクラス$-1$のデータを表す行である。
+
+%% 実験のウェブページで与えられたファイル@sample\_linear.dat@や@sample\_circle.dat@は適切な入力ファイルとなる。
+
+\subsection{実行方法}
+\verb|$ ./client [hostname] [port number] [agent name]|\\
+のように、実行可能ファイル \verb|client| のコマンドライン引数として順に
+\begin{enumerate}
+\item ホスト名
+\item ポート番号
+\item 自身を識別する名前
+\end{enumerate}
+を与えることで実行できる。
+
+\bigskip
+例えばサーバが、ホスト名: localhost、ポート番号: 1234で起動していた場合は、\\
+\verb|$ ./client localhost 1234 yokoi|\\
+のように実行する。
+
+\subsection{出力ファイル}
+サーバから送られてくる入札結果は、実行ファイル \verb|client|と同階層のファイルに蓄積される。
+
+オークション1日目など、該当するファイルが存在しない場合は、実行ファイル \verb|client| がファイルを自動的に生成する。
+
+\bigskip
+ファイルは、\textbf{自分以外のすべてのエージェントとすべての商品の組み合わせに対して}、それぞれ作成される。
+
+各ファイルには、\textbf{あるエージェント}の\textbf{ある商品に}対する入札行動（入札したか否か）が、そのときのすべての商品の価格とともに蓄積される。
+
+
+\subsubsection{ファイル名}
+ファイル名は次の形式をとる。\\
+\verb|bid_[agent name]_g[goods number].dat|
+
+例えばオークションの参加エージェントの名前が、
+\begin{itemize}
+\item \verb|yokoi| （自分自身）
+\item \verb|yamada|
+\item \verb|suzuki|
+\end{itemize}
+で、商品が \verb|g1, g2, g3| だった場合は（オークション1日目に）以下のファイルが生成される。
+
+\begin{itemize}
+\item \verb|bid_yamada_g1.dat|
+\item \verb|bid_yamada_g2.dat|
+\item \verb|bid_yamada_g3.dat|
+\item \verb|bid_suzuki_g1.dat|
+\item \verb|bid_suzuki_g2.dat|
+\item \verb|bid_suzuki_g3.dat|
+\end{itemize}
+
+ファイル \verb|bid_yamada_g2.dat| には、エージェント \verb|yamada| の商品 \verb|g2| に対する入札行動が、そのときのすべての商品の価格とともに蓄積される。
+
+\subsubsection{データの形式}
+データは、\textbf{1日分の入札を1行}とする。
+1行毎の形式は次の通り。\\
+\verb|[price g1] [price g2] ... [price gn] [bid?]|\\
+
+
+値はスペース区切りで格納される。
+
+はじめのn個のセルには各商品の現在価格が格納される。
+最後のセルには、ファイルが\verb|bid_yamada_g2.dat|であれば、エージェント \verb|yamada|の商品 \verb|g2|に対する入札行動が$1$（入札）,$-1$（入札せず）で格納される。
+
+
+%% \subsubsection{実行例}
+%% \begin{itemize}
+%% \item \verb|$ /.svm 10 0 < sample_linear.dat| \\
+%% 学習データとして \verb|sample_linear.dat| を与え、分割数$10$で交差検定をおこなう。
+%% 用いるカーネルは線形カーネル。
+%% \item \verb|$ /.svm 10 2 30 < circle_linear.dat| \\
+%% 学習データとして \verb|sample_circle.dat| を与え、分割数$10$で交差検定をおこなう。
+%% 用いるカーネルはGaussカーネル（$\sigma = 30$）。
+%% \end{itemize}
+
+\section{内部仕様}
+
+\subsection{\texttt{client.cc}に用意した関数}
+\verb|client.cc|には以下の関数を用意した。
+\begin{itemize}
+\item サーバから送られてきたエージェント名のリストを、変数 \verb|agent_names| に格納する関数
+\begin{lstlisting}
+void save_agent_names(char* buf, int read_size,
+     vector<char*>& agent_names);
+\end{lstlisting}
+
+\item 入札結果を蓄積するファイル名のリストを、変数 \verb|dat_names|に格納する関数
+\begin{lstlisting}
+void save_dat_names (vector<char*>& agent_names, 
+     int num_of_agents, int num_of_goods, int my_id,
+     vector<vector<string> >& dat_names);
+\end{lstlisting}
+
+\item 入札結果を蓄積するファイルへのポインタ（\verb|FILE*|）のリストを、変数 \verb|dat_fp|に格納する関数
+\begin{lstlisting}
+void make_fp_to_datfiles(
+     int num_of_agents, int num_of_goods, int my_id,
+     vector<vector<string> >& dat_names,
+     vector<vector<FILE*> >& dat_fp);
+\end{lstlisting}
+
+\item 入札結果を蓄積したすべてのファイル（\verb|bid_[agent name]_g[goods number].dat|）に対して識別器（ラグランジュ乗数 \verb|alph| と閾値 \verb|theta| の組）を生成する関数\\
+※ ただし、現在は生成した識別器は自身の入札額決定に寄与しない
+\begin{lstlisting}
+void make_disc_func(
+     int num_of_agents, int num_of_goods, int my_id,
+     vector<vector<string> >& dat_names, kernel k,
+     vector<vector<vector<double> > >& alph,
+     vector<vector<double> >& theta);
+\end{lstlisting}
+
+\item 入札額を決定する関数\\
+※ ただし、現在は「商品 \verb|g1| のみに入札しほかの商品には入札しない」という行動のみを繰り返す仕様となっている
+\begin{lstlisting}
+void decide_bid_price(int num_of_goods, char* bid_str);
+\end{lstlisting}
+
+\item サーバから送られてくる入札結果を各ファイルに蓄積する関数
+\begin{lstlisting}
+void save_bid_data(
+     char* buf, int num_of_agents, int num_of_goods, int my_id,
+     vector<vector<FILE*> >& dat_fp);
+\end{lstlisting}
+
+\end{itemize}
+
+\subsection{識別器}
+識別器は、入札結果を蓄積するファイル毎に、すなわち自分以外のすべてのエージェントとすべての商品の組み合わせ毎に生成される。
+
+たとえば、ファイル \verb|bid_yamada_g2.dat| から生成される識別器は、「エージェント \verb|yamada|は、現在のすべての商品の価格を踏まえて、商品 \verb|g2|に入札する否か」を識別（予測）する。
+
+\subsubsection{内部形式}
+識別関数を構成するラグランジュ乗数\verb|alph|および閾値 \verb|theta|は、プログラム内で次の形で格納した。
+\begin{lstlisting}
+vector<vector<vector<double> > > alph;
+vector<vector<double> > theta;
+\end{lstlisting}
+それぞれ
+\begin{lstlisting}
+alph[agent number - 1][goods number - 1]
+vector[agent number - 1][goods number - 1]
+\end{lstlisting}
+を与えることで、エージェント \verb|a[agent number]| と商品 \verb|g[goods number]|の組み合わせに対する識別器を構成する、ラグランジュ乗数の組（\verb|vector<double>|）と閾値（\verb|double|）を得ることができる。
+
+\subsection{\texttt{svm.cc, svm.hh}の仕様変更}
+グローバル変数を排除した。
+
+具体的には、
+\begin{itemize}
+\item 定数は \verb|#define|マクロにした。
+\begin{lstlisting}
+// QuadProg++ に与えるGの対角成分の補正値
+#define DIAG_COMPONENT_REV (1.0e-7)
+// Lagrange 乗数を無視する閾値
+#define SV_THRESHOLD (1.0e-8)
+\end{lstlisting}
+\item カーネルの種類および与えるパラメータはまとめて構造体とし、SVMを生成する関数などへ引数渡しするようにした。
+\begin{lstlisting}
+enum ktype {LINEAR, POLYNOMIAL, GAUSS, SIGMOID};
+
+typedef struct ks {
+  enum ktype kernel_type; // カーネルの種類
+  int param_d; // 多項式カーネルのパラメータd
+  double param_s; // Gauss カーネルのパラメータ\sigma
+  double param_a; // シグモイドカーネルのパラメータa
+  double param_b; // シグモイドカーネルのパラメータb
+} *kernel;
+\end{lstlisting}
+\end{itemize}
+
+\section{実行結果}
+配布のサーバ \verb|server|を起動し、作成した \verb|client|と、配布のままのクライアント \verb|client-orig|を接続した。
+
+自動でオークションの参加と、データファイルの生成、データの蓄積がおこなわれることが確認できた。
+
+\begin{itemize}
+\item \verb|server|
+\begin{lstlisting}
+$ ./server 1234 2 2
+// localhost:1234 にてオークションを開始. 商品数:2, エージェント数:2
+\end{lstlisting}
+\item \verb|client|
+\begin{lstlisting}
+$ ./client localhost 1234 yokoi
+// 入力は以上. 以下, 自動でオークション参加
+
+Agent Names:
+  a1: yokoi
+  a2: yamada
+Your ID: 1
+Num of Goods: 2
+Num of Agents: 2
+make discriminant functions...
+done.
+10
+g1:0 g2:0 a1:10 a2:11
+g1:1 g2:0
+10
+g1:1 g2:0 a1:10 a2:10
+g1:2 g2:0
+10
+g1:2 g2:0 a1:10 a2:00
+end
+winner  g1:1 g2:2
+price   g1:2 g2:0  
+\end{lstlisting}
+\item \verb|client-orig|\\
+競合のエージェントとして、配布の \verb|client|をそのまま用いた。
+
+\begin{lstlisting}
+$ ./client localhost 1234
+PLEASE INPUT YOUR NAME
+yamada // 入力
+a1:yokoi a2:yamada
+Your ID: 2
+2,2
+11 // 入力
+g1:0 g2:0 a1:10 a2:11
+g1:1 g2:0
+10 // 入力
+g1:1 g2:0 a1:10 a2:10
+g1:2 g2:0
+00 // 入力
+g1:2 g2:0 a1:10 a2:00
+end
+// press RETURN
+winner  g1:1 g2:2
+price   g1:2 g2:0
+// press RETURN
+\end{lstlisting}
+
+\item データ蓄積ファイル\\
+入札結果がファイルに正しく格納された。
+
+\begin{lstlisting}
+$ cat bid_yamada_g1.dat
+0 0 1
+1 0 1
+2 0 -1
+
+$ cat bid_yamada_g2.dat
+0 0 1
+1 0 -1
+2 0 -1
+\end{lstlisting}
+\end{itemize}
+
+\section{おこなった工夫}
+\begin{itemize}
+\item \verb|client|を利用するユーザは、実行コマンド一行のみを端末から入力すれば良い仕様とした。
+
+オークション終了時にサーバから送られてくる文字列（各商品の取得者や最終価格）を受け取る工程も自動化し、サーバとの通信に利用するソケットや各データファイルへのポインタも正しくcloseするようにした。
+
+\item サーバから送られてくる情報を一部改変し、ユーザにとって見やすいものとした。\\
+ユーザー名一覧:
+\begin{lstlisting}
+// original
+a1:yokoi a2:yamada
+// 改修後
+Agent Names:
+  a1: yokoi
+  a2: yamada
+\end{lstlisting}
+商品数とデータ数:
+\begin{lstlisting}
+// original
+2,2
+// 改修後
+Num of Goods: 2
+Num of Agents: 2
+\end{lstlisting}
+
+\item 他エージェントをエージェント名で識別できるようにした。\\
+オークション開始時のログイン順によって、エージェントを識別するID \verb|a1, a2, ...|と実際のエージェントとの関連付けが変わってしまう。
+そこで、サーバから送られてくるエージェント名の情報をもとに他エージェントを識別することとした。
+
+\bigskip
+ただし、エージェント名の付け方によっては、エージェント名による他エージェントの識別困難あるいは不可能となる可能性がある。
+\begin{itemize}
+\item 複数のエージェントが同一の名前を持つことができる
+\item エージェント名として「\verb|yamada a2:suzuki|」等の文字列が許容される
+\end{itemize}
+などの理由による。
+
+\end{itemize}
+
+\section{課題}
+\begin{itemize}
+\item 現在識別器は常に$\sigma = 10$のGaussカーネルを用いて作成している。カーネルの種類およびパラメータを少しずつ動かしながら交差検定をおこない、最も適切な識別器を生成できるようにしたい。
+
+\item 現在は全入札結果を蓄積しているが、これではデータが膨らみ過ぎ、とくにパラメータを動かしながら交差検定をおこなう場合、識別器生成の付け方計算量が大きくなる可能性がある。
+そこで、
+\begin{itemize}
+\item 完全に重複するデータの除外
+\begin{lstlisting}
+3 5 7 13 1
+3 5 7 13 1
+\end{lstlisting}
+↓
+\begin{lstlisting}
+3 5 7 13 1
+\end{lstlisting}
+\item 同一のベクトル$(price_{g1},price_{g2}, \cdots,price_{gn})$に対して別の入札行動が発生した場合のデータの除外
+\begin{lstlisting}
+3 5 7 13 1
+3 5 7 13 -1
+\end{lstlisting}
+↓
+\begin{lstlisting}
+[deleted]
+\end{lstlisting}
+\item サポートベクタに影響しやすい入札結果のみを保存
+\begin{lstlisting}
+3 5 7 13 1
+3 5 7 14 1
+3 5 7 15 1
+3 5 7 16 -1
+3 5 7 17 -1
+3 5 7 18 -1
+\end{lstlisting}
+↓
+\begin{lstlisting}
+3 5 7 15 1
+3 5 7 16 -1
+\end{lstlisting}
+\end{itemize}
+等の工夫をおこないたい。
+
+\end{itemize}
+
+
+\bigskip
+\begin{flushright}
+以上
+\end{flushright}
+\end{document}

@@ -1,0 +1,248 @@
+\documentclass[]{jsarticle}
+%% \setlength{\textheight}{37\baselineskip} % 11pt
+%% \setlength{\textheight}{35\baselineskip} % 12pt
+
+%% font
+\usepackage[T1]{fontenc} % 8ビットエンコーディング
+% <,|,> の直書き
+\usepackage{textcomp} % 文字種追加
+\usepackage{otf} % 文字種追加
+
+%% math
+\usepackage{amsmath,amssymb} % 数学記号の追加
+\usepackage{bm} % 数式の太字 vector等 e.g. \bm{a}
+\usepackage{cancel} % 数式に打ち消し合いを示すための斜め線
+
+%% table
+\usepackage{array} % tabular拡張
+\usepackage{multirow}
+
+%% figure
+\usepackage{float}
+
+\usepackage{listings}
+\lstset{
+%% language=Scheme,
+ basicstyle=\ttfamily,
+ numbers=none,
+ xleftmargin=4zw
+}
+\usepackage{url}
+
+\catcode`@=\active
+\def@#1@{\texttt{#1}}
+
+%% レイアウト
+
+%% title補正
+\addtolength{\textheight}{\topskip}
+\setlength{\voffset}{0pt}
+\setlength{\topmargin}{0pt}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+
+%% \pagestyle{empty} % ページ番号非表示
+
+\title{計算機科学実験及演習4 - エージェント\\課題1-1 レポート}
+\author{工学部 情報学科 計算機科学コース 3回生
+\\横井 祥（よこい しょう）
+\\学籍番号：1029-23-2177}
+%% \title{English IIA E2T01; Professor Hayashi, Brian\\Homework \#1}
+%% \author{Yokoi, Sho; 1029-23-2177} % ほか
+\date{\today}\西暦
+\begin{document}
+\maketitle
+
+%% \tableofcontents % 目次の表示
+
+
+\section{プログラム概要}
+入力として学習データを受け取り、SVMにより識別関数を生成して出力するプログラムを作成した。
+
+\section{外部仕様}
+生成される実行可能ファイル@svm@は、
+学習データを受け取り識別関数@f@を出力する。
+
+% 入力として渡すことのできる任意次元の特徴ベクトルを持つ学習データを渡すことができるが、
+% 今回の課題における出力は、@gnuplot@に渡す都合上2次元を仮定した。
+
+以下に詳細を記す。
+
+\subsection{ファイル名}
+\begin{itemize}
+\item @svm.cc@ : 学習データを受け取り識別関数を返す、メインの機能を担う
+\item @QuadProd++.cc, QuadProd++.hh@ : 二次計画問題のsolver
+\item @Makefile@
+\end{itemize}
+
+\subsection{コンパイル方法}
+同梱の@Makefile@に従い\\
+@\$ make@\\
+にてコンパイルをおこなう。
+
+コンパイルが完了すると実行可能ファイル@svm@が生成される。
+
+\subsection{入力ファイル}
+実行可能ファイル@svm@、学習データを入力ファイルとする。
+
+学習データは、各行にn次元の特徴ベクトルとそのクラス（$1$または$-1$）がスペース区切りで記載されているものとする。
+例えば\\
+@1 2 3 -1@\\
+は、特徴ベクトル$(1,2,3)^T$でクラス$-1$のデータを表す行である。
+
+実験のウェブページで与えられたファイル@sample\_linear.dat@や@sample\_circle.dat@は適切な入力ファイルとなる。
+
+\subsection{出力ファイル}
+実行可能ファイル@svm@は、
+\begin{itemize}
+\item 識別関数@f@（を表す@gnuplot@形式の式）
+\item 二次計画問題の解$\alpha$（Lagrange乗数）を表す配列@alph[]@の値
+\item 識別関数の閾値$\theta$を表す@theta@の値
+\end{itemize}
+を出力する。
+
+本課題では、特に@f@の出力に際して、特徴ベクトル空間の次元を2と仮定した。
+
+特徴ベクトル空間の次元が3以上の場合も$\alpha$と$\theta$の値は正しく出力される。
+
+出力ファイルをそのまま@gnuplot@に渡せるよう、$\alpha$と$\theta$は@gnuplot@のコメントとなる形式としてある。
+
+出力ファイルの例：
+\begin{lstlisting}
+f(x,y) = (-0.208333) * (1 + (1.000000) * x + (-1.000000) * y)**2 + \
+(-0.208333) * (1 + (-1.000000) * x + (1.000000) * y)**2 + \
+(0.083333) * (1 + (-1.000000) * x + (-1.000000) * y)**2 + \
+(0.333333) * (1 + (0.500000) * x + (0.500000) * y)**2 + \
+(-0.666667)
+# alph[0] = -0.000000
+# alph[1] = 0.208333
+# alph[2] = 0.208333
+# alph[3] = 0.083333
+# alph[4] = 0.000000
+# alph[5] = -0.000000
+# alph[6] = 0.000000
+# alph[7] = -0.000000
+# alph[8] = 0.333333
+# theta = -0.666667
+\end{lstlisting}
+
+\subsection{実行方法}
+1番目のコマンドライン引数でカーネルトリックの種類を、2番目以後のコマンドライン引数はカーネルに与えるパラメータを渡す。
+
+カーネルとして用いる関数の形、およびパラメータ名は講義資料に準ずる。
+
+\begin{itemize}
+\item 線形カーネル（内積。カーネルトリックなし）\\
+1番目のコマンドライン引数: @0@
+\item 多項式カーネル\\
+1番目のコマンドライン引数: @1@\\
+2番目のコマンドライン引数でパラメータ$d$を与える
+\item Gaussカーネル\\
+1番目のコマンドライン引数: @2@\\
+2番目のコマンドライン引数でパラメータ$\sigma$を与える
+\item シグモイドカーネル\\
+1番目のコマンドライン引数: @3@\\
+2番目および3番目のコマンドライン引数でパラメータ$a$および$b$を与える
+\end{itemize}
+
+\subsubsection{例}
+\begin{itemize}
+\item @\$ /.svm 0 < sample\_linear.dat > out0@\\
+学習データとして@sample\_linear.dat@を与え、線形カーネルのSVMで識別関数を生成。\\
+生成した識別関数@f@を@out0@に出力する。
+\item @\$ /.svm 2 10 < sample\_circle.dat > out1@\\
+学習データとして@sample\_circle.dat@を与え、Gaussカーネル（$\sigma = 10$）を用いたSVMで識別関数を生成。\\
+生成した識別関数@f@を@out1@に出力する。
+\end{itemize}
+
+\section{内部仕様}
+\subsection{学習データの内部形式}
+与えた学習データは、
+@vector<vector<double> > x@に学習データの特徴ベクトル$\bm{x}$を順に格納し、
+@vector<double> y@にそのクラスを順に格納する。
+
+二次計画問題の解は、@alph[]@に格納する。
+
+\subsection{グローバル変数}
+\begin{itemize}
+\item コマンドライン引数で与える情報（カーネルの種類およびカーネルに与えるパラメータ）
+\begin{lstlisting}
+int kernel; // カーネルの種類
+int param_d; // 多項式カーネル
+double param_s; // ガウスカーネル
+double param_a; // シグモイドカーネル
+double param_b; // シグモイドカーネル
+\end{lstlisting}
+
+\item 定数
+\begin{lstlisting}
+// QuadProd++ に与えるGの対角成分の補正値
+const double diag_component_rev = 1.0e-9;
+// Lagrange乗数を無視する閾値
+const double sv_threshold = 1.0e-8;
+\end{lstlisting}
+\end{itemize}
+
+\subsection{関数}
+\begin{itemize}
+\item ベクトルを計算するための関数
+\begin{lstlisting}
+// 内積
+double inner_product_v(vector<double>& v1, vector<double>& v2);
+// スカラー倍
+vector<double> c_v(double c, vector<double>& v);
+// 和
+vector<double> plus_v(vector<double>& v1, vector<double>& v2);
+// 差
+vector<double> minus_v(vector<double>& v1, vector<double>& v2);
+// ユークリッドノルムの二乗（＝ベクトルの各要素の平方和）
+double norm_square_v(vector<double>& v);
+\end{lstlisting}
+
+\item 2つのベクトルに対して、そのカーネルを計算する関数
+\begin{lstlisting}
+// 線形カーネル
+double kernel_0(vector<double>& x1, vector<double>& x2);
+// 多項式カーネル
+double kernel_1(vector<double>& x1, vector<double>& x2);
+// Gauss カーネル
+double kernel_2(vector<double>& x1, vector<double>& x2);
+// シグモイドカーネル
+double kernel_3(vector<double>& x1, vector<double>& x2);
+// 以上4種の関数を格納する関数
+double (*kernel_func[4])(vector<double>&, vector<double>&) =
+{ kernel_0, kernel_1, kernel_2, kernel_3 };
+\end{lstlisting}
+
+\item エラーメッセージを出力した上でプロセスを終了させる関数（コマンドライン引数の過不足に際して実行される）
+\begin{lstlisting}
+void alert_arg();
+\end{lstlisting}
+
+\item 学習データを標準入力から読み込み、内部形式に格納する関数
+\begin{lstlisting}
+void read_data(vector<vector<double> >& x, vector<int>& y);
+\end{lstlisting}
+
+\item 二次計画問題を解く関数。求めたLagrange乗数は配列@alph[]@に格納される
+\begin{lstlisting}
+void solve_quad_problem
+  (vector<vector<double> >& x, vector<int>& y,
+   double alph[MATRIX_DIM]);
+\end{lstlisting}
+\end{itemize}
+
+\section{評価結果}
+% \subsection{二次計画問題が正しく解けているか確認}
+% 講義資料にて与えられたサンプルデータに対して、二次計画問題が正しく解けているか確認した。
+
+
+
+\section{考察}
+\section{感想}
+
+\bigskip
+\begin{flushright}
+以上
+\end{flushright}
+\end{document}

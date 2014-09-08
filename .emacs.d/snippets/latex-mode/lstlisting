@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: lstlisting
+# key: lstlisting
+# --
+\begin{lstlisting}
+$0
+\end{lstlisting}

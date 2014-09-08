@@ -1,0 +1,323 @@
+control: ^
+shift: ⇧
+opiton: ⌥
+
+* 確認
+** terminalに渡るキーコード
+- Ctrl-V -> キー入力
+- 自前の何かを作る
+http://d.hatena.ne.jp/ka_maru/20111206/1323143769
+  
+** Emacsでmapされているもの
+M-x describe-bindings 全て確認
+M-x describe-key RET [key]
+
+コマンド確認
+M-x apropos-command RET 検索ワード RET
+
+* (kbd)の書き方
+
+C-
+M-
+TAB
+RET
+<f11>
+<up><down><right><left>
+
+** Shift の扱い
+(kbd "A") // Shift
+(kbd "M-A") // Meta Shift
+(kbd "C-S-a") // Ctrl Shift
+(kbd "C-:") // 例外
+
+* 知識
+** ターミナルはASCIIコードの列しか受け取れない
+- ターミナル（エミュレータ）上では原則として一つのキー入力は一つのASCIIコードとしてアプリケーションに渡される [1]
+- ASCIIコード
+  
+  http://d.hatena.ne.jp/futashika/20081026/1225000327
+  http://d.hatena.ne.jp/sugyan/20120224/1330051378
+
+  - Control キー
+    - 下位5ビット分のみを返すマスク
+      アルファベット26種+@, [, \, ], ^, _の記号6種
+      http://d.hatena.ne.jp/sugyan/20120224/1330051378
+      に適用する事で、別のASCIIコードが返される
+  
+  ASCIIコード表
+  http://www9.plala.or.jp/sgwr-t/c_sub/ascii.html
+  http://hpcgi3.nifty.com/prismwave/wiki/wiki.cgi?p=ASCII%A5%B3%A1%BC%A5%C9%C9%BD
+
+- *エスケープシーケンス (escape sequence)* とは、コンピュータシステムにおいて、通常の文字列では表せない特殊な文字や機能を、規定された特別な文字の並びにより表したもの。狭義には、エスケープコード (0x1B, ESC) に始まる一連のバイト列のことをいう。 [Wikipedia-J]
+
+** 端末へ入力した組合せをASCIIコードの列に変換するための機構
+*** Send HEX Code
+*** Send Escape Sequence
+
+escape sequence のフォーマット    
+http://sanrinsha.lolipop.jp/blog/2012/07/%E3%82%BF%E3%83%BC%E3%83%9F%E3%83%8A%E3%83%AB%E3%81%A7ctrltab%E3%81%A8%E3%81%8B%E3%82%92%E4%BD%BF%E3%81%86.html
+
+- iTerm
+^[ [1;5A
+   ----- 送信コード <- ここを入力する
+-- escape部
+
+- Terminal
+\033hogehoge
+----
+
+- Emacs
+\ehoge
+--
+
+- xterm
+http://paranantoka.vs.land.to/term/xterm.html
+
+
+** Emacs 側でASCIIコードの列をなんらかの組合せに解釈するための機構
+*** event-apply-hoge-modifier 関数
+---
+C-x @ S         event-apply-shift-modifier
+C-x @ a         event-apply-alt-modifier
+C-x @ c         event-apply-control-modifier
+C-x @ h         event-apply-hyper-modifier
+C-x @ m         event-apply-meta-modifier
+C-x @ s         event-apply-super-modifier
+---
+たとえば C-x @ c RET で、 C-RET と扱ってくれる
+
+C-S-SPC などに対しては自前の関数を用意すれば良い [1]
+
+*** input-decode-map
+(define-key input-decode-map "\e[1;5A" [C-up])
+\e ... escape
+[1;5A ... 送信コード <- ここを受け取る
+
+*** key-translation-map
+これは別の話?
+http://ergoemacs.org/emacs/emacs_key-translation-map.html
+
+* Usage
+** Send HEX Code(特定のコード列を投げる) -> event-apply-hoge-modifier (矢印キー以外とのコンビネーションに利用)
+http://d.hatena.ne.jp/sugyan/20120228/1330392943
+
+*** Cheet Sheet
+C-x @ S (0x18 0x40 0x53) event-apply-shift-modifier
+C-x @ a (0x18 0x40 0x61) event-apply-alt-modifier
+C-x @ c (0x18 0x40 0x63) event-apply-control-modifier
+C-x @ h (0x18 0x40 0x68) event-apply-hyper-modifier
+C-x @ m (0x18 0x40 0x6d) event-apply-meta-modifier
+C-x @ s (0x18 0x40 0x73) event-apply-super-modifier
+
+C-x @ C (0x18 0x40 0x43) event-apply-control-shift-modifier
+C-x @ M (0x18 0x40 0x4d) event-apply-control-meta-modifier
+
+*** iTerm
+Send HEX Code
+- for C-*
+^;      0x18 0x40 0x63 0x3b
+^'      0x18 0x40 0x63 0x27
+^,      0x18 0x40 0x63 0x2c
+^.      0x18 0x40 0x63 0x2e
+^-      0x18 0x40 0x63 0x2d
+^=      0x18 0x40 0x63 0x3d
+^RET    0x18 0x40 0x63 0x0d
+^TAB    0x18 0x40 0x63 0x09
+
+- for C-M-S-* (C-M-<shift同時押しが必要なキー>)
+^⌥⇧%  0x18 0x40 0x4d 0x25
+
+*** Emacs (関数の用意)
+;; C-x @ C (0x18 0x40 0x43) event-apply-control-shift-modifier
+(defun event-apply-control-shift-modifier (ignore-prompt)
+  "\\Add the Control+Shift modifier to the following event.
+For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Shift-SPC."
+  (vector (event-apply-modifier
+           (event-apply-modifier (read-event) 'shift 25 "S-")
+           'control 26 "C-")))
+(define-key function-key-map (kbd "C-x @ C") 'event-apply-control-shift-modifier)
+
+;; C-x @ M (0x18 0x40 0x4d) event-apply-control-meta-modifier
+(defun event-apply-meta-control-modifier (ignore-prompt)
+  (vector (event-apply-modifier
+           (event-apply-modifier (read-event) 'control 26 "C-")
+           'meta 27 "M-")))
+(define-key function-key-map (kbd "C-x @ M") 'event-apply-meta-control-modifier)
+
+** Send Escape Sequence -> input-decode-map (矢印キー/(Functionキー)とのコンビネーションに利用)
+https://gist.github.com/terjesb/4257641
+... といいつつ結局全部こっちでやったな
+
+*** iTerm
+**** 直接編集
+emacsにエスケープシーケンスを楽して投げたい
+  inputrc?
+    これ話違うっぽいな…
+  keyremap.xml?
+    COMMAND_L, COMMAND_R 両方入れたりするのが面倒...
+    https://pqrs.org/macosx/keyremap4macbook/xml.html.ja
+    https://github.com/tekezo/Files/blob/master/KeyRemap4MacBook/private.append_escape_for_keys/private.xml
+    https://groups.google.com/forum/#!msg/keyremap4macbook/LOjF297kYe4/ZSyZ7C7-0iAJ
+
+    MODIFIERFLAG_EITHER_LEFT_OR_RIGHT_COMMAND なんてあるんかい...
+    
+  itermのplist編集?
+    # default?
+    /Applications/iTerm.app/Contents/Resources/PresetKeyMappings.plist
+    # user?
+    ~/Library/Preferences/com.googlecode.iterm2.plist
+
+
+**** GUI
+
+
+Send Escape Sequence
+
+- Loaded xterm Defaults.
+
+# 2: S
+Send ^[ [1;2A〜D
+# 5: C
+Send ^[ [1;5A〜D
+# 6: C+S
+Send ^[ [1;6A〜D
+
+- Verified/added escapes for:
+"^[" よりあとの部分を入力する
+
+# 3: M
+# 4: M+S
+# 7: C+M
+# 8: C+M+S
+
+M-x describe-bindings
+M-0 2 A S-up とかもある
+
+M-[2 7 ; 1 3 ; 9 ~ <C-M-tab>
+
+M-[2 7 ; 6 ; 1 3 ~ <C-S-return>
+
+M-[2 7 ; 6 ; 6 3 ~ C-?
+M-[2 7 ; 6 ; 6 2 ~ C->
+M-[2 7 ; 6 ; 6 0 ~ C-<
+M-[2 7 ; 6 ; 5 8 ~ C-:
+M-[2 7 ; 6 ; 4 3 ~ C-+
+M-[2 7 ; 6 ; 4 2 ~ C-*
+M-[2 7 ; 6 ; 4 1 ~ C-)
+M-[2 7 ; 6 ; 4 0 ~ C-(
+M-[2 7 ; 6 ; 3 8 ~ C-&
+M-[2 7 ; 6 ; 3 7 ~ C-%
+M-[2 7 ; 6 ; 3 6 ~ C-$
+M-[2 7 ; 6 ; 3 5 ~ C-#
+M-[2 7 ; 6 ; 3 4 ~ C-"
+M-[2 7 ; 6 ; 3 3 ~ C-!
+
+M-[2 7 ; 5 ; 6 1 ~ C-=
+M-[2 7 ; 5 ; 5 9 ~ C-;
+M-[2 7 ; 5 ; 5 7 ~ C-9
+M-[2 7 ; 5 ; 4 9 ~ C-1
+M-[2 7 ; 5 ; 4 8 ~ C-0
+M-[2 7 ; 5 ; 4 7 ~ C-/
+M-[2 7 ; 5 ; 4 6 ~ C-.
+M-[2 7 ; 5 ; 4 5 ~ C--
+M-[2 7 ; 5 ; 4 4 ~ C-,
+M-[2 7 ; 5 ; 3 9 ~ C-'
+
+M-[2 7 ; 5 ; 1 3 ~ <C-return>
+M-[2 7 ; 5 ; 9 2 ~ C-\
+
+M-[2 7 ; 1 4 ; 6 3 ~ C-M-?
+M-[2 7 ; 1 4 ; 6 2 ~ C-M->
+M-[2 7 ; 1 4 ; 6 0 ~ C-M-<
+M-[2 7 ; 1 4 ; 5 8 ~ C-M-:
+M-[2 7 ; 1 4 ; 4 3 ~ C-M-+
+M-[2 7 ; 1 4 ; 4 2 ~ C-M-*
+M-[2 7 ; 1 4 ; 4 1 ~ C-M-)
+M-[2 7 ; 1 4 ; 4 0 ~ C-M-(
+M-[2 7 ; 1 4 ; 3 8 ~ C-M-&
+M-[2 7 ; 1 4 ; 3 7 ~ C-M-%
+M-[2 7 ; 1 4 ; 3 6 ~ C-M-$
+M-[2 7 ; 1 4 ; 3 5 ~ C-M-#
+M-[2 7 ; 1 4 ; 3 4 ~ C-M-"
+M-[2 7 ; 1 4 ; 3 3 ~ C-M-!
+
+M-[2 7 ; 1 3 ; 6 1 ~ C-M-=
+M-[2 7 ; 1 3 ; 5 9 ~ C-M-;
+M-[2 7 ; 1 3 ; 5 7 ~ C-M-9
+M-[2 7 ; 1 3 ; 5 6 ~ C-M-8
+M-[2 7 ; 1 3 ; 5 5 ~ C-M-7
+M-[2 7 ; 1 3 ; 5 4 ~ C-M-6
+M-[2 7 ; 1 3 ; 5 3 ~ C-M-5
+M-[2 7 ; 1 3 ; 5 2 ~ C-M-4
+M-[2 7 ; 1 3 ; 5 1 ~ C-M-3
+M-[2 7 ; 1 3 ; 5 0 ~ C-M-2
+M-[2 7 ; 1 3 ; 4 9 ~ C-M-1
+M-[2 7 ; 1 3 ; 4 8 ~ C-M-0
+M-[2 7 ; 1 3 ; 4 7 ~ C-M-/
+M-[2 7 ; 1 3 ; 4 6 ~ C-M-.
+M-[2 7 ; 1 3 ; 4 5 ~ C-M--
+M-[2 7 ; 1 3 ; 4 4 ~ C-M-,
+M-[2 7 ; 1 3 ; 3 9 ~ C-M-'
+M-[2 7 ; 1 3 ; 1 3 ~ <C-M-return>
+M-[2 7 ; 1 3 ; 9 2 ~ C-M-\
+
+
+*** Emacs
+;; ;;; S (for org-mode)
+;; (define-key input-decode-map "\e[1;2A" [S-up]) ;; <select> を上書きするかも
+;; (define-key input-decode-map "\e[1;2B" [S-down])
+;; (define-key input-decode-map "\e[1;2C" [S-right])
+;; (define-key input-decode-map "\e[1;2D" [S-left])
+;; ;;; M
+;; (define-key input-decode-map "\e[1;3A" [M-up])
+;; (define-key input-decode-map "\e[1;3B" [M-down])
+;; (define-key input-decode-map "\e[1;3C" [M-right])
+;; (define-key input-decode-map "\e[1;3D" [M-left])
+;; ;;; M-S (for org-mode)
+;; (define-key input-decode-map "\e[1;4A" [S-M-up])
+;; (define-key input-decode-map "\e[1;4B" [S-M-down])
+;; (define-key input-decode-map "\e[1;4C" [S-M-right])
+;; (define-key input-decode-map "\e[1;4D" [S-M-left])
+;; ;;; C
+;; (define-key input-decode-map "\e[1;5A" [C-up])
+;; (define-key input-decode-map "\e[1;5B" [C-down])
+;; (define-key input-decode-map "\e[1;5C" [C-right])
+;; (define-key input-decode-map "\e[1;5D" [C-left])
+;; ;;; C-S (for org-mode)
+;; (define-key input-decode-map "\e[1;6A" [C-S-up])
+;; (define-key input-decode-map "\e[1;6B" [C-S-down])
+;; (define-key input-decode-map "\e[1;6C" [C-S-right])
+;; (define-key input-decode-map "\e[1;6D" [C-S-left])
+;; ;;; C-M
+;; (define-key input-decode-map "\e[1;7A" [C-M-up])
+;; (define-key input-decode-map "\e[1;7B" [C-M-down])
+;; (define-key input-decode-map "\e[1;7C" [C-M-right])
+;; (define-key input-decode-map "\e[1;7D" [C-M-left])
+;; ;;; C-M-S
+;; (define-key input-decode-map "\e[1;8A" [C-M-S-up])
+;; (define-key input-decode-map "\e[1;8B" [C-M-S-down])
+;; (define-key input-decode-map "\e[1;8C" [C-M-S-right])
+;; (define-key input-decode-map "\e[1;8D" [C-M-S-left])
+
+* 利点欠点
+- この設定は"iTerm2での"設定なので、Emacsを起動していない状態のシェルなどでも<Ctrlキー + ";"キー>を押した際にC-x @ c ;が送られることになってしまう。
+  http://d.hatena.ne.jp/sugyan/20120228/1330392943
+- ただし、zsh もマルチストロークのキーバインドに対応しているので、相応の機能を書いておけば良い [1]
+  
+
+* 
+
+- 連続押しとしてアプリケーションに渡す機能
+  - iTerm
+    - option を +Esc とする
+    - Keys で同時押しを...
+      - Send Escape Sequence
+      - Send HEX Code
+
+
+keyboard -> terminal      
+  iTerm の設定で同時押しを連続押しに変換
+
+
+
+[1] http://d.akinori.org/2012/01/02/%E3%82%BF%E3%83%BC%E3%83%9F%E3%83%8A%E3%83%AB%E3%81%AEemacs%E3%81%A7%E3%82%82%E7%89%B9%E6%AE%8A%E3%82%AD%E3%83%BC%E3%82%B3%E3%83%B3%E3%83%9C/

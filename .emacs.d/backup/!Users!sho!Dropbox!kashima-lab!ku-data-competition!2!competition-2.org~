@@ -1,0 +1,7 @@
+http://universityofbigdata.net/
+
+- [X] 小数点付きで答えるの?
+  - [X] AUCって何?
+    - http://d.hatena.ne.jp/yutakikuchi/20120910/1347233734
+    - > Area Under the Curveのこと。ROC曲線の曲線よりしたの面積。分類器の精度評価に使う。
+

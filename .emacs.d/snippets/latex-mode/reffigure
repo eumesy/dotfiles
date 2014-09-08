@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: reffigure
+# key: reffigure
+# --
+図\ref{fig:$1}

@@ -1,0 +1,89 @@
+% Created 2013-12-22 日 21:26
+\documentclass[11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{fixltx2e}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{rotating}
+\usepackage[normalem]{ulem}
+\usepackage{amsmath}
+\usepackage{textcomp}
+\usepackage{marvosym}
+\usepackage{wasysym}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\tolerance=1000
+\author{sho}
+\date{\today}
+\title{hoge}
+\hypersetup{
+  pdfkeywords={},
+  pdfsubject={},
+  pdfcreator={Emacs 24.3.1 (Org mode 8.2.4)}}
+\begin{document}
+
+\maketitle
+\tableofcontents
+
+\begin{center}
+\begin{tabular}{llrrrrr}
+1 &  & time & v(X*) & time & v(F) & delay\\
+XA & 立ち上がり & 1.050\,(-09) & 1.250\,(+00) & 1.430\,(-09) & 1.253\,(+00) & 3.8\,(-10)\\
+ & 立ち下がり & 5.150\,(-09) & 1.250\,(+00) & 5.450\,(-09) & 1.246\,(+00) & 3\,(-10)\\
+XB & 立ち上がり & 9.050\,(-09) & 1.250\,(+00) & 9.463\,(-09) & 1.245\,(+00) & 4.13\,(-10)\\
+ & 立ち下がり & 1.315\,(-08) & 1.250\,(+00) & 1.347\,(-08) & 1.245\,(+00) & 3.2\,(-10)\\
+XC & 立ち上がり & 1.705\,(-08) & 1.250\,(+00) & 1.749\,(-08) & 1.247\,(+00) & 4.4\,(-10)\\
+ & 立ち下がり & 2.115\,(-08) & 1.250\,(+00) & 2.148\,(-08) & 1.255\,(+00) & 3.3\,(-10)\\
+XD & 立ち上がり & 2.505\,(-08) & 1.250\,(+00) & 2.552\,(-08) & 1.246\,(+00) & 4.7\,(-10)\\
+ & 立ち下がり & 2.915\,(-08) & 1.250\,(+00) & 2.949\,(-08) & 1.244\,(+00) & 3.4\,(-10)\\
+\end{tabular}
+\end{center}
+4.7E-10
+
+\begin{center}
+\begin{tabular}{llrrrrrlr}
+1 &  &  &  &  &  &  &  & \\
+- & invin & nand4 & invfirst & invout & F.O.(all) & L.E.(all) & Gain(all) & \\
+Gain/step &  &  &  &  &  &  &  & \\
+Logical & Effort & - & 1.00 & 2.00 & 1.00 & 1.00 &  & 20\\
+2 & 40 & 3.419951893 &  &  &  &  &  & \\
+Gain & - & 3.42 & 3.42 & 3.42 & 3.42 &  &  & \\
+ &  &  &  &  &  &  &  & \\
+F.O. & - & 3.42 & 1.71 & 3.42 & 3.42 &  &  & \\
+ &  &  &  &  &  &  &  & \\
+Input & Capacitance(um) & - & 6.00 & 20.52 & 35.09 & 120.00 &  & \\
+ &  &  &  &  &  &  &  & \\
+Load & Capacitance(um) & 6 & 20.52 & 35.09 & 120.00 & 410.39 &  & \\
+ &  &  &  &  &  &  &  & \\
+PMOS & - &  &  & 2.00 & 2.00 & 2.00 & 2.00 & \\
+ &  &  &  &  &  &  &  & \\
+NMOS & - &  &  & 1.00 & 4.00 & 1.00 & 1.00 & \\
+ &  &  &  &  &  &  &  & \\
+PMOS(um) &  & - & 4.00000 & 6.83990 &  &  &  & \\
+23.39214 &  & 80.00000 &  &  &  &  &  & \\
+ &  &  &  &  &  &  &  & \\
+NMOS(um) &  & - & 2.00000 &  & 13.67981 &  &  & \\
+11.69607 &  & 40.00000 &  &  &  &  &  & \\
+\end{tabular}
+\end{center}
+
+\begin{center}
+\begin{tabular}{llrrrr}
+1 & - & invin & nand4 & invfirst & invout\\
+\hline
+L.E. & - & 1.00 & 2.00 & 1.00 & 1.00\\
+Gain & - & 3.42 & 3.42 & 3.42 & 3.42\\
+F.O. & - & 3.42 & 1.71 & 3.42 & 3.42\\
+Input-Capacitance(um) & - & 6.00 & 20.52 & 35.09 & 120.00\\
+Load-Capacitance(um) & 6 & 20.52 & 35.09 & 120.00 & 410.39\\
+PMOS & - & 2.00 & 2.00 & 2.00 & 2.00\\
+NMOS & - & 1.00 & 4.00 & 1.00 & 1.00\\
+PMOS(um) & - & 4.00000 & 6.83990 & 23.39214 & 80.00000\\
+NMOS(um) & - & 2.00000 & 13.67981 & 11.69607 & 40.00000\\
+\end{tabular}
+\end{center}
+% Emacs 24.3.1 (Org mode 8.2.4)
+\end{document}

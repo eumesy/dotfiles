@@ -1,0 +1,44 @@
+** org-capture
+色々 Org Capture する | Amrta
+http://skalldan.wordpress.com/2011/07/16/%E8%89%B2%E3%80%85-org-capture-%E3%81%99%E3%82%8B-2/
+iPhone で Org Capture | Amrta
+http://skalldan.wordpress.com/2011/08/18/iphone-%e3%81%a7-org-capture/
+org-capture を使ってみる - 水鏡日記
+http://d.hatena.ne.jp/suikyounohito/20120430/1335766189
+org-capture ～Emacs + org-modeで素早くメモをとる新しい方法～ - (rubikitch loves (Emacs Ruby CUI Books))
+http://d.hatena.ne.jp/rubikitch/20100819/org
+[O] Alfred workflow for org-capture
+http://lists.gnu.org/archive/html/emacs-orgmode/2013-09/msg00519.html
+Org-Mode for GNU Emacs - Alfred workflow for org-capture
+http://comments.gmane.org/gmane.emacs.orgmode/76348
+
+*** + howm
+Youhei SASAKI's official site: org-modeの設定
+http://www.gfd-dennou.org/member/uwabami/cc-env/emacs/org-mode_config.html#fn.1
+Youhei SASAKI's official site: howm の設定
+http://www.gfd-dennou.org/member/uwabami/cc-env/emacs/howm_config.html
+
+howm-modeとorg-modeを同時に使ってみたい。
+http://mikio.github.io/article/2012/09/28_howm-modeorg-mode.html
+Emacs + Org-mode + howm + MobileOrg + Dropbox でテキスト管理環境を構築した | Engineering My Life
+http://yono05.wordpress.com/2011/11/23/emacs-org-mode-howm-mobileorg-dropbox-%E3%81%A7%E3%83%86%E3%82%AD%E3%82%B9%E3%83%88%E7%AE%A1%E7%90%86%E7%92%B0%E5%A2%83%E3%82%92%E6%A7%8B%E7%AF%89%E3%81%97%E3%81%9F/
+どーでもいい日々: Evernote vs Emacs+howm+org+Dropbox
+http://yamadawindsurf.blogspot.jp/2011/03/evernote-vs-emacshowmorgdropbox.html
+
+*** 勉強時間管理?
+Emacs org-modeで快適タスク管理　入門 - 中川的備忘録
+http://d.hatena.ne.jp/kenbell1988/20121116/1353072530
+
+** cal
+[emacs][ui] Emacs用カレンダー calfw v1.2 リリース - 技術日記＠kiwanami
+http://d.hatena.ne.jp/kiwanami/20110723/1311434175
+
+ぷかぷか～: howmとorg-mode両方でタスク管理できるようにした
+http://pukapukasuru84.blogspot.jp/2012/04/howmorg-mode.html
+
+AdventCalendar - 「タスク」から「予定」を分離してカレンダー表示，Org-mode仕立てで - Qiita
+http://qiita.com/takaxp/items/0b717ad1d0488b74429d
+
+[emacs][ui] calfw の org-agenda 対応 calfw-org.el - 技術日記＠kiwanami
+http://d.hatena.ne.jp/kiwanami/20110619/1308495781
+

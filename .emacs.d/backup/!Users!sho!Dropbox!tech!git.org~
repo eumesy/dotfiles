@@ -1,0 +1,195 @@
+* ref
+★ Git - Book
+http://git-scm.com/book/ja/
+
+GitHub 時代のデプロイ戦略 - naoyaのはてなダイアリー
+http://d.hatena.ne.jp/naoya/20140502/1399027655
+
+Github を使って雑誌原稿を書く - naoyaのはてなダイアリー
+http://d.hatena.ne.jp/naoya/20140127/1390815492
+
+実用Git
+  2冊目に読む本?
+  http://d.hatena.ne.jp/conceal-rs/20100309/1268100626
+Git入門 - リファレンス
+http://www8.atwiki.jp/git_jp/pages/35.html
+
+
+peco と alias -g で git に便利革命おきた - Qiita
+http://qiita.com/Kuniwak/items/b711d6c3e402dfd9356b?utm_source=Qiita%E3%83%8B%E3%83%A5%E3%83%BC%E3%82%B9&utm_campaign=afa43dacf8-Qiita_newsletter_118_20_8_2014&utm_medium=email&utm_term=0_e44feaa081-afa43dacf8-32891877
+
+
+Gitがこわくて触れられなかったけど、このスライドで理解出来るようになったよGitサイトまとめ
+http://programmerbox.com/2013-07-17_git_summary/
+
+もっと早く知りたかった！ Gitが鬼のようにわかるスライド厳選7選 | Find Job ! Startup
+http://www.find-job.net/startup/7-git-slides
+
+git diff の使い方がほんの少し理解できた - murankの日記
+http://d.hatena.ne.jp/murank/20110320/1300619118
+
+git reset についてもまとめてみる - murankの日記
+http://d.hatena.ne.jp/murank/20110327/1301224770
+
+
+★Git - Book
+http://git-scm.com/book/ja/
+
+Gitでファイルを削除する | アルミナ解析室
+http://jampin.blog20.fc2.com/blog-entry-122.html
+
+絳アト日記: GitHub 最初の設定 — ssh 鍵の登録
+http://akaato.blogspot.jp/2011/04/github-ssh.html
+
+Dropboxをgitの共有リポジトリとして使う | Tea Leaves
+http://tea-leaves.co.jp/home/ja/article/1359806435
+
+EZ-NET 特集： リポジトリからファイルを削除する - Git による版管理環境を構築する
+http://network.station.ez-net.jp/special/git/usage/rm.asp
+
+Gitコマンドリファレンス - No Programming, No Life
+http://npnl.hatenablog.jp/entry/20101107/1289121576
+
+* help
+$ git help <command>
+
+* start
+$ git init
+$ git remote add origin <repos>
+
+$ git clone <repos>
+// current directory の下にフォルダが作られる
+
+check
+
+local
+$ git init
+
+* 日常
+** 編集
+取り消し
+git checkout -- <file>
+
+** add
+$ git add .
+
+やり直し
+$ git reset HEAD <file>
+
+* add
+-i 対話モード
+-p patch モードを直接起動
+
+* commit
+** コミット方法選択肢
+- まず add
+-  
+-a, --all
+    Tell the command to automatically stage files that have been modified and
+    deleted, but new files you have not told Git about are not affected.
+- 引数にファイル名を羅列
+
+
+-m "message"
+複数可. それぞれが別の段落となる
+$ git commit -m "foo" \
+> -m "bar"
+
+- コミットログの修正
+$ git commit --amend (-m "fixed xxx bug, refs #10")
+
+やり直し
+$ git commit -m '初期コミット'
+$ git add 忘れてたファイル
+$ git commit --amend 
+
+$ git commit -v
+===> emacsclientが立ち上がってログ開始。C-x C-c で保存&コミット?
+
+以前コミットしたファイルに復旧
+http://blog.kyokutyo.com/git/git%E3%81%A7%E7%89%B9%E5%AE%9A%E3%81%AE%E3%83%95%E3%82%A1%E3%82%A4%E3%83%AB%E3%82%92%E6%8C%87%E5%AE%9A%E3%81%97%E3%81%9F%E3%82%B3%E3%83%9F%E3%83%83%E3%83%88%E3%81%AE%E7%8A%B6%E6%85%8B%E3%81%AB/
+
+* log
+$ git log -1
+好きな個数のコミットを出力
+
+* archive
+$ git archive --format=tar \
+> --prefix=mysite-1.0/ 1.0 \
+'| gzip > mysite-1.0.tar.gz
+
+$ git archive --format=zip \
+> --prefix=mysite-1.0/ 1.0 \
+> > mysite-1.0.zip
+
+* branch
+
+新しいbranchを切る
+- git <branch> <tagname>
+
+- 目的のbranchへの切り替えは、git checkout
+
+* 
+add remote repo
+$ git remote add dropbox $HOME/Dropbox/git/hello.git
+
+Macでgitを使う方法
+http://lab.hisasann.com/macgit/
+
+GitHub for Mac を初心者が使ってGitHubにPushからDropBoxの共有フォルダを使って仲間でコードを無料でGit共有するようになるまで | Brand Of Me
+http://brandofme.vi-king.net/?p=503
+
+最速で Git を Mac にインストールして基本的なコマンドを使う方法 | ウェブル
+http://weble.org/2011/02/14/git-mac-install
+
+Git入門 - ドキュメント
+http://www8.atwiki.jp/git_jp/
+
+Git ユーザマニュアル (バージョン 1.5.3 以降用)
+http://cdn8.atwikiimg.com/git_jp/pub/git-manual-jp/Documentation/user-manual.html
+
+Emacs Markdown Mode
+http://jblevins.org/projects/markdown-mode/
+
+* GitHub
+Git のリポジトリのホスティングサービス
+
+はてなブログチームの開発フローとGitHub // Speaker Deck
+https://speakerdeck.com/shibayu36/hatenaburogutimufalsekai-fa-hurotogithub
+
+
+** GitHub Pages
+http://pages.github.com/
+http://blog.eiel.info/blog/2013/02/17/github-pages/
+http://tokkono.cute.coocan.jp/blog/slow/index.php/programming/github-pages-almost-perfect-guide/
+
+*** ユーザーページ
+http://アカウント名.github.io
+- アカウントにひとつだけ作れる
+- アカウント名.github.com というリポジトリを作る
+- master ブランチがwebサイトになる
+- 自動生成機能(?)はなく、自分で生成することになる
+
+*** グループページ
+- ユーザーページと同様
+- Organization というグループを作る機能で
+- グループページもひとつだけ作れる
+
+*** プロジェクトページ
+http://ユーザー名.github.io/プロジェクト名
+- リポジトリに gh-pages というブランチを作る
+- プロジェクト名=git init したディレクトリ名?
+- 自動生成機能がある
+  - Jekyll
+
+*** Jekyll
+- markdown, textile を push すれば github が html に変換してくれる
+
+*** 独自ドメイン
+- 使用したいドメイン名を CNAME というファイルに書いておいて、DNS を設定して、Github を参照するようにする
+
+** gist
+コードの断片を管理したり人に見せたりブログに貼付けたりするのに便利
+** GitHub Flavored Markdown
+https://help.github.com/articles/github-flavored-markdown
+http://tokkono.cute.coocan.jp/blog/slow/index.php/programming/markdown-skills-for-github-beginners/

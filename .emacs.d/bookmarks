@@ -1,0 +1,60 @@
+;;;; Emacs Bookmark Format Version 1 ;;;;
+;;; This format is meant to be slightly human-readable;
+;;; nevertheless, you probably don't want to edit it.
+;;; -*- End Of Bookmark File Format Version Stamp -*-
+(("table.org"
+ (filename . "~/Dropbox/13c-2nd-semester/le4/ocaml/table.org")
+ (front-context-string . "\n|              ")
+ (rear-context-string)
+ (position . 1))
+("typing.ml"
+ (filename . "~/Dropbox/13c-2nd-semester/le4/ocaml/interpreter/typing.ml")
+ (front-context-string . "open Syntax\n\nexc")
+ (rear-context-string)
+ (position . 1))
+("report3.ml"
+ (filename . "~/Dropbox/13c-2nd-semester/le4/ocaml/interpreter/report3.ml")
+ (front-context-string . "(* Ex.4.1 [必修課題]")
+ (rear-context-string)
+ (position . 1))
+("syntax.ml"
+ (filename . "~/Dropbox/13c-2nd-semester/le4/ocaml/interpreter/syntax.ml")
+ (front-context-string . "(* ML interprete")
+ (rear-context-string)
+ (position . 1))
+("parser.mly"
+ (filename . "~/Dropbox/13c-2nd-semester/le4/ocaml/interpreter/parser.mly")
+ (front-context-string . "%{\nopen Syntax\n%")
+ (rear-context-string)
+ (position . 1))
+("main.ml"
+ (filename . "~/Dropbox/13c-2nd-semester/le4/ocaml/interpreter/main.ml")
+ (front-context-string . "open Syntax\nopen")
+ (rear-context-string)
+ (position . 1))
+("eval.ml"
+ (filename . "~/Dropbox/13c-2nd-semester/le4/ocaml/interpreter/eval.ml")
+ (front-context-string . "open Syntax \n\n(*")
+ (rear-context-string)
+ (position . 1))
+("lexer.mll"
+ (filename . "~/Dropbox/13c-2nd-semester/le4/ocaml/interpreter/lexer.mll")
+ (front-context-string . "  (\"if\", Parser.")
+ (rear-context-string . " Parser.FALSE);\n")
+ (position . 94))
+(".tmux.conf"
+ (filename . "~/.tmux.conf")
+ (front-context-string . "# reload\nbind C-")
+ (rear-context-string)
+ (position . 1))
+(".zshrc"
+ (filename . "~/.zshrc")
+ (front-context-string . "alias reload='so")
+ (rear-context-string)
+ (position . 1))
+("init.el"
+ (filename . "~/.emacs.d/init.el")
+ (front-context-string . "\n  (define-key g")
+ (rear-context-string . "-quick-update t)")
+ (position . 3548))
+)

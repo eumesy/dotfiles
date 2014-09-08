@@ -1,0 +1,34 @@
+* 1st try
+mean(-i(vdd0)) = 1.355533e-03
+mean(-i(vdd1)) = 8.999193e-04
+mean(-i(vdd2)) = 9.059024e-04
+mean(-i(vdd3)) = 9.694373e-04
+mean(-i(vdd4)) = 1.065880e-03
+mean(-i(vdd5)) = 1.191376e-03
+mean(-i(vdd6)) = 1.341423e-03
+mean(-i(vdd7)) = 1.513299e-03
+mean(-i(vdd8)) = 1.704810e-03
+mean(-i(vdd9)) = 1.913881e-03
+
+* 2nd try
+mean(-i(vdd0)) = 1.112153e-03
+mean(-i(vdd1)) = 1.007822e-03
+mean(-i(vdd2)) = 9.537236e-04
+mean(-i(vdd3)) = 9.231252e-04
+mean(-i(vdd4)) = 9.056140e-04
+mean(-i(vdd5)) = 8.961390e-04
+mean(-i(vdd6)) = 8.919741e-04
+mean(-i(vdd7)) = 8.915709e-04
+mean(-i(vdd8)) = 8.940435e-04
+mean(-i(vdd9)) = 8.988511e-04
+
+* 3rd trymean(-i(vdd0)) = 8.916877e-04
+mean(-i(vdd1)) = 8.915177e-04
+mean(-i(vdd2)) = 8.913913e-04
+mean(-i(vdd3)) = 8.913159e-04
+mean(-i(vdd4)) = 8.912840e-04
+mean(-i(vdd5)) = 8.912942e-04
+mean(-i(vdd6)) = 8.913449e-04
+mean(-i(vdd7)) = 8.914371e-04
+mean(-i(vdd8)) = 8.915680e-04
+mean(-i(vdd9)) = 8.919076e-04

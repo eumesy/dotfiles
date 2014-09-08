@@ -1,0 +1,3 @@
+
+% guess input enc
+PTEX_IN_FILTER = /usr/local/bin/nkf -w

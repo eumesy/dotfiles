@@ -1,0 +1,274 @@
+***********************************************************************
+* Set supply and library
+***********************************************************************
+.INCLUDE ../mos_model3
+.options temp=27
+.options post
+
+***********************************************************************
+* Define power supply
+***********************************************************************
+Vdd0     Vdd0      0       2.5
+Vdd1     Vdd1      0       2.5
+Vdd2     Vdd2      0       2.5
+Vdd3     Vdd3      0       2.5
+Vdd4     Vdd4      0       2.5
+Vdd5     Vdd5      0       2.5
+Vdd6     Vdd6      0       2.5
+Vdd7     Vdd7      0       2.5
+Vdd8     Vdd8      0       2.5
+Vdd9     Vdd9      0       2.5
+
+***********************************************************************
+* Define Subcircuits
+***********************************************************************
+* MOSFETs General form: MXXXX ND NG NS NB MNAME <L=VAL> <W=VAL>
+
+.subckt invin In Out Vdd
+mp      Out In Vdd Vdd  cmosp l=0.25u w=6u
+mn      Out In 0 0      cmosn l=0.25u w=3u
+.ends
+.subckt invout In Out Vdd
+mp      Out In Vdd Vdd  cmosp l=0.25u w=150u
+mn      Out In 0 0      cmosn l=0.25u w=75u
+.ends
+
+* simulate 1st try
+* .subckt inv0 In Out Vdd
+* mp      Out In Vdd Vdd  cmosp l=0.25u w=6u
+* mn      Out In 0 0      cmosn l=0.25u w=3u
+* .ends
+* .subckt inv1 In Out Vdd
+* mp      Out In Vdd Vdd  cmosp l=0.25u w=22u
+* mn      Out In 0 0      cmosn l=0.25u w=11u
+* .ends
+* .subckt inv2 In Out Vdd
+* mp      Out In Vdd Vdd  cmosp l=0.25u w=38u
+* mn      Out In 0 0      cmosn l=0.25u w=19u
+* .ends
+* .subckt inv3 In Out Vdd
+* mp      Out In Vdd Vdd  cmosp l=0.25u w=54u
+* mn      Out In 0 0      cmosn l=0.25u w=27u
+* .ends
+* .subckt inv4 In Out Vdd
+* mp      Out In Vdd Vdd  cmosp l=0.25u w=70u
+* mn      Out In 0 0      cmosn l=0.25u w=35u
+* .ends
+* .subckt inv5 In Out Vdd
+* mp      Out In Vdd Vdd  cmosp l=0.25u w=86u
+* mn      Out In 0 0      cmosn l=0.25u w=43u
+* .ends
+* .subckt inv6 In Out Vdd
+* mp      Out In Vdd Vdd  cmosp l=0.25u w=102u
+* mn      Out In 0 0      cmosn l=0.25u w=51u
+* .ends
+* .subckt inv7 In Out Vdd
+* mp      Out In Vdd Vdd  cmosp l=0.25u w=118u
+* mn      Out In 0 0      cmosn l=0.25u w=59u
+* .ends
+* .subckt inv8 In Out Vdd
+* mp      Out In Vdd Vdd  cmosp l=0.25u w=134u
+* mn      Out In 0 0      cmosn l=0.25u w=67u
+* .ends
+* .subckt inv9 In Out Vdd
+* mp      Out In Vdd Vdd  cmosp l=0.25u w=150u
+* mn      Out In 0 0      cmosn l=0.25u w=75u
+* .ends
+
+* simulate 2nd try
+* .subckt inv0 In Out Vdd
+* mp      Out In Vdd Vdd  cmosp l=0.25u w=8.9u
+* mn      Out In 0 0      cmosn l=0.25u w=4.45u
+* .ends
+* .subckt inv1 In Out Vdd
+* mp      Out In Vdd Vdd  cmosp l=0.25u w=11.8u
+* mn      Out In 0 0      cmosn l=0.25u w=5.9u
+* .ends
+* .subckt inv2 In Out Vdd
+* mp      Out In Vdd Vdd  cmosp l=0.25u w=14.7u
+* mn      Out In 0 0      cmosn l=0.25u w=7.35u
+* .ends
+* .subckt inv3 In Out Vdd
+* mp      Out In Vdd Vdd  cmosp l=0.25u w=17.6u
+* mn      Out In 0 0      cmosn l=0.25u w=8.8u
+* .ends
+* .subckt inv4 In Out Vdd
+* mp      Out In Vdd Vdd  cmosp l=0.25u w=20.5u
+* mn      Out In 0 0      cmosn l=0.25u w=10.25u
+* .ends
+* .subckt inv5 In Out Vdd
+* mp      Out In Vdd Vdd  cmosp l=0.25u w=23.4u
+* mn      Out In 0 0      cmosn l=0.25u w=11.7u
+* .ends
+* .subckt inv6 In Out Vdd
+* mp      Out In Vdd Vdd  cmosp l=0.25u w=26.3u
+* mn      Out In 0 0      cmosn l=0.25u w=13.15u
+* .ends
+* .subckt inv7 In Out Vdd
+* mp      Out In Vdd Vdd  cmosp l=0.25u w=29.2u
+* mn      Out In 0 0      cmosn l=0.25u w=14.6u
+* .ends
+* .subckt inv8 In Out Vdd
+* mp      Out In Vdd Vdd  cmosp l=0.25u w=32.1u
+* mn      Out In 0 0      cmosn l=0.25u w=16.05u
+* .ends
+* .subckt inv9 In Out Vdd
+* mp      Out In Vdd Vdd  cmosp l=0.25u w=35u
+* mn      Out In 0 0      cmosn l=0.25u w=17.5u
+* .ends
+
+* simulate 3rd try
+.subckt inv0 In Out Vdd
+mp      Out In Vdd Vdd  cmosp l=0.25u w=26.64u
+mn      Out In 0 0      cmosn l=0.25u w=13.32u
+.ends
+.subckt inv1 In Out Vdd
+mp      Out In Vdd Vdd  cmosp l=0.25u w=26.98u
+mn      Out In 0 0      cmosn l=0.25u w=13.49u
+.ends
+.subckt inv2 In Out Vdd
+mp      Out In Vdd Vdd  cmosp l=0.25u w=27.32u
+mn      Out In 0 0      cmosn l=0.25u w=13.66u
+.ends
+.subckt inv3 In Out Vdd
+mp      Out In Vdd Vdd  cmosp l=0.25u w=27.66u
+mn      Out In 0 0      cmosn l=0.25u w=13.83u
+.ends
+.subckt inv4 In Out Vdd
+mp      Out In Vdd Vdd  cmosp l=0.25u w=28u
+mn      Out In 0 0      cmosn l=0.25u w=14u
+.ends
+.subckt inv5 In Out Vdd
+mp      Out In Vdd Vdd  cmosp l=0.25u w=28.34u
+mn      Out In 0 0      cmosn l=0.25u w=14.17u
+.ends
+.subckt inv6 In Out Vdd
+mp      Out In Vdd Vdd  cmosp l=0.25u w=28.68u
+mn      Out In 0 0      cmosn l=0.25u w=14.34u
+.ends
+.subckt inv7 In Out Vdd
+mp      Out In Vdd Vdd  cmosp l=0.25u w=29.02u
+mn      Out In 0 0      cmosn l=0.25u w=14.51u
+.ends
+.subckt inv8 In Out Vdd
+mp      Out In Vdd Vdd  cmosp l=0.25u w=29.36u
+mn      Out In 0 0      cmosn l=0.25u w=14.68u
+.ends
+.subckt inv9 In Out Vdd
+mp      Out In Vdd Vdd  cmosp l=0.25u w=26.3u
+mn      Out In 0 0      cmosn l=0.25u w=13.15u
+.ends
+
+***********************************************************************
+* Stimulus
+***********************************************************************
+* Format of pulse input:
+* PULSE(v_initial v_final t_delay t_rise t_fall t_pulsewidth t_period)
+
+Vin0     in0    0       PULSE(2.5  0   1ns 0.1ns 0.1ns 5.9ns 9ns)
+Vin1     in1    0       PULSE(2.5  0   1ns 0.1ns 0.1ns 5.9ns 9ns)
+Vin2     in2    0       PULSE(2.5  0   1ns 0.1ns 0.1ns 5.9ns 9ns)
+Vin3     in3    0       PULSE(2.5  0   1ns 0.1ns 0.1ns 5.9ns 9ns)
+Vin4     in4    0       PULSE(2.5  0   1ns 0.1ns 0.1ns 5.9ns 9ns)
+Vin5     in5    0       PULSE(2.5  0   1ns 0.1ns 0.1ns 5.9ns 9ns)
+Vin6     in6    0       PULSE(2.5  0   1ns 0.1ns 0.1ns 5.9ns 9ns)
+Vin7     in7    0       PULSE(2.5  0   1ns 0.1ns 0.1ns 5.9ns 9ns)
+Vin8     in8    0       PULSE(2.5  0   1ns 0.1ns 0.1ns 5.9ns 9ns)
+Vin9     in9    0       PULSE(2.5  0   1ns 0.1ns 0.1ns 5.9ns 9ns)
+
+***********************************************************************
+* Top level simulation netlist
+***********************************************************************
+
+* 0
+xinv0in      in0       a0       Vdd0     invin
+xinv0mid      a0       b0       Vdd0     inv0
+xinv0out      b0     out0       Vdd0     invout
+Cload0      out0        0       2000f
+* 1
+xinv1in      in1       a1       Vdd1     invin
+xinv1mid      a1       b1       Vdd1     inv1
+xinv1out      b1     out1       Vdd1     invout
+Cload1      out1        0       2000f
+* 2
+xinv2in      in2       a2       Vdd2     invin
+xinv2mid      a2       b2       Vdd2     inv2
+xinv2out      b2     out2       Vdd2     invout
+Cload2      out2        0       2000f
+* 3
+xinv3in      in3       a3       Vdd3     invin
+xinv3mid      a3       b3       Vdd3     inv3
+xinv3out      b3     out3       Vdd3     invout
+Cload3      out3        0       2000f
+* 4
+xinv4in      in4       a4       Vdd4     invin
+xinv4mid      a4       b4       Vdd4     inv4
+xinv4out      b4     out4       Vdd4     invout
+Cload4      out4        0       2000f
+* 5
+xinv5in      in5       a5       Vdd5     invin
+xinv5mid      a5       b5       Vdd5     inv5
+xinv5out      b5     out5       Vdd5     invout
+Cload5      out5        0       2000f
+* 6
+xinv6in      in6       a6       Vdd6     invin
+xinv6mid      a6       b6       Vdd6     inv6
+xinv6out      b6     out6       Vdd6     invout
+Cload6      out6        0       2000f
+* 7
+xinv7in      in7       a7       Vdd7     invin
+xinv7mid      a7       b7       Vdd7     inv7
+xinv7out      b7     out7       Vdd7     invout
+Cload7      out7        0       2000f
+* 8
+xinv8in      in8       a8       Vdd8     invin
+xinv8mid      a8       b8       Vdd8     inv8
+xinv8out      b8     out8       Vdd8     invout
+Cload8      out8        0       2000f
+* 9
+xinv9in      in9       a9       Vdd9     invin
+xinv9mid      a9       b9       Vdd9     inv9
+xinv9out      b9     out9       Vdd9     invout
+Cload9      out9        0       2000f
+
+.tran .001ns 10ns
+
+.control
+run
+linearize i(Vdd0)
+print mean(-i(Vdd0)) >> out
+run
+linearize i(Vdd1)
+print mean(-i(Vdd1)) >> out
+run
+linearize i(Vdd2)
+print mean(-i(Vdd2)) >> out
+run
+linearize i(Vdd3)
+print mean(-i(Vdd3)) >> out
+run
+linearize i(Vdd4)
+print mean(-i(Vdd4)) >> out
+run
+linearize i(Vdd5)
+print mean(-i(Vdd5)) >> out
+run
+linearize i(Vdd6)
+print mean(-i(Vdd6)) >> out
+run
+linearize i(Vdd7)
+print mean(-i(Vdd7)) >> out
+run
+linearize i(Vdd8)
+print mean(-i(Vdd8)) >> out
+run
+linearize i(Vdd9)
+print mean(-i(Vdd9)) >> out
+
+quit
+.endc
+
+***********************************************************************
+* End of Deck
+***********************************************************************
+.end

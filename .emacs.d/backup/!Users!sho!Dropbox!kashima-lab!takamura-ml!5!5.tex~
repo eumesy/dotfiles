@@ -1,0 +1,16 @@
+\documentclass[]{jsarticle}
+\input{$HOME/Dropbox/tempdoc/tex-preamble-jsarticle}
+
+\title{確率論の基礎}
+\author{Sho Yokoi}
+%% \title{English IIA E2T01; Professor Hayashi, Brian\\Homework \#1}
+%% \author{Yokoi, Sho; 1029-23-2177} % ほか
+\date{\today}\西暦
+\begin{document}
+\maketitle
+
+%% \setcounter{tocdepth}{3} % 0:chapterまで, 1:sectionまで, 2:subsectionまで, 3:subsubsectionまで
+%% \tableofcontents % 目次の表示
+%% \newpage
+
+\end{document}

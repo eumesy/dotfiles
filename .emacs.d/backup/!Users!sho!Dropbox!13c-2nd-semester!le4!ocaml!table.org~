@@ -1,0 +1,9 @@
+
+|                      |   | typing |
+|----------------------+---+--------|
+| let 宣言             | v |        |
+| let 宣言 curried     | v |        |
+| let rec 宣言         | v |        |
+| let rec 宣言 curried |   |        |
+| let 式               | v | v      |
+| let 式 curried       | v |        |

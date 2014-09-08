@@ -1,0 +1,29 @@
+num_of_agents と num_of_goods が逆だった…！あぶない！
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Committer: Sho Yokoi <sho@mba-2.local>
+#
+# On branch master
+# Changes to be committed:
+#	modified:   Makefile
+#	modified:   README
+#	modified:   client.cc
+#	new file:   report/ex4-2-1-yokoi.aux
+#	new file:   report/ex4-2-1-yokoi.dvi
+#	new file:   report/ex4-2-1-yokoi.fdb_latexmk
+#	new file:   report/ex4-2-1-yokoi.fls
+#	new file:   report/ex4-2-1-yokoi.log
+#	new file:   report/ex4-2-1-yokoi.pdf
+#	new file:   report/ex4-2-1-yokoi.tex
+#	modified:   svm.hh
+#
+# Changes not staged for commit:
+#	deleted:    QuadProg++.o
+#	deleted:    bid_kk_g1.dat
+#	deleted:    bid_kk_g2.dat
+#	deleted:    client
+#	deleted:    svm.o
+#	deleted:    test
+#

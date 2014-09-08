@@ -1,0 +1,106 @@
+[y,n,q,a,d,/,e,?]
+| y | yes     |
+| n | no      |
+| q | quit    |
+| a | all yes |
+| d | all no  |
+
+* ref
+ShellScript - シェルスクリプトを書くときに気をつける9箇条 - Qiita
+http://qiita.com/b4b4r07/items/9ea50f9ff94973c99ebe
+
+【書評】Unix関連書籍のご紹介 - Programming Studio
+http://www.coppermine.jp/docs/programming/2012/05/unix-books.html
+
+Amazon.co.jp： Unixパワーツール: シェリー パワーズ, ティム オライリー, ジェリー ピーク, マイク ルキダス, Shelley Powers, Tim O’Reilly, Jerry Peek, Mike Loukides, ドキュメントシステム: 本
+http://www.amazon.co.jp/dp/4873111420/
+すすめているページ
+  http://j.ktamura.com/archives/972
+
+Amazon.co.jp： たのしいUNIX―UNIXへの招待 (Ascii books): 坂本 文: 本 (続編あり)
+http://www.amazon.co.jp/dp/4756107850/
+
+Amazon.co.jp： 入門 Unix for OS X 第5版: Dave Taylor, 酒井 皇治: 本
+http://www.amazon.co.jp/dp/4873116449/
+Amazon.co.jp： Mac OS X UNIX活用大全 Mac OS X 10.6 Snow Leopard対応版 (MacPeople Books): 大津真: 本
+http://www.amazon.co.jp/dp/4048683772/
+
+Amazon.co.jp： 詳解 シェルスクリプト: Arnold Robbins, Nelson H. F. Beebe, 日向 あおい: 本
+http://www.amazon.co.jp/dp/4873112672/
+# コマンドの話、コマンドの組み合わせの話、シェルスクリプトの話
+
+Amazon.co.jp： 入門UNIXシェルプログラミング―シェルの基礎から学ぶUNIXの世界: ブルース ブリン, Bruce Blinn, 山下 哲典: 本
+http://www.amazon.co.jp/dp/4797321946/
+# 完全にシェルスクリプトの話
+
+Amazon.co.jp： 詳解UNIXプログラミング: W.リチャード スティーヴンス, W.Richard Stevens, 大木 敦雄: 本
+http://www.amazon.co.jp/dp/4894713195/
+# システムコールの話
+
+* pager(less,lv)
+less
+| d | 半画面進む | 
+
+Snow Leopardで利用するページャ、「less」と「lv」の併用が便利 - builder by ZDNet Japan
+http://builder.japan.zdnet.com/os-admin/sp_snow-leopard-09/20417894/
+
+* chmod
+
+UNIXコマンド - chmod
+http://www.k-tanaka.net/unix/chmod.php
+
+$ chmode u+x hoge.sh
+
+| u | user   |
+| g | group  |
+| o | others |
+| a | all    |
+
+| + | add    |
+| - | remove |
+
+| r | read    |
+| w | write   |
+| x | execute |
+
+* rename
+# linux
+rename hoge HOGE hoge.*
+
+# homebrew の方
+rename -v 's/.outt/.out/i' *.outt
+
+* zip,tarなど
+UNIXの圧縮・解凍
+http://adgjm.net/its/unix/tar.htm
+
+- tar.gz 圧縮
+  $ tar zxvf hoge.tar.gz hoge
+
+** zip 圧縮
+$ zip hoge.zip moga.c moga.h README Makefile report.pdf
+
+** zip 解凍
+$ unzip hoge.zip
+
+** tar
+UNIXの部屋 コマンド検索:tar (*BSD/Linux)
+http://x68000.q-e-d.net/~68user/unix/pickup?tar
+
+* プロセス
+** pgrep, pkill
+プロセスのgrep、kill
+
+-f
+    実行時に渡された引数もマッチ対象にする?
+    http://d.hatena.ne.jp/lurker/20061102/1162427170
+-l
+    long output
+    process name も出力
+
+* wget
+再帰的に(?)1リンク先までDL
+$ wget -r -l 1 http://www.hogehoge
+
+* download
+$ wget URL

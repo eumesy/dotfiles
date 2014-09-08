@@ -1,0 +1,212 @@
+* Basic.v
+binary (2,opt)
+boolean_functions (2,opt)
+decreasing
+
+* Induction.v
+beq_nat_refl_informal (2,opt)
+binary_commute (2,opt)
+binary_inverse (2,opt)
+destruct_induction (2,opt)
+even_b__oddb_Sn (2,opt)
+more_exercises *9 (2,opt)
+mult_comm (2,opt)
+plus_comm_informal (2,opt)
+plus_swap' (2,opt)
+
+* Lists.v
+- [X] snd_fst_is_swap (1)
+- [X] fst_swap_is_snd (1) *hw*
+- [X] list_funs (2) *hw*
+  - [X] nonzeros
+  - [X] oddmembers
+  - [X] countoddmembers
+- [ ] alternative (3)
+- [ ] bag_functions (3)
+  - [ ] count
+  - [ ] sum
+  - [ ] add
+  - [ ] member
+- [ ] bag_more_functions (3)
+  - [ ] remove_one
+  - [ ] remove_all
+  - [ ] subset
+- [ ] bag_theorem (3)
+
+** Reasoning About Lists
+- [X] list_exercises (3) *hw*
+  - [X] app_nil_end
+  - [X] rev_involutive # 自力で解き直せる気がしない...
+  - [X] app_assoc4
+  - [X] snoc_append
+  - [X] distr_rev
+  - [X] nonzeros_app
+- [ ] list_design (2)
+- [ ] bag_proofs (3)
+  - [ ] count_member_nonzero
+  - [ ] remove_decreases_count
+- [ ] bag_count_sum (3)
+- [ ] rev_injective (3)
+
+- [X] hd_opt (2) *hw* *4*
+- [X] optional_elim_hd (1) *4*
+
+- [X] beq_natlist (2) *hw*
+  - [X] beq_natlist
+  - [X] beq_natlist_refl
+
+** Dictionaries
+- [ ] dictionary_invariant1 (1)
+- [ ] dictionary_invariant2 (1)
+  
+* Poly.v (多相型, データとしての関数)
+- [ ] mumble_grumble (2)
+- [ ] baz_num_elts (2)
+
+- [ ] poly_exercises (2)
+  - [ ] repeat
+  - [ ] nil_app
+  - [ ] rev_snoc
+  - [ ] rev_involutive
+  - [ ] snoc_with_append
+
+*** Polymorphic Pairs
+- [ ] combine_checks (1)
+- [X] split (2) *hw*
+
+*** Polymorphic Options
+- [X] hd_opt_poly (1)
+
+** Functions as Data
+*** Highre-Order Functions
+*** Currying
+- [ ] currying (2)
+  - [ ] prod_uncurry
+  - [ ] uncurry_curry
+*** Filter
+*** Anonymous Functions
+- [X] filter_even_gt7 (2)
+- [X] partition (3) *hw*
+*** Map
+*** Map for Options
+- [ ] map_rev (3)
+- [X] flat_map (2) *hw*
+- [ ] implicit_args (2)
+*** Fold
+- [ ] fold_types_different (1)
+*** Functions for Constructing Functions
+- [ ] override_example (1) *5*
+
+** The [unfold] tactic
+- [ ] override_neq (2) *5*
+
+** Additional Exercises
+- [ ] fold_length (2) *5*
+- [ ] fold_map (3) *5*
+
+* MoreCoq.v
+** The [apply] tactic
+- [X] silly_ex (2) *hw*
+- [ ] apply_exercise1 (3) 
+- [ ] apply_rewrite (1) 
+
+** The [apply ... with ...] tactic
+- [ ] apply_with_exercise (3)
+
+** The [inversion] tactic
+- [X] silly_ex1 (1) *hw*
+- [X] silly_ex2 (1) *hw*
+- [ ] practice
+  - [ ] beq_nat_0_l
+  - [ ] beq_nat_0_r
+
+** Using Tactics on Hypotheses(前提)
+- [X] plus_n_n_injective (3) *hw*
+
+** Varying the Induction Hypothesis
+- [X] beq_nat_true (2) *hw*
+- [ ] beq_nat_true_informal (2)
+- [X] gen_dep_practice (3) *hw*
+- [ ] index_after_last_informal (3)
+- [ ] gen_dep_practice_more (3)
+- [ ] app_length_cons (3)
+- [ ] app_length_twice (4)
+
+** Using [destruct] on Compound Expressions
+- [X] override_shadow (1) *hw*
+- [ ] combine_split (3)
+- [X] destruct_eqn_exerceise (2) *hw*
+- [ ] override_same (2)
+
+** Additional Exercises
+- [ ] beq_nat_sym (3)
+- [ ] beq_nat_trans (3)
+- [ ] split_combile (3)
+  - [ ] split_combine_statement
+  - [ ] split_combile
+- [ ] override_permute (3)
+- [ ] filter_exercise (3)
+- [ ] forall_exists_challenge (4)
+
+** MoreCoq で用意された便利命題
+- trans_eq
+- f_equal
+
+** MoreCoq で用意された便利関数
+- override
+
+* Logic.v
+** Propositions
+** Proofs and Evidence
+** Cunjunction (Logical "and")
+- [X] proj2 (1)
+- [X] and_assoc (2) *hw*
+** iff
+- [X] iff_properties (1) *hw*
+  - [X] iff_refl
+  - [X] iff_trans
+** Disjunction (Logical "or")
+- [X] or_distributes_over_and_2 (2) *hw*
+- [X] or_distributes_over_and (1)
+** Relating [/\] and [\/] with [andb] and [orb] (advanced)
+- [ ] bool_prop (2)
+  - [ ] andb_false
+  - [ ] orb_prop
+  - [ ] orb_false_elim
+** Falsehood
+** Truth
+- [ ] True (2)
+** Negation
+- [ ] double_neg_inf (2)
+- [X] contrapositive (2) *hw*
+- [X] not_both_true_and_false (1) *hw*
+- [ ] informal_not_PNP (1)
+- [ ] classical_axioms (5)
+- [ ] excluded_middle_irrefutable (3)
+** Inequality
+- [X] false_beq_nat (2) *hw*
+- [ ] beq_nat_false (2)
+
+
+* Prop.v
+** From Boolean Functions to Propositions
+- [X] double_even (1) *hw*
+- [X] ev__even (1) はじめから解かれてた
+- [ ] l_fails (1)
+- [X] ev_sum (2) *hw*
+** Inductively Defined Propositions
+- [ ] varieties_of_beauty (1)
+- [X] b_times2 (2) *hw*
+- [X] b_timesm (3)
+** Induction Over Evidence
+- [ ] gorgeous_tree (1)
+- [X] gorgeous_plus13 (1) *hw*
+- [X] gorgeous_sum (2) *hw*
+- [X] beautiful__gorgeous (3)
+- [X] g_times2 (3)
+** [Inversion] on Evidence
+- [ ] ev_minus2_n (1)
+- [X] inversion_practice (1) *hw*
+  - [X] SSSSev__even
+  - [X] even5_nonsense
+- [ ] ev_ev__ev (3)

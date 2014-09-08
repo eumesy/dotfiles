@@ -1,0 +1,8 @@
+#!/bin/sh
+./loop.sh > circle_scaling.raw
+
+awk 'BEGIN{sum=0} {print sum, $1; sum++}' < circle_scaling.raw >! circle_scaling.dat
+
+gnuplot -p < draw.gp
+epstopdf circle_scaling.eps
+open circle_scaling.pdf

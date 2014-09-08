@@ -1,0 +1,89 @@
+\documentclass[]{jsarticle}
+
+%% font
+\usepackage[T1]{fontenc} % 8ビットエンコーディング <,|,> の直書き
+\usepackage{textcomp} % 文字種追加
+\usepackage[deluxe]{otf} % 文字種追加. deluxe:日本語フォントが5書体(太細×明ゴ＋丸ゴ)使えるようになる
+
+%% math
+\usepackage{amsmath,amssymb} % 数学記号の追加
+\usepackage{bm} % 数式の太字 \bm{}
+\usepackage{cancel} % 数式に打ち消し合いを示すための斜め線
+
+%% table
+\usepackage{array} % tabular拡張
+\usepackage{comment}
+\usepackage{multirow}
+
+%% figure
+\usepackage[dvipdfmx]{graphicx}
+
+%% arrange tables or figures
+\usepackage{float}
+
+\usepackage{listings}
+\lstset{
+% language=Scheme,
+ basicstyle=\ttfamily\footnotesize,
+%  frame=tbrl, %枠を上下左右に表示
+ breaklines=true, % 行が長くなった場合に改行
+ numbers=left,
+ breaklines=true, %折り返し
+ xleftmargin=4zw
+}
+\usepackage{url}
+
+\catcode`@=\active
+\def@#1@{\texttt{#1}}
+
+%% レイアウト
+% title補正
+\addtolength{\textheight}{\topskip}
+\setlength{\voffset}{0pt}
+\setlength{\topmargin}{0pt}
+\setlength{\headheight}{0pt}
+\setlength{\headsep}{0pt}
+% \pagestyle{empty} % ページ番号非表示
+
+\title{人工知能 (石田先生・松原先生)\\第1回演習課題　経路探索}
+\author{横井 祥（よこい しょう）\\
+学籍番号：1029-23-2177\\
+工学部 情報学科 計算機科学コース 3回生}
+%% \title{English IIA E2T01; Professor Hayashi, Brian\\Homework \#1}
+%% \author{Yokoi, Sho; 1029-23-2177} % ほか
+\date{\today}\西暦
+\begin{document}
+\maketitle
+
+%% \setcounter{tocdepth}{3} % 0:chapterまで, 1:sectionまで, 2:subsectionまで, 3:subsubsectionまで
+%% \tableofcontents % 目次の表示
+%% \newpage
+
+\[
+  \frac{\pi}{2} =
+  \left( \int_{0}^{\infty} \frac{\sin x}{\sqrt{x}} dx \right)^2 =
+  \sum_{k=0}^{\infty} \frac{(2k)!}{2^{2k}(k!)^2} \frac{1}{2k+1} =
+  \prod_{k=1}^{\infty} \frac{4k^2}{4k^2 - 1}
+\]
+
+\section{漢字だよセクション Section}
+本文本文
+あれ？
+
+\subsection{サブセクション Subsection}
+本文本文
+
+\subsubsection{サブサブ subsubsection}
+本文本文
+
+\paragraph{para}
+本文本文
+
+\subparagraph{subpara}
+本文本文
+
+\bigskip
+\begin{flushright}
+以上
+\end{flushright}
+\end{document}

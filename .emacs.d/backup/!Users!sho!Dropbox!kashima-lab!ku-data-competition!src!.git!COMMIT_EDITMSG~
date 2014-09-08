@@ -1,0 +1,17 @@
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch master
+# Changes to be committed:
+#	new file:   LinearRegression-tuple.py
+#	modified:   LinearRegression.py
+#	new file:   result_LinearRegression-tuple.tsv
+#	new file:   result_LinearRegression_normalize.tsv
+#	new file:   result_Linear_normalized_clsposneg.tsv
+#	new file:   result_RidgeCV.tsv
+#	new file:   result_RidgeCV_normalized_clsposneg.tsv
+#	new file:   result_RidgeCV_normalized_clsposneg2.tsv
+#	new file:   result_RidgeCV_normalized_clsposneg3.tsv
+#	new file:   result_RidgeCV_normalizedmean_clsposneg.tsv
+#	new file:   result_RidgeCV_normalizedmeanall.tsv
+#

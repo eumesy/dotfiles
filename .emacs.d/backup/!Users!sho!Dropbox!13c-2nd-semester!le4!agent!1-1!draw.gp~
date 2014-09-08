@@ -1,0 +1,34 @@
+set terminal postscript eps
+set out "f.eps"
+
+set multiplot     # 複数のグラフの同居
+
+
+## 識別関数の描画
+load "f.gp"       # 識別関数 e.g. f(x,y) = x+y
+
+set isosample 50  # 描画の細かさの向上
+set view map	  # 3Dグラフをz軸上側から表示
+set size square	  # グラフの縦横比 1:1
+unset surface	  # gridの削除
+set contour	  # 等高線の表示
+set cntrparam levels incremental -1, 1, 1
+
+set xr[0:50]      # x 定義域
+set yr[0:50]	  # y 定義域
+splot f(x, y) notitle
+
+
+## 学習データの描画
+reset
+set size square
+set xr[0:50]      # x 定義域
+set yr[0:50]	  # y 定義域
+set palette defined (-1 "red", 1 "blue")
+set view map
+set cbrange [-1.0:1.0] # z座標の範囲
+splot "data/sample_circle.dat" u 1:2:3 w points palette pt 1 notitle
+
+
+## epsファイルへの出力
+replot

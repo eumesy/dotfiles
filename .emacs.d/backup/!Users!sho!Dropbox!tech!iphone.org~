@@ -1,0 +1,71 @@
+設定をリセットしたらとりあえず
+- モバイル通信: OFF
+- 一般 / Appのバックグラウンド更新: OFF
+- パスコードロック
+
+* 辞書の同期
+…がうまくいかない場合の処方箋集
+http://xtrailor.com/2013/06/user-dic/
+http://xtrailor.com/2013/02/icloud-sync-dic/
+http://yuttariblog.blogspot.jp/2013/02/ios61.html?m=1
+http://applech2.com/archives/33407820.html
+http://www.macotakara.jp/blog/category-54/entry-21493.html
+http://diwao.com/2013/05/iphone_user_dic_.html
+https://discussionsjapan.apple.com/message/100805220#100805220
+
+
+* 設定
+** Bluetooth: off
+** モバイルデータ通信: off
+** 通知センター
+- ロック画面でのアクセス: off, off
+- 今日の表示
+  - 株価: off
+
+_通知をもらうアプリ_
+- 通知のスタイル: バナー
+- サウンド: off
+- 通知
+  - 表示: 10件
+- ロック画面に表示: off
+ 
+_通知不要のアプリ_
+- 通知のスタイル: なし
+- サウンド: off
+- 通知
+  - 通知センターに表示: off
+- ロック画面に表示: off
+
+** 一般
+- Spotlight検索: 全off
+- 文字サイズを変更: minimum
+- アクセシビリティ
+  # 半透明 off
+  - コントラストを上げる: on
+  # アニメーション off
+  - 視差効果を減らす: on
+- Appのバックグラウンド更新: できるだけoff
+- パスコードロック
+  - on
+  - ロック中にアクセスを許可
+    - Passbook: off
+- キーボード
+  - 自動大文字入力: off
+  - 自動修正: off
+  - ピリオドの簡易入力: off
+  - キーボード
+    - 編集: 日本語かな, 英語 のみ
+    - 日本語かな
+- かなオプション: フリックのみ
+
+** プライバシー
+- 位置情報サービス: できるだけOFF
+- 広告
+  - プライバシー
+    - 追跡型広告を制限: ON
+
+** iCloud
+- 書類とデータ: on
+  # ことえり辞書など
+* コントロールセンター (画面下からフリック)
+- AirDrop: OFF

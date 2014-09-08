@@ -1,0 +1,83 @@
+* meeting
+1. 13/11/06 1700-1845 
+2. 13/11/09 1930-2100
+
+* url
+デザインスクール
+http://www.design.kyoto-u.ac.jp/
+
+アンケートフォーム
+https://docs.google.com/forms/d/18MH1XGpnyfreGsh-rfOg9NghUp2MadWqO79rJkyhyaQ/viewform
+アンケートフォーム2
+https://docs.google.com/forms/d/1W2Rnn8D6OlgNY1Rwf1L868UU6Y1f76d_0B_M3oIPfLU/viewform 登録フォーム
+https://docs.google.com/forms/d/1W2Rnn8D6OlgNY1Rwf1L868UU6Y1f76d_0B_M3oIPfLU/edit 編集画面
+
+集計
+https://docs.google.com/spreadsheet/ccc?key=0Asr6xyGMS5p-dGNiQXBhS1ZBWHZfSHUwVkRLdnJTM2c&usp=sharing
+集計2
+https://docs.google.com/spreadsheet/ccc?key=0Asr6xyGMS5p-dGJ3OF9MR0hzRExoVUowV2hmek1iY2c#gid=0
+
+ヒューリスティクスまとめ
+https://docs.google.com/document/d/1mFlVrev3pWISvObbh_134MpZmdTPTVH61naqR3Wqd_Y/edit
+
+スライド
+https://docs.google.com/presentation/d/1DzFtYv-7NyMGnmOZeK0qnDRaV4gs7fvyErKkWn0PJ98/edit
+スライド2
+https://docs.google.com/presentation/d/1wLvCJzocYuJdZ8s9Xtt42hPWJZdNprmRkNoNgn7NMPo/edit
+
+
+* アンケート
+** 情報検索タスク
+1. 来年度の受験を考えている人が入試要項を得る
+2. 直近で予定されているイベントの情報を得る
+3. 開講されている英語講義の情報を得る
+4. 京都駅からキャンパスへ行く方法を得る
+
+** todos
+*** DONE 7/21項目の改変
+*** DONE 情報検索タスクを4つ作る
+---
+*** TODO アンケート実施
+- 4種類の情報検索タスクを実行
+- アンケートに回答
+  - ディエゴの作るフォーム上で回答
+---
+*** TODO 統計処理 配布資料3.7.3に従う
+   - 平均
+   - 標準偏差
+*** TODO スライド作成
+ 
+
+* ヒューリスティクス
+
+** ヒューリスティック評価 評価項目
+- サイト内での用語や表現の一貫性 (Internal consistency)
+- ユーザ中心にデザインされたシンプルな会話 (Simple dialog)
+- 美しくて最小限のデザイン (Aesthetic and minimalist design) *
+- 覚えることは最小限に (Minimizing the user's memory load)
+- エラーが起こりにくいインタフェース (Preventing errors)
+- ユーザへの恒常的なフィードバック (Feedback)
+- 常にユーザの制御下に (Internal locus of control)
+
+「*」 ... replaced from MEDLINEplus list
+
+** todos
+*** DONE ひとつ基準作る（入れ替える）
+
+*** TODO 実際に評価（全員）
+- 7種類のヒューリスティック評価基準を用いて、ウェブサイトの「問題点」および「解決方法」を指摘する
+- 各基準で1つ以上見つかれば理想的だけれど、見つからない項目があってもOK
+  - チーム全体で、各基準につき「少なくともひとつ1つ」の問題点＋解決方法を指摘する
+
+*** TODO スライド作成
+
+
+** アンケートとヒューリスティクスの比較
+
+*** TODO 2で見つかった問題を1の基準で分類
+
+*** TODO 傾向比較
+
+*** TODO アンケートの評価
+
+    

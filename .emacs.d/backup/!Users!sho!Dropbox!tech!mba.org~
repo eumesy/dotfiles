@@ -1,0 +1,768 @@
+* want to do
+** ウィルス対策
+- ClamXav
+java?が強引に入った気がする...
+
+** language
+- [ ] 既存辞書編集
+  http://datafarm.jp/column/Mavericks-kotoeri.html
+- [ ] Google 日本語入力で、自動半角入力可?
+- [ ] iCloud/keychain?
+- [ ] Time Machine
+- [ ] クリップボードの共有
+
+** keyboard
+- KeyRemap4MacBook のXML編集でリマップできる...?
+
+** cron
+$ sudo tlmgr update --self --all // texliveのupdate
+$ brew update ?? // formulaeのupdate
+
+** ほか
+- Fonts
+  - Ricty
+    - italic対応 (in iTerm)
+    - ギリシャ文字の半角表示
+- Maps.app
+- Contacts.app
+- Notes.app
+- 軽量エディタ
+  - CotEditor
+
+* 要手動移行
+** シンボリックリンク張ると問題起きそう
+~/.recentf
+~/.zshhistory
+
+** シンボリックリンク脹れない
+/Applications/Emacsclient **.app
+
+** シンボリックリンク張ってない
+~/Dropbox/OmniGraffle/Stencils
+(アプリ用の置き場にコピーしたっけ?)
+
+~/Library/Application Support/Skype
+
+** ほか
+iTunes 認証解除
+iPhoto Library
+~/Library/Mail の中身 (今のMailは違うくさいけど…)
+
+* 旧マシン削除
+http://gori.me/mac/40302
+- iTunes
+  - 認証解除
+- iCloud
+  - Macを探す OFF
+  - 解除
+- Opt押しながら再起動
+  - ディスクユーティリティでデータ削除
+
+OS再インストール
+- (10.6) USB差して再起動
+- (10.7以後) Cmd+R して再起動 Apple ID 要る??
+
+* OS (via. App store)
+
+* Software Update
+
+* XCode (via. App store)
+Developer登録だとかの話は、もう不要...?
+http://wiki.tmd45.in/wiki.cgi?page=Xcode%A4%C8MacPorts%A4%F2%A5%A4%A5%F3%A5%B9%A5%C8%A1%BC%A5%EB%A4%B7%A4%C6UNIX%B4%C4%B6%AD%A4%F2%C0%B0%A4%A8%A4%EB
+
+- Preferences...
+  - Downloads
+    - Check for and install undates automatically: on
+
+- terminalでgcc等を入力すればCommand Line Tools のDLが要求される -> install
+http://railsapps.github.io/xcode-command-line-tools.html
+
+* XQuartz (including X11)
+http://xquartz.macosforge.org/landing/
+
+* Homebrew
+- install
+http://brew.sh/index_ja.html
+
+$ brew update
+
+$ brew tap homebrew/science
+https://github.com/homebrew/homebrew-science
+# for R
+
+$ brew tap homebrew/dupes
+http://www.topbug.net/blog/2013/04/14/install-and-use-gnu-command-line-tools-in-mac-os-x/
+
+$ brew install gfortran
+# > brew では gfortran が必要なプログラムをインストールする場合，gfortran は自動でインストールしてくれない仕様
+http://d.hatena.ne.jp/hijouguchi/20120925/1348593450
+
+$ brew install coreutils findutils gnu-tar gnu-sed gawk lv
+$ brew install zsh zsh-completions git wget tmux rlwrap colordiff
+$ brew install imagemagick nkf fontforge pdfjam
+$ brew install gnuplot python ocaml coq gauche r
+$ brew install ngspice
+$ brew install id3v2
+
+# curl は
+# > This formula is keg-only.
+# > Mac OS X already provides this software and installing another version in
+# > parallel can cause all kinds of trouble.
+# なので入れない
+
+* python
+$ pip install numpy scipy ipython
+
+# matplotlib
+# https://github.com/rueckstiess/mtools/wiki/matplotlib-Installation-Guide
+$ sudo ln -s /usr/X11/include/freetype2/freetype /usr/local/include/freetype
+$ sudo ln -s /usr/X11/include/ft2build.h /usr/local/include/ft2build.h
+$ pip install maplotlib
+
+$ pip install pyzmq pandas scikit-learn
+
+* rename
+ref
+  http://hints.macworld.com/article.php?story=20050630022203488
+  http://kzkz.jp/blog/index.php/view/168
+alternative
+  brew rename (コマンド違う模様)
+
+download
+https://www.kernel.org/pub/linux/utils/util-linux/
+-> util-linux-2.24.tar.gz
+
+$ tar zxvf util~
+$ cd util~
+$ ./configure
+$ make rename
+$ sudo cp rename /usr/bin/
+$ cd misc-utils
+$ cp rename.1 /usr/share/man/man1
+
+* pdftk
+http://www.pdflabs.com/tools/pdftk-the-pdf-toolkit/
+-> PDFtk Server
+-> Mac
+
+- これhomebrew tapでどうにかしたいなぁ
+
+* Dropbox
+- Download
+
+- General
+  - Use black and white menu bar icons: on
+- Network
+  - Bandwidth
+    - Upload rate: Don't limit
+
+* git
+git config --global user.name 'Your Name'
+git config --global user.email you@example.com
+# github に登録したemail
+git config --global credential.helper osxkeychain
+git config --global core.editor 'emacsclient -nw'
+
+* KU-Network
+** MIAKO
+学外から学内限定サービスを利用する - 京都大学情報環境機構 KUINS運用委員会
+http://www.kuins.kyoto-u.ac.jp/ja/index.php?%B3%D8%B3%B0%A4%AB%A4%E9%B3%D8%C6%E2%B8%C2%C4%EA%A5%B5%A1%BC%A5%D3%A5%B9%A4%F2%CD%F8%CD%D1%A4%B9%A4%EB
+-> PPTP
+
+- 代替案
+  - SSH
+  - UQ WiMAX 専用プラン
+    https://jvr.uqwimax.jp/univ/kuins
+
+** ルータ
+VPNパススルーを通す
+
+- PPTP関連のよくある質問
+  http://www.kuins.kyoto-u.ac.jp/ja/3FAQ/index.php?PPTP%B4%D8%CF%A2
+- URoad Aero 設定画面
+  http://uroad.aero/ ?
+- URoad Aero マニュアル
+  http://www.shinseicorp.com/wimax/URoad-AeroWM/
+
+** eduroam
+KUINS News No.73 - eduroamの利用方法
+http://www.kuins.kyoto-u.ac.jp/news/73/#eduroam
+   
+KUINS提供無線LANの使い方 - 京都大学情報環境機構 KUINS運用委員会
+http://www.kuins.kyoto-u.ac.jp/ja/index.php?KUINS%C4%F3%B6%A1%CC%B5%C0%FELAN%A4%CE%BB%C8%A4%A4%CA%FD
+
+* System Preferences
+- General
+  - Sidebar icon size: small
+  - Show scroll bars: always
+  - Click in the scroll bar to: Jump to the spot that's clicked
+  - Close windows when quitting an application: off
+- Desktop & Screen Saver
+  - Desktop: 適当. ~/Dropbox/desktop_picture
+  - Screen saver: 適当
+- Dock
+  - Minimize window using: Scale effect
+  - Animate opening applications: off
+  - Automatically hide and show the Dock: on
+- Mission Control
+  - Show Dashboard as a space: off
+  - Keyboard and Mouse Shortcuts
+    - Keyboard shortcus: all off
+  - [ ] 他、あとで見直す
+  - Hot Corners...
+    - 右下: Desktop
+    - 左下: Put Display to Sleep
+- Language & Region
+  - Preferred languages: English > Japanese
+  - Region: Japan
+  - First day of week: Monday
+  - Time format: 24-Hour Time
+- Spotlight
+  - Spotlight menu keyboard shortcut: Ctrl+Cmd+Space
+
+- Display
+  - Automatically adjust brightness: off
+  - [ ] Color -> Calibrate してもよいかも
+- Keyboard
+  - Keyboard
+    - Key Repeat: fastest
+    - Delay Until Repeat: Shortest
+    - Use all F1, F2, etc. keys as standard function keys: on
+    - Caps Lock Key: Control
+  - Text
+    - Use smart quotes and dashes: off
+  - Shortcuts
+    - Full Keyboard Access: All controls
+    - [ ] ここに良さそうなショートカットが色々置いてある
+  - Input Sources
+    - [ ] Automatically switch to a document's input source なる項目が
+    - Kotoeri
+      - Input modes
+	- Half-width Katakana: on
+      - Predictive candidates: off (lion,chrome入力フリーズ問題 http://d.hatena.ne.jp/sasaplus1/20110820/1313846518 )
+      - '\' key generates: backslash
+      - Full-width numeral characters: off
+- Trackpad
+  - Point & Click
+    - Tap to Click: on
+    - Three finger drag: on
+    - Tracking speed: 6th
+  - More Gestures
+    - Swipe between pages: off
+    - Mission Control
+      - Swipe up with "four" fingers
+    - App Expose: on
+- Sound
+  - Alert volume: 0
+
+- iCloud
+  - Documents & Data
+    # 辞書が同期される
+- Network
+  - Set Service Order: KUINS(VPN) -> Ethernet -> WiFi
+  - Wi-Fi
+    - Advanced...
+      - Wi-Fi
+	- Preferred Networks: Wi-Fiルータ-> eduroam -> MIAKO
+
+- Bluetooth
+  - Turn Bluetooth Off
+  - Show Bluetooth in menu bar: off
+- Sharing
+  - Computer Name: mba
+- Users & Groups
+  - Full Name: sho
+- Date & Time
+  - Clock
+    - Display the time with seconds: on
+    - Show date: on
+
+* ことえり
+記号を常に半角に
+http://www9.atwiki.jp/defaults/pages/21.html
+# space
+$ defaults write com.apple.inputmethod.Kotoeri zhsy -dict-add " " -bool no
+# back-quote
+$ defaults write com.apple.inputmethod.Kotoeri zhsy -dict-add "\`" -bool no
+$ defaults write com.apple.inputmethod.Kotoeri zhsy -dict-add "@" -bool no
+$ defaults write com.apple.inputmethod.Kotoeri zhsy -dict-add "#" -bool no
+$ defaults write com.apple.inputmethod.Kotoeri zhsy -dict-add "$" -bool no
+$ defaults write com.apple.inputmethod.Kotoeri zhsy -dict-add "%" -bool no
+$ defaults write com.apple.inputmethod.Kotoeri zhsy -dict-add "^" -bool no
+$ defaults write com.apple.inputmethod.Kotoeri zhsy -dict-add "*" -bool no
+$ defaults write com.apple.inputmethod.Kotoeri zhsy -dict-add "=" -bool no
+$ defaults write com.apple.inputmethod.Kotoeri zhsy -dict-add "|" -bool no
+$ defaults write com.apple.inputmethod.Kotoeri zhsy -dict-add ";" -bool no
+$ defaults write com.apple.inputmethod.Kotoeri zhsy -dict-add ":" -bool no
+$ defaults write com.apple.inputmethod.Kotoeri zhsy -dict-add "'" -bool no
+# double-quote
+$ defaults write com.apple.inputmethod.Kotoeri zhsy -dict-add "'\"'" -bool no
+$ defaults write com.apple.inputmethod.Kotoeri zhsy -dict-add "'>'" -bool no
+$ defaults write com.apple.inputmethod.Kotoeri zhsy -dict-add "'<'" -bool no
+$ killall Kotoeri
+
+* Finder
+- keyboard brightness: off (F5)
+
+- Preferences...
+  - General
+    - Shor these items on the desktop
+      - Hard disks: on
+    - New Finder windows show: 今学期のフォルダ
+    - Sprint-loaded folders and windows: off
+  - Sidebar
+    - ~/
+    - mba
+    - Macintosh HD
+  - Advanced
+    - Show all filename extensions: on
+    - [ ] Show warning before changing an extension なる項目が...
+    - When performing a search: Search This Mac
+
+- View
+  - Show Tab Bar: on
+  - Show Path Bar: on
+  - Show Status Bar: on
+  - (~/ ->) Show View Options
+    - Show Library Folder: on
+
+- Desktop
+  - 右クリック
+    - Sort By
+      - Snap to Grid: on
+
+- Dock に追加
+  - Applications
+    Display as: Folder, View content as: List
+  - Downloads
+
+- Sidebar
+  - Ctrl+Shift+G -> ~/Library/Mobile Documents -> Make Alias -> FAVORITE に登録
+  - 今学期のフォルダ
+
+- Menubar
+  - Battery
+    - Show Percentage: on
+
+** defaults
+- 不可視ファイルの表示
+$ defaults write com.apple.finder AppleShowAllFiles -boolean true
+$ killall Finder
+
+- ダッシュボード無効化
+$ defaults write com.apple.dashboard mcx-disabled -boolean true
+$ killall Dock
+http://www.pvh.jp/mac/osxlion-dashboard-invalidity/
+
+- Stop icons from bouncing in Dock | defaults-write.com
+http://www.defaults-write.com/stop-icons-from-bouncing-in-dock/#.UrRxEWQW0kg
+$ defaults write com.apple.dock no-bouncing -bool TRUE
+
+- Display full Path in OS X Finder title Bar | defaults-write.com
+http://www.defaults-write.com/display-full-posix-path-in-os-x-finder-title-bar/#.UrRnx2QW0kg
+$ defaults write com.apple.finder _FXShowPosixPathInTitle -bool true
+$ killall Finder
+
+- Change default view style in OS X Finder | defaults-write.com
+http://www.defaults-write.com/change-default-view-style-in-os-x-finder/#.UrRoZ2QW0kg
+$ defaults write com.apple.Finder FXPreferredViewStyle clmv
+$ killall Finder
+
+- Increase the speed of OS X dialogs boxes | defaults-write.com
+http://www.defaults-write.com/increase-the-speed-of-os-x-dialogs-boxes/#.UrRpQ2QW0kg
+$ defaults write NSGlobalDomain NSWindowResizeTime .05
+
+- Save to disk (not to iCloud) by default | defaults-write.com
+http://www.defaults-write.com/save-to-disk-not-to-icloud-by-default/#.UrRsVGQW0kh
+$ defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
+
+- .DS_Storeを作成しない
+Mac OS X v10.4 and later： _ネットワーク接続時_ に .DS_Store ファイルの作成を抑制する方法
+http://support.apple.com/kb/HT1629?viewlocale=ja_JP
+Disable the creation of .DS_store files | defaults-write.com
+http://www.defaults-write.com/disable-the-creation-of-ds_store-files/#.UrRuOWQW0kh
+$ defaults write com.apple.desktopservices DSDontWriteNetworkStores TRUE
+
+about .DS_Store
+http://lists.apple.com/archives/applescript-users/2006/Jun/msg00180.html
+
+* KeyRemap4MacBook => Karabiner
+https://pqrs.org/macosx/keyremap4macbook/document.html.ja
+
+- Change Key
+  - Emacs Mode
+    - Ctrl + D, H, I, J, M, PNBF, AE, /, S
+  - For Japanese
+    - 左右のコマンドキーを英数/かなとしても使う: コマンドキーの動作を優先モード
+  
+* iTerm2
+- System Preferences / Security & Privacy / Privacy / Accessibility に iTerm.app を投げる
+  key remap できるようになる
+
+- Preferences
+  - General
+    - Closing
+      - Quit when all windows are closed: on
+    - Preferences
+      - [ ] Load preferences from a custom folder on URL なる項目が
+    - [ ] Selection
+    - Window
+      - Adjust window when changing font size: off
+      - Use Lion-style Fullscreen windows: off
+	# Fullscreen: Cmd+Ret
+    - [ ] Tmux
+      
+  - Appearance
+    - Panes
+      - Show per-pane title bar with split panes: off
+    - Dimming
+      - Dimming amount: 30%くらい
+	
+  - Keys
+    - Remap Modifier Keys
+      - Left option key: Left command
+      - Left command key: Left option
+    - Global Shortcut Keys
+      - Cmd+t: Next Pane
+      - Cmd+Tab: Do Not Remap Modifiers
+      - Cmd+BackQuote: Do Not Remap Modifiers
+      - Cmd+Shift+Space: Do Not Remap Modifiers
+	# Spotlight側のshortcutを一時的に変更した上で設定
+      - [ ] Cmd+,: Do Not Remap Modifiers ?
+	
+  - Profile / Default
+    - General
+      - Working Directory: Reuse previous session's directory
+    - Text
+      - Text Rendering
+	- Blinking text allowed
+	- Italic text allowed
+      - Double-Width Characters
+	- Treat ambiguous-width characters as double width: on
+	  "■"等の全角表示
+    - Window
+      - Transparency: 30%くらい
+    - Terminal
+      - Report Terminal Type: xterm-256color
+	# emacsclient 256色表示
+    - Keys
+      - Left option key act as: +Esc
+      - [ ] Delete key sends ^H なる項目が
+---
+$ cd /Applications/iTerm/Contents/Resources/
+$ cp PresetKeyMappings.plist PresetKeyMappings.plist-old
+- PresetKeyMappings.plist の中に、 ~/Dropbox/dotfiles/iTerm/xtermemacsclientuskey.plist を追加
+- Load Preset... -> xterm + emacsclient + US key
+---
+    - Advanced
+      - [ ] Semantic History
+
+* cdto
+https://code.google.com/p/cdto/
+for iTerm
+
+* Emacs
+$ brew install emacs --cocoa --japanese
+http://qiita.com/catatsuy/items/c3e4fe2e6c856c285880
+http://mochizblog.heroku.com/15
+
+$ ln -s /usr/local/Cellar/emacs/24.3/Emacs.app/ /Applications/Emacs.app
+$ ln -s ~/Dropbox/dotfiles/.emacs.d/ .emacs.d
+$ ln -s ~/Dropbox/dotfiles/.recentf .recentf
+# .recentf は mv の方が良いかも...
+
+必要なファイルは ~/Dropbox/scripts/Emacsclient **.app へ関連付け
+  適当なファイルで cmd+i -> Open with: Emacsclient **.app -> Change all
+
+  | txt | emacsclient-nw |
+  | org | emacsclient-nw |
+  | tex | emacsclient-nw |
+
+* zsh
+- 環境引継
+$ ln -s ~/Dropbox/dotfiles/.zshrc .zshrc
+$ ln -s ~/Dropbox/dotfiles/.zsh_history .zsh_history
+$ ln -s ~/Dropbox/dotfiles/.zsh .zsh
+# bash などで実行
+
+- zaw
+$ chmod 755 /Users/sho/Dropbox/dotfiles/.zsh/zaw
+$ chmod 755 /Users/sho/Dropbox/dotfiles/.zsh/functions
+
+- zsh-completions
+$ chmod go-w /usr/local/share
+# 755と結果的に同じ?
+$ rm -f ~/.zcomdump; compinit
+
+# アクセス権で問題が発生しているファイルは $ compaudid で確認可
+
+- ログインシェル変更
+$ sudo emacs /etc/shells
+最終行に
+/usr/local/bin/zsh
+追加
+
+$ chpass -s /usr/local/bin/zsh
+http://kronus9.sblo.jp/article/70293394.html
+http://tukaikta.blog135.fc2.com/blog-entry-195.html
+
+* LaTeX 
+- MacTeX インストール
+  http://oku.edu.mie-u.ac.jp/~okumura/texwiki/?Mac#f5466652
+  記載のミラーサイトより
+  # homebrew 経由は(homebrew的にも)非推奨
+  - インストール時
+    Customize -> Convert-IM: off 
+    # homebrew 経由でImageMagick導入
+
+- PATH通す /usr/texbin
+
+- 一式update
+$ sudo tlmgr update --self --all
+
+- texmf.cnf
+$ ln -s ~/Dropbox/texmf ~/Library/texmf
+$ sudo mktexlsr
+
+- 文字コード自動判別
+$ printf '\n%% guess input enc\nPTEX_IN_FILTER = /usr/local/bin/nkf -w\n' | sudo tee -a /usr/local/texlive/texmf-local/web2c/texmf.cnf
+$ sudo mktexlsr
+
+- pdf読み込み時のextractbb自動実行
+$ sudo emacs /usr/local/texlive/texmf-local/web2c/texmf.cnf
+
+以下追加
+shell_escape_commands = \
+bibtex,bibtex8,bibtexu,pbibtex,upbibtex,biber,\
+kpsewhich,\
+makeindex,mendex,texindy,\
+mpost,pmpost,upmpost,\
+repstopdf,epspdf,extractbb
+
+$ mktexlsr
+
+- ヒラギノ埋め込み
+  http://oku.edu.mie-u.ac.jp/~okumura/texwiki/?Mac#i9febc9b
+  ~/Dropbox/texmf/initfont.sh に入れた
+
+- 設定ファイル
+$ ln -s ~/Dropbox/dotfiles/.latexmkrc .latexmkrc
+
+- jsarticle.cls 改変
+part〜subparagraphあたりの headfont -> bfseries に変更
+
+- LaTeXiT.app
+  - preferences
+    - General
+      - Export format of images: PDF with outlined fonts
+* Skim
+http://skim-app.sourceforge.net/index.html
+
+- View
+  - Hide Note Pane
+  - Hide Contens Pane
+- Preferences...
+  - Sync
+    - Check for file changes: on
+
+- アラートを出さずに常時リロード
+$ defaults write -app Skim SKAutoReloadFileUpdate -boolean true
+http://sourceforge.net/apps/mediawiki/skim-app/index.php?title=Hidden_Preferences#Auto_Reload
+
+* Adobe Reader
+
+* Fonts
+** Ricty
+# Inconsolata (for Ricty)
+$ wget http://levien.com/type/myfonts/Inconsolata.otf
+$ cp Inconsolata.otf ~/Library/Fonts/
+
+# Migu 1M (for Ricty)
+$ wget -O migu-1m.zip "http://sourceforge.jp/frs/redir.php?m=jaist&f=%2Fmix-mplus-ipa%2F59022%2Fmigu-1m-20130617.zip"
+# これが最新かどうかはここで確認
+# http://mix-mplus-ipa.sourceforge.jp/migu/
+$ unzip -o migu-1m.zip -d migu-1m
+$ 直下のmig-1m-*.ttf を~/Library/Fonts/ へcp
+
+# Ricty
+$ git clone https://github.com/yascentur/Ricty.git
+$ sh Ricty/ricty_generator.sh auto
+
+# Ricty Discord
+$ rm rictyd* # 2つ消す
+$ fontforge -script Ricty/ricty_discord_patch.pe -0 -7 -z -Z -r -asterisk -plus -hyphen -angles -equal -bar -tilde Ricty-Regular.ttf Ricty-Bold.ttf
+
+$ mv -f Ricty*.ttf ~/Library/Fonts/
+
+# Powerline symbols
+$ git clone https://github.com/Lokaltog/powerline.git
+$ fontforge -script powerline/font/fontpatcher.py RictyRegular-Bold.ttf
+$ fontforge -script powerline/font/fontpatcher.py RictyDiscord-Bold.ttf
+$ できあがったフォントを~/Library/Fonts/ へcp
+
+# iTerm
+Profiles -> Default -> Text -> 各font -> Ricty Discord for Powerline
+
+参考:
+Ricty Discordのフォント
+http://blog.livedoor.jp/okashi1/archives/51836566.html
+
+スクリプト参考
+http://r9y9.github.io/blog/2013/07/27/mig-ricty-font-install/
+http://d.hatena.ne.jp/akishin999/20130928/1380373262
+
+** FontBook
+$ defaults write com.apple.FontBook AppleLanguages '("ja-JP","en-US")'
+これだけ日本語優先
+消す場合
+$ defaults delete com.apple.FontBook AppleLanguages
+
+* Google Chrome
+ログインしておくと、ブックマークなど自動同期
+
+* Mendeley
+- DL
+- bookmarklet -> Chrome
+   http://www.mendeley.com/import/
+
+* Evernote
+- DL
+
+* LINE (via. App Store)
+$ cd ~/Library/Containers/jp.naver.line.mac/Data/
+$ mv -i Caches Caches-old
+$ ln -s ~/Dropbox/dotfiles/LINE/jp.naver.line/ Caches
+
+- Settings
+  - Chats & Voice Calls
+    - Send Key: Command + Enter
+
+* Skype
+~/Library/Application Support/Skype
+  以下を旧端末から移行
+
+DL
+  http://www.skype.com/ja/
+  開いてログインすれば移行完了
+
+* App Cleaner
+http://www.freemacsoft.net/appcleaner/
+  
+* Office for Mac (via. Amazon.co.jp)
+** DL
+https://www.amazon.co.jp/gp/swvgdtt/your-account/manage-downloads.html
+# プロダクトキー確認
+# ここからはDLできず
+http://www.microsoft.com/japan/mac/trial
+# ここからDLして認証
+
+- update
+Excel -> アップグレード... 
+  # 出なくなるまでひたすらDL
+
+- Docから要らないアプリ消しまくる
+- Microsoft AutoUpdate だけは残しておく
+
+** Excel
+- 環境設定
+  - 全般
+    - 標準フォント: Ricty Regular 18pt
+
+* iTunes
+- 旧端末で認証解除
+  Store -> Deauthorize This Computer...
+
+- 新端末
+  - ライブラリ紐付け
+    option を押しながら iTunes 起動
+    外付けHDDの iTunes Library.itl を選択
+    https://discussionsjapan.apple.com/docs/DOC-1024
+  - 認証
+    Store -> Authorize This Computer...
+
+* Pastebot Sync
+http://tapbots.com/software/pastebot/#sync
+
+* Omni Graffle
+- download 5 pro
+http://www.omnigroup.com/support/omnigraffle
+.dmg
+http://www.omnigroup.com/ftp/pub/software/MacOSX/10.6/OmniGrafflePro-5.4.4.dmg
+
+- Stenciles
+$ rm ~/Dropbox/OmniGraffle/Stencils/stenciles.xml
+$ ln -s ~/Dropbox/OmniGraffle/Stencils ~/Library/Application\ Support/The\ Omni\ Group/OmniGraffle/Stencils
+
+* Tree (via. App Store)
+- これで作ってしまったドキュメントがあるので…
+* iPhoto
+これに従って外付けHDDで移動
+http://support.apple.com/kb/HT1229?viewlocale=ja_JP
+
+* Mail.app
+~/Library/Mail の中身を投げっぱなし
+
+* MDRP (Mac DVDRipper Pro) (Purchased)
+http://www.macdvdripperpro.com/
+Mac DVDRipper Pro -> Registration
+(フルディスクイメージ)
+
+* Arduino
+IDE (Arduino.app)
+http://arduino.cc/en/main/software
+
+$ easy_install ino
+
+- upload の stty の使い方修正
+emacs /usr/local/lib/python2.7/site-packages/ino-0.3.6-py2.7.egg/ino/commands/upload.py
+https://github.com/amperka/ino/issues/96
+
+- serial
+$ brew install picocom
+
+- XCTU
+http://www.digi.com/support/productdetail?pid=3430
+
+* FLV
+VideoLAN - Official page for VLC media player, the Open Source video framework!
+http://www.videolan.org/vlc/
+
+* 保留中 Purchased
+- Alfred
+
+* 保留中
+** VMWare(Purchased) & Windows 7
+
+** Evernote
+   
+** CotEditor
+- 上のバー
+  小さいサイズ＆アイコンのみ
+  行折り返しを追加
+  
+** GraphicConverter
+-  フリーのままでpdf編集可
+
+** App Store / Purchases にたっぷり
+-  ToyViewer
+  - .pgm
+- なぜか pages / keynote もある
+
+** the unarchiver (app store)
+** 動画/音声
+- VLC.app
+- Perian
+- Audacity.app
+- Burn
+
+** Evernote
+** Limechat
+** ほか
+iExtractMP3 (flv→mp3(for iPod))
+flash...
+UnRarX
+FileZilla (FTPクライアント)
+SeaShore
+cooViewer
+PastebotSync
+Switch (wma → mp3)

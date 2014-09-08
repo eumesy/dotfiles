@@ -1,0 +1,112 @@
+struct tree_node {
+  int node_number;
+  bool has_child;
+  tree_node* fst_child;
+  tree_node* snd_child;
+  std::vector<std::string> profile;
+};
+
+vector<tree_node> make_guide_tree(vector<string> &seq, double (&distance)[NUM_OF_SEQ_MAX][NUM_OF_SEQ_MAX]) {
+  // 近隣結合法
+  // 各ノードを自然数で管理
+  // - 葉(seqの各要素)は、seq の index で管理
+  // - 葉以外のノードには、生成される度に新たに自然数を付与
+
+  const int num_of_seq = (int)(seq.size());
+
+  // ノード全体の集合
+  // 含まれるノードの index の最大値で管理
+  // ノード全体 = {0, ..., node_id_max}
+  int node_id_max = num_of_seq - 1;
+
+  // 未処理ノードの集合
+  vector<int> L; 
+  for (int i=0; i<num_of_seq; i++)
+	L.push_back(i);
+
+  // 案内木
+  // index, プロファイル, 及び子ノードへのポインタを持つ struct tree_node の配列
+  vector<tree_node> guide_tree;
+  for (int i=0; i<num_of_seq; i++) {
+	struct tree_node t_;
+	t_.node_number = i;
+	t_.profile.push_back(seq[i]);
+	guide_tree.push_back(t_);
+  }
+
+  // 案内木の生成
+  while (L.size() > 2) {
+	// calc r
+	double _r[NUM_OF_SEQ_MAX];
+	for (vector<int>::iterator i = L.begin(); i != L.end(); i++) {
+	  _r[*i] = 0;
+	  for (vector<int>::iterator k = L.begin(); k != L.end(); k++) {
+		_r[*i] += distance[*i][*k];
+	  }
+	  _r[*i] = _r[*i] / (L.size() - 2.0);
+	}
+
+	// calc D and choose i, j
+	double _D[NUM_OF_SEQ_MAX][NUM_OF_SEQ_MAX];
+	double _D_min;
+	int _i, _j;
+	_D_min = numeric_limits<double>::max();
+	for (vector<int>::iterator i = L.begin(); i != L.end(); i++) {
+	  for (vector<int>::iterator j = L.begin(); j != L.end(); j++) {
+		if (*j == *i)
+		  continue;
+		else if (*j > *i) {
+		  _D[*i][*j] = distance[*i][*j] - _r[*i] - _r[*j];
+		  if (_D[*i][*j] < _D_min) {
+			_D_min = _D[*i][*j];
+			_i = *i;
+			_j = *j;
+		  }
+		}
+		else // *j < *i
+		  _D[*i][*j] = _D[*j][*i];
+	  }	
+	}	
+
+	// create new node k
+	node_id_max++;
+	int _k = node_id_max;
+	{
+	  struct tree_node node_k;
+	  node_k.node_number = _k;
+	  node_k.fst_child = &guide_tree[_i];
+	  node_k.snd_child = &guide_tree[_j];
+	  guide_tree.push_back(node_k);
+	}
+
+	// calc d[k][m]
+	for (vector<int>::iterator m = L.begin(); m != L.end(); m++) {
+	  if (*m == _i || *m == _j)
+		continue;
+	  distance[_k][*m] = (distance[_i][*m] + distance[_j][*m] - distance[_i][_j]) / 2.0;
+	  distance[*m][_k] = distance[_k][*m];
+	}
+	// calc d[i][k], d[j][k]
+	distance[_i][_k] = (distance[_i][_j] + _r[_i] - _r[_j]) / 2.0;
+	distance[_k][_i] = distance[_i][_k];
+	distance[_j][_k] = distance[_i][_j] - distance[_i][_k];
+	distance[_k][_j] = distance[_j][_k];
+	
+	// remove i, j from L
+	L.erase(std::remove(L.begin(), L.end(), _i), L.end());
+	L.erase(std::remove(L.begin(), L.end(), _j), L.end());
+	// add k to L
+	L.push_back(_k);
+  }
+  if (L.size() == 2) {
+	// make root node
+	node_id_max++;
+	struct tree_node root_node;
+	root_node.node_number = node_id_max;
+	root_node.fst_child = &guide_tree[L[0]];
+	root_node.snd_child = &guide_tree[L[1]];
+	guide_tree.push_back(root_node);
+  }
+
+  return guide_tree;
+}

@@ -1,0 +1,398 @@
+- [ ] .py作ったときに #! /usr/bin/env python 入れる??
+
+* reference
+データ・サイエンスのプログラミング言語はRからPythonに置き換わる | ReadWrite Japan
+http://readwrite.jp/archives/2534
+
+Pythonによるデータ分析入門 ―NumPy、pandasを使ったデータ処理
+
+公式ドキュメントのチュートリアル (大谷くんより)
+
+全てのwebエンジニアがPythonを勉強するべき2013年到来
+http://anond.hatelabo.jp/20130101082333
+
+入門 自然言語処理
+
+2.7? 大谷くんより
+
+Mac OS X Lion / homebrew にて python の環境を整える — JAWSUG-Okinawa 2nd study NOTE
+http://www.sicafe.net/macPackageManageTips/html/homebrewPythonInstall.html
+Mac OS Marvericks にHomebrewを使ってpyenv,pythonの環境設定を行うメモ - Qiita
+http://qiita.com/tstomoki/items/b23291fec7a412157f23
+python - How do Homebrew, PIP, easy_install etc. work so that I can clean up - Stack Overflow
+http://stackoverflow.com/questions/10455947/how-do-homebrew-pip-easy-install-etc-work-so-that-i-can-clean-up
+Mac で Python - Study03.net 対シンバシ専用
+http://d.hatena.ne.jp/tell-k/20110418/1303121778
+Python - MacOSX Mavericks(10.9)にhomebrewを使ってDjangoの開発環境を整える - Qiita
+http://qiita.com/tetsuya/items/f9a01d6bdea9639aff26
+Mac OS XにPythonをインストールする — Pythonヒッチハイク・ガイド
+https://python-guide-ja.readthedocs.org/en/latest/starting/install/osx/
+
+PyPy 速い by 山之内氏
+
+Amazon.co.jp： Pythonスタートブック: 辻 真吾: 本
+http://www.amazon.co.jp/gp/product/4774142298/ref=as_li_ss_tl?ie=UTF8&tag=yuuki05a-22&linkCode=as2&camp=247&creative=7399&creativeASIN=4774142298
+
+■参考サイト
+自然言語処理にはやっぱりPythonがいちばん - nokunoの日記
+http://d.hatena.ne.jp/nokuno/20110820/1313803330
+
+はじめに — 機械学習の Python との出会い
+http://www.kamishima.net/mlmpyja/intro.html
+
+* パッケージ管理
+pipの使い方 (2014/1バージョン) — そこはかとなく書くよん。
+http://tdoc.info/blog/2014/01/15/pip.html
+
+Python の distribute と pip が！！ - けいれん現象の幽玄美よ
+http://elfcobe.hateblo.jp/entry/2013/07/31/154404
+
+はじめの一歩 — Python School 1.5.2 documentation
+http://skitazaki.github.io/python-school-ja/getting-started.html
+
+* 実行
+** interactive interpreter (インタラクティブインタプリタ/対話モード)
+http://docs.python.jp/2.7/tutorial/interactive.html
+代替: IPython, bpython
+
+$ python
+
+>>> execfile('test.py')
+
+Ctrl+D to quit
+Ctrl+C to 割り込み(強制的に一次プロンプト">>>"に戻る)
+
+対話モードでは、最後に表示され結果は変数 _ に代入される
+
+対話モード起動時実行ファイルの設定
+http://docs.python.jp/2.7/tutorial/interpreter.html#tut-startup
+
+** コマンド直打ち
+$ python -c command
+$ python -c 'print 1+1'
+
+** module の実行
+$ python -m module
+??
+
+** 実行可能ファイルにする
+#! /usr/bin/env python
+# -*- coding: utf-8 -*-
+
+$ chmod +x hoge.py
+
+
+PyPy 等のコンパイラとは…？
+
+* コメント
+# comment
+hogehoge # comment
+
+* 変数の宣言(定義)と代入
+x = 3 # 宣言は不要．代入により宣言(定義)される
+
+x = y = 0 # 返り値は代入された値
+
+まとめて宣言、代入
+a, b = 0, 1
+
+* 整数と小数
+x = 1
+x = 3.14
+y = 3.0
+
+** 
+// 商
+% 剰余
+
+** インクリメント
+n += 1
+
+** 型変換
+float()
+int()
+long()
+
+** 比較演算子
+<
+>
+<=
+>=
+==
+!= # <> も利用できるが非推奨
+
+a < b < c は a < b and b < c と等価
+
+> a, b, c, ..., y, z が式で op1, op2, ..., opN が比較演算子である場合、 a op1 b op2 c ... y opN z は a op1 b and b op2 c and ... y opN z と等価になります。ただし、前者では各式は多くても一度しか評価されません。
+
+* 複素数
+x = 3 + 4j
+y = complex(4, 5.6)
+
+x.real # 3
+x.imag # 4
+abs(x) # 5
+
+** 文字列
+*** (通常の)文字列
+'hoge moga'
+"foo baa"
+hello = "This is a rather long string containing\n\
+several lines of text just as you would do in C.\n\
+    Note that whitespace at the beginning of the line is\
+ significant."
+
+ソースコードを見やすくするための改行
+  \[改行] ... 無視される
+改行文字を出力する
+  \n
+
+*** 三重クォート
+print """
+Usage: thingy [OPTIONS]
+     -h                        Display this usage message
+     -H hostname               Hostname to connect to
+"""
+ソースコードの改行が改行文字として出力される
+
+*** raw文字列
+hello = r"hoge\nmoga"
+エスケープシーケンスが展開されない
+
+*** Unicode文字列
+通常の文字列はバイト列として処理される
+u'こんにちは'
+とすれば、1文字毎に処理される
+'こんにちは'[3] # ???
+u'こんにちは'[3] # ち
+len('こんにちは') # 15
+len(u'こんにちは') # 5
+
+ur'こんにちは\nいい天気ですね' # Unicode文字列+raw
+
+*** 
+文字列は変更できない
+
+*** エンコード変更
+Unicode文字列(python) -> 適当なエンコーディング
+u"あいう".encode('utf-8')
+# '\xe3\x81\x82\xe3\x81\x84\xe3\x81\x86'
+
+適当なエンコーディング -> Unicode文字列(python)
+unicode('\xe3\x81\x82\xe3\x81\x84\xe3\x81\x86', 'utf-8')
+# u'\u3042\u3044\u3046'
+
+* 言語仕様
+> 識別子に対する非 ASCII 文字の使用はサポートされていません
+
+* sequence型
+シーケンス型
+http://docs.python.jp/2.7/library/stdtypes.html#typesseq
+
+** 文字列 string
+文字列メソッド
+http://docs.python.jp/2.7/library/stdtypes.html#string-methods
+文字列の書式設定
+http://docs.python.jp/2.7/library/string.html#new-string-formatting
+
+'hoge' + 'moga' # 連結
+'hello! ' * 5 # 反復
+len(str) # 文字列長
+
+str[index] # n文字目
+ # 0はじまり
+ # 動作としては str[index: index+1] と同じ
+str[-index] # 後ろからn文字目
+ # -0はじまり s t r i n g^ここ-0 だが、str[-0]はstr[0]となる
+ # 動作としては str[-index: -index+1] と同じ
+
+slice
+- str[start_index:end_index] 文字列の切り出し start〜endのひとつ前
+
+sliceの場合、取り出したい文字数を考えればOK
+- str[:i] # 最初のi文字 前半は0がデフォルト値 str[0:i] と同じ
+- str[-i:] # 末尾のi文字
+- str[i:] # 最初のi文字を除くすべて 後半は文字長がデフォルト値 str[i:len(str)] と同じ
+- str[:-i] # 末尾のi文字を除くすべて
+
+s[:] リストの浅いコピー/スライスコピーを返す # 浅いコピー? ポインタということ?
+
+s[:i] + s[i:] は s に等しくなる
+
+len() 文字列長
+
+変更は不可
+
+三重クォート 行末エスケープ不要(複数行出力可能)
+
+** list
+a = ['spam', 'eggs', 100, 1234]
+
++ 連結
+*n 反復
+slice
+len() リスト長
+
+リストは(文字列と違い)個々の値を変更できる
+a = [1, 2, 5]
+a[1] = 3 # a = [1, 3, 5]
+
+*** スライスを使ったリストの更新
+>>> # いくつかの項目を置換する:
+... a[0:2] = [1, 12]
+>>> a
+[1, 12, 123, 1234]
+>>> # いくつかの項目を除去する:
+... a[0:2] = []
+>>> a
+[123, 1234]
+>>> # いくつかの項目を挿入する:
+... a[1:1] = ['bletch', 'xyzzy']
+>>> a
+[123, 'bletch', 'xyzzy', 1234]
+>>> # それ自身 (のコピー) を先頭に挿入する
+>>> a[:0] = a
+>>> a
+[123, 'bletch', 'xyzzy', 1234, 123, 'bletch', 'xyzzy', 1234]
+>>> # リストをクリアする: 全てのアイテムを空のリストに置換する
+>>> a[:] = []
+>>> a
+[]
+
+**** range() 整数列の生成
+>>> range(10)
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+>>> range(1,10)
+[1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+*** tuple
+
+*** 数値リストの生成
+range(5) # [0,1,2,3,4]
+
+** sequenceに対するループ
+for i, v in enumerate(sequence) 要素のインデックスと要素の同時取り出し
+
+
+** ndarray (NumPy)
+np.array(list)
+
+array([[1,2,3,4],
+       [5,6,7,8])
+
+** set
+val = set(sequence)
+
+** dictionary
+tel = {'jack': 4098, 'sape': 4139}
+
+** logic
+and 
+or
+not
+
+** input/output
+*** raw_input() (2.x), input() (3.x)
+str = raw_input()
+- 末尾の改行は自動削除
+- 読み込んだ値を文字列として保持
+
+*** input() (2.x)
+i = input()
+# i = int(raw_input()) と同義
+- 読み込んだ値をint型にキャスト
+
+*** 入力を半角スペースで区切ってintのリストにして代入
+n = map(int, raw_input().split())
+
+* 制御
+** if, elif, else
+- switch case はこれで代用する
+
+** for in, continue, break, else
+任意のシーケンス型(リストまたは文字列型)に対して反復を行う
+for x in a:
+  hoge()
+
+else
+  for でループ全完了時 (break時除く)
+  while で条件が偽になった時 (break時除く)
+
+* 関数 def, return
+def fib(n):
+  """documentation string"""
+  # start with indent
+
+* module
+import module_name
+module_name.hoge()
+module_name.moga
+
+from module_name import hoge, moga
+hoge()
+
+form module_name import *
+# アンダースコア (_) で開始する名前以外の全ての名前を import 
+
+__name__ メンバ: module_name の文字列が入る
+
+$ python hoge.py <arguments>
+で実行されると、__name__ には __main__ が入る
+
+** compile
+hoge.pyc (コンパイル済ファイル)
+
+$ python -O hoge.py
+hoge.pyo (オブジェクトファイル?)
+
+> .pyc ファイルや .pyo ファイルから読み出されたとしても、
+> プログラムは何ら高速に動作するわけではありません。
+> .pyc ファイルや .pyo ファイルで高速化されるのは、読み込まれるときの速度だけです。
+
+** dir()
+dir(module_name)
+モジュールが定義している名前のリストを返す
+
+** パッケージ
+モジュール群の名前空間の切り分け ディレクトリ化 的なことをする
+
+* i/o
+** open, csv.reader
+# csv
+import csv
+
+f = open('regression001/data_train.tsv')
+reader = csv.reader(f)
+reader = csv.reader(f, delimiter='\t')
+# readerオブジェクト
+
+for line in reader:
+    print line
+
+l = list(reader)
+# list
+
+** numpy.loadtxt('hoge.txt')
+==> ndarray
+
+** numpy.genfromtxt('hoge.txt')
+==> ndarray ?
+
+** pandas.read_table, pandas.read_csv
+* NumPy
+ndarrayに対して
+内積 np.dot(array1, array2)
+外積 np.cross(array1, array2)
+
+* 入出力
+# 2.x
+末尾に改行も出力される
+print 1+1
+print 'hoge'
+i = 256*256
+print 'The value of i is', i
+# The value of i is 65536
+# , で区切って並べると、間に半角スペースが入る
+print 'hoge', # 末尾に改行が出力されない
+# …しかし半角スペースはひとつ入る??

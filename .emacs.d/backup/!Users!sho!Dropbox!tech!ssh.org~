@@ -1,0 +1,45 @@
+* reference
+『はじめてUNIXで仕事をする人が読む本』
+- 1章 ログインログアウト
+- 6章 セキュリティ
+
+* login
+** ホスト名およびユーザ名の入力
+ログイン中のローカルホストと同じユーザ名でログイン
+$ ssh HOST_NAME
+ユーザ名を指定してログイン
+$ ssh USER_NAME@HOST_NAME
+
+~/.ssh/config
+内に以下を設定
+Host[tab]HOST_NAME_ALIAS
+[tab]User[tab]USER_NAME
+[tab]Hostname[tab]HOST_NAME
+
+$ ssh HOST_NAME_ALIAS
+
+** パスワード入力の省略
+公開鍵暗号 (RSA)
+$ ssh-keygen -t rsa
+~/.ssh/id_rsa
+$ touch authorized_keys
+$ cat id_rsa.pub >> authorized_keys
+$ chmod 600 authorized_keys
+$ scp authorized_keys HOST_NAME:~/.ssh/
+
+ssh 前に
+$ ssh-add
+[rsa password]
+
+~/.ssh/config に
+Host[tab]*
+[tab]ForwardAgent[tab]yes
+多段SSHでもPW要求されない
+
+* ファイル転送
+** scp
+local -> server
+$ scp PATH_TO_FILE_LOCAL HOST_NAME:PATH_TO_FILE
+
+servr -> local
+$ scp HOST_NAME:PATH_TO_FILE PATH_TO_FILE_LOCAL

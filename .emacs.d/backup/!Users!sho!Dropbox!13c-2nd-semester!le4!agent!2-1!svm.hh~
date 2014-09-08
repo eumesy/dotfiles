@@ -1,0 +1,50 @@
+using namespace std;
+
+// kernel
+int kernel; // カーネルの種類
+int param_d; // 多項式カーネルのパラメータd
+double param_s; // Gaussカーネルのパラメータ\sigma
+double param_a; // シグモイドカーネルのパラメータa
+double param_b; // シグモイドカーネルのパラメータb
+
+// 予測精度の評価(交差検定)
+int num_of_parts; // 与えられたデータの分割数(交差検定)
+
+// quadratic programming problem
+const double diag_component_rev = 1.0e-7; // QuadProg++ に与えるGの対角成分の補正値
+const double sv_threshold = 1.0e-8; // Lagrange 乗数を無視する閾値
+
+
+// calc vector
+double inner_product_v(vector<double>& v1, vector<double>& v2);
+vector<double> c_v(double c, vector<double>& v);
+vector<double> plus_v(vector<double>& v1, vector<double>& v2);
+vector<double> minus_v(vector<double>& v1, vector<double>& v2);
+double norm_square_v(vector<double>& v);
+
+// calc kernel
+double kernel_0(vector<double>& x1, vector<double>& x2);
+double kernel_1(vector<double>& x1, vector<double>& x2);
+double kernel_2(vector<double>& x1, vector<double>& x2);
+double kernel_3(vector<double>& x1, vector<double>& x2);
+double (*kernel_func[4])(vector<double>&, vector<double>&) =
+{ kernel_0, kernel_1, kernel_2, kernel_3 };
+
+// read data
+void read_data(vector<vector<double> >& x, vector<int>& y);
+void alert_arg();
+
+// solve quadratic programming problem
+void solve_quad_problem(vector<vector<double> >& x, vector<int>& y, vector<double>& alph);
+
+// calc theta
+double calc_theta(vector<vector<double> >& x, vector<int>& y, vector<double>& alph);
+
+// discriminant function
+int disc_func(vector<vector<double> >& x_training, vector<int>& y_training, vector<double>& alph, double theta, vector<double>& x);
+
+// print function
+void print_function(vector<vector<double> >& x, vector<int>& y, vector<double>& alph, double theta);
+
+// cross validation
+double cross_validation(vector<vector<double> >& x, vector<int>& y);

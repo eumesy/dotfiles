@@ -1,0 +1,94 @@
+* 2014-04-10
+** サーバ
+41-90, 101-112
+数が大きい方が高性能
+_メモリを食いつぶさないように_
+  ganglia でチェック
+  最も重要
+
+研究が進んだら、並列コア数増やすとか
+
+プログラム書く: orchid
+実際に動かす: orchid (死んでも
+
+$ ssh orchid
+==>
+$ ssh orchid** (番号指定)
+
+** 宿題
+- [ ] localにdlした後 scp でサーバにupしましょう
+- [ ] ログインする度にパスワードを聞かれないようにする
+  - [ ] 説明のリンクは後で送ります
+- [X] windowsの人はcontrolとcaps-lockを入れ替えましょう
+
+** 次回
+==> 月曜この時間
+
+* 2014-04-14
+** 宿題
+- [ ] 演習9
+- [ ] 演習10
+- [ ] コマンド票をある程度自習しておきましょう
+
+* 2014-04-17
+nkf -w /path | grep -v "EOS" | .... | head -500 > hoge.txt
+nkf -w /path | grep type
+
+token: 500
+type: 行単位に同じ tokenの重複を除いたもの
+
+sort jmntest | uniq | wc -l
+cat file | LANG=C sort | ...
+
+13
+grep " 名詞 " jmntest | wc -l
+sort jmntest | uniq | grep " 名詞 " | wc -l
+awk ''
+
+* 2014-04-21
+$ sort -r test
+$ sort -nr test
+$ sort -nr | uniq -c
+
+uniq -c (count)
+
+$ grep " 名詞 " file500 | sort | uniq -c | sort -k 1
+$ grep " 名詞 " file500 | sort | uniq -c | sort
+(-k 1 : 1
+
+$ grep " 動詞 " file500 | sort | uniq -c | sort -r | cut -d ' ' -f 7,10 | lv
+$ grep " 動詞 " file500 | sort | uniq -c | sort -r | awk '{print $1, $4}' | lv
+
+$ grep " 名詞 " file500 | sort | uniq -c | sort -r | awk '$7 != "数詞" {print $0'}
+
+$ cut -d " " -f 1,4 file500 | sort -k 2
+
+sort -k 1,1 | sort -s -k 2,2
+sort -k 1,1 -k 2,2
+
+cat /share/text/asahi/juman/2005/200501a.jmn | nkf -w | grep -B 1 "首相" | awk '{if ($1 nq "首相"){print $3}}'| sort | uniq -c | sort
+
+grep -B: 前の行とともに出す?
+
+* 2014-04-28
+- $foo には $bar (スカラにはスカラ) を代入しないといけない
+- foreach my $y (sort {$var{$a} cmp $var{$b}} keys %var) {
+      $y
+  }
+- 再帰呼び出しはあまり使わない方が良い?
+  - fibの話ね
+
+- [ ] 宿題: exercise 28
+
+* 2014-05-01
+@$var_ref <- reference している array そのもの
+ @{$var_ref} と同じ?
+%$var_ref <- reference している hash そのもの
+
+正規表現
+Perlの強みのひとつ
+* 2014-05-08
+- UTF-8 のままだと、perl の中で文字数を数えたり正規表現で置換するときに byte stream として扱われてしまう
+- binmode を付けておかないと、「フラグ付き utf-8」という perl 専用の(?) 内部表現で出力されてしまう
+- open FILE
+  ファイルの enconding を指定→入力時出力時に、use utf8; が有れば(?)、フラグ付き utf-8 で内部処理されるようになる

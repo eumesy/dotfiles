@@ -1,0 +1,118 @@
+2014/02/09 11:31
+
+実験及演習4 (プログラム検証) の「先」を勉強するための文献等
+
+実験及演習4 (プログラム検証) を受講されている皆様、 
+
+# 参考になるかもしれませんので、 
+# プログラム検証受講者以外の方にもお送りしています。 
+
+担当の末永です。 
+
+プログラム検証では静的型付き関数型プログラミング言語とプログラム検証に 
+少し触れていただきました。いかがだったでしょうか。さらにこれらのトピッ 
+クを勉強してみたいという方に、以下のラーニングソースをご紹介します。 
+
+・OCaml について 
+
+さらに OCaml を勉強したい場合、以下の書籍をオススメします。一つ目はオン 
+ラインで読めます。二つ目は演習室に何冊かあるようです。 
+
+Yaron Minsky, Anil Madhavapeddy, and Jason Hickey 
+Real World OCaml 
+https://realworldocaml.org/ 
+
+五十嵐 淳 
+プログラミング in OCaml 
+https://gihyo.jp/dp/ebook/2012/978-4-7741-5314-8 
+
+また、OCaml で書かれた小さなコンパイラを東北大学の住井英二郎先生が実装 
+して解説されています。OCaml は言語処理系を実装するために作られたという 
+経緯があるので、コンパイラのソースを読むのは勉強になるでしょう。 
+
+住井英二郎 
+速攻 MinCaml コンパイラ概説 
+http://esumii.github.io/min-caml/ 
+
+・OCaml 以外の静的型つき関数型言語 
+
+いろいろな言語がありますが、メジャーどころで言えば Haskell でしょう。 
+OCaml とはいろいろ異なる特徴があります。 
+
+末永があまり Haskell に詳しくないので、良い本を紹介するのが難しいのです 
+が、たとえば 
+
+Miran Liprovaca 
+Learn You a Haskell for Great Good!: A Beginner's Guide 
+http://learnyouahaskell.com/ 
+
+はオンラインで読めます。日本語訳を最近田中英行さんと、白眉センターの村 
+主崇行さんが翻訳しました。 
+
+Miran Liprovaca 著、田中 英之、村主 崇行 訳 
+すごいHaskell楽しく学ぼう! 
+http://www.amazon.co.jp/dp/4274068854 
+
+・プログラム検証：型に基づく手法 
+
+型に基づくプログラム検証や、その背景にある数学的な理論を勉強するには、 
+以下の本がお勧めです。 
+
+Benjamin C. Pierce 
+Types and Programming Languages 
+http://www.amazon.co.jp/dp/0262162091 
+
+和訳もあります。 
+
+Benjamin C. Pierce 著、住井 英二郎 ら訳 
+型システム入門 -- プログラミング言語と型の理論 -- 
+http://www.amazon.co.jp/dp/4274069117/ 
+
+・プログラム検証：モデル検査 
+
+型に基づく手法以外には、モデル検査と呼ばれる手法がよく知られています。 
+プログラムの実行を抽象化した、いわばプログラムのモデルを作り、そのモデ 
+ルを全数探索して保証したい性質を満たすかどうか調べる手法です。背景理論 
+に関する教科書としては 
+
+Edmund M. Clerke Jr. et al. 
+Model Checking 
+http://www.amazon.co.jp/dp/0262032708 
+
+が有名で読みやすいです。（残念ながらまだ和訳はありません。）いろいろ実 
+装もあるので動かしてみるのもよいでしょう。いろいろなモデル検査器があり、 
+それぞれ異なった特徴があります。 
+
+SPIN 
+http://spinroot.com/spin/whatispin.html 
+
+SLAM 
+http://research.microsoft.com/en-us/projects/slam/ 
+
+BLAST 
+http://mtc.epfl.ch/software-tools/blast/index-epfl.php 
+
+・SMT ソルバ 
+
+最近のプログラム検証研究では、プログラム検証の問題を制約充足問題に帰着 
+して、その制約の充足可能性を SMT ソルバと呼ばれるソルバで解く、という手 
+法が流行です。 
+
+アルゴリズム論の講義を取られた方はご存知だと思いますが、命題変数を含む 
+ブール式で制約が与えられたときに、その制約の充足可能性を判定する問題は 
+NP 完全で、いわゆる「難しい」問題であるとされています。それでも（現実的 
+に現れる制約を）現実的な時間で解けるソルバがいくつか出てきています。そ 
+のようなソルバを SAT ソルバと呼びますが、以下に挙げる SMT ソルバは、 
+SAT 問題に加えて、線形不等式制約等が扱えるようなソルバです。例として 
+
+Z3 
+http://z3.codeplex.com/ 
+
+Yices 
+http://yices.csl.sri.com/ 
+
+を挙げておきます。使ってみると面白いかもしれません。 
+
+-- 
+末永幸平 
+ksuenaga@kuis.kyoto-u.ac.jp

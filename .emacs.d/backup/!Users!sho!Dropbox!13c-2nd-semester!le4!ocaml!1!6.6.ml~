@@ -1,0 +1,110 @@
+(* 6.6 *)
+
+(*********************************************************)
+(* 1. refrectの作成 *)
+
+type 'a tree = Lf | Br of 'a * 'a tree * 'a tree;;
+
+
+(* [解答] *)
+let rec refrect = function
+  | Lf -> Lf
+  | Br (x, left, right) -> Br (x, refrect right, refrect left);;
+
+
+
+(* [実行例] *)
+let comptree = Br(1, Br(2, Br(4, Lf, Lf),
+			   Br(5, Lf, Lf)),
+		     Br(3, Br(6, Lf, Lf),
+			   Br(7, Lf, Lf)));;
+refrect comptree;;
+(*
+- : int tree =
+Br (1, Br (3, Br (7, Lf, Lf), Br (6, Lf, Lf)),
+ Br (2, Br (5, Lf, Lf), Br (4, Lf, Lf)))
+
+ * 正しく動作している事が確認できた。
+ *)
+
+
+(*********************************************************)
+(* 2. 方程式の完成 *)
+
+let rec preorder = function
+  | Lf -> []
+  | Br (x, left, right) -> x :: (preorder left) @ (preorder right);;
+let rec inorder = function
+  | Lf -> []
+  | Br (x, left, right) -> (inorder left) @ (x :: inorder right);;
+let rec postorder = function
+  | Lf -> []
+  | Br (x, left, right) -> (postorder left) @ (postorder right) @ [x];;
+
+(* [解答] *)
+let eq1 t =
+  preorder (refrect (t)) = List.rev (postorder (t));;
+
+let eq2 t = 
+  inorder (refrect (t)) = List.rev (inorder (t));;
+
+let eq3 t =
+  postorder (refrect (t)) = List.rev (preorder (t));;
+
+
+(* [実行例] *)
+eq1 comptree;;
+(*
+- : bool = true
+*)
+
+eq2 comptree;;
+(*
+- : bool = true
+*)
+
+eq3 comptree;;
+(*
+- : bool = true
+*)
+
+
+(*
+ * [説明]
+ * 
+ * 各順序付けは、次の順で行われる。[]内は再帰。
+ * 
+ * - preorder
+ *       1
+ *    [2] [3]
+ * 
+ * - inorder
+ *       2
+ *    [1] [3]
+ * 
+ * - postorder
+ *       3
+ *    [1] [2]
+ *
+ * したがって
+ * - preorder (refrect (t))
+ *       1
+ *    [3] [2]
+ * 
+ * は、postorder の順序付け結果の逆順である。
+ *
+ *
+ * 同様に
+ * - inorder (refrect (t))
+ *       2
+ *    [3] [1]
+ *
+ * は、inorder の順序付けの結果の逆順であり、
+ *
+ *
+ * - postorder (refrect (t))
+ *       3
+ *    [2] [1]
+ *
+ * は、preorder の順序付けの結果の逆順である。
+ *)

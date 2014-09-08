@@ -1,0 +1,119 @@
+***********************************************************************
+* Set supply and library
+***********************************************************************
+.INCLUDE ../mos_model3
+.options temp=27
+.options post
+
+***********************************************************************
+* Define power supply
+***********************************************************************
+Vdd     Vdd     0       2.5
+
+***********************************************************************
+* Define Subcircuits
+***********************************************************************
+* MOSFETs General form: MXXXX ND NG NS NB MNAME <L=VAL> <W=VAL>
+
+* common
+.subckt invin In Out Vdd
+mp      Out In Vdd Vdd  cmosp l=0.25u w=4u
+mn      Out In 0 0      cmosn l=0.25u w=2u
+.ends
+.subckt invout In Out Vdd
+mp      Out In Vdd Vdd  cmosp l=0.25u w=80u
+mn      Out In 0 0      cmosn l=0.25u w=40u
+.ends
+
+* 1
+.subckt nand4 InA InB InC InD Out Vdd
+mp1     Out InA Vdd Vdd  cmosp l=0.25u w=6.83990u
+mp2     Out InB Vdd Vdd  cmosp l=0.25u w=6.83990u
+mp3     Out InC Vdd Vdd  cmosp l=0.25u w=6.83990u
+mp4     Out InD Vdd Vdd  cmosp l=0.25u w=6.83990u
+mn1     Out InA N1  0    cmosn l=0.25u w=13.67981u
+mn2     N1  InB N2  0    cmosn l=0.25u w=13.67981u
+mn3     N2  InC N3  0    cmosn l=0.25u w=13.67981u
+mn4     N3  InD 0   0    cmosn l=0.25u w=13.67981u
+.ends
+.subckt invfirst In Out Vdd
+mp      Out In Vdd Vdd  cmosp l=0.25u w=23.39214u
+mn      Out In 0 0      cmosn l=0.25u w=11.69607u
+.ends
+
+* 2
+.subckt invsecond In Out Vdd
+mp      Out In Vdd Vdd  cmosp l=0.25u w=6.83990u
+mn      Out In 0 0      cmosn l=0.25u w=3.41995u
+.ends
+.subckt nor4 InA InB InC InD Out Vdd
+mp1     N1  InA Vdd Vdd  cmosp l=0.25u w=93.56857u
+mp2     N2  InB N1  Vdd  cmosp l=0.25u w=93.56857u
+mp3     N3  InC N2  Vdd  cmosp l=0.25u w=93.56857u
+mp4     Out InD N3  Vdd  cmosp l=0.25u w=93.56857u
+mn1     Out InA 0   0    cmosn l=0.25u w=11.69607u
+mn2     Out InB 0   0    cmosn l=0.25u w=11.69607u
+mn3     Out InC 0   0    cmosn l=0.25u w=11.69607u
+mn4     Out InD 0   0    cmosn l=0.25u w=11.69607u
+.ends
+
+* 3
+.subckt nand2 In1 In2 Out Vdd
+mp1     Out In1 Vdd Vdd  cmosp l=0.25u w=6.83990u
+mp2     Out In2 Vdd Vdd  cmosp l=0.25u w=6.83990u
+mn1     Out In1 N   0    cmosn l=0.25u w=6.83990u
+mn2     N   In2 0   0    cmosn l=0.25u w=6.83990u
+.ends
+.subckt nor2 In1 In2 Out Vdd
+mp1     N   In1 Vdd Vdd  cmosp l=0.25u w=46.78428u
+mp2     Out In2 N   Vdd  cmosp l=0.25u w=46.78428u
+mn1     Out In1 0   0    cmosn l=0.25u w=11.69607u
+mn2     Out In2 0   0    cmosn l=0.25u w=11.69607u
+.ends
+
+***********************************************************************
+* Stimulus
+***********************************************************************
+* Format of pulse input:
+* pulse v_initial v_final t_delay t_rise t_fall t_pulsewidth t_period
+VinA    XA      0       PULSE(0 2.5  1ns 0.1ns 0.1ns 4ns 33ns)
+VinB    XB      0       PULSE(0 2.5  9ns 0.1ns 0.1ns 4ns 33ns)
+VinC    XC      0       PULSE(0 2.5 17ns 0.1ns 0.1ns 4ns 33ns)
+VinD    XD      0       PULSE(0 2.5 25ns 0.1ns 0.1ns 4ns 33ns)
+
+***********************************************************************
+* Top level simulation netlist
+***********************************************************************
+* common
+xinvA      XA   A    Vdd    invin
+xinvB      XB   B    Vdd    invin
+xinvC      XC   C    Vdd    invin
+xinvD      XD   D    Vdd    invin
+
+* 1
+* xnand4     A    B    C    D    E    Vdd    nand4
+* xinvfirst  E    F    Vdd    invfirst
+
+* 2
+* xinvsndA   A    EA   Vdd    invsecond
+* xinvsndB   B    EB   Vdd    invsecond
+* xinvsndC   C    EC   Vdd    invsecond
+* xinvsndD   D    ED   Vdd    invsecond
+* xnor4      EA   EB   EC   ED   F    Vdd    nor4
+
+* 3
+xnand2AB   A    B    E1   Vdd    nand2
+xnand2CD   C    D    E2   Vdd    nand2
+xnor2      E1   E2   F    Vdd    nor2
+
+* common
+xinvout    F    0    Vdd    invout
+
+
+.tran .001ns 33ns
+.plot TRAN V(XA) V(XB) V(XC) V(XD) V(F)
+
+***********************************************************************
+* End of Deck
+***********************************************************************
+.end

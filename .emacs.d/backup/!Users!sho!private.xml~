@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<root>
+  <appdef>
+    <appname>TERMINAL</appname>
+    <equal>com.googlecode.iterm2</equal>
+  </appdef>
