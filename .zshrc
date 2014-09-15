@@ -1,6 +1,5 @@
 export LANG=ja_JP.UTF-8
 
-alias reload='source ~/.zshrc'
 alias q='exit'
 
 export PATH=/usr/local/opt/coreutils/libexec/gnubin:/usr/local/bin:/usr/texbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin
