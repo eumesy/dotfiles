@@ -1,4 +1,5 @@
 export LANG=ja_JP.UTF-8
+export TERM=xterm-256color
 
 export PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin
 # rename: /usr/bin
