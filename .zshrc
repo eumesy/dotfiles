@@ -10,10 +10,6 @@ export PATH=/usr/local/opt/coreutils/libexec/gnubin:/usr/local/bin:/usr/texbin:/
 # MacTeX: /usr/texbin
 # rename: /usr/bin
 
-if [ `hostname -s` = "lotus" ];then
-    export PATH=/data/tmplocal/bin/:$PATH
-fi
-
 export TERM=xterm-256color
 
 # http://nanabit.net/blog/2009/11/29/insert-date-on-single-key/
