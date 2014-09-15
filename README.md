@@ -7,6 +7,8 @@ $ git clone git@github.com:eumesy/dotfiles.git ~/.dotfiles
 $ ln -sf ~/.dotfiles/.zshrc ~/.zshrc
 $ ln -sf ~/.dotfiles/.zsh ~/.zsh
 $ ln -sf ~/.dotfiles/.gitconfig ~/.gitconfig
+$ ln -sf ~/.dotfiles/.tmux.conf ~/.tmux.conf
+$ ln -sf ~/.dotfiles/.screenrc ~/.screenrc
 
 $ chmod 755 ~/.dotfiles/.zsh/zaw
 $ zsh
