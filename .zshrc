@@ -24,9 +24,10 @@ autoload -Uz vcs_info
 zstyle ':vcs_info:*' formats '(%s)[%b]'
 zstyle ':vcs_info:*' actionformats '(%s)[%b|%a]'
 precmd() {
-    psvar=()
-    LANG=en_US.UTF-8 vcs_info
-    psvar[1]=$vcs_info_msg_0_
+  psvar=()
+  LANG=en_US.UTF-8 vcs_info
+  psvar[1]=$vcs_info_msg_0_
+  echo -ne "\ek/$PWD:t:idle\e\\" # screen/tmux: change window name
 }
 PROMPT=$'%f%3F%~ %1(v|%F{green}%1v%f|)
 [%n@%m]$ '
@@ -120,7 +121,14 @@ setopt auto_cd # ディレクトリ名だけで移動
 setopt auto_pushd
 setopt pushd_ignore_dups
 alias p='popd'
-function chpwd() { ls; echo -ne "\033]0;$(pwd | rev | awk -F \/ '{print "/"$1"/"$2}'| rev)\007"} # ls後にcd?
+function chpwd() { # 
+  ls
+  echo -ne "\033]0;$(pwd | rev | awk -F \/ '{print "/"$1"/"$2}'| rev)\007"
+}
+function preexec() { # コマンド実行直後
+  mycmd=(${(s: :)${1}})
+  echo -ne "\ek/$PWD:t:$mycmd[1]\e\\" # screen/tmux: change window name
+}
 
 alias f='fg'
 
@@ -139,6 +147,7 @@ alias gco='git checkout'
 alias gl='git log'
 alias gb='git branch'
 
+# OS X
 alias o='open'
 alias of='open .'
 
