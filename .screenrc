@@ -1,0 +1,29 @@
+# ^t 自体を端末に送りたいときは ^t^t
+escape ^t^t
+
+startup_message off
+autodetach on
+vbell off
+defscrollback 1000
+
+# caption always (pane)
+setenv CAPTION_ALWAYS ""
+setenv CAPTION_ALWAYS "$CAPTION_ALWAYS%{= KW}"
+setenv CAPTION_ALWAYS "$CAPTION_ALWAYS %H "
+
+setenv CAPTION_ALWAYS "$CAPTION_ALWAYS%-w"
+setenv CAPTION_ALWAYS "$CAPTION_ALWAYS%{= yk} %n:%t "
+setenv CAPTION_ALWAYS "$CAPTION_ALWAYS%{-}%+w"
+
+setenv CAPTION_ALWAYS "$CAPTION_ALWAYS "
+setenv CAPTION_ALWAYS "$CAPTION_ALWAYS%= " # separator ?
+setenv CAPTION_ALWAYS "$CAPTION_ALWAYS%Y-%m-%d(%D) %02c "
+
+caption always "$CAPTION_ALWAYS"
+unsetenv CAPTION_ALWAYS
+
+# hardstatus (session)
+setenv HARDSTATUS_ALWAYS ""
+
+# hardstatus alwayslastline "$HARDSTATUS_ALWAYS"
+unsetenv HARDSTATUS_ALWAYS
