@@ -1,0 +1,19 @@
+# この前処理必要?
+# https://github.com/etheriqa/dotfiles/blob/master/.zshenv.darwin
+
+# for iTerm ?
+export TERM=xterm-256color
+
+# for homebrew
+export PATH=/usr/local/bin:${PATH}
+
+# for coreutils
+export PATH=/usr/local/opt/coreutils/libexec/gnubin:${PATH}
+# $(brew --prefix coreutils)/libexec/gnubin
+export MANPATH=/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}
+
+# for gnu-sed
+export MANPATH=/usr/local/opt/gnu-sed/libexec/gnuman:${MANPATH}
+
+# for MacTex
+export PATH=/usr/texbin:${PATH}

@@ -1,5 +1,0 @@
-* org
-** mode
-#+BEGIN_SRC shell
-grep 'hoge' file_name
-#+END_SRC

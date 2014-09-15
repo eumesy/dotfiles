@@ -1,0 +1,19 @@
+# findutils
+alias find='gfind'
+alias locate='glocate'
+alias updatedb='gupdatedb'
+alias xargs='gxargs'
+# gnu-tar, gnu-sed, gawk
+alias tar='gtar'
+alias sed='gsed'
+alias awk='gawk'
+
+# OS X
+alias o='open'
+alias of='open .'
+
+# zaw
+source ~/.zsh/zaw/zaw.zsh
+zstyle ':filter-select' case-insensitive yes
+bindkey '^l' zaw-cdr
+

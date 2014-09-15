@@ -1,15 +1,4 @@
-export LANG=ja_JP.UTF-8
-
 alias q='exit'
-
-export PATH=/usr/local/opt/coreutils/libexec/gnubin:/usr/local/bin:/usr/texbin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin
-# Homebrew coreutils: /usr/local/opt/coreutils/libexec/gnubin
-#  $(brew --prefix coreutils)/libexec/gnubin
-# Homebrew: /usr/local/bin
-# MacTeX: /usr/texbin
-# rename: /usr/bin
-
-export TERM=xterm-256color
 
 # http://nanabit.net/blog/2009/11/29/insert-date-on-single-key/
 function insert_date {
@@ -34,11 +23,6 @@ PROMPT=$'%f%3F%~ %1(v|%F{green}%1v%f|)
 # [%n]$ '
 PROMPT2='[%n]> '
 
-export EDITOR='emacsclient -nw'
-# export VISUAL=emacsclient
-export ALTERNATE_EDITOR=''
-export GIT_EDITOR='emacsclient -nw'
-# alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs'
 alias e='emacsclient -nw'    # CUI
 alias ee='emacsclient -c -n' # GUI
 function kes() {
@@ -51,22 +35,6 @@ function kill-emacs()  {
     emacsclient -e '(kill-emacs)';
     pkill -f 'emacsclient -nw';
 }
-
-# gnu like
-# $ brew install coreutils findutils gnu-sed gawk 
-
-# coreutils
-export MANPATH=/usr/local/opt/gnu-sed/libexec/gnuman:$MANPATH
-# findutils
-alias find='gfind'
-alias locate='glocate'
-alias updatedb='gupdatedb'
-alias xargs='gxargs'
-# gnu-tar, gnu-sed, gawk
-alias tar='gtar'
-alias sed='gsed'
-export MANPATH=/usr/local/opt/coreutils/libexec/gnuman:$MANPATH
-alias awk='gawk'
 
 # gls
 export LS_COLORS='di=01;36:ln=01;35:ex=01;32'
@@ -146,21 +114,10 @@ alias gco='git checkout'
 alias gl='git log'
 alias gb='git branch'
 
-# OS X
-alias o='open'
-alias of='open .'
-
-# java
-export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
-# http://d.hatena.ne.jp/snaka72/20120101/1325403702
-
 alias t='latexmk'
 alias tp='latexmk -pvc'
 alias tc='latexmk -c'
 alias tC='latexmk -C'
-
-alias jakld='rlwrap java -Xss1m -jar ~/Dropbox/java/scheme/jakld-20121227.jar'
-alias jak='jakld'
 
 # alias ngspice='rlwrap ngspice'
 
@@ -207,10 +164,14 @@ zstyle ':chpwd:*' recent-dirs-max 5000
 zstyle ':chpwd:*' recent-dirs-default yes
 zstyle ':completion:*' recent-dirs-insert both
 
-# zaw
-source ~/.zsh/zaw/zaw.zsh
-zstyle ':filter-select' case-insensitive yes
-bindkey '^l' zaw-cdr
-
 setopt extended_glob
 
+case $OSTYPE in
+  darwin*)
+    if [ -f $HOME/.zshrc.darwin ]; then . $HOME/.zshrc.darwin; fi
+    ;;
+  linux*)
+    if [ -f $HOME/.zshrc.linux ]; then . $HOME/.zshrc.linux; fi
+    ;;
+esac
+if [ -f $HOME/.zshrc.local ]; then . $HOME/.zshrc.local; fi
