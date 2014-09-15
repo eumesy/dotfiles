@@ -55,7 +55,7 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 (add-hook 'server-visit-hook 'server-remove-kill-buffer-hook)
 
 ;; フレーム終了
-(global-set-key (kbd "C-x C-c") 'delete-frame)
+;; (global-set-key (kbd "C-x C-c") 'delete-frame)
 
 (setq backup-directory-alist
       (cons (cons "\\.*$" (expand-file-name "~/.emacs.d/backup"))
