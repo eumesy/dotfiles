@@ -36,21 +36,21 @@ function kill-emacs()  {
     pkill -f 'emacsclient -nw';
 }
 
-# gls
-export LS_COLORS='di=01;36:ln=01;35:ex=01;32'
+# gnu ls
 # http://linux-sxs.org/housekeeping/lscolors.html
+export LS_COLORS='di=01;36:ln=01;35:ex=01;32'
 zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
 alias l='ls -lhGAF --color'
 alias ls='ls -F --color'
-#       -l     use a long listing format
-#       -h, --human-readable
-#              with -l, print sizes in human readable format (e.g., 1K 234M 2G)
-#       -G, --no-group
-#              in a long listing, don't print group names
-#       -A, --almost-all
-#              do not list implied . and ..
-#       -F, --classify
-#              append indicator (one of */=>@|) to entries
+# -l     use a long listing format
+# -h, --human-readable
+#        with -l, print sizes in human readable format (e.g., 1K 234M 2G)
+# -G, --no-group
+#        in a long listing, don't print group names
+# -A, --almost-all
+#        do not list implied . and ..
+# -F, --classify
+#        append indicator (one of */=>@|) to entries
 
 alias diff='colordiff -u'
 #       -u  -U NUM  --unified[=NUM]

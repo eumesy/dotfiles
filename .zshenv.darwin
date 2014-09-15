@@ -5,9 +5,11 @@
 export PATH=/usr/local/bin:${PATH}
 
 # for coreutils
-export PATH=/usr/local/opt/coreutils/libexec/gnubin:${PATH}
-# $(brew --prefix coreutils)/libexec/gnubin
-export MANPATH=/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}
+if [ -d /usr/local/opt/coreutils/libexec/gnubin ] ; then
+  export PATH=/usr/local/opt/coreutils/libexec/gnubin:${PATH}
+  # $(brew --prefix coreutils)/libexec/gnubin
+  export MANPATH=/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}
+fi
 
 # for gnu-sed
 export MANPATH=/usr/local/opt/gnu-sed/libexec/gnuman:${MANPATH}

@@ -1,6 +1,8 @@
 export LANG=ja_JP.UTF-8
 export TERM=xterm-256color
 
+# 重複したパスを登録しない
+typeset -U path
 export PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin
 # rename: /usr/bin
 export EDITOR='emacsclient -nw'
