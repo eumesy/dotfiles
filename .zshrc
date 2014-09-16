@@ -138,8 +138,8 @@ autoload -Uz zmv
 alias zmv="noglob zmv -w"
 
 # 補完
-# fpath=(/usr/local/share/zsh-completions $fpath)
-fpath=(~/.zsh/zsh-completions $fpath)
+fpath=(/usr/local/share/zsh-completions $fpath)
+# fpath=(~/.zsh/zsh-completions $fpath)
 
 autoload -U compinit
 compinit
@@ -185,7 +185,7 @@ bindkey '^R' peco-select-history
 
 ########################################################################
 # cdr
-# 
+########################################################################
 # - http://blog.n-z.jp/blog/2013-11-12-zsh-cdr.html
 # - > cdr: Peter Stephenson さんによる、ディレクトリ移動の履歴を複数のシェルのセッションをまたいで追跡するための関数群および含まれている関数
 # - ~/.chpwd-recent-dirs に保存
