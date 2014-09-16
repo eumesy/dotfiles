@@ -8,6 +8,8 @@ alias tar='gtar'
 alias sed='gsed'
 alias awk='gawk'
 
+alias zcat='gzcat'
+
 # OS X
 alias o='open'
 alias of='open .'
