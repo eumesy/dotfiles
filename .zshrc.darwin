@@ -17,8 +17,8 @@ source ~/.zsh/zaw/zaw.zsh
 zstyle ':filter-select' case-insensitive yes
 bindkey '^l' zaw-cdr
 
-if [ -d /usr/local/opt/coreutils/libexec/gnubin ]; then # GNU ls is not in coreutils
-else
+if [ -d /usr/local/opt/coreutils/libexec/gnubin ]; then # GNU ls in coreutils
+else # BSD ls
   # -G  -- enable colorized output
   export LSCOLORS=gxfxcxdxbxegedabagacad
   alias l='ls -lhGAF'
