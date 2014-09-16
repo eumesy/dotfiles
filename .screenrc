@@ -5,6 +5,7 @@ startup_message off
 autodetach on
 vbell off
 defscrollback 1000
+altscreen on
 
 # caption always (pane)
 setenv CAPTION_ALWAYS ""
