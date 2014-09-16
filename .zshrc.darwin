@@ -15,9 +15,9 @@ alias o='open'
 alias of='open .'
 
 # zaw
-source ~/.zsh/zaw/zaw.zsh
-zstyle ':filter-select' case-insensitive yes
-bindkey '^l' zaw-cdr
+# source ~/.zsh/zaw/zaw.zsh
+# zstyle ':filter-select' case-insensitive yes
+# bindkey '^l' zaw-cdr
 
 if [ -d /usr/local/opt/coreutils/libexec/gnubin ]; then # GNU ls in coreutils
 else # BSD ls

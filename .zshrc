@@ -1,3 +1,7 @@
+autoload -Uz vcs_info
+autoload -Uz add-zsh-hook
+autoload -Uz colors
+
 alias q='exit'
 
 # http://nanabit.net/blog/2009/11/29/insert-date-on-single-key/
@@ -7,8 +11,6 @@ function insert_date {
 zle -N insert_date
 bindkey '^[[15~' insert_date
 
-autoload colors
-autoload -Uz vcs_info
 zstyle ':vcs_info:*' formats '(%s)[%b]'
 zstyle ':vcs_info:*' actionformats '(%s)[%b|%a]'
 precmd() {
@@ -164,7 +166,7 @@ bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end
 
 # peco
-# via. http://qiita.com/uchiko/items/f6b1528d7362c9310da0
+# http://qiita.com/uchiko/items/f6b1528d7362c9310da0
 function peco-select-history() {
     local tac
     if which tac > /dev/null; then
@@ -181,13 +183,32 @@ function peco-select-history() {
 zle -N peco-select-history
 bindkey '^R' peco-select-history
 
-
+####################################
 # cdr
-autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+####################################
+autoload -Uz chpwd_recent_dirs cdr
 add-zsh-hook chpwd chpwd_recent_dirs
 zstyle ':chpwd:*' recent-dirs-max 5000
 zstyle ':chpwd:*' recent-dirs-default yes
 zstyle ':completion:*' recent-dirs-insert both
+
+# peco
+# http://futurismo.biz/archives/2514
+function peco-cdr () {
+    local selected_dir=$(cdr -l | awk '{ print $2 }' | peco)
+    if [ -n "$selected_dir" ]; then
+        BUFFER="cd ${selected_dir}"
+        zle accept-line
+    fi
+    zle clear-screen
+}
+zle -N peco-cdr
+bindkey '^l' peco-cdr
+
+# zaw
+# source ~/.zsh/zaw/zaw.zsh
+# zstyle ':filter-select' case-insensitive yes
+# bindkey '^l' zaw-cdr
 
 setopt extended_glob
 
