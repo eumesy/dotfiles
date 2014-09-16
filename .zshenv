@@ -3,8 +3,16 @@ export TERM=xterm-256color
 
 # 重複したパスを登録しない
 typeset -U path
-export PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/X11/bin
-# rename: /usr/bin
+path=(
+    /usr/bin(N-/)
+    /bin(N-/)
+    /usr/sbin(N-/)
+    /sbin(N-/)
+    /usr/X11/bin(N-/)
+    $HOME/local/bin(N-/)
+    $path
+)
+
 export EDITOR='emacsclient -nw'
 # export VISUAL=emacsclient
 export ALTERNATE_EDITOR=''

@@ -1,8 +1,11 @@
 # この前処理必要?
 # https://github.com/etheriqa/dotfiles/blob/master/.zshenv.darwin
 
-# for homebrew
-export PATH=/usr/local/bin:${PATH}
+path=(
+    /usr/local/bin(N-/) # homebrew
+    $path
+)
+# rename: /usr/bin
 
 # for coreutils
 if [ -d /usr/local/opt/coreutils/libexec/gnubin ] ; then
