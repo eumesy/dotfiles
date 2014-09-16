@@ -48,14 +48,17 @@
 $ cd
 $ git clone git@github.com:eumesy/dotfiles.git ~/.dotfiles
 
+$ ln -sf ~/.dotfiles/.zshenv ~/.zshenv
+$ ln -sf ~/.dotfiles/.zshenv.darwin ~/.zshenv.darwin
 $ ln -sf ~/.dotfiles/.zshrc ~/.zshrc
+$ ln -sf ~/.dotfiles/.zshrc.darwin ~/.zshrc.darwin
 $ ln -sf ~/.dotfiles/.zsh ~/.zsh
 $ ln -sf ~/.dotfiles/.gitconfig ~/.gitconfig
-$ ln -sf ~/.dotfiles/.tmux.conf ~/.tmux.conf
+$ ln -sf ~/.dotfiles/.gitignore.global ~/.gitignore
 $ ln -sf ~/.dotfiles/.screenrc ~/.screenrc
+$ ln -sf ~/.dotfiles/.tmux.conf ~/.tmux.conf
 $ ln -sf ~/.dotfiles/.peco ~/.peco
 
-$ chmod 755 ~/.dotfiles/.zsh/zaw
 $ zsh
 $ rm -f ~/.zcompdump; compinit
 ```
