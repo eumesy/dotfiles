@@ -1,0 +1,7 @@
+{
+    "Keymap": {
+        "M-v": "peco.ScrollPageUp",
+        "C-v": "peco.ScrollPageDown",
+        "C-c": "peco.Cancel"
+    }
+}
