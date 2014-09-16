@@ -114,6 +114,8 @@ alias gco='git checkout'
 alias gl='git log'
 alias gb='git branch'
 
+alias screen='screen -U' # utf-8
+
 alias t='latexmk'
 alias tp='latexmk -pvc'
 alias tc='latexmk -c'
