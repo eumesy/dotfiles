@@ -25,6 +25,7 @@ $ ln -sf ~/.dotfiles/.zsh ~/.zsh
 $ ln -sf ~/.dotfiles/.gitconfig ~/.gitconfig
 $ ln -sf ~/.dotfiles/.tmux.conf ~/.tmux.conf
 $ ln -sf ~/.dotfiles/.screenrc ~/.screenrc
+$ ln -sf ~/.dotfiles/.peco ~/.peco
 
 $ chmod 755 ~/.dotfiles/.zsh/zaw
 $ zsh

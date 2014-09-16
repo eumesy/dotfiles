@@ -146,18 +146,41 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # tab補完時に大文字�
 
 setopt complete_aliases
 
+####################################
 # history
+####################################
 HISTFILE=~/.zsh_history
 HISTSIZE=6000000
 SAVEHIST=6000000
 setopt hist_ignore_all_dups
 setopt hist_ignore_dups
 setopt share_history # share command history data
+
+# 入力途中で C-p C-n
 autoload history-search-end
 zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
 bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end
+
+# peco
+# via. http://qiita.com/uchiko/items/f6b1528d7362c9310da0
+function peco-select-history() {
+    local tac
+    if which tac > /dev/null; then
+        tac="tac"
+    else
+        tac="tail -r"
+    fi
+    BUFFER=$(\history -n 1 | \
+        eval $tac | \
+        peco --query "$LBUFFER")
+    CURSOR=$#BUFFER
+    zle clear-screen
+}
+zle -N peco-select-history
+bindkey '^R' peco-select-history
+
 
 # cdr
 autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
@@ -167,6 +190,9 @@ zstyle ':chpwd:*' recent-dirs-default yes
 zstyle ':completion:*' recent-dirs-insert both
 
 setopt extended_glob
+
+
+
 
 case $OSTYPE in
   darwin*)
