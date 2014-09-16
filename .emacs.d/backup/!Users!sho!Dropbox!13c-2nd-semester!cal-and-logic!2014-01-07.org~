@@ -1,6 +1,0 @@
-ev__even'
-
-intros n E. induction n as [| n'].
-Case "n = 0".
-  unfold even. reflexivity.
-Case "n = S n'"

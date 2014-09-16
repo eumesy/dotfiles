@@ -1,7 +1,0 @@
-#!/bin/sh
-i=0
-while [ $i -ne 25 ]
-do
-    ./svm 10 2 $i < ../data/sample_manji100.dat
-    i=`expr $i + 1`
-done

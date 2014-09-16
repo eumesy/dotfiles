@@ -1,7 +1,0 @@
-■値を渡す
-・fgets(,,stdin)など
-・./a.out arg1 arg2 … など、mainの引数として
-    int main(int argc, char *argv[])
-    結城本p141
-・stdin,stdoutの変更
-./a.out < input > output

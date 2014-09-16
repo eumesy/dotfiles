@@ -1,5 +1,0 @@
-# name: #include "..."
-# key: incf
-# --
-#include "$1.h"
-$0

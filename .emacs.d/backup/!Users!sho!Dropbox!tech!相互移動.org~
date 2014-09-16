@@ -1,7 +1,0 @@
-* Finder <---> iTerm
-Finder ---> iTerm
-  cdto.app
-iTerm ---> Finder
-  $ open .
-
-

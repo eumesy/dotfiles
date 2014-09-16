@@ -1,2 +1,0 @@
-set isosample 50  # 描画の細かさの向上
-plot "data.dat"

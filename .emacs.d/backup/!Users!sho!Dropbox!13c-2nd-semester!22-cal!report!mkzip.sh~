@@ -1,2 +1,0 @@
-rm ../report.zip
-zip ../report.zip Basics.v Induction.v Lists.v Poly.v

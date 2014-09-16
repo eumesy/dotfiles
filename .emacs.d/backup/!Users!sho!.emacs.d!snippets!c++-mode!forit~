@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: forit
-# key: forit
-# --
-for (vector<$1>::iterator $2 = $3.begin(); ${2} != ${3}.end(); ${2}++) {
-  $0
-}

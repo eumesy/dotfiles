@@ -1,6 +1,0 @@
-set multiplot
-set contour
-set view 0,0
-unset surface
-set cntrparam levels incremental -1, 1, 1
-set isosample 50

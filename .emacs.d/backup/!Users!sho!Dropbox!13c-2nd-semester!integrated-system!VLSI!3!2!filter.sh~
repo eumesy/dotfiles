@@ -1,6 +1,0 @@
-#!/bin/sh
-
-for f in *.out
-do
-    (grep '1.2..e+' | awk '{print $1, $2}') < $f > ${f}.filtered
-done

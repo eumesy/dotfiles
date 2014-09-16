@@ -1,7 +1,0 @@
-#!/bin/sh
-i=0
-while [ $i -ne 1001 ]
-do
-    ./svm 10 2 $i < ../data/sample_circle_half.dat
-    i=`expr $i + 1`
-done

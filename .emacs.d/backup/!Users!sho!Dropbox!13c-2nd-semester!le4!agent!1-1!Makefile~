@@ -1,6 +1,0 @@
-CXX=g++
-CXXFLAGS=-Wall -Wextra
-
-svm: svm.cc QuadProg++.cc
-	$(CXX) $(CXXFLAGS) svm.cc QuadProg++.cc -arch i386 -o $@
-

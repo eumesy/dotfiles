@@ -1,3 +1,0 @@
-QuadProg++.cc
-- print_matrix の name の型を char * -> const char * に変更
-

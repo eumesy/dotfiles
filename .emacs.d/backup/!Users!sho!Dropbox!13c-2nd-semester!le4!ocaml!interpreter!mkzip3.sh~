@@ -1,2 +1,0 @@
-rm ../3.zip
-zip ../3.zip Makefile README environment.ml environment.mli eval.ml lexer.mll main.ml mySet.ml mySet.mli parser.mly report2.ml report3.ml syntax.ml syntax.ml typing.ml lexer.mll

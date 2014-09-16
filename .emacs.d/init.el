@@ -57,11 +57,15 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 ;; フレーム終了
 ;; (global-set-key (kbd "C-x C-c") 'delete-frame)
 
+;; backup files
 (setq backup-directory-alist
       (cons (cons "\\.*$" (expand-file-name "~/.emacs.d/backup"))
             backup-directory-alist))
+(setq make-backup-files nil) ;; doesn't make backup files
+;; auto-save files
 (setq auto-save-file-name-transforms
       `((".*" ,(expand-file-name "~/.emacs.d/backup/") t)))
+(setq auto-save-default nil)
 
 (require 'helm-config)
 (helm-mode t)
