@@ -26,3 +26,22 @@ else # BSD ls
   alias l='ls -lhGAF'
   alias ls='ls -GF'
 fi
+
+########################################################################
+# open files
+########################################################################
+# todo
+function op(){
+    selected_file=$(mdfind -name $@ | peco)
+    # _extentions='org|md|txt'
+    case $selected_file:e in
+	org|md|txt)
+	    emacsclient -nw $selected_file
+	    ;;
+	*)
+	    open $selected_file
+	    ;;
+    esac
+}
+
+# directory なら cd

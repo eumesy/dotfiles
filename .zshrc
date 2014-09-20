@@ -82,14 +82,6 @@ alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 
-alias ..='cd ../'
-alias ...='cd ../../'
-alias ....='cd ../../../'
-alias .....='cd ../../../../'
-setopt auto_cd # ディレクトリ名だけで移動
-setopt auto_pushd
-setopt pushd_ignore_dups
-alias p='popd'
 function chpwd() { # 
   ls
   echo -ne "\033]0;$(pwd | rev | awk -F \/ '{print "/"$1"/"$2}'| rev)\007"
@@ -149,7 +141,7 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # tab補完時に大文字�
 setopt complete_aliases
 
 ########################################################################
-# history
+# command history
 ########################################################################
 HISTFILE=~/.zsh_history
 HISTSIZE=6000000
@@ -165,7 +157,6 @@ zle -N history-beginning-search-forward-end history-search-end
 bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end
 
-# peco
 # http://qiita.com/uchiko/items/f6b1528d7362c9310da0
 function peco-select-history() {
     local tac
@@ -184,19 +175,29 @@ zle -N peco-select-history
 bindkey '^R' peco-select-history
 
 ########################################################################
-# cdr
+# cd
 ########################################################################
 # - http://blog.n-z.jp/blog/2013-11-12-zsh-cdr.html
 # - > cdr: Peter Stephenson さんによる、ディレクトリ移動の履歴を複数のシェルのセッションをまたいで追跡するための関数群および含まれている関数
 # - ~/.chpwd-recent-dirs に保存
 ########################################################################
+alias ..='cd ../'
+alias ...='cd ../../'
+alias ....='cd ../../../'
+alias .....='cd ../../../../'
+setopt auto_cd # ディレクトリ名だけで移動
+setopt auto_pushd
+setopt pushd_ignore_dups
+alias p='popd'
+
+# cdr
 autoload -Uz chpwd_recent_dirs cdr
 add-zsh-hook chpwd chpwd_recent_dirs
 zstyle ':chpwd:*' recent-dirs-max 5000
 zstyle ':chpwd:*' recent-dirs-default yes
 zstyle ':completion:*' recent-dirs-insert both
 
-# peco
+# peco-cdr
 # http://futurismo.biz/archives/2514
 function peco-cdr () {
     local selected_dir=$(cdr -l | awk '{ print $2 }' | peco)
@@ -209,15 +210,7 @@ function peco-cdr () {
 zle -N peco-cdr
 bindkey '^l' peco-cdr
 
-# zaw
-# source ~/.zsh/zaw/zaw.zsh
-# zstyle ':filter-select' case-insensitive yes
-# bindkey '^l' zaw-cdr
-
 setopt extended_glob
-
-
-
 
 case $OSTYPE in
   darwin*)
