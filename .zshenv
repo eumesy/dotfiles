@@ -19,10 +19,6 @@ export ALTERNATE_EDITOR=''
 export GIT_EDITOR='emacsclient -nw'
 # alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs'
 
-# java
-export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
-# http://d.hatena.ne.jp/snaka72/20120101/1325403702
-
 case $OSTYPE in
   darwin*)
     if [ -f $HOME/.zshenv.darwin ]; then . $HOME/.zshenv.darwin; fi

@@ -1,9 +1,9 @@
 # 方針
-- 古く枯れたソフト/バージョンしか無い環境でも困らないように
-  - 操作者としての自分が困らないように
+- 古く枯れたソフト/バージョンで構成された環境でも困らない設定
+  - 操作者としての自分が困らない
     - 上位互換のキーバインド設定
    	  - tmux を普段使いする場合も、キーバインドは screen 互換
-   	  - helm-for-files を C-x b にバインド
+   	  - helm-for-files は C-x b にバインド
   - レガシーな環境に設定ファイルを持ち込んでも問題無いように
     - OS による分岐
 	- コマンドの存在を確認してからロード
@@ -14,14 +14,16 @@
     - escape sequence
 
 # Requirement
+- git
+- zsh
 - peco
 
 # 準備 (Linux)
 ## peco
 - バイナリ版を落として使う
-    - https://github.com/peco/peco/releases
+    - [バイナリ置き場](https://github.com/peco/peco/releases)
 	- http://qiita.com/lestrrat/items/de8565fe32864f76ac19
-	
+
 - CPUの確認
     ```shell
     $ uname -a
@@ -32,13 +34,19 @@
 	
 - ダウンロードしてパスが通っているディレクトリへ
     ```shell
-    $ cd $HOME/local/bin
     $ wget https://github.com/peco/peco/releases/download/v0.*.*/peco_linux_***.tar.gz
     $ tar zxvf peco_linux_***.tar.gz
     $ mv peco_linux_***/peco $HOME/local/bin
     $ rm peco_linux_***.tar.gz
     $ rm -rf peco_linux_***
     ```
+
+## zsh
+- ログインシェルの変更
+    ```shell
+	$ which zsh
+	$ chsh -s /usr/bin/zsh
+	```
 
 # 準備 (Mac)
 

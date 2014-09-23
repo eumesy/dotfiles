@@ -19,3 +19,7 @@ export MANPATH=/usr/local/opt/gnu-sed/libexec/gnuman:${MANPATH}
 
 # for MacTex
 export PATH=/usr/texbin:${PATH}
+
+# java
+export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
+# http://d.hatena.ne.jp/snaka72/20120101/1325403702
