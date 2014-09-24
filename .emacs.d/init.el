@@ -29,6 +29,18 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 ;; terminal sends escape sequence
 ;; modifier key + arrow key
 
+
+;;-------------------------------------------------
+;; package
+;;-------------------------------------------------
+(add-to-list 'load-path "~/.emacs.d/elisp")
+
+(when (require 'auto-install nil t)
+  ;; インストール先指定
+  (setq auto-install-directory "~/.emacs.d/elisp")
+  ;; EmacsWiki に登録されている elisp の名前を取得
+  (auto-install-update-emacswiki-package-name t))
+
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
 (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
@@ -481,3 +493,7 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 
 ;; tex
 (add-to-list 'ac-modes 'latex-mode)
+
+;; howm
+(setq howm-directory "~/Dropbox/howm/")
+
