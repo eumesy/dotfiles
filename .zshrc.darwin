@@ -1,9 +1,11 @@
-# findutils
+# GNU like
+## homebrew/findutils
 alias find='gfind'
 alias locate='glocate'
 alias updatedb='gupdatedb'
 alias xargs='gxargs'
-# gnu-tar, gnu-sed, gawk
+
+## homebrew/gnu-tar, gnu-sed, gawk
 alias tar='gtar'
 alias sed='gsed'
 alias awk='gawk'

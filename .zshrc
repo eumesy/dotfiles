@@ -129,7 +129,9 @@ setopt noclobber
 autoload -Uz zmv
 alias zmv="noglob zmv -w"
 
+########################################################################
 # 補完
+########################################################################
 # fpath=(/usr/local/share/zsh-completions $fpath) # homebrew
 fpath=(${HOME}/.zsh/zsh-completions/src $fpath)
 
@@ -139,6 +141,15 @@ zstyle ':completion:*:default' list-colors ${LS_COLORS} # 補完候補に色
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # tab補完時に大文字小文字無視
 
 setopt complete_aliases
+
+# peco
+function insert-file-by-peco(){
+    LBUFFER=$LBUFFER$(ls -A | peco | tr '\n' ' ' | \
+	sed 's/[[:space:]]*$//') # delete trailing space
+    zle -R -c
+}
+zle -N insert-file-by-peco
+bindkey '^o' insert-file-by-peco
 
 ########################################################################
 # command history
