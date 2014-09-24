@@ -507,3 +507,8 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 (when (require 'howm-mode nil t)
   (define-key global-map (kbd "C-x , ,") 'howm-menu) ;; org-mode との衝突回避
   )
+(add-hook 'howm-after-save-hook
+	  (function (lambda ()
+		      ;; 内容が空の場合はファイルを削除する。
+		      (if (= (point-min) (point-max))
+			  (delete-file (buffer-file-name (current-buffer)))))))
