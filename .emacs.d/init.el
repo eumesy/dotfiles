@@ -144,7 +144,6 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
                      ((char-equal ?\  (aref (buffer-name b) 0)) nil)
 		     ((equal "*scratch*" (buffer-name b)) b)
 		     ((equal "*ocaml-toplevel*" (buffer-name b)) b)
-		     ;;		     ((equal "*compilation*" (buffer-name b))
 		     ((char-equal ?* (aref (buffer-name b) 0)) nil) ; それ以外の * で始まるバッファは表示しない
                      ((char-equal ?\  (aref (buffer-name b) 0)) nil)
                      ((buffer-live-p b) b)))
@@ -495,5 +494,16 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 (add-to-list 'ac-modes 'latex-mode)
 
 ;; howm
+(add-to-list 'load-path "~/.emacs.d/elisp/howm")
 (setq howm-directory "~/Dropbox/howm/")
-
+(setq howm-menu-lang 'ja)
+;; org-mode 併用
+(setq howm-view-title-header "*") ;; howm のロードより前に書く
+(setq howm-file-name-format "%Y/%m/%Y-%m-%d-%H%M%S.org")
+(setq howm-template-date-format "[%Y-%m-%d %H:%M]")
+(setq howm-template "* %title%cursor\n\n%date\n")
+(setq howm-prefix "\C-x,") ;; org-mode との衝突回避
+;; 
+(when (require 'howm-mode nil t)
+  (define-key global-map (kbd "C-x , ,") 'howm-menu) ;; org-mode との衝突回避
+  )
