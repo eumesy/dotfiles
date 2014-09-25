@@ -4,6 +4,7 @@ autoload -Uz colors
 
 export LANG=ja_JP.UTF-8
 
+
 alias q='exit'
 
 # http://nanabit.net/blog/2009/11/29/insert-date-on-single-key/
