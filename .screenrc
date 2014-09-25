@@ -1,3 +1,6 @@
+defencoding utf8
+encoding utf8 utf8
+
 # ^t 自体を端末に送りたいときは ^t^t
 escape ^t^t
 
@@ -17,8 +20,9 @@ setenv CAPTION_ALWAYS "$CAPTION_ALWAYS%{= yk} %n:%t "
 setenv CAPTION_ALWAYS "$CAPTION_ALWAYS%{-}%+w"
 
 setenv CAPTION_ALWAYS "$CAPTION_ALWAYS "
-setenv CAPTION_ALWAYS "$CAPTION_ALWAYS%= " # separator ?
-setenv CAPTION_ALWAYS "$CAPTION_ALWAYS%Y-%m-%d(%D) %02c "
+setenv CAPTION_ALWAYS "$CAPTION_ALWAYS%= " # sator ?
+setenv CAPTION_ALWAYS "$CAPTION_ALWAYS%Y-%m-%d %02c "
+# LANG=jp で曜日表記すると，caption で文字化けする可能性あり
 
 caption always "$CAPTION_ALWAYS"
 unsetenv CAPTION_ALWAYS
