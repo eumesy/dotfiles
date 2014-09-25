@@ -79,18 +79,36 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
       `((".*" ,(expand-file-name "~/.emacs.d/backup/") t)))
 (setq auto-save-default nil)
 
-(require 'helm-config)
-(helm-mode t)
-(setq helm-idle-delay 0.1)
-(setq helm-ff-auto-update-initial-value nil) ;; 自動補完無効
-(define-key helm-read-file-map (kbd "TAB") 'helm-execute-persistent-action) ;; tab補完
-(define-key helm-read-file-map (kbd "<tab>") 'helm-execute-persistent-action) ;; tab補完
-(global-set-key (kbd "C-l") 'helm-for-files)
-(global-set-key (kbd "C-x b") 'helm-for-files)
-(global-set-key (kbd "M-y") 'helm-show-kill-ring)
-(global-set-key (kbd "M-x") 'helm-M-x)
+(when (require 'helm-config nil t)
+	(helm-mode t)
 
-;; http://shibayu36.hatenablog.com/entry/2012/12/29/001418
+	(setq helm-idle-delay 0.1)
+	(setq helm-ff-auto-update-initial-value nil) ;; 自動補完無効
+ 	;; (define-key helm-read-file-map (kbd "TAB") 'helm-execute-persistent-action) ;; tab補完
+ 	;; (define-key helm-read-file-map (kbd "<tab>") 'helm-execute-persistent-action) ;; tab補完
+
+	(global-set-key (kbd "C-l") 'helm-for-files)
+	(global-set-key (kbd "C-x b") 'helm-for-files)
+	(global-set-key (kbd "M-y") 'helm-show-kill-ring)
+	(global-set-key (kbd "M-x") 'helm-M-x)
+
+	;; minibuffer
+	(define-key helm-map (kbd "C-h") 'delete-backward-char)
+	(define-key helm-find-files-map (kbd "C-h") 'delete-backward-char)
+	;; Emulate `kill-line' in helm minibuffer (C-k)
+	;; http://d.hatena.ne.jp/a_bicky/20140104/1388822688
+	(setq helm-delete-minibuffer-contents-from-point t)
+	(defadvice helm-delete-minibuffer-contents (before helm-emulate-kill-line activate)
+	  "Emulate `kill-line' in helm minibuffer"
+	  (kill-new (buffer-substring (point) (field-end))))
+
+	;; helm-mode で無効にするコマンド
+	;; (add-to-list 'helm-completing-read-handlers-alist '(dired-do-copy . nil))
+	;; (add-to-list 'helm-completing-read-handlers-alist '(dired-do-rename . nil))
+	;; (add-to-list 'helm-completing-read-handlers-alist '(dired-create-directory . nil))
+	)
+
+;; Http://shibayu36.hatenablog.com/entry/2012/12/29/001418
 (when (require 'recentf nil t)
   (setq recentf-max-saved-items 2000)
   (setq recentf-auto-cleanup 10)
@@ -166,10 +184,9 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 (set-face-attribute 'tabbar-separator nil  :height 1.2)
 
 ;; dired
-;; dired-find-alternate-file の有効化
-(put 'dired-find-alternate-file 'disabled nil)
 ;; RET 標準の dired-find-file では dired バッファが複数作られるので
 ;; dired-find-alternate-file を代わりに使う
+(put 'dired-find-alternate-file 'disabled nil)
 (define-key dired-mode-map (kbd "RET") 'dired-find-alternate-file)
 (define-key dired-mode-map (kbd "a") 'dired-find-file)
 
