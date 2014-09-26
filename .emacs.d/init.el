@@ -471,7 +471,7 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 ;; (add-to-list 'ac-modes 'flex-mode)
 
 ;; ess (R-mode)
-;; (setq load-path (append '("~/.emacs.d/ess-13.05/lisp") load-path))
+;; (setq load-path (append '("~/.emacs.d/elisp/ess-13.05/lisp") load-path))
 ;; (require 'ess-site)
 
 ;; Coq
@@ -484,7 +484,7 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 ;; OCaml
 ;;; Tuareg-mode
 ;;; via. http://tuareg.forge.ocamlcore.org/ -> Released Files
-(setq load-path (append '("~/.emacs.d/tuareg-2.0.6") load-path))
+(setq load-path (append '("~/.emacs.d/elisp/tuareg-2.0.6") load-path))
 (autoload 'tuareg-mode "tuareg" "Major mode for editing Caml code" t)
 (autoload 'camldebug "camldebug" "Run the Caml debugger" t)
 ;; (setq auto-mode-alist (cons '("\\.ml\\w?" . tuareg-mode) auto-mode-alist))
