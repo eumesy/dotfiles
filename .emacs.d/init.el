@@ -142,8 +142,6 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 (define-key ac-menu-map (kbd "C-p") 'ac-previous)
 (ac-set-trigger-key "TAB")
 
-(auto-fill-mode -1)
-
 ;; http://stackoverflow.com/questions/384284/how-do-i-rename-an-open-file-in-emacs
 (defun rename-current-buffer-and-file (new-name)
   "Renames both current buffer and file it's visiting to NEW-NAME."
