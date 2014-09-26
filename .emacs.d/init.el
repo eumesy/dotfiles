@@ -1,6 +1,11 @@
 (set-language-environment 'Japanese)
 
+(set-default-coding-systems 'utf-8)
+(set-keyboard-coding-system 'utf-8)
+(set-terminal-coding-system 'utf-8)
+(set-buffer-file-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
+
 (setq load-path (append '("~/.emacs.d") load-path))
 
 (global-set-key (kbd "<f7>") 'eval-buffer)
@@ -404,7 +409,7 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 
 ;; org
 (add-to-list 'ac-modes 'org-mode)
-;; (add-to-list 'auto-mode-alist '("\\.txt$" . org-mode))
+(add-to-list 'auto-mode-alist '("\\.txt$" . org-mode))
 (setq org-src-fontify-natively t)
 ;; org-reveal
 (load-library "ox-reveal")
