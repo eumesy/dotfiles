@@ -1,0 +1,4 @@
+path=(
+    $HOME/.cask/bin(N-/)
+    $path
+)
