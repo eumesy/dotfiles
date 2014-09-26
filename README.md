@@ -1,24 +1,37 @@
 # 方針
 - 古く枯れたソフト/バージョンで構成された環境でも困らない設定
-  - 操作者としての自分が困らない
-    - 上位互換のキーバインド設定
-   	  - tmux を普段使いする場合も、キーバインドは screen 互換
-   	  - helm-for-files は C-x b にバインド
-  - レガシーな環境に設定ファイルを持ち込んでも問題無いように
-    - OS による分岐
-	- コマンドの存在を確認してからロード
+    - 操作者としての自分が困らない
+        - 上位互換のキーバインド設定
+            - tmux を普段使いする場合も、キーバインドは screen 互換
+            - helm-for-files は C-x b にバインド
+    - レガシーな環境に設定ファイルを持ち込んでも問題無いように
+        - OS による分岐
+        - コマンドの存在を確認してからロード
 
 - 設定に時間をかけすぎない
-  - 鬼門
-    - 色指定
-    - escape sequence
+    - 鬼門
+        - 色指定
+        - escape sequence
+
+- 覚えることは少なく
+    - Anything 的機能を積極的に導入
+        - helm, peco
 
 # Requirement
 - git
 - zsh
 - peco
+- Cask
+    - python
 
 # 準備 (Linux)
+## zsh
+- ログインシェルの変更
+    ```shell
+	$ which zsh
+	$ chsh -s /usr/bin/zsh
+	```
+
 ## peco
 - バイナリ版を落として使う
     - [バイナリ置き場](https://github.com/peco/peco/releases)
@@ -41,11 +54,10 @@
     $ rm -rf peco_linux_***
     ```
 
-## zsh
-- ログインシェルの変更
+## Cask
+- installation
     ```shell
-	$ which zsh
-	$ chsh -s /usr/bin/zsh
+	$ curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
 	```
 
 # 準備 (Mac)
@@ -58,6 +70,7 @@ $ git clone git@github.com:eumesy/dotfiles.git ~/.dotfiles
 
 $ ln -sf ~/.dotfiles/.zshenv ~/.zshenv
 $ ln -sf ~/.dotfiles/.zshenv.darwin ~/.zshenv.darwin
+$ ln -sf ~/.dotfiles/.zshenv.linux ~/.zshenv.linux
 $ ln -sf ~/.dotfiles/.zshrc ~/.zshrc
 $ ln -sf ~/.dotfiles/.zshrc.darwin ~/.zshrc.darwin
 $ ln -sf ~/.dotfiles/.zsh ~/.zsh
@@ -76,7 +89,7 @@ ln -f: 上書き
 ### push
 ```shell
 $ git add .
-$ git commit -m "some comment"
+$ git commit -m "some comments"
 $ git push origin master
 ```
 
