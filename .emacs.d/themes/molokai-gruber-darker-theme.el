@@ -31,7 +31,8 @@
 (custom-theme-set-faces
  'molokai-gruber-darker
 
- '(default ((t (:background "#1B1D1E" :foreground "#F8F8F2"))))
+;; '(default ((t (:background "#1B1D1E" :foreground "#F8F8F2"))))
+ '(default ((t (:background "#000000" :foreground "#F8F8F2"))))
  '(cursor ((t (:foregound "#F8F8F0"))))
 
  '(bold ((t (:weight bold))))

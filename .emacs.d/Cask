@@ -1,0 +1,14 @@
+(source gnu)
+(source melpa)
+(source marmalade)
+
+(depends-on "auto-install")
+(depends-on "auto-complete")
+(depends-on "helm")
+(depends-on "helm-c-yasnippet")
+(depends-on "recentf-ext")
+(depends-on "tabbar")
+
+(depends-on "bison-mode")
+(depends-on "markdown-mode")
+

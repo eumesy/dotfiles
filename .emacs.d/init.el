@@ -8,8 +8,6 @@
 
 (setq load-path (append '("~/.emacs.d") load-path))
 
-(global-set-key (kbd "<f7>") 'eval-buffer)
-
 ;; C-x @ S (0x18 0x40 0x53) event-apply-shift-modifier
 ;; C-x @ a (0x18 0x40 0x61) event-apply-alt-modifier
 ;; C-x @ c (0x18 0x40 0x63) event-apply-control-modifier
@@ -38,21 +36,21 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 ;;-------------------------------------------------
 ;; package
 ;;-------------------------------------------------
-(add-to-list 'load-path "~/.emacs.d/elisp")
+(require 'cask)
+(cask-initialize)
 
+(add-to-list 'load-path "~/.emacs.d/elisp")
 (when (require 'auto-install nil t)
   ;; インストール先指定
   (setq auto-install-directory "~/.emacs.d/elisp")
   ;; EmacsWiki に登録されている elisp の名前を取得
   (auto-install-update-emacswiki-package-name t))
 
-(require 'package)
-(add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-(package-initialize)
+;; (require 'package)
+;; (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
+;; (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+;; (package-initialize)
 
-(require 'install-elisp)
-(setq install-elisp-repository-directory "~/.emacs.d")
 
 ;;; emacsclient
 ;; ALTERNATIVE_EDITOR を渡さずに開いてしまったときのために(Emacs.appのダブルクリックとか)
@@ -217,6 +215,7 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 ;; http://d.hatena.ne.jp/aoe-tk/20130210/1360506829
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 (load-theme 'molokai-gruber-darker t)
+
 ;; (load-theme 'molokai t)
 ;; (load-theme 'gruber-darker t)  ;; helm周りよい
 ;; (load-theme 'monokai t)
@@ -450,37 +449,37 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 ;; verilog mode
 ;;; http://linuxcom.info/verilog-mode.html
 ;;; Load verilog-mode only when needed
-(autoload 'verilog-mode "verilog-mode" "Verilog mode" t )
+;; (autoload 'verilog-mode "verilog-mode" "Verilog mode" t )
 ;; Any files that end in .v should be in verilog mode
-;;(setq auto-mode-alist (cons '("\\.v\\'" . verilog-mode) auto-mode-alist))
-(setq auto-mode-alist (cons '("\\.vt\\'" . verilog-mode) auto-mode-alist))
+;; (setq auto-mode-alist (cons '("\\.v\\'" . verilog-mode) auto-mode-alist))
+;; (setq auto-mode-alist (cons '("\\.vt\\'" . verilog-mode) auto-mode-alist))
 ;;; Any files in verilog mode shuold have their keywords colorized
-(add-hook 'verilog-mode-hook '(lambda () (font-look-mode 1)))
-(add-to-list 'ac-modes 'verilog-mode)
+;; (add-hook 'verilog-mode-hook '(lambda () (font-look-mode 1)))
+;; (add-to-list 'ac-modes 'verilog-mode)
 
 ;; bison mode/flex mode
-(require 'font-lock)
-(require 'cc-mode)
-(require 'bison-mode)
-(add-to-list 'auto-mode-alist '("\\.y$" . bison-mode))
-(add-to-list 'auto-mode-alist '("\\.yy$" . bison-mode))
-(autoload 'bison-mode "bison-mode" t)
-(add-to-list 'auto-mode-alist '("\\.l$" . flex-mode))
-(add-to-list 'auto-mode-alist '("\\.ll$" . flex-mode))
-(autoload 'flex-mode "flex-mode" t)
-(add-to-list 'ac-modes 'bison-mode)
-(add-to-list 'ac-modes 'flex-mode)
+;; (require 'font-lock)
+;; (require 'cc-mode)
+;; (require 'bison-mode)
+;; (add-to-list 'auto-mode-alist '("\\.y$" . bison-mode))
+;; (add-to-list 'auto-mode-alist '("\\.yy$" . bison-mode))
+;; (autoload 'bison-mode "bison-mode" t)
+;; (add-to-list 'auto-mode-alist '("\\.l$" . flex-mode))
+;; (add-to-list 'auto-mode-alist '("\\.ll$" . flex-mode))
+;; (autoload 'flex-mode "flex-mode" t)
+;; (add-to-list 'ac-modes 'bison-mode)
+;; (add-to-list 'ac-modes 'flex-mode)
 
 ;; ess (R-mode)
-(setq load-path (append '("~/.emacs.d/ess-13.05/lisp") load-path))
-(require 'ess-site)
+;; (setq load-path (append '("~/.emacs.d/ess-13.05/lisp") load-path))
+;; (require 'ess-site)
 
 ;; Coq
-(setq auto-mode-alist (cons '("\.v$" . coq-mode) auto-mode-alist))
-(autoload 'coq-mode "coq" "Major mode for editing Coq vernacular." t)
-(add-to-list 'ac-modes 'coq-mode)
+;; (setq auto-mode-alist (cons '("\.v$" . coq-mode) auto-mode-alist))
+;; (autoload 'coq-mode "coq" "Major mode for editing Coq vernacular." t)
+;; (add-to-list 'ac-modes 'coq-mode)
 ;;; ProofGeneral
-(load-file "$HOME/.emacs.d/ProofGeneral/generic/proof-site.elc")
+;; (load-file "$HOME/.emacs.d/ProofGeneral/generic/proof-site.elc")
 
 ;; OCaml
 ;;; Tuareg-mode
