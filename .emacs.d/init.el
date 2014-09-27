@@ -581,3 +581,7 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 ;;-------------------------------------------------
 ;; git-gutter
 (global-git-gutter-mode t)
+
+
+;; rainbow-mode
+(add-hook 'emacs-lisp-mode-hook 'rainbow-mode)

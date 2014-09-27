@@ -10,6 +10,7 @@
 (depends-on "helm-c-yasnippet")
 (depends-on "pbcopy")
 (depends-on "popwin")
+(depends-on "rainbow-mode")
 (depends-on "recentf-ext")
 (depends-on "tabbar")
 
