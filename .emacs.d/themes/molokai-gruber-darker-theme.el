@@ -31,7 +31,7 @@
 (custom-theme-set-faces
  'molokai-gruber-darker
 
-;; '(default ((t (:background "#1B1D1E" :foreground "#F8F8F2"))))
+ ;; '(default ((t (:background "#1B1D1E" :foreground "#F8F8F2"))))
  '(default ((t (:background "#000000" :foreground "#F8F8F2"))))
  '(cursor ((t (:foregound "#F8F8F0"))))
 
@@ -55,10 +55,10 @@
  '(escape-glyph ((t (:foreground "#E6DB74"))))
  '(minibuffer-prompt ((t (:foreground "#66D9EF"))))
  '(mode-line ((t (:foreground "#F8F8F2" :background "#000000"
-			      :box (:line-width 1 :color "#000000" :style released-button)))))
+                              :box (:line-width 1 :color "#000000" :style released-button)))))
  '(mode-line-buffer-id ((t (:foreground nil :background "#000000" :weight semi-bold))))
  '(mode-line-inactive ((t (:foreground "#BCBCBC" :background "#000000"
-				       ':box (:line-width 1 :color "#232526")))))
+                                       ':box (:line-width 1 :color "#232526")))))
  '(mode-line-mousable ((t (:foreground "#BCBCBC" :background "#000000"))))
  '(mode-line-mousable-minor-mode ((t (:foreground "#BCBCBC" :background "#000000"))))
  '(font-lock-builtin-face ((t (:foreground "#A6E22E"))))
@@ -140,28 +140,28 @@
  '(org-table ((t (:foreground "#87afd7"))))
  '(proof-locked-face ((t (:background "#00005f"))))
 
-;; (gruber-darker-fg        "#e4e4ef")
-;; (gruber-darker-fg+1      "#f4f4ff")
-;; (gruber-darker-fg+2      "#f5f5f5")
-;; (gruber-darker-white     "#ffffff")
-;; (gruber-darker-black     "#000000")
-;; (gruber-darker-bg-1      "#101010")
-;; (gruber-darker-bg        "#181818")
-;; (gruber-darker-bg+1      "#282828")
-;; (gruber-darker-bg+2      "#453d41")
-;; (gruber-darker-bg+3      "#484848")
-;; (gruber-darker-bg+4      "#52494e")
-;; (gruber-darker-red-1     "#c73c3f")
-;; (gruber-darker-red       "#f43841")
-;; (gruber-darker-green     "#73c936")
-;; (gruber-darker-yellow    "#ffdd33")
-;; (gruber-darker-brown     "#d7ffd7") ;; #cc8c3c
-;; (gruber-darker-quartz    "#95a99f")
-;; (gruber-darker-niagara-1 "#5f627f")
-;; (gruber-darker-niagara   "#96a6c8")
-;; (gruber-darker-wisteria  "#9e95c7")
+ ;; (gruber-darker-fg        "#e4e4ef")
+ ;; (gruber-darker-fg+1      "#f4f4ff")
+ ;; (gruber-darker-fg+2      "#f5f5f5")
+ ;; (gruber-darker-white     "#ffffff")
+ ;; (gruber-darker-black     "#000000")
+ ;; (gruber-darker-bg-1      "#101010")
+ ;; (gruber-darker-bg        "#181818")
+ ;; (gruber-darker-bg+1      "#282828")
+ ;; (gruber-darker-bg+2      "#453d41")
+ ;; (gruber-darker-bg+3      "#484848")
+ ;; (gruber-darker-bg+4      "#52494e")
+ ;; (gruber-darker-red-1     "#c73c3f")
+ ;; (gruber-darker-red       "#f43841")
+ ;; (gruber-darker-green     "#73c936")
+ ;; (gruber-darker-yellow    "#ffdd33")
+ ;; (gruber-darker-brown     "#d7ffd7") ;; #cc8c3c
+ ;; (gruber-darker-quartz    "#95a99f")
+ ;; (gruber-darker-niagara-1 "#5f627f")
+ ;; (gruber-darker-niagara   "#96a6c8")
+ ;; (gruber-darker-wisteria  "#9e95c7")
 
-)
+ )
 
 ;;;###autoload
 (when load-file-name

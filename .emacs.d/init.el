@@ -64,7 +64,7 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 ;; ALTERNATIVE_EDITOR を渡さずに開いてしまったときのために(Emacs.appのダブルクリックとか)
 (require 'server)
 (unless (server-running-p) ;; 重複起動抑止
-    (server-start))
+  (server-start))
 
 ;; サーバ/クライアント全終了
 ;; via. 「Emacsテクニックバイブル」p.91
@@ -91,33 +91,33 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 (setq auto-save-default nil)
 
 (when (require 'helm-config nil t)
-	(helm-mode t)
+  (helm-mode t)
 
-	(setq helm-idle-delay 0.1)
-	(setq helm-ff-auto-update-initial-value nil) ;; 自動補完無効
- 	;; (define-key helm-read-file-map (kbd "TAB") 'helm-execute-persistent-action) ;; tab補完
- 	;; (define-key helm-read-file-map (kbd "<tab>") 'helm-execute-persistent-action) ;; tab補完
+  (setq helm-idle-delay 0.1)
+  (setq helm-ff-auto-update-initial-value nil) ;; 自動補完無効
+  ;; (define-key helm-read-file-map (kbd "TAB") 'helm-execute-persistent-action) ;; tab補完
+  ;; (define-key helm-read-file-map (kbd "<tab>") 'helm-execute-persistent-action) ;; tab補完
 
-	(global-set-key (kbd "C-l") 'helm-for-files)
-	(global-set-key (kbd "C-x b") 'helm-for-files)
-	(global-set-key (kbd "M-y") 'helm-show-kill-ring)
-	(global-set-key (kbd "M-x") 'helm-M-x)
+  (global-set-key (kbd "C-l") 'helm-for-files)
+  (global-set-key (kbd "C-x b") 'helm-for-files)
+  (global-set-key (kbd "M-y") 'helm-show-kill-ring)
+  (global-set-key (kbd "M-x") 'helm-M-x)
 
-	;; minibuffer
-	(define-key helm-map (kbd "C-h") 'delete-backward-char)
-	(define-key helm-find-files-map (kbd "C-h") 'delete-backward-char)
-	;; Emulate `kill-line' in helm minibuffer (C-k)
-	;; http://d.hatena.ne.jp/a_bicky/20140104/1388822688
-	(setq helm-delete-minibuffer-contents-from-point t)
-	(defadvice helm-delete-minibuffer-contents (before helm-emulate-kill-line activate)
-	  "Emulate `kill-line' in helm minibuffer"
-	  (kill-new (buffer-substring (point) (field-end))))
+  ;; minibuffer
+  (define-key helm-map (kbd "C-h") 'delete-backward-char)
+  (define-key helm-find-files-map (kbd "C-h") 'delete-backward-char)
+  ;; Emulate `kill-line' in helm minibuffer (C-k)
+  ;; http://d.hatena.ne.jp/a_bicky/20140104/1388822688
+  (setq helm-delete-minibuffer-contents-from-point t)
+  (defadvice helm-delete-minibuffer-contents (before helm-emulate-kill-line activate)
+    "Emulate `kill-line' in helm minibuffer"
+    (kill-new (buffer-substring (point) (field-end))))
 
-	;; helm-mode で無効にするコマンド
-	;; (add-to-list 'helm-completing-read-handlers-alist '(dired-do-copy . nil))
-	;; (add-to-list 'helm-completing-read-handlers-alist '(dired-do-rename . nil))
-	;; (add-to-list 'helm-completing-read-handlers-alist '(dired-create-directory . nil))
-	)
+  ;; helm-mode で無効にするコマンド
+  ;; (add-to-list 'helm-completing-read-handlers-alist '(dired-do-copy . nil))
+  ;; (add-to-list 'helm-completing-read-handlers-alist '(dired-do-rename . nil))
+  ;; (add-to-list 'helm-completing-read-handlers-alist '(dired-create-directory . nil))
+  )
 
 ;; Http://shibayu36.hatenablog.com/entry/2012/12/29/001418
 (when (require 'recentf nil t)
@@ -187,9 +187,9 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
                      ((eq (current-buffer) b) b) ; Always include the current buffer.
                      ((buffer-file-name b) b)
                      ((char-equal ?\  (aref (buffer-name b) 0)) nil)
-		     ((equal "*scratch*" (buffer-name b)) b)
-		     ((equal "*ocaml-toplevel*" (buffer-name b)) b)
-		     ((char-equal ?* (aref (buffer-name b) 0)) nil) ; それ以外の * で始まるバッファは表示しない
+                     ((equal "*scratch*" (buffer-name b)) b)
+                     ((equal "*ocaml-toplevel*" (buffer-name b)) b)
+                     ((char-equal ?* (aref (buffer-name b) 0)) nil) ; それ以外の * で始まるバッファは表示しない
                      ((char-equal ?\  (aref (buffer-name b) 0)) nil)
                      ((buffer-live-p b) b)))
                 (buffer-list))))
@@ -255,12 +255,12 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 
 (if window-system 
     (setq default-frame-alist
-	  (append (list
-		   '(width . 120)
-		   '(height . 40)
-		   '(background-color . "black")
-		   )
-		  default-frame-alist)))
+          (append (list
+                   '(width . 120)
+                   '(height . 40)
+                   '(background-color . "black")
+                   )
+                  default-frame-alist)))
 ;; 半透明
 (if window-system 
     (progn
@@ -276,6 +276,9 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 ;;-------------------------------------------------
 ;; edit
 ;;-------------------------------------------------
+;; インデントにタブ文字を利用しない
+(setq-default indent-tabs-mode nil)
+
 (global-set-key (kbd "C-h") 'delete-backward-char)
 ;; http://akisute3.hatenablog.com/entry/20120318/1332059326
 ;; (keyboard-translate ?\C-h ?\C-?) 
@@ -389,9 +392,9 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 (setq auto-insert-directory "~/Dropbox/template/")
 (setq auto-insert-alist
       (nconc '(
-	       ("\\.cpp$" . "temp.cpp")
-	       ("\\.c$" . "temp.c")
-	       ) auto-insert-alist))
+               ("\\.cpp$" . "temp.cpp")
+               ("\\.c$" . "temp.c")
+               ) auto-insert-alist))
 (add-hook 'find-file-not-found-hooks 'auto-insert)
 
 
@@ -437,7 +440,7 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
   (interactive)
   (shell-command
    (format "open -a /Applications/Marked.app %s"
-	   (shell-quote-argument (buffer-file-name))))
+           (shell-quote-argument (buffer-file-name))))
   )
 (global-set-key "\C-cm" 'markdown-preview-file)
 
@@ -557,10 +560,10 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
   (define-key global-map (kbd "C-x , ,") 'howm-menu) ;; org-mode との衝突回避
   )
 (add-hook 'howm-after-save-hook
-	  (function (lambda ()
-		      ;; 内容が空の場合はファイルを削除する。
-		      (if (= (point-min) (point-max))
-			  (delete-file (buffer-file-name (current-buffer)))))))
+          (function (lambda ()
+                      ;; 内容が空の場合はファイルを削除する。
+                      (if (= (point-min) (point-max))
+                          (delete-file (buffer-file-name (current-buffer)))))))
 
 ;; google translate
 ;; http://qiita.com/catatsuy/items/ae9875706769d4f02317
@@ -568,8 +571,8 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 (global-set-key "\C-xT" 'google-translate-query-translate)
 ;; 翻訳のデフォルト値を設定 (無効化は C-u を付与 e.g. C-u C-x t)
 (custom-set-variables
-  '(google-translate-default-source-language "en")
-  '(google-translate-default-target-language "ja"))
+ '(google-translate-default-source-language "en")
+ '(google-translate-default-target-language "ja"))
 
 ;; pbcopy
 ;; OS X の clipboard と同期
@@ -582,6 +585,48 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 ;; git-gutter
 (global-git-gutter-mode t)
 
-
+;;-------------------------------------------------
+;; appearance
+;;-------------------------------------------------
 ;; rainbow-mode
 (add-hook 'emacs-lisp-mode-hook 'rainbow-mode)
+
+;; 全角スペース タブ trailing-spacesを目立たせる
+;; www.amazon.co.jp/dp/4791712595
+(when (require 'whitespace nil t)
+  ;; space-markとtab-mark、それからspacesとtrailingを対象とする
+  (setq whitespace-style '(space-mark tab-mark face spaces trailing))
+  (setq whitespace-display-mappings
+        '(
+          ;; (space-mark   ?\     [?\u00B7]     [?.]) ; space - centered dot
+          (space-mark   ?\xA0  [?\u00A4]     [?_]) ; hard space - currency
+          (space-mark   ?\x8A0 [?\x8A4]      [?_]) ; hard space - currency
+          (space-mark   ?\x920 [?\x924]      [?_]) ; hard space - currency
+          (space-mark   ?\xE20 [?\xE24]      [?_]) ; hard space - currency
+          (space-mark   ?\xF20 [?\xF24]      [?_]) ; hard space - currency
+          (space-mark ?\u3000 [?\u25a1] [?_ ?_]) ; full-width-space - square
+          ;; NEWLINE is displayed using the face `whitespace-newline'
+          ;; (newline-mark ?\n    [?$ ?\n])  ; eol - dollar sign
+          ;; (newline-mark ?\n    [?\u21B5 ?\n] [?$ ?\n]); eol - downwards arrow
+          ;; (newline-mark ?\n    [?\u00B6 ?\n] [?$ ?\n]); eol - pilcrow
+          ;; (newline-mark ?\n    [?\x8AF ?\n]  [?$ ?\n]); eol - overscore
+          ;; (newline-mark ?\n    [?\x8AC ?\n]  [?$ ?\n]); eol - negation
+          ;; (newline-mark ?\n    [?\x8B0 ?\n]  [?$ ?\n]); eol - grade
+          ;;
+          ;; WARNING: the mapping below has a problem.
+          ;; When a TAB occupies exactly one column, it will display the
+          ;; character ?\xBB at that column followed by a TAB which goes to
+          ;; the next TAB column.
+          ;; If this is a problem for you, please, comment the line below.
+          (tab-mark     ?\t    [?\u00BB ?\t] [?\\ ?\t]) ; tab - left quote mark
+          ))
+  ;; whitespace-spaceの定義を全角スペースにし、色をつけて目立たせる
+  (setq whitespace-space-regexp "\\(\u3000+\\)")
+  (set-face-foreground 'whitespace-space "cyan")
+  (set-face-background 'whitespace-space 'nil)
+  ;; whitespace-trailingを色つきアンダーラインで目立たせる
+  (set-face-underline  'whitespace-trailing t)
+  (set-face-foreground 'whitespace-trailing "cyan")
+  (set-face-background 'whitespace-trailing 'nil)
+  (global-whitespace-mode 1)
+  )
