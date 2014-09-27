@@ -6,8 +6,9 @@
 (set-buffer-file-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
 
-(setq load-path (append '("~/.emacs.d") load-path))
-
+;;-------------------------------------------------
+;; keyboard
+;;-------------------------------------------------
 ;; C-x @ S (0x18 0x40 0x53) event-apply-shift-modifier
 ;; C-x @ a (0x18 0x40 0x61) event-apply-alt-modifier
 ;; C-x @ c (0x18 0x40 0x63) event-apply-control-modifier
@@ -32,6 +33,11 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 ;; terminal sends escape sequence
 ;; modifier key + arrow key
 
+;;-------------------------------------------------
+;; mouse
+;;-------------------------------------------------
+;; (xterm-mouse-mode -1)
+;; tとするとマウス選択によるmacのクリップボードへのコピーがうまくいかない
 
 ;;-------------------------------------------------
 ;; package
@@ -51,7 +57,9 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 ;; (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
 ;; (package-initialize)
 
-
+;;-------------------------------------------------
+;; application
+;;-------------------------------------------------
 ;;; emacsclient
 ;; ALTERNATIVE_EDITOR を渡さずに開いてしまったときのために(Emacs.appのダブルクリックとか)
 (require 'server)
@@ -167,10 +175,6 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 ;; 時刻表示
 (display-time-mode 1)
 
-;; マウス
-;; (xterm-mouse-mode t)
-;; tとするとマウス選択によるmacのクリップボードへのコピーがうまくいかない
-
 ;; tabbar.el
 ;; (require 'tabbar)
 (tabbar-mode 1)
@@ -241,9 +245,9 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 
 ;; Cocoa Emacs
 ;; font
-(set-face-attribute 'default nil :family "Ricty" :height 180)
-(set-fontset-font "fontset-default" 'ascii '("Ricty" . "iso10646-*"))
-(set-fontset-font "fontset-default" 'japanese-jisx0208 '("Ricty" . "iso10646-*"))
+;; (set-face-attribute 'default nil :family "Ricty" :height 180)
+;; (set-fontset-font "fontset-default" 'ascii '("Ricty" . "iso10646-*"))
+;; (set-fontset-font "fontset-default" 'japanese-jisx0208 '("Ricty" . "iso10646-*"))
 
 ;; Command <-> Option
 (setq ns-command-modifier (quote meta))
@@ -261,13 +265,17 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 (if window-system 
     (progn
       (set-frame-parameter nil 'alpha 90)))
-;; (tool-bar-mode -1)
-;; (menu-bar-mode -1)
+(tool-bar-mode -1)
+(menu-bar-mode -1)
 
 (global-set-key (kbd "C-o") 'find-file)     ;; default: C-x C-f
 (global-set-key (kbd "M-s") 'save-buffer)   ;; default: C-x C-s
 (global-set-key (kbd "M-t") 'other-window)  ;; default: C-x o
 (global-set-key (kbd "M-g") 'goto-line)     ;; default: M-g g
+
+;;-------------------------------------------------
+;; edit
+;;-------------------------------------------------
 (global-set-key (kbd "C-h") 'delete-backward-char)
 ;; http://akisute3.hatenablog.com/entry/20120318/1332059326
 ;; (keyboard-translate ?\C-h ?\C-?) 
@@ -566,3 +574,4 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 ;; pbcopy
 ;; OS X の clipboard と同期
 (turn-on-pbcopy)
+
