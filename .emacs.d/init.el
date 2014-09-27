@@ -96,3 +96,6 @@
 
 ;; (global-unset-key "\C-t")
 ;; prefix for tmux
+
+(add-hook 'after-init-hook #'global-flycheck-mode)
+

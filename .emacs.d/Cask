@@ -4,6 +4,8 @@
 
 (depends-on "auto-install")
 (depends-on "auto-complete")
+(depends-on "init-loader")
+(depends-on "flycheck")
 (depends-on "git-gutter")
 (depends-on "google-translate")
 (depends-on "helm")
