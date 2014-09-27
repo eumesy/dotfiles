@@ -1,0 +1,8 @@
+(require 'auto-complete-config)
+(global-auto-complete-mode 1)
+(ac-config-default)
+(setq ac-auto-start 2)
+(setq ac-use-menu-map t)
+(define-key ac-menu-map (kbd "C-n") 'ac-next)
+(define-key ac-menu-map (kbd "C-p") 'ac-previous)
+(ac-set-trigger-key "TAB")
