@@ -18,6 +18,7 @@
         - helm, peco
 
 # Requirements
+- ag (the silver searcher)
 - git
 - zsh
 - peco
@@ -63,6 +64,8 @@
     ```shell
     $ curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
     ```
+
+## ag (the silver searcher)
 
 # 準備 (Mac)
 

@@ -73,6 +73,9 @@
   ;; (add-to-list 'helm-completing-read-handlers-alist '(dired-create-directory . nil))
   )
 
+;; helm-ag
+(global-set-key (kbd "C-M-s") 'helm-ag-this-file)
+
 (global-set-key (kbd "<f8>") 'toggle-truncate-lines)
 
 ;; 自動改行
@@ -99,3 +102,4 @@
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
+;;; init.el ends here

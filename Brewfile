@@ -8,10 +8,12 @@ upgrade
 tap caskroom/cask
 tap peco/peco
 
+install ag
 install peco
-install brew-cask
 
 # homebrew-cask
+install brew-cask
+
 cask install dash
 
 # cleanup

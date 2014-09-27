@@ -9,6 +9,7 @@
 (depends-on "git-gutter")
 (depends-on "google-translate")
 (depends-on "helm")
+(depends-on "helm-ag")
 (depends-on "helm-c-yasnippet")
 (depends-on "pbcopy")
 (depends-on "popwin")
