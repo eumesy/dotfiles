@@ -15,5 +15,6 @@
 (depends-on "tabbar")
 
 (depends-on "bison-mode")
+(depends-on "git-commit-mode")
 (depends-on "markdown-mode")
 
