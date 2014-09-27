@@ -25,11 +25,13 @@
     - python
 
 # 準備 (Linux)
+
 ## zsh
 - ログインシェルの変更
+
     ```shell
-	$ which zsh
-	$ chsh -s /usr/bin/zsh
+    $ which zsh
+	$ chsh -s /path/to/zsh
 	```
 
 ## peco
@@ -38,6 +40,7 @@
 	- http://qiita.com/lestrrat/items/de8565fe32864f76ac19
 
 - CPUの確認
+
     ```shell
     $ uname -a
     ```
@@ -97,10 +100,3 @@ $ git push origin master
 ```shell
 $ git pull
 ```
-
-# todo
-## シンボリックリンクを自動ではる
-- shell script
-  - http://www.d-wood.com/blog/2014/03/19_5845.html
-- Makefile
-  - https://github.com/etheriqa/dotfiles

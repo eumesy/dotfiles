@@ -382,7 +382,7 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 
 
 ;;; gccsence
-(require 'gccsense)
+;; (require 'gccsense)
 
 ;;; Scheme
 ;;   jakld
@@ -409,7 +409,7 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 (add-to-list 'auto-mode-alist '("\\.txt$" . org-mode))
 (setq org-src-fontify-natively t)
 ;; org-reveal
-(load-library "ox-reveal")
+;; (load-library "ox-reveal")
 
 ;; Markdown MODE
 ;;; http://jblevins.org/projects/markdown-mode/
