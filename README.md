@@ -28,26 +28,24 @@
 
 ## zsh
 - ログインシェルの変更
-
     ```shell
     $ which zsh
-	$ chsh -s /path/to/zsh
-	```
+    $ chsh -s /path/to/zsh
+    ```
 
 ## peco
 - バイナリ版を落として使う
     - [バイナリ置き場](https://github.com/peco/peco/releases)
-	- http://qiita.com/lestrrat/items/de8565fe32864f76ac19
+    - http://qiita.com/lestrrat/items/de8565fe32864f76ac19
 
 - CPUの確認
-
     ```shell
     $ uname -a
     ```
-	
+
     - x86_64 -> amd64
     - i389 -> 386
-	
+
 - ダウンロードしてパスが通っているディレクトリへ
     ```shell
     $ wget https://github.com/peco/peco/releases/download/v0.*.*/peco_linux_***.tar.gz
@@ -60,8 +58,8 @@
 ## Cask
 - installation
     ```shell
-	$ curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
-	```
+    $ curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
+    ```
 
 # 準備 (Mac)
 
@@ -82,6 +80,7 @@ $ ln -sf ~/.dotfiles/.gitignore.global ~/.gitignore
 $ ln -sf ~/.dotfiles/.screenrc ~/.screenrc
 $ ln -sf ~/.dotfiles/.tmux.conf ~/.tmux.conf
 $ ln -sf ~/.dotfiles/.peco ~/.peco
+$ ln -sf ~/.dotfiles/Brewfile ~/Brewfile
 
 $ zsh
 $ rm -f ~/.zcompdump; compinit
