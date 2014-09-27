@@ -17,7 +17,7 @@
     - Anything 的機能を積極的に導入
         - helm, peco
 
-# Requirement
+# Requirements
 - git
 - zsh
 - peco

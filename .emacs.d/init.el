@@ -133,6 +133,12 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 ;; 自動改行
 (auto-fill-mode -1)
 
+;; popwin
+(when (require 'popwin nil t)
+  (setq display-buffer-function 'popwin:display-buffer)
+  (setq popwin:popup-window-position 'bottom)
+  )
+
 (require 'auto-complete-config)
 (global-auto-complete-mode 1)
 (ac-config-default)
@@ -166,7 +172,7 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 ;; tとするとマウス選択によるmacのクリップボードへのコピーがうまくいかない
 
 ;; tabbar.el
-(require 'tabbar)
+;; (require 'tabbar)
 (tabbar-mode 1)
 (global-set-key (kbd "C-t") 'tabbar-forward)
 (global-set-key (kbd "C-S-t") 'tabbar-backward)
@@ -547,3 +553,12 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 		      ;; 内容が空の場合はファイルを削除する。
 		      (if (= (point-min) (point-max))
 			  (delete-file (buffer-file-name (current-buffer)))))))
+
+;; google translate
+;; http://qiita.com/catatsuy/items/ae9875706769d4f02317
+(global-set-key "\C-xt" 'google-translate-at-point)
+(global-set-key "\C-xT" 'google-translate-query-translate)
+;; 翻訳のデフォルト値を設定 (無効化は C-u を付与 e.g. C-u C-x t)
+(custom-set-variables
+  '(google-translate-default-source-language "en")
+  '(google-translate-default-target-language "ja"))
