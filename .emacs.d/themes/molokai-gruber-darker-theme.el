@@ -62,8 +62,8 @@
  '(mode-line-mousable ((t (:foreground "#BCBCBC" :background "#000000"))))
  '(mode-line-mousable-minor-mode ((t (:foreground "#BCBCBC" :background "#000000"))))
  '(font-lock-builtin-face ((t (:foreground "#A6E22E"))))
- '(font-lock-comment-face ((t (:foreground "#465457" :slant italic))))
- '(font-lock-comment-delimiter-face ((t (:foreground "#465457" :slant italic))))
+ '(font-lock-comment-face ((t (:foreground "#7E8E91" :slant italic)))) ;; #465457
+ '(font-lock-comment-delimiter-face ((t (:foreground "#7E8E91" :slant italic)))) ;; #465457
  '(font-lock-constant-face ((t (:foreground "#AE81FF"))))
  '(font-lock-doc-face ((t (:foreground "#E6DB74" :slant italic))))
  '(font-lock-function-name-face ((t (:foreground "#F92672" :slant italic))))
@@ -103,7 +103,7 @@
  '(markdown-reference-face ((t (:foreground "#66D9EF"))))
  '(markdown-url-face ((t (:foreground "#E6DB74"))))
  '(markdown-link-title-face ((t (:foreground "#F92672"))))
- '(markdown-comment-face ((t (:foreground "#465457"))))
+ '(markdown-comment-face ((t (:foreground "#7E8E91")))) ;; #465457
  '(markdown-math-face ((t (:foreground "#AE81FF" :slant italic))))
  '(mumamo-background-chunk-major ((t (:background "#272822"))))
  '(mumamo-background-chunk-submode ((t (:background "#1B1D1E"))))

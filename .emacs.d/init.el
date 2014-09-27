@@ -33,6 +33,10 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 ;; terminal sends escape sequence
 ;; modifier key + arrow key
 
+;; Command <-> Option
+(setq ns-command-modifier (quote meta))
+(setq ns-alternate-modifier (quote super))
+
 ;;-------------------------------------------------
 ;; mouse
 ;;-------------------------------------------------
@@ -224,13 +228,6 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 (load-theme 'molokai-gruber-darker t)
 
-;; (load-theme 'molokai t)
-;; (load-theme 'gruber-darker t)  ;; helm周りよい
-;; (load-theme 'monokai t)
-;; (load-theme 'solarized-dark t)
-;; (load-theme 'solarized-light t)
-;; (load-theme 'dark-laptop t)
-
 ;; http://d.hatena.ne.jp/meganii/20101106/1289056658
 ;; ウィンドウ設定(色)
 ;; for carbon-emacs
@@ -242,16 +239,11 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 
 (transient-mark-mode t)
 
-
 ;; Cocoa Emacs
 ;; font
 ;; (set-face-attribute 'default nil :family "Ricty" :height 180)
 ;; (set-fontset-font "fontset-default" 'ascii '("Ricty" . "iso10646-*"))
 ;; (set-fontset-font "fontset-default" 'japanese-jisx0208 '("Ricty" . "iso10646-*"))
-
-;; Command <-> Option
-(setq ns-command-modifier (quote meta))
-(setq ns-alternate-modifier (quote super))
 
 (if window-system 
     (setq default-frame-alist
@@ -262,11 +254,12 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
                    )
                   default-frame-alist)))
 ;; 半透明
-(if window-system 
-    (progn
-      (set-frame-parameter nil 'alpha 90)))
-(tool-bar-mode -1)
-(menu-bar-mode -1)
+;;(if window-system
+;;    (progn
+;;      (set-frame-parameter nil 'alpha 90)))
+
+;;; emacs -nw で起動した時にメニューバーを消す
+(if window-system (menu-bar-mode 1) (menu-bar-mode -1))
 
 (global-set-key (kbd "C-o") 'find-file)     ;; default: C-x C-f
 (global-set-key (kbd "M-s") 'save-buffer)   ;; default: C-x C-s
@@ -630,3 +623,16 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
   (set-face-background 'whitespace-trailing 'nil)
   (global-whitespace-mode 1)
   )
+
+(defface hlline-face
+  '((((class color)
+      (background dark))
+     (:background "#101010"))
+    (((class color)
+      (background light))
+     (:background "SeaGreen" :))
+    (t
+     ()))
+  "Used face hl-line.")
+(setq hl-line-face 'hlline-face)
+(global-hl-line-mode)
