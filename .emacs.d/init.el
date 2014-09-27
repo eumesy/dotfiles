@@ -365,13 +365,13 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 (global-set-key (kbd "<f5>") 'revert-buffer-no-confirm)
 
 ;;; linum
-(global-set-key (kbd "<f6>") 'linum-mode)
-(setq linum-format "%4d ")
+;; (global-set-key (kbd "<f6>") 'linum-mode)
+;; (setq linum-format "%4d ")
 ;; 軽量化
 ;; http://d.hatena.ne.jp/daimatz/20120215/1329248780
-(setq linum-delay t)
-(defadvice linum-schedule (around my-linum-schedule () activate)
-  (run-with-idle-timer 0.2 nil #'linum-update-current))
+;; (setq linum-delay t)
+;; (defadvice linum-schedule (around my-linum-schedule () activate)
+;;   (run-with-idle-timer 0.2 nil #'linum-update-current))
 
 (global-set-key (kbd "<f8>") 'toggle-truncate-lines)
 
@@ -575,3 +575,9 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 ;; OS X の clipboard と同期
 (turn-on-pbcopy)
 
+
+;;-------------------------------------------------
+;; git
+;;-------------------------------------------------
+;; git-gutter
+(global-git-gutter-mode t)

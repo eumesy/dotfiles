@@ -4,6 +4,7 @@
 
 (depends-on "auto-install")
 (depends-on "auto-complete")
+(depends-on "git-gutter")
 (depends-on "google-translate")
 (depends-on "helm")
 (depends-on "helm-c-yasnippet")
