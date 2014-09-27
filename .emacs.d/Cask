@@ -7,6 +7,7 @@
 (depends-on "google-translate")
 (depends-on "helm")
 (depends-on "helm-c-yasnippet")
+(depends-on "pbcopy")
 (depends-on "popwin")
 (depends-on "recentf-ext")
 (depends-on "tabbar")

@@ -562,3 +562,7 @@ For example, type \\[event-apply-control-shift-modifier] SPC to enter Control-Sh
 (custom-set-variables
   '(google-translate-default-source-language "en")
   '(google-translate-default-target-language "ja"))
+
+;; pbcopy
+;; OS X の clipboard と同期
+(turn-on-pbcopy)
