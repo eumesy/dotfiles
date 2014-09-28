@@ -1,5 +1,4 @@
 ;; org
-
 (add-to-list 'auto-mode-alist '("\\.txt$" . org-mode))
 (setq org-src-fontify-natively t)
 ;; org-reveal
@@ -12,7 +11,7 @@
 (setq howm-menu-lang 'ja)
 ;; org-mode 併用
 (setq howm-view-title-header "*") ;; howm のロードより前に書く
-(setq howm-file-name-format "%Y/%m/%Y-%m-%d-%H%M%S.org")
+(setq howm-file-name-format "%Y/%m/%Y-%m-%d.org") ;; 1日1ファイル
 (setq howm-template-date-format "[%Y-%m-%d %H:%M]")
 (setq howm-template "* %title%cursor\n\n%date\n")
 (setq howm-prefix "\C-x,") ;; org-mode との衝突回避
