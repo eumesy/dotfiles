@@ -1,6 +1,5 @@
 ;; org
 
-(add-to-list 'ac-modes 'org-mode)
 (add-to-list 'auto-mode-alist '("\\.txt$" . org-mode))
 (setq org-src-fontify-natively t)
 ;; org-reveal
@@ -31,7 +30,6 @@
 ;; http://jblevins.org/projects/markdown-mode/
 (autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
 (setq auto-mode-alist (cons '("\\.md" . markdown-mode) auto-mode-alist))
-(add-to-list 'ac-modes 'markdown-mode)
 
 ;; via. http://yasuyk.github.io/blog/2013/01/16/emacs-marked/
 (defun markdown-preview-file ()

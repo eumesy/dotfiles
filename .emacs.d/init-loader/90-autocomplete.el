@@ -6,3 +6,10 @@
 (define-key ac-menu-map (kbd "C-n") 'ac-next)
 (define-key ac-menu-map (kbd "C-p") 'ac-previous)
 (ac-set-trigger-key "TAB")
+
+;; Enable auto-complete mode other than default enable modes
+;; https://github.com/syohex/dot_files/blob/master/emacs/init_loader/08_auto-complete.el
+(dolist (mode '(latex-mode
+                markdown-mode
+                org-mode))
+  (add-to-list 'ac-modes mode))

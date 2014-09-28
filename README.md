@@ -17,6 +17,10 @@
     - Anything 的機能を積極的に導入
         - helm, peco
 
+## Emacs
+- モード毎の設定
+    - 「auto-complete-mode をデフォルトで有効にするか」は autocomplete.el にまとめて記述
+
 # Requirements
 - ag (the silver searcher)
 - git

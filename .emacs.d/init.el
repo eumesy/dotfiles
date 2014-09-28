@@ -26,6 +26,8 @@
 ;; (package-initialize)
 
 ;; init-loader
+(custom-set-variables
+ '(init-loader-show-log-after-init 'error-only))
 (init-loader-load "~/.emacs.d/init-loader")
 
 ;;-------------------------------------------------
