@@ -37,12 +37,12 @@ function op(){
     selected_file=$(mdfind -name $@ | peco)
     # _extentions='org|md|txt'
     case $selected_file:e in
-	org|md|txt)
-	    emacsclient -nw $selected_file
-	    ;;
-	*)
-	    open $selected_file
-	    ;;
+        org|md|txt)
+            emacsclient -nw $selected_file
+            ;;
+        *)
+            open $selected_file
+            ;;
     esac
 }
 

@@ -9,7 +9,7 @@
 ;;-------------------------------------------------
 ;; package
 ;;-------------------------------------------------
-(require 'cask)
+(require 'cask "~/.cask/cask.el")
 (cask-initialize)
 
 (add-to-list 'load-path "~/.emacs.d/elisp")
@@ -58,6 +58,7 @@
   (global-set-key (kbd "C-x b") 'helm-for-files)
   (global-set-key (kbd "M-y") 'helm-show-kill-ring)
   (global-set-key (kbd "M-x") 'helm-M-x)
+  (global-set-key (kbd "C-M-o") 'helm-occur)
 
   ;; minibuffer
   (define-key helm-map (kbd "C-h") 'delete-backward-char)
@@ -93,15 +94,10 @@
                ) auto-insert-alist))
 (add-hook 'find-file-not-found-hooks 'auto-insert)
 
-;;-------------------------------------------------
-;; git
-;;-------------------------------------------------
-;; git-gutter
-(global-git-gutter-mode t)
-
 ;; (global-unset-key "\C-t")
 ;; prefix for tmux
 
+;;; flycheck
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
 ;;; init.el ends here

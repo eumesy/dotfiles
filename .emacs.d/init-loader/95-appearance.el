@@ -74,6 +74,53 @@
 ;; 対応するカッコを強調表示
 (show-paren-mode)
 
+;;; hlinum
+;; 現在行の行番号をハイライト
+;; git-gutter との相性がよくない
+;; (require 'hlinum)
+;; (hlinum-activate)
+;; (custom-set-faces
+;;  '(linum-highlight-face ((t (:foreground "black"
+;;                              :background "red")))))
+
+;;; highlight current line number
+;; 現在行の行番号をハイライト
+;; http://stackoverflow.com/questions/10591334/colorize-current-line-number
+;; (require 'hl-line)
+;; (defface my-linum-hl
+;;   `((t :inherit linum :background ,(face-background 'hl-line nil t)))
+;;   "Face for the current line number."
+;;   :group 'linum)
+;; (defvar my-linum-format-string "%3d")
+;; (add-hook 'linum-before-numbering-hook 'my-linum-get-format-string)
+;; (defun my-linum-get-format-string ()
+;;   (let* ((width (1+ (length (number-to-string
+;;                              (count-lines (point-min) (point-max))))))
+;;          (format (concat "%" (number-to-string width) "d")))
+;;     (setq my-linum-format-string format)))
+;; (defvar my-linum-current-line-number 0)
+;; (setq linum-format 'my-linum-format)
+;; (defun my-linum-format (line-number)
+;;   (propertize (format my-linum-format-string line-number) 'face
+;;               (if (eq line-number my-linum-current-line-number)
+;;                   'my-linum-hl
+;;                 'linum)))
+;; (defadvice linum-update (around my-linum-update)
+;;   (let ((my-linum-current-line-number (line-number-at-pos)))
+;;     ad-do-it))
+;; (ad-activate 'linum-update)
+
+;;; linum
+;; (custom-set-variables
+;;  '(global-linum-mode t))
+;; (global-set-key (kbd "<f6>") 'linum-mode)
+;; (setq linum-format "%4d ")
+;; 軽量化
+;; http://d.hatena.ne.jp/daimatz/20120215/1329248780
+;; (setq linum-delay t)
+;; (defadvice linum-schedule (around my-linum-schedule () activate)
+;;   (run-with-idle-timer 0.2 nil #'linum-update-current))
+
 ;; 現在行をハイライト
 (defface hlline-face
   '((((class color)
@@ -88,14 +135,21 @@
 (setq hl-line-face 'hlline-face)
 (global-hl-line-mode)
 
-;;; linum
-;; (global-set-key (kbd "<f6>") 'linum-mode)
-;; (setq linum-format "%4d ")
-;; 軽量化
-;; http://d.hatena.ne.jp/daimatz/20120215/1329248780
-;; (setq linum-delay t)
-;; (defadvice linum-schedule (around my-linum-schedule () activate)
-;;   (run-with-idle-timer 0.2 nil #'linum-update-current))
+;;; git-gutter
+(global-git-gutter-mode t)
+(custom-set-variables
+;; '(git-gutter:window-width 1)
+;; '(git-gutter:unchanged-sign " ")
+ '(git-gutter:modified-sign "=")
+ '(git-gutter:added-sign "+")
+ '(git-gutter:deleted-sign "-")
+)
+;; (set-face-background 'git-gutter:unchanged "#101010")
+;; (set-face-background 'git-gutter:modified "#101010")
+;; (set-face-background 'git-gutter:added "#101010")
+;; (set-face-background 'git-gutter:deleted "#101010")
+
+;; (git-gutter:linum-setup)
 
 ;; theme (Emacs 24-)
 ;; http://d.hatena.ne.jp/aoe-tk/20130210/1360506829
