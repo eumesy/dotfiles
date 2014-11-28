@@ -91,7 +91,12 @@ $ cask upgrade-cask
 
 - path
 
-
+## ssh key for GitHub
+- RSA 公開鍵作成
+```
+$ ssh-keygen -t rsa -C "your_email@example.com"
+# generated ~/.ssh/id_rsa
+```
 
 ## ag (the silver searcher)
 

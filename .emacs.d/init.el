@@ -9,7 +9,15 @@
 ;;-------------------------------------------------
 ;; package
 ;;-------------------------------------------------
-(require 'cask "~/.cask/cask.el")
+(cond
+ ((string-match "apple-darwin" system-configuration)
+  (require 'cask)
+  )
+ ((string-match "linux" system-configuration)
+  (require 'cask "~/.cask/cask.el")
+  )
+)
+
 (cask-initialize)
 
 (add-to-list 'load-path "~/.emacs.d/elisp")
