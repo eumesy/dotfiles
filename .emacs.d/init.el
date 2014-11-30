@@ -9,7 +9,7 @@
 ;;-------------------------------------------------
 ;; package
 ;;-------------------------------------------------
-(require 'cask)
+(require 'cask "~/.cask/cask.el")
 (cask-initialize)
 
 (add-to-list 'load-path "~/.emacs.d/elisp")
