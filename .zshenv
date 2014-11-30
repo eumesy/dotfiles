@@ -9,6 +9,7 @@ path=(
     /usr/sbin(N-/)
     /sbin(N-/)
     /usr/X11/bin(N-/)
+    $HOME/.cask/bin(N-/)
     $HOME/local/bin(N-/)
     $HOME/.cask/bin(N-/)
     $path

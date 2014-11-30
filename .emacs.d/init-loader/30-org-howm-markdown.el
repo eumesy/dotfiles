@@ -4,18 +4,17 @@
 ;; org-reveal
 ;; (load-library "ox-reveal")
 
-
 ;; howm
 (add-to-list 'load-path "~/.emacs.d/elisp/howm")
 (setq howm-directory "~/Dropbox/howm/")
 (setq howm-menu-lang 'ja)
 ;; org-mode 併用
-(setq howm-view-title-header "*") ;; howm のロードより前に書く
+(setq howm-view-title-header "*") ;; howm のロードより前に書くこと
 (setq howm-file-name-format "%Y/%m/%Y-%m-%d.org") ;; 1日1ファイル
 (setq howm-template-date-format "[%Y-%m-%d %H:%M]")
 (setq howm-template "* %title%cursor\n\n%date\n")
 (setq howm-prefix "\C-x,") ;; org-mode との衝突回避
-;; 
+;;
 (when (require 'howm-mode nil t)
   (define-key global-map (kbd "C-x , ,") 'howm-menu) ;; org-mode との衝突回避
   )
@@ -24,6 +23,12 @@
                       ;; 内容が空の場合はファイルを削除する。
                       (if (= (point-min) (point-max))
                           (delete-file (buffer-file-name (current-buffer)))))))
+;; ~/Dropbox/howm の下で org-mode で編集する場合は howm-mode を追加
+;; http://d.hatena.ne.jp/TakashiHattori/20120627/1340768058
+(add-hook 'org-mode-hook
+          (function (lambda ()
+                      (if (string-match "Dropbox/howm" buffer-file-name)
+                          (howm-mode)))))
 
 ;;; Markdown
 ;; http://jblevins.org/projects/markdown-mode/
@@ -38,5 +43,3 @@
    (format "open -a /Applications/Marked.app %s"
            (shell-quote-argument (buffer-file-name))))
   )
-(global-set-key "\C-cm" 'markdown-preview-file)
-

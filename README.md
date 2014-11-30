@@ -63,11 +63,40 @@
     ```
 
 ## Cask
+- .emacs.d 移行後にインストールすれば，初期化までしてくれる?
+
 - installation
 
     ```shell
     $ curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
     ```
+
+    - or
+
+        ```shell
+        git clone https://github.com/cask/cask.git $HOME/.cask
+        ```
+
+    - or
+
+        ```shell
+        git clone git@github.com:cask/cask.git $HOME/.cask
+        ```
+
+
+- upgrade cask
+```shell
+$ cask upgrade-cask
+```
+
+- path
+
+## ssh key for GitHub/Bitbucket
+- RSA 公開鍵作成
+```shell
+$ ssh-keygen -t rsa -C "your_email@example.com"
+# generated ~/.ssh/id_rsa
+```
 
 ## ag (the silver searcher)
 
@@ -79,21 +108,25 @@
 $ cd
 $ git clone git@github.com:eumesy/dotfiles.git ~/.dotfiles
 
+$ ln -sf ~/.dotfiles/Brewfile ~/Brewfile
+$ ln -sf ~/.dotfiles/.emacs.d ~/.emacs.d
+$ ln -sf ~/.dotfiles/.gitconfig ~/.gitconfig
+$ ln -sf ~/.dotfiles/.gitignore.global ~/.gitignore
+$ ln -sf ~/.dotfiles/.screenrc ~/.screenrc
+$ ln -sf ~/.dotfiles/.tmux.conf ~/.tmux.conf
+$ ln -sf ~/.dotfiles/.peco ~/.peco
 $ ln -sf ~/.dotfiles/.zshenv ~/.zshenv
 $ ln -sf ~/.dotfiles/.zshenv.darwin ~/.zshenv.darwin
 $ ln -sf ~/.dotfiles/.zshenv.linux ~/.zshenv.linux
 $ ln -sf ~/.dotfiles/.zshrc ~/.zshrc
 $ ln -sf ~/.dotfiles/.zshrc.darwin ~/.zshrc.darwin
 $ ln -sf ~/.dotfiles/.zsh ~/.zsh
-$ ln -sf ~/.dotfiles/.gitconfig ~/.gitconfig
-$ ln -sf ~/.dotfiles/.gitignore.global ~/.gitignore
-$ ln -sf ~/.dotfiles/.screenrc ~/.screenrc
-$ ln -sf ~/.dotfiles/.tmux.conf ~/.tmux.conf
-$ ln -sf ~/.dotfiles/.peco ~/.peco
-$ ln -sf ~/.dotfiles/Brewfile ~/Brewfile
 
 $ zsh
 $ rm -f ~/.zcompdump; compinit
+
+$ cd ~/.emacs.d/
+$ cask
 ```
 ln -f: 上書き
 

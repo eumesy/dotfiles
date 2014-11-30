@@ -20,6 +20,17 @@
 (setq cua-enable-cua-keys nil)
 (global-set-key (kbd "C-RET") 'cua-set-rectangle-mark)
 
+;; M-@
+;; http://miyazakikenji.wordpress.com/2013/06/12/emacs-%E3%81%A7%E5%8D%98%E8%AA%9E%E5%89%8A%E9%99%A4%E3%81%A8%E9%81%B8%E6%8A%9E-2/
+(defun mark-word-at-point ()
+  (interactive)
+  (let ((char (char-to-string (char-after (point)))))
+    (cond
+     ((string= " " char) (delete-horizontal-space))
+     ((string-match "[\t\n -@\[-`{-~]" char) (mark-word ))
+     (t (forward-char) (backward-word) (mark-word 1)))))
+(global-set-key "\M-@" 'mark-word-at-point)
+
 ;;-------------------------------------------------
 ;; copy / kill
 ;;-------------------------------------------------
