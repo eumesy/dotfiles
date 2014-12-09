@@ -9,7 +9,6 @@
 ;;-------------------------------------------------
 ;; package
 ;;-------------------------------------------------
-(require 'cask "~/.cask/cask.el")
 (cond
  ((string-match "apple-darwin" system-configuration)
   (require 'cask)
