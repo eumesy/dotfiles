@@ -109,3 +109,6 @@
 (add-hook 'after-init-hook #'global-flycheck-mode)
 
 ;;; init.el ends here
+
+;;; hs-minor-mode
+(global-set-key (kbd "C-\\") 'hs-toggle-hiding)
