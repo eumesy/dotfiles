@@ -111,3 +111,4 @@
 
 ;;; hs-minor-mode
 (global-set-key (kbd "C-\\") 'hs-toggle-hiding)
+
