@@ -9,6 +9,7 @@ autodetach on
 vbell off
 defscrollback 1000
 altscreen on # less or lv uses alternate screen
+defflow off # screen + emacs problem
 
 # caption always (pane)
 setenv CAPTION_ALWAYS ""
@@ -32,3 +33,4 @@ setenv HARDSTATUS_ALWAYS ""
 
 # hardstatus alwayslastline "$HARDSTATUS_ALWAYS"
 unsetenv HARDSTATUS_ALWAYS
+
