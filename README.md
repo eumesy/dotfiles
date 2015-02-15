@@ -16,6 +16,7 @@
 - 覚えることは少なく
     - Anything 的機能を積極的に導入
         - helm, peco
+    - 「ポケットひとつ」にはそれなりに拘る
 
 ## Emacs
 - モード毎の設定
@@ -23,11 +24,12 @@
 
 # Requirements
 - ag (the silver searcher)
-- git
-- zsh
-- peco
 - Cask
     - python
+- git
+- ghq
+- peco
+- zsh
 
 # 準備 (Linux)
 
@@ -104,8 +106,13 @@ $ ssh-keygen -t rsa -C "your_email@example.com"
 
 # usage
 ## init
+- ghq で管理している src を移行 (可能なら Dropbox 経由?)
+
 ```shell
 $ cd
+
+$ ln -s hoge/src ~/src
+
 $ git clone git@github.com:eumesy/dotfiles.git ~/.dotfiles
 
 $ ln -sf ~/.dotfiles/Brewfile ~/Brewfile

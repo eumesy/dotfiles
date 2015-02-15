@@ -7,3 +7,5 @@
 	ui = auto
 [credential]
 	helper = osxkeychain
+[ghq]
+	root = ~/src
