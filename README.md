@@ -122,6 +122,7 @@ $ ln -sf ~/.dotfiles/.gitignore.global ~/.gitignore
 $ ln -sf ~/.dotfiles/.screenrc ~/.screenrc
 $ ln -sf ~/.dotfiles/.tmux.conf ~/.tmux.conf
 $ ln -sf ~/.dotfiles/.peco ~/.peco
+$ ln -sf ~/.dotfiles/.pip_requirements ~/.pip_requirements
 $ ln -sf ~/.dotfiles/.zshenv ~/.zshenv
 $ ln -sf ~/.dotfiles/.zshenv.darwin ~/.zshenv.darwin
 $ ln -sf ~/.dotfiles/.zshenv.linux ~/.zshenv.linux

@@ -3,23 +3,28 @@
 
 path=(
     /usr/local/bin(N-/) # homebrew
-    $path
+    ${path}
 )
 # rename: /usr/bin
 
-# for coreutils
+# coreutils
 if [ -d /usr/local/opt/coreutils/libexec/gnubin ] ; then
   export PATH=/usr/local/opt/coreutils/libexec/gnubin:${PATH}
   # $(brew --prefix coreutils)/libexec/gnubin
   export MANPATH=/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}
 fi
 
-# for gnu-sed
+# gnu-sed
 export MANPATH=/usr/local/opt/gnu-sed/libexec/gnuman:${MANPATH}
 
-# for MacTex
+# MacTex
 export PATH=/usr/texbin:${PATH}
 
 # java
 export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
 # http://d.hatena.ne.jp/snaka72/20120101/1325403702
+
+# python
+export PYENV_ROOT=${HOME}/.pyenv
+if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
+if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi

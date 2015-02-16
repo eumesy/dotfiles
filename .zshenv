@@ -3,7 +3,7 @@ export TERM=xterm-256color
 
 # go
 # ghq (~/.gitconfig)
-export GOPATH=$HOME
+export GOPATH=${HOME}
 
 # 重複したパスを登録しない
 typeset -U path
@@ -13,11 +13,11 @@ path=(
     /usr/sbin(N-/)
     /sbin(N-/)
     /usr/X11/bin(N-/)
-    $GOPATH/bin(N-/)
-    $HOME/.cask/bin(N-/)
-    $HOME/local/bin(N-/)
-    $HOME/.cask/bin(N-/)
-    $path
+    ${GOPATH}/bin(N-/)
+    ${HOME}/.cask/bin(N-/)
+    ${HOME}/local/bin(N-/)
+    ${HOME}/.cask/bin(N-/)
+    ${path}
 )
 
 export EDITOR='emacsclient -nw'
@@ -29,10 +29,10 @@ export GIT_EDITOR='emacsclient -nw'
 
 case $OSTYPE in
   darwin*)
-    if [ -f $HOME/.zshenv.darwin ]; then . $HOME/.zshenv.darwin; fi
+    if [ -f ${HOME}/.zshenv.darwin ]; then . ${HOME}/.zshenv.darwin; fi
     ;;
   linux*)
-    if [ -f $HOME/.zshenv.linux ]; then . $HOME/.zshenv.linux; fi
+    if [ -f ${HOME}/.zshenv.linux ]; then . ${HOME}/.zshenv.linux; fi
     ;;
 esac
-if [ -f $HOME/.zshenv.local ]; then . $HOME/.zshenv.local; fi
+if [ -f ${HOME}/.zshenv.local ]; then . ${HOME}/.zshenv.local; fi
