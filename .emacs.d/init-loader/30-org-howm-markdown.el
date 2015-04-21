@@ -1,8 +1,9 @@
 ;; org
 (add-to-list 'auto-mode-alist '("\\.txt$" . org-mode))
 (setq org-src-fontify-natively t)
-;; org-reveal
-;; (load-library "ox-reveal")
+(setq org-export-default-language "ja")
+
+;;; org-latex
 
 ;; howm
 (add-to-list 'load-path "~/.emacs.d/elisp/howm")
@@ -40,6 +41,6 @@
   "run Marked on the current file and revert the buffer"
   (interactive)
   (shell-command
-   (format "open -a /Applications/Marked.app %s"
+   (format "open -a '/Applications/Marked 2.app' %s"
            (shell-quote-argument (buffer-file-name))))
   )
