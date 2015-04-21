@@ -1,6 +1,7 @@
 (source gnu)
 (source melpa)
 (source marmalade)
+(source org)
 
 (depends-on "auto-install")
 (depends-on "auto-complete")
@@ -12,6 +13,7 @@
 (depends-on "helm-ag")
 (depends-on "helm-c-yasnippet")
 (depends-on "hlinum")
+(depends-on "org-plus-contrib")
 (depends-on "pbcopy")
 (depends-on "popwin")
 (depends-on "quickrun")
