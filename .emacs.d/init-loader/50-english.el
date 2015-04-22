@@ -8,7 +8,7 @@
 ;;;; Run flyspell with aspell instead of ispell
 (setq ispell-list-command "--list")
 ;;;; flyspell in other modes: http://www.emacswiki.org/emacs/FlySpell#toc1
-(dolist (hook '(latex-mode-hook text-mode-hook org-mode-hook))
+(dolist (hook '(latex-mode-hook))
   (add-hook hook (lambda () (flyspell-mode 1))))
 
 ;; google translate
