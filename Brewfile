@@ -9,6 +9,7 @@ tap caskroom/cask
 tap peco/peco
 
 install ag
+install aspell --lang=en
 install peco
 
 # homebrew-cask

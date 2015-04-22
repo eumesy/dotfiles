@@ -3,8 +3,6 @@
 (setq org-src-fontify-natively t)
 (setq org-export-default-language "ja")
 
-;;; org-latex
-
 ;; howm
 (add-to-list 'load-path "~/.emacs.d/elisp/howm")
 (setq howm-directory "~/Dropbox/howm/")
