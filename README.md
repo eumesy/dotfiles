@@ -116,6 +116,7 @@ $ ln -s hoge/src ~/src
 $ git clone git@github.com:eumesy/dotfiles.git ~/.dotfiles
 
 $ ln -sf ~/.dotfiles/Brewfile ~/Brewfile
+$ ln -sf ~/.dotfiles/.aspell.conf ~/.aspell.conf
 $ ln -sf ~/.dotfiles/.emacs.d ~/.emacs.d
 $ ln -sf ~/.dotfiles/.gitconfig ~/.gitconfig
 $ ln -sf ~/.dotfiles/.gitignore.global ~/.gitignore
