@@ -61,8 +61,9 @@ alias diff='colordiff -u'
 #       -u  -U NUM  --unified[=NUM]
 #              Output NUM (default 3) lines of unified context.
 
-export LESS=-R
-# alias less='less -R'
+alias c='pygmentize -O style=monokai -f terminal256 -g'
+
+export LESS='-R'
 #       -R or --RAW-CONTROL-CHARS
 #              Like  -r,  but  only ANSI "color" escape sequences are output in "raw" form.
 #              Unlike -r, the screen appearance is  maintained  correctly  in  most  cases.
@@ -79,7 +80,7 @@ export LESS=-R
 #              than  the  standard ones may appear between the ESC and the m by setting the
 #              environment variable LESSANSIMIDCHARS to the list of  characters  which  can
 #              appear.
-alias ll='less'
+export LESSOPEN='|pygmentize-lessfilter %s'
 
 alias rm='rm -i'
 alias cp='cp -i'
