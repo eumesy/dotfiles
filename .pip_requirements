@@ -3,6 +3,7 @@ ipython
 matplotlib
 numpy
 pandas
+Pygments
 scikit-learn
 scipy
 theano
