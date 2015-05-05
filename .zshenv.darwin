@@ -4,6 +4,7 @@
 path=(
     /usr/local/bin(N-/) # homebrew
     ${HOME}/Dropbox/dotfiles/src(N-/)
+    /usr/texbin(N-/) # MacTex
     ${path}
 )
 # rename: /usr/bin
@@ -20,9 +21,6 @@ fi
 
 # gnu-sed
 export MANPATH=/usr/local/opt/gnu-sed/libexec/gnuman:${MANPATH}
-
-# MacTex
-export PATH=/usr/texbin:${PATH}
 
 # java
 export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
