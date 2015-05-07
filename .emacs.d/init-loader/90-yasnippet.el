@@ -1,7 +1,6 @@
 (require 'yasnippet)
 (setq yas-snippet-dirs
       '("~/.emacs.d/snippets"
-        ;; "~/.emacs.d/elpa/yasnippet-20131021.928/snippets"
         ))
 
 (yas-global-mode 1)
