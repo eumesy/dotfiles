@@ -2,8 +2,10 @@
 (source melpa)
 (source org)
 
+(depends-on "auctex")
 (depends-on "auto-install")
 (depends-on "auto-complete")
+(depends-on "bind-key")
 (depends-on "init-loader")
 (depends-on "flycheck")
 (depends-on "git-gutter")
@@ -23,4 +25,3 @@
 (depends-on "bison-mode")
 (depends-on "git-commit-mode")
 (depends-on "markdown-mode")
-

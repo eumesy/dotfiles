@@ -14,7 +14,7 @@
 (setq howm-template "* %title%cursor\n\n%date\n")
 (setq howm-prefix "\C-x,") ;; org-mode との衝突回避
 ;;
-(when (require 'howm-mode nil t)
+(when (require 'howm nil t)
   (define-key global-map (kbd "C-x , ,") 'howm-menu) ;; org-mode との衝突回避
   )
 (add-hook 'howm-after-save-hook

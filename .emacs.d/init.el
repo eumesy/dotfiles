@@ -105,10 +105,27 @@
 ;; prefix for tmux
 
 ;;; flycheck
-(add-hook 'after-init-hook #'global-flycheck-mode)
-
-;;; init.el ends here
+(add-hook 'c-mode 'flycheck-mode)
 
 ;;; hs-minor-mode
 (global-set-key (kbd "C-\\") 'hs-toggle-hiding)
 
+;;; outline-minor-mode
+;; ref. http://qiita.com/kawabata@github/items/9a1a1e211c57a56578d8
+;; alternative: outline-magic http://www.emacswiki.org/emacs/OutlineMagic
+(with-eval-after-load 'outline
+  (bind-key "<tab>" 'org-cycle outline-minor-mode-map)
+  (bind-key "TAB"   'org-cycle outline-minor-mode-map)
+  (bind-key "C-TAB"   'org-global-cycle outline-minor-mode-map)
+  (bind-key "C-<tab>" 'org-global-cycle outline-minor-mode-map)
+  (bind-key "C-c C-f" 'outline-forward-same-level outline-minor-mode-map)
+  (bind-key "C-c C-b" 'outline-backward-same-level outline-minor-mode-map)
+  (bind-key "C-c C-n" 'outline-next-visible-heading outline-minor-mode-map)
+  (bind-key "C-c C-p" 'outline-previous-visible-heading outline-minor-mode-map)
+  (bind-key "<tab>" 'org-cycle outline-mode-map)
+  (bind-key "TAB"   'org-cycle outline-mode-map)
+  (bind-key "S-TAB"   'org-global-cycle outline-mode-map)
+  (bind-key "S-<tab>" 'org-global-cycle outline-mode-map))
+
+
+;;; init.el ends here
