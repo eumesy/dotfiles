@@ -2,7 +2,6 @@
 (source melpa)
 (source org)
 
-(depends-on "auctex")
 (depends-on "auto-install")
 (depends-on "auto-complete")
 (depends-on "bind-key")
@@ -21,7 +20,9 @@
 (depends-on "rainbow-mode")
 (depends-on "recentf-ext")
 (depends-on "tabbar")
+(depends-on "use-package")
 
+(depends-on "auctex")
 (depends-on "bison-mode")
 (depends-on "git-commit-mode")
 (depends-on "markdown-mode")

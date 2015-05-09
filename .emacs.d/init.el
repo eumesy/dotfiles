@@ -19,6 +19,8 @@
 )
 (cask-initialize)
 
+(require 'use-package)
+
 (add-to-list 'load-path "~/.emacs.d/elisp")
 (when (require 'auto-install nil t)
   ;; インストール先指定
@@ -27,15 +29,7 @@
   ;; (auto-install-update-emacswiki-package-name t)
   )
 
-;; (require 'package)
-;; (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
-;; (add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
-;; (package-initialize)
 
-;; init-loader
-(custom-set-variables
- '(init-loader-show-log-after-init 'error-only))
-(init-loader-load "~/.emacs.d/init-loader")
 
 ;;-------------------------------------------------
 ;; application
@@ -127,5 +121,11 @@
   (bind-key "S-TAB"   'org-global-cycle outline-mode-map)
   (bind-key "S-<tab>" 'org-global-cycle outline-mode-map))
 
+
+
+;; init-loader
+(custom-set-variables
+ '(init-loader-show-log-after-init 'error-only))
+(init-loader-load "~/.emacs.d/init-loader")
 
 ;;; init.el ends here
