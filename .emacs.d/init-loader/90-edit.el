@@ -8,9 +8,10 @@
 ;;-------------------------------------------------
 ;; move cursol
 ;;-------------------------------------------------
-(global-set-key (kbd "C-M-h") (lambda () (interactive) (move-to-window-line 0)))
-(global-set-key (kbd "C-M-m") (lambda () (interactive) (move-to-window-line nil)))
-(global-set-key (kbd "C-M-l") (lambda () (interactive) (move-to-window-line -1)))
+;; (bind-key "C-M-h" (lambda () (interactive) (move-to-window-line 0  )))
+;; (bind-key "C-M-m" (lambda () (interactive) (move-to-window-line nil)))
+;; (bind-key "C-M-l" (lambda () (interactive) (move-to-window-line -1 )))
+;; これで bind-key が微妙に死んでる…
 
 ;;-------------------------------------------------
 ;; select

@@ -125,7 +125,29 @@
 
 ;; init-loader
 (custom-set-variables
- '(init-loader-show-log-after-init 'error-only))
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(ansi-color-faces-vector
+   [default default default italic underline success warning error])
+ '(ansi-color-names-vector
+   ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
+ '(custom-safe-themes
+   (quote
+    ("967b1948874c82a0d33c0a4be18c7a9f03715dc0af5194751407df72c25f93fe" "400994f0731b2109b519af2f2d1f022e7ced630a78890543526b9342a3b04cf1" default)))
+ '(git-gutter:added-sign "+")
+ '(git-gutter:deleted-sign "-")
+ '(git-gutter:modified-sign "=")
+ '(google-translate-default-source-language "en")
+ '(google-translate-default-target-language "ja")
+ '(init-loader-show-log-after-init (quote error-only)))
 (init-loader-load "~/.emacs.d/init-loader")
 
 ;;; init.el ends here
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

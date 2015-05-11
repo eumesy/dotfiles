@@ -29,10 +29,17 @@
                       (if (string-match "Dropbox/howm" buffer-file-name)
                           (howm-mode)))))
 
-;;; Markdown
-;; http://jblevins.org/projects/markdown-mode/
-(autoload 'markdown-mode "markdown-mode.el" "Major mode for editing Markdown files" t)
-(setq auto-mode-alist (cons '("\\.md" . markdown-mode) auto-mode-alist))
+;; markdown-mode
+;; ref. http://jblevins.org/projects/markdown-mode/
+(use-package markdown-mode
+  :mode (
+         ("\\.md\\'" . markdown-mode)
+         )
+  :init
+  (bind-key "TAB" 'markdown-cycle)
+  (bind-key "C->" 'markdown-demote)
+  (bind-key "C-<" 'markdown-promote)
+  )
 
 ;; via. http://yasuyk.github.io/blog/2013/01/16/emacs-marked/
 (defun markdown-preview-file ()
