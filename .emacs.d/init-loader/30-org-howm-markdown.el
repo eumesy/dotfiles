@@ -40,6 +40,7 @@
              ("TAB" . markdown-cycle)
              ("C-<" . markdown-promote)
              ("C->" . markdown-demote)
+             ("M-RET" . markdown-insert-list-item)
              )
   )
 
