@@ -35,11 +35,12 @@
   :mode (
          ("\\.md\\'" . markdown-mode)
          )
-  :init
-  (bind-key "TAB" 'markdown-cycle)
-  (bind-key "C->" 'markdown-demote)
-  (bind-key "C-<" 'markdown-promote)
   )
+(defun mp-add-markdown-keys ()
+  (local-set-key (kbd "TAB") 'markdown-cycle)
+  (local-set-key (kbd "C->") 'markdown-demote)
+  )
+(add-hook 'markdown-mode-hook 'mp-add-markdown-keys)
 
 ;; via. http://yasuyk.github.io/blog/2013/01/16/emacs-marked/
 (defun markdown-preview-file ()

@@ -14,5 +14,5 @@
 ;; define
 (define-key yas-minor-mode-map (kbd "C-M-i") 'yas-expand)
 
-(require 'helm-c-yasnippet)
-(global-set-key (kbd "C-M-;") 'helm-c-yas-complete)
+;; (require 'helm-c-yasnippet)
+;; (global-set-key (kbd "C-M-;") 'helm-c-yas-complete)
