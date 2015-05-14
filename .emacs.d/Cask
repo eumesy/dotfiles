@@ -19,6 +19,7 @@
 (depends-on "quickrun")
 (depends-on "rainbow-mode")
 (depends-on "recentf-ext")
+(depends-on "smart-mode-line")
 (depends-on "tabbar")
 (depends-on "use-package")
 
