@@ -1,6 +1,3 @@
-;; インデントにタブ文字を利用しない
-(setq-default indent-tabs-mode nil)
-
 (global-set-key (kbd "C-h") 'delete-backward-char)
 ;; http://akisute3.hatenablog.com/entry/20120318/1332059326
 ;; (keyboard-translate ?\C-h ?\C-?)
@@ -100,3 +97,16 @@
   (message (substring (car kill-ring-yank-pointer) 0 -1)))
 (global-set-key (kbd "M-K") 'copy-whole-line)
 (global-set-key (kbd "M-k") 'kill-whole-line)
+
+;;-------------------------------------------------
+;; indent
+;;-------------------------------------------------
+;; インデントにタブ文字を利用しない
+(setq-default indent-tabs-mode nil)
+
+(defun indent-buffer ()
+  "Indent buffer."
+  (mark-whole-buffer)
+  (indent-region)
+  )
+(global-set-key (kbd "C-M-\") 'indent-buffer)
