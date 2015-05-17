@@ -27,7 +27,8 @@
      ((string= " " char) (delete-horizontal-space))
      ((string-match "[\t\n -@\[-`{-~]" char) (mark-word ))
      (t (forward-char) (backward-word) (mark-word 1)))))
-(global-set-key "\M-@" 'mark-word-at-point)
+(global-set-key (kbd "M-@") 'mark-word-at-point)
+(global-set-key (kbd "M-SPC") 'mark-word-at-point)
 
 ;;-------------------------------------------------
 ;; copy / kill
@@ -104,9 +105,10 @@
 ;; インデントにタブ文字を利用しない
 (setq-default indent-tabs-mode nil)
 
-(defun indent-buffer ()
-  "Indent buffer."
-  (mark-whole-buffer)
-  (indent-region)
+;; via. http://superuser.com/questions/794579/emacs-move-cursor-back-after-mark-whole-buffer-indent-region
+(defun indent-whole-buffer ()
+  "Indent whole buffer."
+  (interactive)
+  (indent-region (point-min) (point-max))
   )
-(global-set-key (kbd "C-M-\") 'indent-buffer)
+(global-set-key (kbd "C-M-S-\\") 'indent-whole-buffer)
