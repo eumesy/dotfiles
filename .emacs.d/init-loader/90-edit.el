@@ -107,8 +107,9 @@
 
 ;; via. http://superuser.com/questions/794579/emacs-move-cursor-back-after-mark-whole-buffer-indent-region
 (defun indent-whole-buffer ()
-  "Indent whole buffer."
+  "Indent the whole buffer."
   (interactive)
+  (mark-whole-buffer)
   (indent-region (point-min) (point-max))
   )
 (global-set-key (kbd "C-M-S-\\") 'indent-whole-buffer)
