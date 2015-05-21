@@ -11,14 +11,14 @@
 ;; これで bind-key が微妙に死んでる…
 
 ;;-------------------------------------------------
-;; select
+;; mark(select) / copy / kill
 ;;-------------------------------------------------
 ;; 矩形選択
 (cua-mode t)
 (setq cua-enable-cua-keys nil)
 (global-set-key (kbd "C-RET") 'cua-set-rectangle-mark)
 
-;; M-@
+;; M-@, M-SPC
 ;; http://miyazakikenji.wordpress.com/2013/06/12/emacs-%E3%81%A7%E5%8D%98%E8%AA%9E%E5%89%8A%E9%99%A4%E3%81%A8%E9%81%B8%E6%8A%9E-2/
 (defun mark-word-at-point ()
   (interactive)
@@ -30,9 +30,6 @@
 (global-set-key (kbd "M-@") 'mark-word-at-point)
 (global-set-key (kbd "M-SPC") 'mark-word-at-point)
 
-;;-------------------------------------------------
-;; copy / kill
-;;-------------------------------------------------
 ;; M-d
 (defun kill-word-at-point ()
   (interactive)
@@ -109,7 +106,8 @@
 (defun indent-whole-buffer ()
   "Indent the whole buffer."
   (interactive)
-  (mark-whole-buffer)
+  ;; (mark-whole-buffer)
+  ;; (indent-region (region-beginning) (region-end))
   (indent-region (point-min) (point-max))
   )
 (global-set-key (kbd "C-M-S-\\") 'indent-whole-buffer)
