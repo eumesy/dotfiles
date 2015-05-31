@@ -4,7 +4,7 @@
 # --
 \begin{figure}[hp]
   \centering
-  \includegraphics{$1.eps}
+  \includegraphics[width=1.0\textwidth, keepaspectratio=true]{img/$1.pdf}
   \caption{$2}
   \label{fig:${3:$1}}
 \end{figure}

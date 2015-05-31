@@ -1,0 +1,7 @@
+# -*- mode: snippet; require-final-newline: nil -*-
+# name: cases
+# key: cases
+# --
+\begin{cases}
+$0
+\end{cases}

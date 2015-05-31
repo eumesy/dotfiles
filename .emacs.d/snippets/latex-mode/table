@@ -13,6 +13,6 @@
   \end{center}
 \end{table}%
 \begin{comment}
-#+ORGTBL: SEND $1 orgtbl-to-latex :efmt "$%s\\\\times10^{%s}$"
+#+ORGTBL: SEND $1 orgtbl-to-latex :no-escape t :efmt "$%s\\\\times10^{%s}$"
 |$0 | |
 \end{comment}
