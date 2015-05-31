@@ -5,7 +5,11 @@
          ("\\.tex\\'" . LaTeX-mode)
          ("\\.sty\\'" . LaTeX-mode)
          )
+  :config
+  (bind-keys :map LaTeX-mode-map
+             ("M-RET" . 'latex-insert-item)
+             )
   :init
-  (bind-key "M-RET" 'latex-insert-item)
   (add-hook 'LaTeX-mode-hook 'outline-minor-mode t)
   )
+)

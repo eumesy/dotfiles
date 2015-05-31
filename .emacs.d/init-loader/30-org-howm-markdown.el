@@ -41,6 +41,8 @@
              ("C-<" . markdown-promote)
              ("C->" . markdown-demote)
              ("M-RET" . markdown-insert-list-item)
+             ;; ("M-{" . markdown-beginning-of-block)
+             ;; ("M-}" . markdown-end-of-block)
              )
   ;; face
   ;; via. http://qiita.com/rysk-t/items/62bb0eef4d581d9eba82
