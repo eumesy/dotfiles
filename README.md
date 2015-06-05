@@ -31,10 +31,47 @@
 - peco
 - zsh
 
+# 準備 (Mac)
+## dotfiles
+
+    ```shell
+    # symbolic links
+    $ ./init-osx.sh
+    # ime
+    $ sudo cp /System/Library/Input\ Methods/JapaneseIM.app/Contents/Resources/KeySetting_Default.plist /System/Library/Input\ Methods/JapaneseIM.app/Contents/Resources/KeySetting_Default.plist.orig
+    $ ./init-osx-JapaneseIM.sh
+    ```
+
+## homebrew
+
+    ```shell
+    $ brew update
+    $ brew doctor
+    $ brew upgrade
+    $ brew install rcmdnk/file/brew-file
+    $ brew file install
+    ```
+
+- [Homebrew/homebrew-bundle - GitHub](https://github.com/Homebrew/homebrew-bundle)
+
+## zsh
+- `/etc/shells` に追記
+
+    ```shell
+    /usr/local/bin/zsh
+    ```
+
+- ログインシェルの変更
+
+    ```shell
+    $ chsh -s /usr/local/bin/zsh
+    ```
+
 # 準備 (Linux)
 
 ## zsh
 - ログインシェルの変更
+
     ```shell
     $ which zsh
     $ chsh -s /path/to/zsh
