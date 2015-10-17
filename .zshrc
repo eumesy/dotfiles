@@ -46,7 +46,7 @@ function kill-emacs()  {
 export LS_COLORS='di=01;36:ln=01;35:ex=01;32'
 zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
 alias l='ls -lhGAF --color'
-alias ls='ls -F --color'
+alias ll='ls -F --color'
 # -l     use a long listing format
 # -h, --human-readable
 #        with -l, print sizes in human readable format (e.g., 1K 234M 2G)
@@ -87,8 +87,8 @@ alias cp='cp -i'
 alias mv='mv -i'
 
 function chpwd() { # 
-  ls
-  echo -ne "\033]0;$(pwd | rev | awk -F \/ '{print "/"$1"/"$2}'| rev)\007"
+  l
+  # echo -ne "\033]0;$(pwd | rev | awk -F \/ '{print "/"$1"/"$2}'| rev)\007"
 }
 function preexec() { # コマンド実行直後
   mycmd=(${(s: :)${1}})

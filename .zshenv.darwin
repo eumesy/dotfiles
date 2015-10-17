@@ -3,6 +3,7 @@
 
 path=(
     /usr/local/bin(N-/) # homebrew
+    ${HOME}/.cabal/bin(N-/) # cabal
     ${HOME}/Dropbox/dotfiles/src(N-/)
     /usr/texbin(N-/) # MacTex
     ${path}

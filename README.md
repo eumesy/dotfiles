@@ -97,7 +97,6 @@
     $ wget https://github.com/peco/peco/releases/download/v0.*.*/peco_linux_***.tar.gz
     $ tar zxvf peco_linux_***.tar.gz
     $ mv peco_linux_***/peco $HOME/local/bin
-    $ rm peco_linux_***.tar.gz
     $ rm -rf peco_linux_***
     ```
 
