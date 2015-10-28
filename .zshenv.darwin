@@ -1,11 +1,18 @@
 # この前処理必要?
 # https://github.com/etheriqa/dotfiles/blob/master/.zshenv.darwin
 
+# from /etc/zprofile
+# http://richa.avasthi.name/blog/2015/10/fixing-your-zsh-path-after-upgrading-to-el-capitan/
+# https://github.com/thoughtbot/dotfiles/issues/420
+if [ -x /usr/libexec/path_helper ]; then
+    eval `/usr/libexec/path_helper -s`
+fi
+
 path=(
     /usr/local/bin(N-/) # homebrew
     ${HOME}/.cabal/bin(N-/) # cabal
     ${HOME}/Dropbox/dotfiles/src(N-/)
-    /usr/texbin(N-/) # MacTex
+    /Library/TeX/texbin(N-/) # MacTex
     ${path}
 )
 # rename: /usr/bin

@@ -14,7 +14,6 @@ path=(
     /sbin(N-/)
     /usr/X11/bin(N-/)
     ${GOPATH}/bin(N-/)
-    ${HOME}/.cask/bin(N-/)
     ${HOME}/local/bin(N-/)
     ${HOME}/.cask/bin(N-/)
     ${path}

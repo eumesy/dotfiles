@@ -77,6 +77,13 @@
     $ chsh -s /path/to/zsh
     ```
 
+    ```shell
+    $ which zsh
+    $ ypchsh
+    > {password}
+    $ /path/to/zsh
+    ```
+
 ## peco
 - バイナリ版を落として使う
     - [バイナリ置き場](https://github.com/peco/peco/releases)
@@ -138,16 +145,12 @@ $ ssh-keygen -t rsa -C "your_email@example.com"
 
 ## ag (the silver searcher)
 
-# 準備 (Mac)
-
 # usage
 ## init
 - ghq で管理している src を移行 (可能なら Dropbox 経由?)
 
 ```shell
 $ cd
-
-$ ln -s hoge/src ~/src
 
 $ git clone git@github.com:eumesy/dotfiles.git ~/.dotfiles
 
