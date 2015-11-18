@@ -67,6 +67,9 @@
     $ chsh -s /usr/local/bin/zsh
     ```
 
+- `/etc/zprofile` をコメントアウト (El Capitan 以後)
+    - <http://richa.avasthi.name/blog/2015/10/fixing-your-zsh-path-after-upgrading-to-el-capitan/>
+
 # 準備 (Linux)
 
 ## zsh
@@ -140,8 +143,23 @@ $ cask upgrade-cask
 - RSA 公開鍵作成
 ```shell
 $ ssh-keygen -t rsa -C "your_email@example.com"
-# generated ~/.ssh/id_rsa
+# generated ~/.ssh/id_rsa, id_rsa.pub
+$ chmod 600 id_rsa
+# もともと 600 だと思うけど一応
 ```
+
+- ~/.ssh/config に以下を追加
+
+        Host github
+            Hostname github.com
+            IdentityFile ~/.ssh/id_rsa
+            User git
+
+- GitHub
+    1. 右上自分アイコン→settings
+    2. SSH Keys
+    3. Add SSH key
+    4. id_rsa.pub の中身を登録
 
 ## ag (the silver searcher)
 
