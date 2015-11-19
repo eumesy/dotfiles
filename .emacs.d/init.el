@@ -107,7 +107,7 @@
 ;; alternative: outline-magic http://www.emacswiki.org/emacs/OutlineMagic
 (use-package outline
   :config
-;; (with-eval-after-load 'outline
+  ;; (with-eval-after-load 'outline
   (bind-key "<tab>" 'org-cycle outline-minor-mode-map)
   (bind-key "TAB"   'org-cycle outline-minor-mode-map)
   (bind-key "C-TAB"   'org-global-cycle outline-minor-mode-map)
