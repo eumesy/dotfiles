@@ -29,8 +29,6 @@
   ;; (auto-install-update-emacswiki-package-name t)
   )
 
-
-
 ;;-------------------------------------------------
 ;; application
 ;;-------------------------------------------------
@@ -107,7 +105,9 @@
 ;;; outline-minor-mode
 ;; ref. http://qiita.com/kawabata@github/items/9a1a1e211c57a56578d8
 ;; alternative: outline-magic http://www.emacswiki.org/emacs/OutlineMagic
-(with-eval-after-load 'outline
+(use-package outline
+  :config
+;; (with-eval-after-load 'outline
   (bind-key "<tab>" 'org-cycle outline-minor-mode-map)
   (bind-key "TAB"   'org-cycle outline-minor-mode-map)
   (bind-key "C-TAB"   'org-global-cycle outline-minor-mode-map)
@@ -119,9 +119,8 @@
   (bind-key "<tab>" 'org-cycle outline-mode-map)
   (bind-key "TAB"   'org-cycle outline-mode-map)
   (bind-key "S-TAB"   'org-global-cycle outline-mode-map)
-  (bind-key "S-<tab>" 'org-global-cycle outline-mode-map))
-
-
+  (bind-key "S-<tab>" 'org-global-cycle outline-mode-map)
+  )
 
 ;; init-loader
 (custom-set-variables
@@ -135,7 +134,7 @@
    ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
  '(custom-safe-themes
    (quote
-    ("967b1948874c82a0d33c0a4be18c7a9f03715dc0af5194751407df72c25f93fe" "400994f0731b2109b519af2f2d1f022e7ced630a78890543526b9342a3b04cf1" default)))
+    ("c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "967b1948874c82a0d33c0a4be18c7a9f03715dc0af5194751407df72c25f93fe" "400994f0731b2109b519af2f2d1f022e7ced630a78890543526b9342a3b04cf1" default)))
  '(git-gutter:added-sign "+")
  '(git-gutter:deleted-sign "-")
  '(git-gutter:modified-sign "=")
