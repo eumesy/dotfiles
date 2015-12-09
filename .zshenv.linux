@@ -1,4 +1,5 @@
 path=(
     $HOME/.cask/bin(N-/)
+    $HOME/bin(N-/) # ghq
     $path
 )
