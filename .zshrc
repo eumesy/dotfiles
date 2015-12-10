@@ -101,10 +101,10 @@ function chpwd() { # exec following commands after cd
   ls
   # echo -ne "\033]0;$(pwd | rev | awk -F \/ '{print "/"$1"/"$2}'| rev)\007"
 }
-function preexec() { # コマンド実行直後
-  mycmd=(${(s: :)${1}})
-  echo -ne "\ek/$PWD:t:$mycmd[1]\e\\" # screen/tmux: change window name
-}
+# function preexec() { # コマンド実行直後
+#   mycmd=(${(s: :)${1}})
+#   echo -ne "\ek/$PWD:t:$mycmd[1]\e\\" # screen/tmux: change window name
+# }
 
 alias f='fg'
 
