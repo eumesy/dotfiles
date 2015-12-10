@@ -54,7 +54,7 @@ function kill-emacs()  {
 # http://linux-sxs.org/housekeeping/lscolors.html
 export LS_COLORS='di=01;36:ln=01;35:ex=01;32'
 zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
-alias ls='ls --color=auto'
+alias ls='ls -A --color=auto'
 alias ll='ls -lhGAF --color=auto'
 # alias ll='ls -F --color=auto'
 # With --color=auto, ls emits color codes only when  standard  output is connected to a terminal.
