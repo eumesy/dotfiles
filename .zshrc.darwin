@@ -1,16 +1,9 @@
-# GNU like
-## homebrew/findutils
-alias find='gfind'
-alias locate='glocate'
-alias updatedb='gupdatedb'
-alias xargs='gxargs'
+# GNU Linux like commands
+## replace shell-built-in commands
+alias which='gwhich'
 
-## homebrew/gnu-tar, gnu-sed, gawk
-alias tar='gtar'
-alias sed='gsed'
-alias awk='gawk'
-
-alias zcat='gzcat'
+## Cross-OS compatibility (like GNU/Linux names)
+# alias awk='gawk' # homebrew
 
 # OS X
 alias o='open'
@@ -21,7 +14,7 @@ alias of='open .'
 # zstyle ':filter-select' case-insensitive yes
 # bindkey '^l' zaw-cdr
 
-if [ -d /usr/local/opt/coreutils/libexec/gnubin ]; then # GNU ls in coreutils
+if [ -d /usr/local/opt/coreutils/libexec/gnubin ]; then # GNU ls exists
 else # BSD ls
   # -G  -- enable colorized output
   export LSCOLORS=gxfxcxdxbxegedabagacad

@@ -4,6 +4,15 @@ autoload -Uz colors
 
 export LANG=ja_JP.UTF-8
 
+case $OSTYPE in
+  darwin*)
+    if [ -f $HOME/.zshrc.darwin ]; then . $HOME/.zshrc.darwin; fi
+    ;;
+  linux*)
+    if [ -f $HOME/.zshrc.linux ]; then . $HOME/.zshrc.linux; fi
+    ;;
+esac
+if [ -f $HOME/.zshrc.local ]; then . $HOME/.zshrc.local; fi
 
 alias q='exit'
 
@@ -41,12 +50,14 @@ function kill-emacs()  {
     pkill -f 'emacsclient -nw';
 }
 
-# gnu ls
+# GNU ls
 # http://linux-sxs.org/housekeeping/lscolors.html
 export LS_COLORS='di=01;36:ln=01;35:ex=01;32'
 zstyle ':completion:*' list-colors 'di=36' 'ln=35' 'ex=32'
-alias l='ls -lhGAF --color'
-alias ll='ls -F --color'
+alias ls='ls --color=auto'
+alias ll='ls -lhGAF --color=auto'
+# alias ll='ls -F --color=auto'
+# With --color=auto, ls emits color codes only when  standard  output is connected to a terminal.
 # -l     use a long listing format
 # -h, --human-readable
 #        with -l, print sizes in human readable format (e.g., 1K 234M 2G)
@@ -226,16 +237,6 @@ zle -N peco-cdr
 bindkey '^l' peco-cdr
 
 setopt extended_glob
-
-case $OSTYPE in
-  darwin*)
-    if [ -f $HOME/.zshrc.darwin ]; then . $HOME/.zshrc.darwin; fi
-    ;;
-  linux*)
-    if [ -f $HOME/.zshrc.linux ]; then . $HOME/.zshrc.linux; fi
-    ;;
-esac
-if [ -f $HOME/.zshrc.local ]; then . $HOME/.zshrc.local; fi
 
 ########################################################################
 # ghq
