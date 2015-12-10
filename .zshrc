@@ -97,8 +97,8 @@ alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 
-function chpwd() { # 
-  l
+function chpwd() { # exec following commands after cd
+  ls
   # echo -ne "\033]0;$(pwd | rev | awk -F \/ '{print "/"$1"/"$2}'| rev)\007"
 }
 function preexec() { # コマンド実行直後
@@ -207,7 +207,7 @@ bindkey '^R' peco-select-history
 # - > cdr: Peter Stephenson さんによる、ディレクトリ移動の履歴を複数のシェルのセッションをまたいで追跡するための関数群および含まれている関数
 # - ~/.chpwd-recent-dirs に保存
 ########################################################################
-alias ..='cd ../'
+# alias ..='cd ../'
 alias ...='cd ../../'
 alias ....='cd ../../../'
 alias .....='cd ../../../../'
