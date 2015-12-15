@@ -92,6 +92,7 @@ export LESS='-R'
 #              environment variable LESSANSIMIDCHARS to the list of  characters  which  can
 #              appear.
 export LESSOPEN='|pygmentize-lessfilter %s'
+alias l='less'
 
 alias rm='rm -i'
 alias cp='cp -i'
