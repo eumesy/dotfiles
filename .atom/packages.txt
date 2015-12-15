@@ -1,0 +1,2 @@
+atomic-emacs@0.8.0
+
