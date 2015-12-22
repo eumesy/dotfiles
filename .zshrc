@@ -229,10 +229,11 @@ zstyle ':completion:*' recent-dirs-insert both
 function peco-cdr () {
     local selected_dir=$(cdr -l | awk '{ print $2 }' | peco)
     if [ -n "$selected_dir" ]; then
-        BUFFER="cd ${selected_dir}"
-        zle accept-line
+        # BUFFER="cd ${selected_dir}"
+        BUFFER="${selected_dir}"
+        # zle accept-line
     fi
-    zle clear-screen
+    # zle clear-screen
 }
 zle -N peco-cdr
 bindkey '^l' peco-cdr
@@ -243,6 +244,7 @@ setopt extended_glob
 # ghq
 ########################################################################
 
+# http://weblog.bulknews.net/post/89635306479/ghq-pecopercol
 function peco-src () {
     local selected_dir=$(ghq list --full-path | peco --query "$LBUFFER")
     if [ -n "$selected_dir" ]; then
