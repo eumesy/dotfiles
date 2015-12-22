@@ -161,6 +161,11 @@ $ chmod 600 id_rsa
     3. Add SSH key
     4. id_rsa.pub の中身を登録
 
+- post processing
+```shell
+$ ssh -T git@github.com
+```
+
 ## ag (the silver searcher)
 
 # usage

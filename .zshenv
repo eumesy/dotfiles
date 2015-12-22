@@ -7,6 +7,18 @@ export GOPATH=${HOME}
 
 # 重複したパスを登録しない
 typeset -U path
+
+# OS X, El Capitan
+# from /etc/zprofile
+case $OSTYPE in
+    darwin*)
+        # system-wide environment settings for zsh(1)
+        if [ -x /usr/libexec/path_helper ]; then
+            eval `/usr/libexec/path_helper -s`
+        fi
+        ;;
+esac
+
 path=(
     /usr/bin(N-/)
     /bin(N-/)

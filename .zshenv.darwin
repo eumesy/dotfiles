@@ -1,18 +1,15 @@
 # この前処理必要?
 # https://github.com/etheriqa/dotfiles/blob/master/.zshenv.darwin
 
-# from /etc/zprofile
+# from /etc/zprofile (El Capitan)
 # http://richa.avasthi.name/blog/2015/10/fixing-your-zsh-path-after-upgrading-to-el-capitan/
 # https://github.com/thoughtbot/dotfiles/issues/420
-if [ -x /usr/libexec/path_helper ]; then
-    eval `/usr/libexec/path_helper -s`
-fi
 
 path=(
-    /usr/local/bin(N-/) # homebrew
+    # /usr/local/bin(N-/) # homebrew
     ${HOME}/.cabal/bin(N-/) # cabal
     ${HOME}/Dropbox/dotfiles/src(N-/)
-    /Library/TeX/texbin(N-/) # MacTex
+    # /Library/TeX/texbin(N-/) # MacTex (El Capitan -)
     ${path}
 )
 # rename: /usr/bin
@@ -20,15 +17,18 @@ path=(
 # italic
 export TERM=xterm-256color-italic
 
-# coreutils
-if [ -d /usr/local/opt/coreutils/libexec/gnubin ] ; then
-  export PATH=/usr/local/opt/coreutils/libexec/gnubin:${PATH}
-  # $(brew --prefix coreutils)/libexec/gnubin
-  export MANPATH=/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}
-fi
+# homebrew
+export PATH=/usr/local/bin:${PATH}
+export MANPATH=/usr/local/share/man:${MANPATH}
 
-# gnu-sed
-export MANPATH=/usr/local/opt/gnu-sed/libexec/gnuman:${MANPATH}
+# coreutils
+export PATH=/usr/local/opt/coreutils/libexec/gnubin:${PATH}
+export MANPATH=/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}
+# $(brew --prefix coreutils)
+
+# alternative:
+# - http://apple.stackexchange.com/questions/111061/linking-manuals-from-homebrew
+# - https://fredstech.wordpress.com/2010/12/02/fixing-homebrew-manpath/
 
 # java
 export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
