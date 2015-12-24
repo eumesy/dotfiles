@@ -2,8 +2,8 @@ export LANG=ja_JP.UTF-8
 export TERM=xterm-256color
 
 # go
-# ghq (~/.gitconfig)
 export GOPATH=${HOME}
+# ghq -> ~/.gitconfig
 
 # 重複したパスを登録しない
 typeset -U path

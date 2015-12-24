@@ -31,8 +31,13 @@ export MANPATH=/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}
 # - https://fredstech.wordpress.com/2010/12/02/fixing-homebrew-manpath/
 
 # java
-export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
 # http://d.hatena.ne.jp/snaka72/20120101/1325403702
+export JAVA_TOOL_OPTIONS=-Dfile.encoding=UTF-8
+# http://www.mkyong.com/java/how-to-set-java_home-environment-variable-on-mac-os-x/
+export JAVA_HOME=$(/usr/libexec/java_home)
+# http://stackoverflow.com/questions/4729863/using-bash-how-do-you-make-a-classpath-out-of-all-files-in-a-directory
+export CLASSPATH=.:$(find /Library/Java/Extensions/ -name '*.jar' | paste -sd: -)
+alias corenlp='java -cp "$CLASSPATH" -Xmx2g edu.stanford.nlp.pipeline.StanfordCoreNLP'
 
 # python
 export PYENV_ROOT=${HOME}/.pyenv
