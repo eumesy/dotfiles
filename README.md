@@ -17,6 +17,8 @@
     - Anything 的機能を積極的に導入
         - helm, peco
     - 「ポケットひとつ」にはそれなりに拘る
+    - OS による分岐は少なめに
+        - OS X でも ghq のインストールは (homebrew ではなく) go 経由
 
 ## Emacs
 - モード毎の設定
@@ -148,17 +150,29 @@ $ chmod 600 id_rsa
 # もともと 600 だと思うけど一応
 ```
 
-- ~/.ssh/config に以下を追加
+- ~/.ssh/config に以下を追加 (スペースはすべてタブ)
 
-        Host github
-            Hostname github.com
-            IdentityFile ~/.ssh/id_rsa
-            User git
+```
+Host bitbucket.org
+    HostName bitbucket.org
+    IdentityFile ~/.ssh/id_rsa
+    User git
+Host github
+    Hostname github.com
+    IdentityFile ~/.ssh/id_rsa
+    User git
+```
 
 - GitHub
     1. 右上自分アイコン→settings
     2. SSH Keys
     3. Add SSH key
+    4. id_rsa.pub の中身を登録
+
+- Bitbucket
+    1. 右上自分アイコン→Settings
+    2. SSH keys
+    3. Add key
     4. id_rsa.pub の中身を登録
 
 - post processing
