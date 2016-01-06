@@ -5,7 +5,5 @@
 	editor = emacsclient -nw
 	excludesfile = ~/.gitignore
 	ui = auto
-[credential]
-	helper = osxkeychain
 [ghq]
 	root = ~/src
