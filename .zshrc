@@ -1,6 +1,6 @@
-autoload -Uz vcs_info
 autoload -Uz add-zsh-hook
 autoload -Uz colors
+autoload -Uz vcs_info
 
 export LANG=ja_JP.UTF-8
 
@@ -23,7 +23,75 @@ function insert_date {
 zle -N insert_date
 bindkey '^[[15~' insert_date
 
-zstyle ':vcs_info:*' formats '(%s)[%b]'
+# prompt
+## ANSI escape sequences
+local RESET_FORMAT="%{[0m%}"
+local REVERSE="%{[7m%}"
+### text color (foreground)
+local FG_DEFAULT="%{[39m%}"
+local FG_BLACK="%{[30m%}"
+local FG_RED="%{[31m%}"
+local FG_GREEN="%{[32m%}"
+local FG_YELLOW="%{[33m%}"
+local FG_BLUE="%{[34m%}"
+local FG_MAGENTA="%{[35m%}"
+local FG_CYAN="%{[36m%}"
+local FG_GRAY="%{[37m%}"
+local FG_DARK_GRAY="%{[90m%}"
+local FG_LIGHT_RED="%{[91m%}"
+local FG_LIGHT_GREEN="%{[92m%}"
+local FG_LIGHT_YELLOW="%{[93m%}"
+local FG_LIGHT_BLUE="%{[94m%}"
+local FG_LIGHT_MAGENTA="%{[95m%}"
+local FG_LIGHT_CYAN="%{[96m%}"
+local FG_WHITE="%{[97m%}"
+local FG_GRAY00="%{[38;5;232m%}" # black
+local FG_GRAY01="%{[38;5;233m%}"
+local FG_GRAY02="%{[38;5;234m%}"
+local FG_GRAY03="%{[38;5;235m%}"
+local FG_GRAY04="%{[38;5;236m%}"
+local FG_GRAY05="%{[38;5;237m%}"
+local FG_GRAY06="%{[38;5;238m%}"
+local FG_GRAY07="%{[38;5;239m%}"
+local FG_GRAY08="%{[38;5;240m%}"
+local FG_GRAY09="%{[38;5;241m%}"
+local FG_GRAY10="%{[38;5;242m%}"
+local FG_GRAY11="%{[38;5;243m%}"
+local FG_GRAY12="%{[38;5;244m%}"
+local FG_GRAY13="%{[38;5;245m%}"
+local FG_GRAY14="%{[38;5;246m%}"
+local FG_GRAY15="%{[38;5;247m%}"
+local FG_GRAY16="%{[38;5;248m%}"
+local FG_GRAY17="%{[38;5;249m%}"
+local FG_GRAY18="%{[38;5;250m%}"
+local FG_GRAY19="%{[38;5;251m%}"
+local FG_GRAY20="%{[38;5;252m%}"
+local FG_GRAY21="%{[38;5;253m%}"
+local FG_GRAY22="%{[38;5;254m%}"
+local FG_GRAY23="%{[38;5;255m%}" # white
+### text color (background)
+local BG_DEFAULT="%{[49m%}"
+local BG_BLACK="%{[40m%}"
+local BG_RED="%{[41m%}"
+local BG_GREEN="%{[42m%}"
+local BG_YELLOW="%{[43m%}"
+local BG_BLUE="%{[44m%}"
+local BG_MAGENTA="%{[45m%}"
+local BG_CYAN="%{[46m%}"
+local BG_GRAY="%{[47m%}"
+local BG_DARK_GRAY="%{[100m%}"
+local BG_LIGHT_RED="%{[101m%}"
+local BG_LIGHT_GREEN="%{[102m%}"
+local BG_LIGHT_YELLOW="%{[103m%}"
+local BG_LIGHT_BLUE="%{[104m%}"
+local BG_LIGHT_MAGENTA="%{[105m%}"
+local BG_LIGHT_CYAN="%{[106m%}"
+local BG_WHITE="%{[107m%}"
+# git 周り
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:git*:*' get-revision true
+zstyle ':vcs_info:git*:*' check-for-changes true
+zstyle ':vcs_info:*' formats '%s@%b(%6.6i)'
 zstyle ':vcs_info:*' actionformats '(%s)[%b|%a]'
 precmd() {
   psvar=()
@@ -31,11 +99,21 @@ precmd() {
   psvar[1]=$vcs_info_msg_0_
   echo -ne "\ek/$PWD:t:idle\e\\" # screen/tmux: change window name
 }
-PROMPT=$'%f%3F%~ %1(v|%F{green}%1v%f|)
-[%n@%m]$ '
-# PROMPT="%{${fg[yellow]}%}%~%{${reset_color}%} 
-# [%n]$ '
-PROMPT2='[%n]> '
+# prompt
+local DATE_AND_TIME="%D{%Y-%m-%d(%a) %T}"
+PROMPT="
+${FG_GRAY14}%n@%m${RESET_FORMAT} ${FG_YELLOW}%~${RESET_FORMAT} %1(v|${FG_GREEN}%1v${RESET_FORMAT}|)
+${FG_GRAY14}${DATE_AND_TIME}${RESET_FORMAT} ${FG_CYAN}%(!.#.$)${RESET_FORMAT} "
+RPROMPT=''
+PROMPT2="(%_) %(!,#,>) "
+SPROMPT="correct: %R -> %r ? [n,y,a,e]: ]"
+# コマンド実行時に時刻(など)を更新
+# ref. http://vorfee.hatenablog.jp/entry/2015/03/28/174901
+re-prompt() {
+    zle .reset-prompt
+    zle .accept-line
+}
+zle -N accept-line re-prompt
 
 alias e='emacsclient -nw'    # CUI
 alias ee='emacsclient -c -n' # GUI
@@ -176,6 +254,7 @@ SAVEHIST=6000000
 setopt hist_ignore_all_dups
 setopt hist_ignore_dups
 setopt share_history # share command history data
+setopt extended_history # 実行時刻を記録 (share_history で十分かも)
 
 # 入力途中で C-p C-n
 autoload history-search-end
