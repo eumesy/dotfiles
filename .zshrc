@@ -113,8 +113,8 @@ function virtenv_indicator {
 }
 add-zsh-hook precmd virtenv_indicator
 PROMPT="
-${FG_YELLOW}%~${FG_GREEN}%(1V. %1v.)${FG_GRAY14}%(2V. (%2v).)
-${FG_GRAY14}%n@%m ${FG_GRAY14}${DATE_AND_TIME} ${FG_CYAN}%(!.#.$)${RESET_FORMAT} "
+${FG_GRAY14}%n@%m ${FG_YELLOW}%~${FG_GREEN}%(1V. %1v.)${FG_GRAY14}%(2V. (%2v).)
+${FG_GRAY14}${DATE_AND_TIME} ${FG_CYAN}%(!.#.$)${RESET_FORMAT} "
 RPROMPT=""
 PROMPT2="${FG_GRAY14}(%_) ${FG_CYAN}%(!.#.>)${RESET_FORMAT} "
 SPROMPT="correct: %R -> %r ? [n,y,a,e]: "
