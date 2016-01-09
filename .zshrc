@@ -91,7 +91,7 @@ local BG_WHITE="%{[107m%}"
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:git*:*' get-revision true
 zstyle ':vcs_info:git*:*' check-for-changes true
-zstyle ':vcs_info:*' formats '%s@%b(%6.6i)'
+zstyle ':vcs_info:*' formats "@%b(%7.7i)"
 zstyle ':vcs_info:*' actionformats '(%s)[%b|%a]'
 precmd() {
   psvar=()
@@ -100,10 +100,21 @@ precmd() {
   echo -ne "\ek/$PWD:t:idle\e\\" # screen/tmux: change window name
 }
 # prompt
-local DATE_AND_TIME="%D{%Y-%m-%d(%a) %H:%M:%S}"
+local DATE_AND_TIME="%D{%Y-%m-%d %H:%M:%S}" # 曜日:%a, 秒:%S
+# virtualenv 周り
+# http://askubuntu.com/questions/353636/edit-zsh-theme-for-virtualenv-name
+export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+function virtenv_indicator {
+    if [ -z $VIRTUAL_ENV ]; then
+        psvar[2]=''
+    else
+        psvar[2]=${VIRTUAL_ENV##*/}
+    fi
+}
+add-zsh-hook precmd virtenv_indicator
 PROMPT="
-${FG_GRAY14}${DATE_AND_TIME} ${FG_YELLOW}%~ %1(v|${FG_GREEN}%1v${RESET_FORMAT}|)
-${FG_GRAY14}%n@%m ${FG_CYAN}%(!.#.$)${RESET_FORMAT} "
+${FG_YELLOW}%~${FG_GREEN}%(1V. %1v.)${FG_GRAY14}%(2V. (%2v).)
+${FG_GRAY14}%n@%m ${FG_GRAY14}${DATE_AND_TIME} ${FG_CYAN}%(!.#.$)${RESET_FORMAT} "
 RPROMPT=""
 PROMPT2="${FG_GRAY14}(%_) ${FG_CYAN}%(!.#.>)${RESET_FORMAT} "
 SPROMPT="correct: %R -> %r ? [n,y,a,e]: "

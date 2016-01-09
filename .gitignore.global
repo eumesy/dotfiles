@@ -1,2 +1,9 @@
 .DS_Store
 *~
+.#*
+*.dvi
+*.aux
+*.fls
+*.toc
+*.fdb_latexmk
+*.log

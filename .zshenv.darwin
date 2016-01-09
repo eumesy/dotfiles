@@ -8,7 +8,7 @@
 path=(
     # /usr/local/bin(N-/) # homebrew
     ${HOME}/.cabal/bin(N-/) # cabal
-    ${HOME}/Dropbox/dotfiles/src(N-/)
+    # ${HOME}/Dropbox/dotfiles/src(N-/)
     # /Library/TeX/texbin(N-/) # MacTex (El Capitan -)
     ${path}
 )
@@ -18,7 +18,7 @@ path=(
 export TERM=xterm-256color-italic
 
 # homebrew
-export PATH=/usr/local/bin:${PATH}
+export PATH=/usr/local/bin:/usr/local/sbin:${PATH}
 export MANPATH=/usr/local/share/man:${MANPATH}
 
 # coreutils

@@ -17,8 +17,10 @@
     - Anything 的機能を積極的に導入
         - helm, peco
     - 「ポケットひとつ」にはそれなりに拘る
-    - OS による分岐は少なめに
+    - 環境非依存に
+        - OS による分岐は少なめに
         - OS X でも ghq のインストールは (homebrew ではなく) go 経由
+        - 特に実験に関わるもの (python など) は共通のフローで管理
 
 ## Emacs
 - モード毎の設定
@@ -200,6 +202,7 @@ $ ln -sf ~/.dotfiles/.screenrc ~/.screenrc
 $ ln -sf ~/.dotfiles/.tmux.conf ~/.tmux.conf
 $ ln -sf ~/.dotfiles/.peco ~/.peco
 $ ln -sf ~/.dotfiles/.pip_requirements ~/.pip_requirements
+$ ln -sf ~/.dotfiles/.pip_requirements_anaconda ~/.pip_requirements_anaconda
 $ ln -sf ~/.dotfiles/.zshenv ~/.zshenv
 $ ln -sf ~/.dotfiles/.zshenv.darwin ~/.zshenv.darwin
 $ ln -sf ~/.dotfiles/.zshenv.linux ~/.zshenv.linux
@@ -214,6 +217,26 @@ $ cd ~/.emacs.d/
 $ cask
 ```
 ln -f: 上書き
+
+## python
+- pyenv, virtualenv
+
+```bash
+$ ghq get git@github.com:yyuu/pyenv.git
+$ ln -sf ~/src/github.com/yyuu/pyenv ~/.pyenv
+$ ghq get git@github.com:yyuu/pyenv-virtualenv.git
+$ ln -sf ~/src/github.com/yyuu/pyenv-virtualenv ~/.pyenv/plugins/pyenv-virtualenv
+$ source ~/.zshrc
+```
+
+- 実験環境
+
+```bash
+$ pyenv install anaconda2-2.4.1
+$ pyenv global anaconda2-2.4.1
+$ pip install -r ~/.pip_requirements_anaconda
+$ conda install seaborn
+```
 
 ## update
 ### push
