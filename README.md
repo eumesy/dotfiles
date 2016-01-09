@@ -145,7 +145,7 @@ $ cask upgrade-cask
 - RSA 公開鍵作成
 ```shell
 $ ssh-keygen -t rsa -C "your_email@example.com"
-# generated ~/.ssh/id_rsa, id_rsa.pub
+# to generate ~/.ssh/id_rsa, id_rsa.pub
 $ chmod 600 id_rsa
 # もともと 600 だと思うけど一応
 ```

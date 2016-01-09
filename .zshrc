@@ -100,14 +100,14 @@ precmd() {
   echo -ne "\ek/$PWD:t:idle\e\\" # screen/tmux: change window name
 }
 # prompt
-local DATE_AND_TIME="%D{%Y-%m-%d(%a) %T}"
+local DATE_AND_TIME="%D{%Y-%m-%d(%a) %H:%M:%S}"
 PROMPT="
-${FG_GRAY14}%n@%m${RESET_FORMAT} ${FG_YELLOW}%~${RESET_FORMAT} %1(v|${FG_GREEN}%1v${RESET_FORMAT}|)
-${FG_GRAY14}${DATE_AND_TIME}${RESET_FORMAT} ${FG_CYAN}%(!.#.$)${RESET_FORMAT} "
-RPROMPT=''
-PROMPT2="(%_) %(!,#,>) "
-SPROMPT="correct: %R -> %r ? [n,y,a,e]: ]"
-# コマンド実行時に時刻(など)を更新
+${FG_GRAY14}${DATE_AND_TIME} ${FG_YELLOW}%~ %1(v|${FG_GREEN}%1v${RESET_FORMAT}|)
+${FG_GRAY14}%n@%m ${FG_CYAN}%(!.#.$)${RESET_FORMAT} "
+RPROMPT=""
+PROMPT2="${FG_GRAY14}(%_) ${FG_CYAN}%(!.#.>)${RESET_FORMAT} "
+SPROMPT="correct: %R -> %r ? [n,y,a,e]: "
+# コマンド実行時に時刻を更新
 # ref. http://vorfee.hatenablog.jp/entry/2015/03/28/174901
 re-prompt() {
     zle .reset-prompt
