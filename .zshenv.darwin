@@ -38,8 +38,3 @@ export JAVA_HOME=$(/usr/libexec/java_home)
 # http://stackoverflow.com/questions/4729863/using-bash-how-do-you-make-a-classpath-out-of-all-files-in-a-directory
 export CLASSPATH=.:$(find /Library/Java/Extensions/ -name '*.jar' | paste -sd: -)
 alias corenlp='java -cp "$CLASSPATH" -Xmx2g edu.stanford.nlp.pipeline.StanfordCoreNLP'
-
-# python
-export PYENV_ROOT=${HOME}/.pyenv
-if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
-if which pyenv-virtualenv-init > /dev/null; then eval "$(pyenv virtualenv-init -)"; fi

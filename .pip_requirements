@@ -1,9 +1,14 @@
+chardet
 gensim
 ipython
+lxml
 matplotlib
+networkx
 numpy
 pandas
-Pygments
+pip
+pygments
 scikit-learn
 scipy
-theano
+stemming
+Theano

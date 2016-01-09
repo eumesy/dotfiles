@@ -37,6 +37,11 @@ export ALTERNATE_EDITOR=''
 export GIT_EDITOR='emacsclient -nw'
 # alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs'
 
+# python
+export PYENV_ROOT=${HOME}/.pyenv
+export PATH=${PYENV_ROOT}/bin:$PATH
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
 
 case $OSTYPE in
   darwin*)
