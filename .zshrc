@@ -230,13 +230,8 @@ alias md='make depend'
 
 alias g='git'
 compdef g=git
-alias gi='git init'
-alias ga='git add'
-alias gr='git reset'
-alias gc='git commit'
-alias gco='git checkout'
-alias gl='git log'
-alias gb='git branch'
+alias push='git push'
+alias pull='git pull'
 
 alias screen='screen -U' # utf-8
 
