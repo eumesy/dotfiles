@@ -236,6 +236,7 @@ $ pyenv install anaconda2-2.4.1
 $ pyenv global anaconda2-2.4.1
 $ pip install -r ~/.pip_requirements_anaconda
 $ conda install seaborn
+$ conda install line_profiler
 ```
 
 ## update
