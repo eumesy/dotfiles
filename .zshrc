@@ -230,6 +230,10 @@ alias md='make depend'
 
 alias g='git'
 compdef g=git
+alias ga='git add'
+alias gc='git commit'
+alias gd='git diff'
+alias gst='git status'
 alias push='git push'
 alias pull='git pull'
 
