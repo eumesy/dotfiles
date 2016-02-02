@@ -2,8 +2,6 @@ autoload -Uz add-zsh-hook
 autoload -Uz colors
 autoload -Uz vcs_info
 
-export LANG=ja_JP.UTF-8
-
 case $OSTYPE in
   darwin*)
     if [ -f $HOME/.zshrc.darwin ]; then . $HOME/.zshrc.darwin; fi
@@ -111,7 +109,7 @@ local BG_LIGHT_BLUE="%{[104m%}"
 local BG_LIGHT_MAGENTA="%{[105m%}"
 local BG_LIGHT_CYAN="%{[106m%}"
 local BG_WHITE="%{[107m%}"
-# git 周り
+# git
 zstyle ':vcs_info:*' enable git
 zstyle ':vcs_info:git*:*' get-revision true
 zstyle ':vcs_info:git*:*' check-for-changes true
@@ -124,7 +122,7 @@ precmd() {
   echo -ne "\ek/$PWD:t:idle\e\\" # screen/tmux: change window name
 }
 # prompt
-local DATE_AND_TIME="%D{%Y-%m-%d %H:%M:%S}" # 曜日:%a, 秒:%S
+local DATE_AND_TIME="%D{%Y-%m-%d(%a) %H:%M:%S}" # 曜日:%a, 秒:%S
 # virtualenv 周り
 # http://askubuntu.com/questions/353636/edit-zsh-theme-for-virtualenv-name
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
