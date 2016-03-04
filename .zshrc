@@ -202,7 +202,8 @@ export LESS='-R'
 #              than  the  standard ones may appear between the ESC and the m by setting the
 #              environment variable LESSANSIMIDCHARS to the list of  characters  which  can
 #              appear.
-export LESSOPEN='|pygmentize-lessfilter %s'
+# export LESSOPEN='|pygmentize-lessfilter %s'
+export LESSOPEN='|/usr/local/bin/lesspipe.sh %s'
 alias l='less'
 
 alias rm='rm -i'
