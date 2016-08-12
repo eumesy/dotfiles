@@ -11,3 +11,5 @@
 	s = status
 [ghq]
 	root = ~/src
+[push]
+	default = matching
