@@ -1,3 +1,5 @@
+# -*- mode: Shell-Script -*-
+
 # GNU Linux like commands
 ## replace shell-built-in commands
 alias which='gwhich'
