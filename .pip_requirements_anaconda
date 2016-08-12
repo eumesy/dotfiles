@@ -1,3 +1,5 @@
 chardet
+line_profiler
+memory_profiler
 sparsesvd
 stemming

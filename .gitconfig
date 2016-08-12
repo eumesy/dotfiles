@@ -8,6 +8,7 @@
 [alias]
 	a = add
 	c = commit
+	d = diff
 	s = status
 [ghq]
 	root = ~/src

@@ -209,6 +209,7 @@ $ ln -sf ~/.dotfiles/.zshenv.linux ~/.zshenv.linux
 $ ln -sf ~/.dotfiles/.zshrc ~/.zshrc
 $ ln -sf ~/.dotfiles/.zshrc.darwin ~/.zshrc.darwin
 $ ln -sf ~/.dotfiles/.zsh ~/.zsh
+$ ln -sf ~/.dotfiles/mendeley/publicationAbbreviations ~/Library/Application\ Support/Mendeley\ Desktop
 
 $ zsh
 $ rm -f ~/.zcompdump; compinit
@@ -235,8 +236,6 @@ $ source ~/.zshrc
 $ pyenv install anaconda2-2.4.1
 $ pyenv global anaconda2-2.4.1
 $ pip install -r ~/.pip_requirements_anaconda
-$ conda install seaborn
-$ conda install line_profiler
 ```
 
 ## update

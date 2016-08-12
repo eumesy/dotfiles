@@ -1,0 +1,17 @@
+# Journal
+## ML
+ACM SIGKDD Explorations Newsletter	SIGKDD Explor.
+
+# Conference
+## AAAI
+Proceedings of the 26th AAAI Conference on Artificial Intelligence	AAAI
+## ECML PKDD
+Joint European Conference on Machine Learning and Knowledge Discovery in Databases	ECML PKDD
+## ICDM
+Proceedings of the 7th IEEE International Conference on Data Mining	ICDM
+### LDMTA at ICDM
+Large-scale Data Mining: Theory and Applications at ICDM	LDMTA at ICDM
+## ICML
+Proceedings of the 26th Annual International Conference on Machine Learning	ICML
+# KDD
+Proceedings of the 16th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining	KDD
