@@ -1,0 +1,5 @@
+# -*- mode: Shell-Script -*-
+
+# java
+# http://stackoverflow.com/questions/4729863/using-bash-how-do-you-make-a-classpath-out-of-all-files-in-a-directory
+export CLASSPATH=.:$(find ${HOME}/lib/Java/Extensions/ -name '*.jar' | paste -sd: -)
