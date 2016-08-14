@@ -25,17 +25,6 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}' # tab補完時に大文字�
 
 setopt complete_aliases
 
-# peco
-function insert-file-by-peco(){
-    LBUFFER=$LBUFFER$(ls -A | peco | tr '\n' ' ' | \
-                             sed 's/[[:space:]]*$//') # delete trailing space
-    zle -R -c
-}
-zle -N insert-file-by-peco
-bindkey '^o' insert-file-by-peco
-
-
-
 alias q='exit'
 
 # http://nanabit.net/blog/2009/11/29/insert-date-on-single-key/
@@ -261,12 +250,11 @@ alias zmv="noglob zmv -w"
 # command history
 ########################################################################
 HISTFILE=~/.zsh_history
-HISTSIZE=6000000
+HISTSIZE=6000000 # on memory
 SAVEHIST=6000000
 setopt hist_ignore_all_dups
-setopt hist_ignore_dups
-setopt share_history # share command history data
-setopt extended_history # 実行時刻を記録 (share_history で十分かも)
+setopt share_history # 複数起動
+setopt extended_history # 実行時刻を記録
 
 # 入力途中で C-p C-n
 autoload history-search-end
@@ -274,23 +262,6 @@ zle -N history-beginning-search-backward-end history-search-end
 zle -N history-beginning-search-forward-end history-search-end
 bindkey "^P" history-beginning-search-backward-end
 bindkey "^N" history-beginning-search-forward-end
-
-# http://qiita.com/uchiko/items/f6b1528d7362c9310da0
-function peco-select-history() {
-    local tac
-    if which tac > /dev/null; then
-        tac="tac"
-    else
-        tac="tail -r"
-    fi
-    BUFFER=$(\history -n 1 | \
-        eval $tac | \
-        peco --query "$LBUFFER")
-    CURSOR=$#BUFFER
-    zle clear-screen
-}
-zle -N peco-select-history
-bindkey '^R' peco-select-history
 
 ########################################################################
 # cd
@@ -311,23 +282,9 @@ alias p='popd'
 # cdr
 autoload -Uz chpwd_recent_dirs cdr
 add-zsh-hook chpwd chpwd_recent_dirs
-zstyle ':chpwd:*' recent-dirs-max 5000
+zstyle ':chpwd:*' recent-dirs-max 1000
 zstyle ':chpwd:*' recent-dirs-default yes
 zstyle ':completion:*' recent-dirs-insert both
-
-# peco-cdr
-# http://futurismo.biz/archives/2514
-function peco-cdr () {
-    local selected_dir=$(cdr -l | awk '{ print $2 }' | peco)
-    if [ -n "$selected_dir" ]; then
-        # BUFFER="cd ${selected_dir}"
-        BUFFER="${selected_dir}"
-        # zle accept-line
-    fi
-    # zle clear-screen
-}
-zle -N peco-cdr
-bindkey '^l' peco-cdr
 
 setopt extended_glob
 
@@ -346,3 +303,62 @@ function peco-src () {
 }
 zle -N peco-src
 bindkey '^]' peco-src
+
+########################################################################
+# interactive shell
+########################################################################
+
+# using anyframe https://github.com/mollifier/anyframe
+# init
+fpath=(${HOME}/src/github.com/mollifier/anyframe(N-/) $fpath)
+autoload -Uz anyframe-init
+anyframe-init
+
+zstyle ":anyframe:selector:" use fzf
+zstyle ":anyframe:selector:fzf:" command 'fzf --exact --no-sort'
+
+# peco-cdr
+bindkey '^l' anyframe-widget-cdr
+# http://futurismo.biz/archives/2514
+# function peco-cdr () {
+#     local selected_dir=$(cdr -l | awk '{ print $2 }' | peco)
+#     if [ -n "$selected_dir" ]; then
+#         # BUFFER="cd ${selected_dir}"
+#         BUFFER="${selected_dir}"
+#         # zle accept-line
+#     fi
+#     # zle clear-screen
+# }
+# zle -N peco-cdr
+# bindkey '^l' peco-cdr
+
+# command history
+bindkey '^r' anyframe-widget-put-history
+# other imprementations
+# - http://qiita.com/uchiko/items/f6b1528d7362c9310da0
+# function peco-select-history() {
+#     local tac
+#     if which tac > /dev/null; then
+#         tac="tac"
+#     else
+#         tac="tail -r"
+#     fi
+#     BUFFER=$(\history -n 1 | \
+#         eval $tac | \
+#         peco --query "$LBUFFER")
+#     CURSOR=$#BUFFER
+#     zle clear-screen
+# }
+# zle -N peco-select-history
+# bindkey '^R' peco-select-history
+
+# insert file name in current directory
+bindkey '^o' anyframe-widget-insert-filename
+# function insert-file-by-peco(){
+#     LBUFFER=$LBUFFER$(ls -A | peco | tr '\n' ' ' | \
+#                              sed 's/[[:space:]]*$//') # delete trailing space
+#     zle -R -c
+# }
+# zle -N insert-file-by-peco
+# bindkey '^o' insert-file-by-peco
+
