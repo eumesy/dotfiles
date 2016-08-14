@@ -199,6 +199,7 @@ $ ln -sf ~/.dotfiles/.emacs.d ~/.emacs.d
 $ ln -sf ~/.dotfiles/.gitconfig ~/.gitconfig
 $ ln -sf ~/.dotfiles/.gitignore.global ~/.gitignore
 $ ln -sf ~/.dotfiles/.screenrc ~/.screenrc
+$ ln -sf ~/.dotfiles/.template ~/.template
 $ ln -sf ~/.dotfiles/.tmux.conf ~/.tmux.conf
 $ ln -sf ~/.dotfiles/.peco ~/.peco
 $ ln -sf ~/.dotfiles/.pip_requirements ~/.pip_requirements
