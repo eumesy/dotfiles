@@ -8,3 +8,11 @@ path=(
 
 # java
 alias corenlp='java -cp "$CLASSPATH" -Xmx2g edu.stanford.nlp.pipeline.StanfordCoreNLP'
+
+# fzf
+if [[ ! "$PATH" == *${HOME}/src/github.com/junegunn/fzf/bin* ]]; then
+  export PATH="$PATH:${HOME}/src/github.com/junegunn/fzf/bin"
+fi
+if [[ ! "$MANPATH" == *${HOME}/src/github.com/junegunn/fzf/man* && -d "${HOME}/src/github.com/junegunn/fzf/man" ]]; then
+  export MANPATH="$MANPATH:${HOME}/src/github.com/junegunn/fzf/man"
+fi
