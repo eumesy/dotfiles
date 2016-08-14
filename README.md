@@ -209,6 +209,7 @@ $ ln -sf ~/.dotfiles/.zshenv.darwin ~/.zshenv.darwin
 $ ln -sf ~/.dotfiles/.zshenv.linux ~/.zshenv.linux
 $ ln -sf ~/.dotfiles/.zshrc ~/.zshrc
 $ ln -sf ~/.dotfiles/.zshrc.darwin ~/.zshrc.darwin
+$ ln -sf ~/.dotfiles/.zshrc.linux ~/.zshrc.linux
 $ ln -sf ~/.dotfiles/.zsh ~/.zsh
 $ ln -sf ~/.dotfiles/mendeley/publicationAbbreviations ~/Library/Application\ Support/Mendeley\ Desktop
 

@@ -362,3 +362,8 @@ bindkey '^o' anyframe-widget-insert-filename
 # zle -N insert-file-by-peco
 # bindkey '^o' insert-file-by-peco
 
+########################################################################
+# misc
+########################################################################
+
+alias p3='python3'
