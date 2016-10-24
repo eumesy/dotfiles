@@ -8,7 +8,9 @@ def main():
 
 if __name__ == '__main__':
     # parser
-    parser = argparse.ArgumentParser(description='...')
+    parser = argparse.ArgumentParser(
+        description='...',
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter) # --help に各 argument の default を追記
 
 
     # positional arguments
