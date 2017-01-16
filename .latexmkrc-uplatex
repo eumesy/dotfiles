@@ -1,17 +1,12 @@
 #!/usr/bin/env perl
-# ref. http://konn-san.com/prog/why-not-latexmk.html
 
-$latex        = 'uplatex -synctex=1 -halt-on-error';
-$latex_silent = 'uplatex -synctex=1 -halt-on-error -interaction=batchmode';
+$latex        = 'uplatex -interaction=nonstopmode -halt-on-error -file-line-error';
+$dvipdf       = 'dvipdfmx %O -o %D %S';
+$pdf_mode     = 3; # generate pdf via dvipdfmx
 $bibtex       = 'upbibtex';
 $biber        = 'biber --bblencoding=utf8 -u -U --output_safechars';
-$dvipdf       = 'dvipdfmx %O -o %D %S';
-$max_repeat   = 5;
-$pdf_mode     = 3; # generates pdf via dvipdfmx
+$bibtex_use   = 2; # use .bbl files (bibtex or biber); delete .bbl when cleaning (-c, -C)
+$max_repeat   = 10;
 
-# Prevent latexmk from removing PDF after typeset.
-# This enables Skim to chase the update in PDF automatically.
+$pdf_previewer               = 'open -ga /Applications/Skim.app';
 $pvc_view_file_via_temporary = 0;
-
-# Use Skim as a previewer
-$pdf_previewer    = "open -ga /Applications/Skim.app";

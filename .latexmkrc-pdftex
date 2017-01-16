@@ -1,14 +1,10 @@
 #!/usr/bin/env perl
 
-$latex    = 'pdflatex';
-$pdflatex = 'pdflatex -interaction=nonstopmode -file-line-error -synctex=1';
-$pdf_mode = 1;
-$bibtex   = 'bibtex';
+$latex      = 'pdflatex -interaction=nonstopmode -halt-on-error -file-line-error';
+$pdf_mode   = 1; # generate pdf via pdftex
+$bibtex     = 'bibtex';
+$bibtex_use = 2; # use .bbl files (bibtex or biber); delete .bbl when cleaning (-c, -C)
+$max_repeat = 10;
 
-# Prevent latexmk from removing PDF after typeset.
-# This enables Skim to chase the update in PDF automatically.
+$pdf_previewer               = "open -ga /Applications/Skim.app";
 $pvc_view_file_via_temporary = 0;
-
-# Use Skim as a previewer
-$pdf_previewer    = "open -ga /Applications/Skim.app";
-
