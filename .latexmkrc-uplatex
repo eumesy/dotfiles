@@ -8,5 +8,7 @@ $biber        = 'biber --bblencoding=utf8 -u -U --output_safechars';
 $bibtex_use   = 2; # use .bbl files (bibtex or biber); delete .bbl when cleaning (-c, -C)
 $max_repeat   = 10;
 
+$clean_ext = 'nav snm'; # for beamer
+
 $pdf_previewer               = 'open -ga /Applications/Skim.app';
 $pvc_view_file_via_temporary = 0;
