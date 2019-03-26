@@ -15,8 +15,12 @@ if [ -f $HOME/.zshrc.local ]; then . $HOME/.zshrc.local; fi
 ########################################################################
 # 補完
 ########################################################################
-# fpath=(/usr/local/share/zsh-completions $fpath) # homebrew
-fpath=(${HOME}/.zsh/zsh-completions/src $fpath)
+typeset -U fpath
+# zsh-completion via homebrew
+if [ -e /usr/local/share/zsh-completions ]; then
+    fpath=(/usr/local/share/zsh-completions $fpath)
+fi
+# fpath=(${HOME}/.zsh/zsh-completions/src $fpath)
 
 autoload -U compinit
 compinit
@@ -292,17 +296,6 @@ setopt extended_glob
 # ghq
 ########################################################################
 
-# http://weblog.bulknews.net/post/89635306479/ghq-pecopercol
-function peco-src () {
-    local selected_dir=$(ghq list --full-path | peco --query "$LBUFFER")
-    if [ -n "$selected_dir" ]; then
-        BUFFER="cd ${selected_dir}"
-        zle accept-line
-    fi
-    zle clear-screen
-}
-zle -N peco-src
-bindkey '^]' peco-src
 
 ########################################################################
 # interactive shell
@@ -361,6 +354,21 @@ bindkey '^o' anyframe-widget-insert-filename
 # }
 # zle -N insert-file-by-peco
 # bindkey '^o' insert-file-by-peco
+
+# go to dir of ghq
+bindkey '^]' anyframe-widget-cd-ghq-repository
+# http://weblog.bulknews.net/post/89635306479/ghq-pecopercol
+# function peco-src () {
+#     local selected_dir=$(ghq list --full-path | peco --query "$LBUFFER")
+#     if [ -n "$selected_dir" ]; then
+#         BUFFER="cd ${selected_dir}"
+#         zle accept-line
+#     fi
+#     zle clear-screen
+# }
+# zle -N peco-src
+# bindkey '^]' peco-src
+
 
 ########################################################################
 # misc
