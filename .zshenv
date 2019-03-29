@@ -40,11 +40,12 @@ export GIT_EDITOR='emacsclient -nw'
 # alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs'
 
 # python
+## pyenv
 export PYENV_ROOT=${HOME}/.pyenv
 if [ -d "${PYENV_ROOT}" ]; then
     export PATH=${PYENV_ROOT}/bin:$PATH
     eval "$(pyenv init -)"
-    eval "$(pyenv virtualenv-init -)"
+#     eval "$(pyenv virtualenv-init -)"
 fi
 
 case $OSTYPE in

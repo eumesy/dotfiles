@@ -21,6 +21,10 @@ if [ -e /usr/local/share/zsh-completions ]; then
     fpath=(/usr/local/share/zsh-completions $fpath)
 fi
 # fpath=(${HOME}/.zsh/zsh-completions/src $fpath)
+# conda
+if [ -e $HOME/src/github.com/esc/conda-zsh-completion ]; then 
+    fpath=($HOME/src/github.com/esc/conda-zsh-completion $fpath)
+fi
 
 autoload -U compinit
 compinit
@@ -38,7 +42,9 @@ function insert_date {
 zle -N insert_date
 bindkey '^[[15~' insert_date
 
+########################################################################
 # prompt
+########################################################################
 ## ANSI escape sequences
 local RESET_FORMAT="%{[0m%}"
 local REVERSE="%{[7m%}"
@@ -108,14 +114,33 @@ zstyle ':vcs_info:git*:*' get-revision true
 zstyle ':vcs_info:git*:*' check-for-changes true
 zstyle ':vcs_info:*' formats "@%b(%7.7i)"
 zstyle ':vcs_info:*' actionformats '(%s)[%b|%a]'
+
+# executed before each prompt
 precmd() {
-  psvar=()
-  LANG=en_US.UTF-8 vcs_info
-  psvar[1]=$vcs_info_msg_0_
-  echo -ne "\ek/$PWD:t:idle\e\\" # screen/tmux: change window name
+    psvar=()
+    LANG=en_US.UTF-8 vcs_info
+    psvar[1]=$vcs_info_msg_0_
+
+    # python (pyenv, conda)
+    PS_PYTHON_VERSION=$(pyenv version-name)
+    PS_PYTHON_ENV=""
+    if [[ -n $CONDA_DEFAULT_ENV ]]; then
+	PS_PYTHON_ENV="@$CONDA_DEFAULT_ENV"
+    fi
+  
+    echo -ne "\ek/$PWD:t:idle\e\\" # screen/tmux: change window name
+
+PROMPT="
+${FG_GRAY14}%n@%m ${FG_YELLOW}%~${FG_GREEN}%(1V. %1v.)${FG_GRAY14}%(2V. (%2v).) ${FG_GREEN}py:${PS_PYTHON_VERSION}${PS_PYTHON_ENV}
+${FG_GRAY14}${DATE_AND_TIME} ${FG_CYAN}%(!.#.$)${RESET_FORMAT} "
+RPROMPT=""
+PROMPT2="${FG_GRAY14}(%_) ${FG_CYAN}%(!.#.>)${RESET_FORMAT} "
+SPROMPT="correct: %R -> %r ? [n,y,a,e]: "
 }
-# prompt
+
+# date
 local DATE_AND_TIME="%D{%Y-%m-%d(%a) %H:%M:%S}" # 曜日:%a, 秒:%S
+
 # virtualenv 周り
 # http://askubuntu.com/questions/353636/edit-zsh-theme-for-virtualenv-name
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
@@ -127,12 +152,6 @@ function virtenv_indicator {
     fi
 }
 add-zsh-hook precmd virtenv_indicator
-PROMPT="
-${FG_GRAY14}%n@%m ${FG_YELLOW}%~${FG_GREEN}%(1V. %1v.)${FG_GRAY14}%(2V. (%2v).)
-${FG_GRAY14}${DATE_AND_TIME} ${FG_CYAN}%(!.#.$)${RESET_FORMAT} "
-RPROMPT=""
-PROMPT2="${FG_GRAY14}(%_) ${FG_CYAN}%(!.#.>)${RESET_FORMAT} "
-SPROMPT="correct: %R -> %r ? [n,y,a,e]: "
 # コマンド実行時に時刻を更新
 # ref. http://vorfee.hatenablog.jp/entry/2015/03/28/174901
 re-prompt() {
@@ -152,6 +171,26 @@ function kec() {
 function kill-emacs()  {
     emacsclient -e '(kill-emacs)';
     pkill -f 'emacsclient -nw';
+}
+
+#############################################################################
+# alias
+#############################################################################
+
+# Python
+## Anaconda
+## activate command の pyenv とのバッティングを避ける & conda init を避ける (anaconda の python が pyenv の python より優先順位が高くなる)
+## pyenvとanacondaを共存させる時のactivate衝突問題の回避策3種類 - Qiita https://qiita.com/y__sama/items/f732bb7bec2bff355b69
+## zsh - Can I alias a subcommand? (shortening the output of `docker ps`) - Stack Overflow https://stackoverflow.com/questions/34748747/can-i-alias-a-subcommand-shortening-the-output-of-docker-ps
+## todo: pyenv が anaconda でないときに souce が実行されてしまう (そんなファイルはなさそうだけど)
+conda() {
+  case $1 in
+    activate)
+      shift
+      source $PYENV_ROOT/versions/$(pyenv version-name)/bin/activate "$@";;
+    *)
+      command conda "$@";;
+  esac
 }
 
 # GNU ls
@@ -239,7 +278,6 @@ alias tC='latexmk -C'
 # alias ngspice='rlwrap ngspice'
 
 # 存在するファイルにリダイレクトしない
-#
 # リダイレクトしたい場合は
 # unset noclobber
 #  or
