@@ -1,5 +1,13 @@
 # -*- mode: Shell-Script -*-
 
+
+# italic
+# export TERM=xterm-256color-italic
+
+#---------------------------------------------------------------------
+# path
+#---------------------------------------------------------------------
+
 # この前処理必要?
 # https://github.com/etheriqa/dotfiles/blob/master/.zshenv.darwin
 
@@ -16,21 +24,66 @@ path=(
 )
 # rename: /usr/bin
 
-# italic
-export TERM=xterm-256color-italic
+path=(
+    /usr/local/bin(N-/) # homebrew
+    # /usr/local/sbin # homebrew ?
 
-# homebrew
-export PATH=/usr/local/bin:/usr/local/sbin:${PATH}
-export MANPATH=/usr/local/share/man:${MANPATH}
+    /usr/local/opt/coreutils/libexec/gnubin(N-/) # coreutils
+    /usr/local/opt/findutils/libexec/gnubin(N-/) # findutils
+    /usr/local/opt/grep/libexec/gnubin(N-/) # grep
+    # /usr/local/opt/gnu-which/libexec/gnubin(N-/) # gnu-which
+    /usr/local/opt/gnu-tar/libexec/gnubin(N-/) # gnu-tar
 
-# coreutils
-export PATH=/usr/local/opt/coreutils/libexec/gnubin:${PATH}
-export MANPATH=/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}
-# $(brew --prefix coreutils)
+    /usr/local/opt/ed/libexec/gnubin(N-/) # ed
+    /usr/local/opt/gnu-sed/libexec/gnubin(N-/) # gnu-sed
+    ${path}
+)
 
-# alternative:
-# - http://apple.stackexchange.com/questions/111061/linking-manuals-from-homebrew
-# - https://fredstech.wordpress.com/2010/12/02/fixing-homebrew-manpath/
+manpath=(
+    /usr/local/share/man(N-/) # homebrew
+
+    /usr/local/opt/coreutils/libexec/gnuman(N-/) # coreutils
+    /usr/local/opt/findutils/libexec/gnuman(N-/) # findutils
+    /usr/local/opt/grep/libexec/gnuman(N-/) # grep
+    # /usr/local/opt/gnu-which/libexec/gnuman(N-/) # gnu-which
+    /usr/local/opt/gnu-tar/libexec/gnuman(N-/) # gnu-tar
+
+    /usr/local/opt/ed/libexec/gnuman(N-/) # ed
+    /usr/local/opt/gnu-sed/libexec/gnuman(N-/) # gnu-sed
+    ${manpath}
+)
+
+# # homebrew
+# export PATH=/usr/local/bin:/usr/local/sbin:${PATH}
+# export MANPATH=/usr/local/share/man:${MANPATH}
+
+# # coreutils
+# export PATH=/usr/local/opt/coreutils/libexec/gnubin:${PATH}
+# export MANPATH=/usr/local/opt/coreutils/libexec/gnuman:${MANPATH}
+# # $(brew --prefix coreutils)
+# # ^ 重い
+# # findutils
+# export PATH=/usr/local/opt/findutils/libexec/gnubin:${PATH}
+# export MANPATH=/usr/local/opt/findutils/libexec/gnuman:${MANPATH}
+# # grep
+# export PATH=/usr/local/opt/grep/libexec/gnubin:${PATH}
+# export MANPATH=/usr/local/opt/grep/libexec/gnuman:${MANPATH}
+# # gnu-which
+# export PATH=/usr/local/opt/gnu-which/libexec/gnubin:${PATH}
+# export MANPATH=/usr/local/opt/gnu-which/libexec/gnuman:${MANPATH}
+
+
+# # ed
+# export PATH=/usr/local/opt/ed/libexec/gnubin:${PATH}
+# export MANPATH=/usr/local/opt/ed/libexec/gnuman:${MANPATH}
+# # gnu-sed
+# export PATH=/usr/local/opt/gnu-sed/libexec/gnubin:${PATH}
+# export MANPATH=/usr/local/opt/gnu-sed/libexec/gnuman:${MANPATH}
+
+# # gnu-tar
+# export PATH=/usr/local/opt/gnu-tar/libexec/gnubin:${PATH}
+# export MANPATH=/usr/local/opt/gnu-tar/libexec/gnuman:${MANPATH}
+
 
 # java
 # http://d.hatena.ne.jp/snaka72/20120101/1325403702

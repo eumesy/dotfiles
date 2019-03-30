@@ -7,8 +7,8 @@ export TERM=xterm-256color
 export GOPATH=${HOME}
 # ghq -> ~/.gitconfig
 
-# 重複したパスを登録しない
-typeset -U path
+# -U: 重複したパスを登録しない
+typeset -U path manpath
 
 # OS X, El Capitan
 # from /etc/zprofile
@@ -21,6 +21,15 @@ case $OSTYPE in
         ;;
 esac
 
+#   path=xxxx(N-/)
+#     (N-/): 存在しないディレクトリは登録しない
+#     パス(...): ...という条件にマッチするパスのみ残す
+#        N: NULL_GLOBオプションを設定。
+#           globがマッチしなかったり存在しないパスを無視する
+#        -: シンボリックリンク先のパスを評価
+#        /: ディレクトリのみ残す
+#        .: 通常のファイルのみ残す
+# via. zshでHomebrewを使用する場合に設定しておいたほうが良いこと - よんちゅBlog http://yonchu.hatenablog.com/entry/20120415/1334506855
 path=(
     /usr/bin(N-/)
     /bin(N-/)

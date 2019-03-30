@@ -2,7 +2,7 @@
 
 # GNU Linux like commands
 ## replace shell-built-in commands
-alias which='gwhich'
+# alias which='gwhich'
 
 ## Cross-OS compatibility (like GNU/Linux names)
 # alias awk='gawk' # homebrew
