@@ -5,6 +5,7 @@
 	editor = emacsclient -nw
 	excludesfile = ~/.gitignore
 	ui = auto
+	quotepath = false
 [alias]
 	a = add
 	c = commit
