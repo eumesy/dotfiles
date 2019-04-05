@@ -1,17 +1,21 @@
 export LANG="ja_JP.UTF-8"
 export LC_CTYPE="ja_JP.UTF-8"
 export LC_TIME="en_US.UTF-8"
-export TERM=xterm-256color
+# export TERM=xterm-256color
 
 # go
 export GOPATH=${HOME}
 # ghq -> ~/.gitconfig
 
-# -U: 重複したパスを登録しない
-typeset -U path manpath
+# -U: keep only the first occurrence of each duplicated value
+# ref. http://zsh.sourceforge.net/Doc/Release/Shell-Builtin-Commands.html#index-typeset
+typeset -U PATH path MANPATH manpath
 
-# OS X, El Capitan
-# from /etc/zprofile
+# ignore /etc/zprofile, /etc/zshrc, /etc/zlogin, and /etc/zlogout
+# ref. http://zsh.sourceforge.net/Doc/Release/Files.html
+# ref. http://zsh.sourceforge.net/Doc/Release/Options.html#index-GLOBALRCS
+unsetopt GLOBAL_RCS
+# copied from /etc/zprofile
 case $OSTYPE in
     darwin*)
         # system-wide environment settings for zsh(1)

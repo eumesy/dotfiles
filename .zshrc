@@ -1,3 +1,6 @@
+# in ~/.zshenv, executed `unsetopt GLOBAL_RCS` and ignored /etc/zshrc
+[ -r /etc/zshrc ] && . /etc/zshrc
+
 autoload -Uz add-zsh-hook
 autoload -Uz colors
 autoload -Uz vcs_info
