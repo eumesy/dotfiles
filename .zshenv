@@ -56,9 +56,15 @@ export GIT_EDITOR='emacsclient -nw'
 ## pyenv
 export PYENV_ROOT=${HOME}/.pyenv
 if [ -d "${PYENV_ROOT}" ]; then
-    export PATH=${PYENV_ROOT}/bin:$PATH
+    PATH=${PYENV_ROOT}/bin:$PATH
     eval "$(pyenv init -)"
 #     eval "$(pyenv virtualenv-init -)"
+fi
+
+# ruby
+if which rbenv > /dev/null; then
+    PATH=${HOME}/.rbenv/bin:$PATH
+    eval "$(rbenv init -)"
 fi
 
 case $OSTYPE in
