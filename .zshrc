@@ -218,6 +218,9 @@ alias diff='colordiff -u'
 #       -u  -U NUM  --unified[=NUM]
 #              Output NUM (default 3) lines of unified context.
 
+alias du='du -h'
+# -h, --human-readable  print sizes in human readable format (e.g., 1K 234M 2G)
+
 alias c='pygmentize -O style=monokai -f terminal256 -g'
 
 export LESS='-R'
