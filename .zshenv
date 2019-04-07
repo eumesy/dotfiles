@@ -52,6 +52,17 @@ export ALTERNATE_EDITOR=''
 export GIT_EDITOR='emacsclient -nw'
 # alias emacs='/Applications/Emacs.app/Contents/MacOS/Emacs'
 
+
+case $OSTYPE in
+  darwin*)
+    if [ -f ${HOME}/.zshenv.darwin ]; then . ${HOME}/.zshenv.darwin; fi
+    ;;
+  linux*)
+    if [ -f ${HOME}/.zshenv.linux ]; then . ${HOME}/.zshenv.linux; fi
+    ;;
+esac
+if [ -f ${HOME}/.zshenv.local ]; then . ${HOME}/.zshenv.local; fi
+
 # python
 ## pyenv
 export PYENV_ROOT=${HOME}/.pyenv
@@ -66,13 +77,3 @@ if which rbenv > /dev/null; then
     PATH=${HOME}/.rbenv/bin:$PATH
     eval "$(rbenv init -)"
 fi
-
-case $OSTYPE in
-  darwin*)
-    if [ -f ${HOME}/.zshenv.darwin ]; then . ${HOME}/.zshenv.darwin; fi
-    ;;
-  linux*)
-    if [ -f ${HOME}/.zshenv.linux ]; then . ${HOME}/.zshenv.linux; fi
-    ;;
-esac
-if [ -f ${HOME}/.zshenv.local ]; then . ${HOME}/.zshenv.local; fi
