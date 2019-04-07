@@ -238,7 +238,7 @@ export LESS='-R'
 #              environment variable LESSANSIMIDCHARS to the list of  characters  which  can
 #              appear.
 # export LESSOPEN='|pygmentize-lessfilter %s'
-export LESSOPEN='|/usr/local/bin/lesspipe.sh %s'
+# export LESSOPEN='|/usr/local/bin/lesspipe.sh %s'
 alias l='less'
 
 alias rm='rm -i'
