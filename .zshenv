@@ -63,8 +63,10 @@ case $OSTYPE in
 esac
 if [ -f ${HOME}/.zshenv.local ]; then . ${HOME}/.zshenv.local; fi
 
-# python
-## pyenv
+
+# Add python/ruby installed by pyenv/rbenv to the PATH
+# in preference to python/ruby installed by homebrew
+## python/pyenv
 export PYENV_ROOT=${HOME}/.pyenv
 if [ -d "${PYENV_ROOT}" ]; then
     PATH=${PYENV_ROOT}/bin:$PATH
@@ -72,7 +74,7 @@ if [ -d "${PYENV_ROOT}" ]; then
 #     eval "$(pyenv virtualenv-init -)"
 fi
 
-# ruby
+## ruby/rbenv
 if which rbenv > /dev/null; then
     PATH=${HOME}/.rbenv/bin:$PATH
     eval "$(rbenv init -)"
