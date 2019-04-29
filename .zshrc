@@ -16,7 +16,7 @@ esac
 if [ -f $HOME/.zshrc.local ]; then . $HOME/.zshrc.local; fi
 
 ########################################################################
-# 補完
+# 補完 (completion)
 ########################################################################
 typeset -U fpath
 # zsh-completion via homebrew
@@ -28,6 +28,10 @@ fi
 if [ -e $HOME/src/github.com/esc/conda-zsh-completion ]; then 
     fpath=($HOME/src/github.com/esc/conda-zsh-completion $fpath)
 fi
+
+
+# pythohn
+eval "`pip completion --zsh`"
 
 autoload -U compinit
 compinit
@@ -44,6 +48,7 @@ function insert_date {
 }
 zle -N insert_date
 bindkey '^[[15~' insert_date
+
 
 ########################################################################
 # prompt
