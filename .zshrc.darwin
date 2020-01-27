@@ -10,6 +10,7 @@
 # OS X
 alias o='open'
 alias of='open .'
+alias skim='open -a Skim'
 
 # zaw
 # source ~/.zsh/zaw/zaw.zsh
