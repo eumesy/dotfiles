@@ -1,0 +1,41 @@
+[character]
+symbol = "$"
+style_success = "green"
+style_failure = "red"
+
+
+[username]
+show_always = true
+style_user = ""
+
+[hostname]
+ssh_only = false
+style = ""
+
+[directory]
+truncate_to_repo = false
+truncation_length = 8
+style = "yellow"
+prefix = ""
+
+[git_branch]
+prefix = ""
+style = "red"
+
+[git_commit]
+only_detached = false
+style = "red"
+
+[git_status]
+prefix = ""
+suffix = ""
+style = "red"
+modified = "✏️ "
+untracked = "📤 "
+
+[python]
+style = ""
+
+
+[time]
+# disabled = false

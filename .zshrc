@@ -18,12 +18,12 @@ if [ -f $HOME/.zshrc.local ]; then . $HOME/.zshrc.local; fi
 ########################################################################
 # 補完 (completion)
 ########################################################################
+
 typeset -U fpath
 # zsh-completion via homebrew
 if [ -e /usr/local/share/zsh-completions ]; then
     fpath=(/usr/local/share/zsh-completions $fpath)
 fi
-# fpath=(${HOME}/.zsh/zsh-completions/src $fpath)
 # conda
 if [ -e $HOME/src/github.com/esc/conda-zsh-completion ]; then 
     fpath=($HOME/src/github.com/esc/conda-zsh-completion $fpath)
@@ -53,120 +53,127 @@ bindkey '^[[15~' insert_date
 ########################################################################
 # prompt
 ########################################################################
-## ANSI escape sequences
-local RESET_FORMAT="%{[0m%}"
-local REVERSE="%{[7m%}"
-### text color (foreground)
-local FG_DEFAULT="%{[39m%}"
-local FG_BLACK="%{[30m%}"
-local FG_RED="%{[31m%}"
-local FG_GREEN="%{[32m%}"
-local FG_YELLOW="%{[33m%}"
-local FG_BLUE="%{[34m%}"
-local FG_MAGENTA="%{[35m%}"
-local FG_CYAN="%{[36m%}"
-local FG_GRAY="%{[37m%}"
-local FG_DARK_GRAY="%{[90m%}"
-local FG_LIGHT_RED="%{[91m%}"
-local FG_LIGHT_GREEN="%{[92m%}"
-local FG_LIGHT_YELLOW="%{[93m%}"
-local FG_LIGHT_BLUE="%{[94m%}"
-local FG_LIGHT_MAGENTA="%{[95m%}"
-local FG_LIGHT_CYAN="%{[96m%}"
-local FG_WHITE="%{[97m%}"
-local FG_GRAY00="%{[38;5;232m%}" # black
-local FG_GRAY01="%{[38;5;233m%}"
-local FG_GRAY02="%{[38;5;234m%}"
-local FG_GRAY03="%{[38;5;235m%}"
-local FG_GRAY04="%{[38;5;236m%}"
-local FG_GRAY05="%{[38;5;237m%}"
-local FG_GRAY06="%{[38;5;238m%}"
-local FG_GRAY07="%{[38;5;239m%}"
-local FG_GRAY08="%{[38;5;240m%}"
-local FG_GRAY09="%{[38;5;241m%}"
-local FG_GRAY10="%{[38;5;242m%}"
-local FG_GRAY11="%{[38;5;243m%}"
-local FG_GRAY12="%{[38;5;244m%}"
-local FG_GRAY13="%{[38;5;245m%}"
-local FG_GRAY14="%{[38;5;246m%}"
-local FG_GRAY15="%{[38;5;247m%}"
-local FG_GRAY16="%{[38;5;248m%}"
-local FG_GRAY17="%{[38;5;249m%}"
-local FG_GRAY18="%{[38;5;250m%}"
-local FG_GRAY19="%{[38;5;251m%}"
-local FG_GRAY20="%{[38;5;252m%}"
-local FG_GRAY21="%{[38;5;253m%}"
-local FG_GRAY22="%{[38;5;254m%}"
-local FG_GRAY23="%{[38;5;255m%}" # white
-### text color (background)
-local BG_DEFAULT="%{[49m%}"
-local BG_BLACK="%{[40m%}"
-local BG_RED="%{[41m%}"
-local BG_GREEN="%{[42m%}"
-local BG_YELLOW="%{[43m%}"
-local BG_BLUE="%{[44m%}"
-local BG_MAGENTA="%{[45m%}"
-local BG_CYAN="%{[46m%}"
-local BG_GRAY="%{[47m%}"
-local BG_DARK_GRAY="%{[100m%}"
-local BG_LIGHT_RED="%{[101m%}"
-local BG_LIGHT_GREEN="%{[102m%}"
-local BG_LIGHT_YELLOW="%{[103m%}"
-local BG_LIGHT_BLUE="%{[104m%}"
-local BG_LIGHT_MAGENTA="%{[105m%}"
-local BG_LIGHT_CYAN="%{[106m%}"
-local BG_WHITE="%{[107m%}"
-# git
-zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:git*:*' get-revision true
-zstyle ':vcs_info:git*:*' check-for-changes true
-zstyle ':vcs_info:*' formats "@%b(%7.7i)"
-zstyle ':vcs_info:*' actionformats '(%s)[%b|%a]'
+eval "$(starship init zsh)"
 
-# executed before each prompt
-precmd() {
-    psvar=()
-    LANG=en_US.UTF-8 vcs_info
-    psvar[1]=$vcs_info_msg_0_
+# ## ANSI escape sequences
+# local RESET_FORMAT="%{[0m%}"
+# local REVERSE="%{[7m%}"
+# ### text color (foreground)
+# local FG_DEFAULT="%{[39m%}"
+# local FG_BLACK="%{[30m%}"
+# local FG_RED="%{[31m%}"
+# local FG_GREEN="%{[32m%}"
+# local FG_YELLOW="%{[33m%}"
+# local FG_BLUE="%{[34m%}"
+# local FG_MAGENTA="%{[35m%}"
+# local FG_CYAN="%{[36m%}"
+# local FG_GRAY="%{[37m%}"
+# local FG_DARK_GRAY="%{[90m%}"
+# local FG_LIGHT_RED="%{[91m%}"
+# local FG_LIGHT_GREEN="%{[92m%}"
+# local FG_LIGHT_YELLOW="%{[93m%}"
+# local FG_LIGHT_BLUE="%{[94m%}"
+# local FG_LIGHT_MAGENTA="%{[95m%}"
+# local FG_LIGHT_CYAN="%{[96m%}"
+# local FG_WHITE="%{[97m%}"
+# local FG_GRAY00="%{[38;5;232m%}" # black
+# local FG_GRAY01="%{[38;5;233m%}"
+# local FG_GRAY02="%{[38;5;234m%}"
+# local FG_GRAY03="%{[38;5;235m%}"
+# local FG_GRAY04="%{[38;5;236m%}"
+# local FG_GRAY05="%{[38;5;237m%}"
+# local FG_GRAY06="%{[38;5;238m%}"
+# local FG_GRAY07="%{[38;5;239m%}"
+# local FG_GRAY08="%{[38;5;240m%}"
+# local FG_GRAY09="%{[38;5;241m%}"
+# local FG_GRAY10="%{[38;5;242m%}"
+# local FG_GRAY11="%{[38;5;243m%}"
+# local FG_GRAY12="%{[38;5;244m%}"
+# local FG_GRAY13="%{[38;5;245m%}"
+# local FG_GRAY14="%{[38;5;246m%}"
+# local FG_GRAY15="%{[38;5;247m%}"
+# local FG_GRAY16="%{[38;5;248m%}"
+# local FG_GRAY17="%{[38;5;249m%}"
+# local FG_GRAY18="%{[38;5;250m%}"
+# local FG_GRAY19="%{[38;5;251m%}"
+# local FG_GRAY20="%{[38;5;252m%}"
+# local FG_GRAY21="%{[38;5;253m%}"
+# local FG_GRAY22="%{[38;5;254m%}"
+# local FG_GRAY23="%{[38;5;255m%}" # white
+# ### text color (background)
+# local BG_DEFAULT="%{[49m%}"
+# local BG_BLACK="%{[40m%}"
+# local BG_RED="%{[41m%}"
+# local BG_GREEN="%{[42m%}"
+# local BG_YELLOW="%{[43m%}"
+# local BG_BLUE="%{[44m%}"
+# local BG_MAGENTA="%{[45m%}"
+# local BG_CYAN="%{[46m%}"
+# local BG_GRAY="%{[47m%}"
+# local BG_DARK_GRAY="%{[100m%}"
+# local BG_LIGHT_RED="%{[101m%}"
+# local BG_LIGHT_GREEN="%{[102m%}"
+# local BG_LIGHT_YELLOW="%{[103m%}"
+# local BG_LIGHT_BLUE="%{[104m%}"
+# local BG_LIGHT_MAGENTA="%{[105m%}"
+# local BG_LIGHT_CYAN="%{[106m%}"
+# local BG_WHITE="%{[107m%}"
+# # git
+# zstyle ':vcs_info:*' enable git
+# zstyle ':vcs_info:git*:*' get-revision true
+# zstyle ':vcs_info:git*:*' check-for-changes true
+# zstyle ':vcs_info:*' formats "@%b(%7.7i)"
+# zstyle ':vcs_info:*' actionformats '(%s)[%b|%a]'
 
-    # python (pyenv, conda)
-    PS_PYTHON_VERSION=$(pyenv version-name)
-    PS_PYTHON_ENV=""
-    if [[ -n $CONDA_DEFAULT_ENV ]]; then
-	PS_PYTHON_ENV="@$CONDA_DEFAULT_ENV"
-    fi
+# # executed before each prompt
+# precmd() {
+#     psvar=()
+#     LANG=en_US.UTF-8 vcs_info
+#     psvar[1]=$vcs_info_msg_0_
+
+#     # python (pyenv, conda)
+#     PS_PYTHON_VERSION=$(pyenv version-name)
+#     PS_PYTHON_ENV=""
+#     if [[ -n $CONDA_DEFAULT_ENV ]]; then
+# 	PS_PYTHON_ENV="@$CONDA_DEFAULT_ENV"
+#     fi
   
-    echo -ne "\ek/$PWD:t:idle\e\\" # screen/tmux: change window name
+#     echo -ne "\ek/$PWD:t:idle\e\\" # screen/tmux: change window name
 
-PROMPT="
-${FG_GRAY14}%n@%m ${FG_YELLOW}%~${FG_GREEN}%(1V. %1v.)${FG_GRAY14}%(2V. (%2v).) ${FG_GREEN}py:${PS_PYTHON_VERSION}${PS_PYTHON_ENV}
-${FG_GRAY14}${DATE_AND_TIME} ${FG_CYAN}%(!.#.$)${RESET_FORMAT} "
-RPROMPT=""
-PROMPT2="${FG_GRAY14}(%_) ${FG_CYAN}%(!.#.>)${RESET_FORMAT} "
-SPROMPT="correct: %R -> %r ? [n,y,a,e]: "
-}
+# PROMPT="
+# ${FG_GRAY14}%n@%m ${FG_YELLOW}%~${FG_GREEN}%(1V. %1v.)${FG_GRAY14}%(2V. (%2v).) ${FG_GREEN}py:${PS_PYTHON_VERSION}${PS_PYTHON_ENV}
+# ${FG_GRAY14}${DATE_AND_TIME} ${FG_CYAN}%(!.#.$)${RESET_FORMAT} "
+# RPROMPT=""
+# PROMPT2="${FG_GRAY14}(%_) ${FG_CYAN}%(!.#.>)${RESET_FORMAT} "
+# SPROMPT="correct: %R -> %r ? [n,y,a,e]: "
+# }
 
-# date
-local DATE_AND_TIME="%D{%Y-%m-%d(%a) %H:%M:%S}" # 曜日:%a, 秒:%S
+# # date
+# local DATE_AND_TIME="%D{%Y-%m-%d(%a) %H:%M:%S}" # 曜日:%a, 秒:%S
 
-# virtualenv 周り
-# http://askubuntu.com/questions/353636/edit-zsh-theme-for-virtualenv-name
-export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-function virtenv_indicator {
-    if [ -z $VIRTUAL_ENV ]; then
-        psvar[2]=''
-    else
-        psvar[2]=${VIRTUAL_ENV##*/}
-    fi
-}
-add-zsh-hook precmd virtenv_indicator
-# コマンド実行時に時刻を更新
-# ref. http://vorfee.hatenablog.jp/entry/2015/03/28/174901
-re-prompt() {
-    zle .reset-prompt
-    zle .accept-line
-}
-zle -N accept-line re-prompt
+# # virtualenv 周り
+# # http://askubuntu.com/questions/353636/edit-zsh-theme-for-virtualenv-name
+# export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+# function virtenv_indicator {
+#     if [ -z $VIRTUAL_ENV ]; then
+#         psvar[2]=''
+#     else
+#         psvar[2]=${VIRTUAL_ENV##*/}
+#     fi
+# }
+# add-zsh-hook precmd virtenv_indicator
+# # コマンド実行時に時刻を更新
+# # ref. http://vorfee.hatenablog.jp/entry/2015/03/28/174901
+# re-prompt() {
+#     zle .reset-prompt
+#     zle .accept-line
+# }
+# zle -N accept-line re-prompt
+
+
+#############################################################################
+# alias
+#############################################################################
 
 alias e='emacsclient -nw'    # CUI
 alias ee='emacsclient -c -n' # GUI
@@ -180,10 +187,6 @@ function kill-emacs()  {
     emacsclient -e '(kill-emacs)';
     pkill -f 'emacsclient -nw';
 }
-
-#############################################################################
-# alias
-#############################################################################
 
 # Python
 ## Anaconda
@@ -424,3 +427,4 @@ bindkey '^]' anyframe-widget-cd-ghq-repository
 ########################################################################
 
 alias p3='python3'
+
