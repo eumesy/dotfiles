@@ -2,7 +2,7 @@
 (source melpa)
 (source org)
 
-(depends-on "auto-install")
+; (depends-on "auto-install")
 (depends-on "auto-complete")
 (depends-on "bind-key")
 (depends-on "init-loader")
@@ -25,5 +25,5 @@
 
 (depends-on "auctex")
 (depends-on "bison-mode")
-(depends-on "git-commit-mode")
+; (depends-on "git-commit-mode")
 (depends-on "markdown-mode")
