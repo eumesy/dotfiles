@@ -1,3 +1,7 @@
+# profiling
+# zmodload zsh/zprof && zprof
+
+
 export LANG="ja_JP.UTF-8"
 export LC_CTYPE="ja_JP.UTF-8"
 export LC_TIME="en_US.UTF-8"
