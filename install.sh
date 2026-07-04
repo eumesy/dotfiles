@@ -21,15 +21,11 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 echo "==> brew bundle..."
 brew bundle --file=Brewfile
 
-# ---- 3. TeX (MacTeX / TeX Live) ----
-if ! command -v platex >/dev/null 2>&1 && [ ! -x /Library/TeX/texbin/platex ]; then
-  echo "==> Installing MacTeX (no GUI, ~6GB)..."
-  brew install --cask mactex-no-gui
+# ---- 3. TeX 初期設定（mactex-no-gui は Brewfile 経由でインストール済み）----
+if [ -x /Library/TeX/texbin/tlmgr ]; then
   eval "$(/usr/libexec/path_helper)"
   sudo tlmgr update --self --all || true
   sudo tlmgr paper a4 || true
-else
-  echo "==> TeX already installed: $(command -v platex || echo /Library/TeX/texbin/platex)"
 fi
 
 # ---- 4. VS Code extensions ----
