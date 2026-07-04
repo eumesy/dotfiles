@@ -20,15 +20,9 @@ git clone https://github.com/eumesy/dotfiles.git ~/ghq/github.com/eumesy/dotfile
 
 - **主**: VS Code 内蔵の **Settings Sync**（GitHub アカウントでログイン）が
   設定・拡張・キーバインドを全端末に自動同期する
-- **従**: `vscode/` 以下にバックアップコピーを保持
-  （install.sh は設定ファイルが存在しない場合のみ配置する）
-
-設定を大きく変えたら、バックアップも更新しておく:
-
-```sh
-cp "$HOME/Library/Application Support/Code/User/settings.json"    ~/dotfiles/vscode/
-cp "$HOME/Library/Application Support/Code/User/keybindings.json" ~/dotfiles/vscode/
-```
+- **従**: settings.json / keybindings.json の実体は `vscode/` 以下にあり、
+  VS Code の設定ディレクトリからは symlink（install.sh が作成）。
+  設定変更は自動的に git 管理下に入るので、手動コピーは不要
 
 ## Claude Code グローバル設定 (CLAUDE.md)
 

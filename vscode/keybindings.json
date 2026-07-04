@@ -4,5 +4,11 @@
     "key": "cmd+enter",
     "command": "latex-workshop.build",
     "when": "editorLangId == 'latex'"
+  },
+  // Ctrl+. : 再コンパイル（synctex.afterBuild により完了後 PDF がカーソル行へ自動移動）
+  {
+    "key": "ctrl+.",
+    "command": "latex-workshop.build",
+    "when": "editorLangId == 'latex'"
   }
 ]

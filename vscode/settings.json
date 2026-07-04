@@ -21,6 +21,8 @@
   // エディタ横のタブに PDF 表示（⌘click で PDF⇔ソース相互ジャンプ）
   "latex-workshop.view.pdf.viewer": "tab",
   "latex-workshop.synctex.afterBuild.enabled": true,
+  // PDF 上のダブルクリックでソースの該当行へジャンプ（Overleaf と同じ操作感）
+  "latex-workshop.view.pdf.internal.synctex.keybinding": "double-click",
 
   // 中間ファイルをエクスプローラーから隠す
   "files.exclude": {
