@@ -8,6 +8,11 @@
 #   ~/dotfiles/install.sh
 #
 set -euo pipefail
+
+# $0 は「実行時に指定されたこのスクリプト自身のパス」（例: ~/dotfiles/install.sh）。
+# dirname はパスからファイル名を除いた親ディレクトリを返す（例: ~/dotfiles）。
+# つまりこの行は「スクリプトが置かれているディレクトリに移動」という意味。
+# これにより、どのディレクトリから実行しても Brewfile 等への相対パスが正しく解決される。
 cd "$(dirname "$0")"
 
 # ---- 1. Homebrew ----
@@ -56,6 +61,16 @@ if [ -f "$HOME/.claude/CLAUDE.md" ] && [ ! -L "$HOME/.claude/CLAUDE.md" ]; then
   mv "$HOME/.claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md.bak"
 fi
 ln -sfn "$PWD/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
+
+# ---- 8. zsh 設定を symlink ----
+for pair in "zsh/zshrc:.zshrc" "zsh/zprofile:.zprofile"; do
+  src="${pair%%:*}"; dst="${pair##*:}"
+  if [ -f "$HOME/$dst" ] && [ ! -L "$HOME/$dst" ]; then
+    echo "==> Backing up existing ~/$dst -> $dst.bak"
+    mv "$HOME/$dst" "$HOME/$dst.bak"
+  fi
+  ln -sfn "$PWD/$src" "$HOME/$dst"
+done
 
 echo ""
 echo "done. 残りの手動ステップ:"
