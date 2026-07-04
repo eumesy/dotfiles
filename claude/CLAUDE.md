@@ -11,6 +11,14 @@
 - **理由:** 参照先がどのメッセージのどの部分か曖昧になり、ユーザーが遡って探す手間が生じる。
 - **特に:** ユーザーに実行を依頼するコマンドは、依頼するメッセージ自体に必ず全文を再掲する。
 
+## [全場面] dotfiles を編集したら commit & push まで行う
+`~/dotfiles`（実体 ~/ghq/github.com/eumesy/dotfiles）配下のファイルを編集したら、
+その都度 commit & push して GitHub と常に同期された状態を保つ（未 push で放置しない）。
+
+- これは「外部に影響する操作は事前確認」ルールの例外であり、事前確認は不要。
+- ~/.zshrc, ~/.claude/CLAUDE.md, VS Code の settings.json / keybindings.json 等は
+  dotfiles への symlink なので、これらの編集も同ルールの対象。
+
 ## [全場面] ファイル更新は before/after の diff を明示して確認をとる
 ユーザーのファイル（プロジェクトファイル、設定ファイル等）を変更する際は、before/after の
 diff が明確に分かる形で提示し、ユーザーの確認をとってから適用する。
