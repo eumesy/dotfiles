@@ -30,6 +30,12 @@ cp "$HOME/Library/Application Support/Code/User/settings.json"    ~/dotfiles/vsc
 cp "$HOME/Library/Application Support/Code/User/keybindings.json" ~/dotfiles/vscode/
 ```
 
+## Claude Code グローバル設定 (CLAUDE.md)
+
+- 実体は `claude/CLAUDE.md`（このリポジトリ内）、
+  `~/.claude/CLAUDE.md` はそこへの symlink（install.sh が作成）
+- GitHub Web で直接編集したら、各端末で `git -C ~/dotfiles pull` して反映する
+
 ## LaTeX プロジェクトの方針
 
 - ビルド設定は各プロジェクトの `latexmkrc` に一元化

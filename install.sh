@@ -49,6 +49,14 @@ done
 # ---- 6. git ----
 git config --global credential.helper osxkeychain
 
+# ---- 7. Claude Code: グローバル CLAUDE.md を symlink ----
+mkdir -p "$HOME/.claude"
+if [ -f "$HOME/.claude/CLAUDE.md" ] && [ ! -L "$HOME/.claude/CLAUDE.md" ]; then
+  echo "==> Backing up existing ~/.claude/CLAUDE.md -> CLAUDE.md.bak"
+  mv "$HOME/.claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md.bak"
+fi
+ln -sfn "$PWD/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
+
 echo ""
 echo "done. 残りの手動ステップ:"
 echo "  1. VS Code を起動し Settings Sync にログイン（設定・拡張の自動同期）"
