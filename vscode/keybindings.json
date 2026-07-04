@@ -10,13 +10,14 @@
     "key": "ctrl+.",
     "command": "latex-workshop.build",
     "when": "editorLangId == 'latex'"
-},
-{
+  },
+  // Shift+Enter : ターミナルに改行を送る（Claude Code の複数行入力用）
+  {
     "key": "shift+enter",
     "command": "workbench.action.terminal.sendSequence",
     "args": {
-        "text": "\u001b\r"
+      "text": "\u001b\r"
     },
     "when": "terminalFocus"
-}
+  }
 ]
