@@ -10,5 +10,13 @@
     "key": "ctrl+.",
     "command": "latex-workshop.build",
     "when": "editorLangId == 'latex'"
-  }
+},
+{
+    "key": "shift+enter",
+    "command": "workbench.action.terminal.sendSequence",
+    "args": {
+        "text": "\u001b\r"
+    },
+    "when": "terminalFocus"
+}
 ]

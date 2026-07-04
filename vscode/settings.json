@@ -40,5 +40,7 @@
   "chat.disableAIFeatures": true,
   "chat.commandCenter.enabled": false,
 
-  "claudeCode.preferredLocation": "panel"
+"claudeCode.preferredLocation": "panel",
+"terminal.integrated.mouseWheelScrollSensitivity": 3,
+"terminal.integrated.gpuAcceleration": "off"
 }
