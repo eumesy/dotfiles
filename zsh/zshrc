@@ -1,1 +1,12 @@
 export PATH="$HOME/.local/bin:$PATH"
+
+# fzf のキーバインド・補完 (Ctrl-R 履歴検索など)
+source <(fzf --zsh)
+
+# Ctrl-] : ghq 管理下のリポジトリを fzf でインクリメンタル検索して cd
+function ghq-fzf() {
+  local repo=$(ghq list | fzf --reverse --height 40%)
+  [ -n "$repo" ] && cd "$(ghq root)/$repo" && zle reset-prompt
+}
+zle -N ghq-fzf
+bindkey '^]' ghq-fzf
