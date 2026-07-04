@@ -53,13 +53,18 @@ done
 # ---- 6. git ----
 git config --global credential.helper osxkeychain
 
-# ---- 7. Claude Code: グローバル CLAUDE.md を symlink ----
+# ---- 7. Claude Code: グローバル CLAUDE.md / skills を symlink ----
 mkdir -p "$HOME/.claude"
 if [ -f "$HOME/.claude/CLAUDE.md" ] && [ ! -L "$HOME/.claude/CLAUDE.md" ]; then
   echo "==> Backing up existing ~/.claude/CLAUDE.md -> CLAUDE.md.bak"
   mv "$HOME/.claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md.bak"
 fi
 ln -sfn "$PWD/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
+if [ -d "$HOME/.claude/skills" ] && [ ! -L "$HOME/.claude/skills" ]; then
+  echo "==> Backing up existing ~/.claude/skills -> skills.bak"
+  mv "$HOME/.claude/skills" "$HOME/.claude/skills.bak"
+fi
+ln -sfn "$PWD/claude/skills" "$HOME/.claude/skills"
 
 # ---- 8. zsh 設定を symlink ----
 for pair in "zsh/zshrc:.zshrc" "zsh/zprofile:.zprofile"; do
