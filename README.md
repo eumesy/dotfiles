@@ -12,9 +12,14 @@ git clone https://github.com/eumesy/dotfiles.git ~/ghq/github.com/eumesy/dotfile
 
 インストールされるもの:
 
-- Homebrew + `Brewfile` のパッケージ（git, gh, VS Code）
-- MacTeX / TeX Live（未インストールの場合のみ、`mactex-no-gui`）
-- VS Code 拡張（LaTeX Workshop, Awesome Emacs Keymap）
+- Homebrew と [`Brewfile`](Brewfile) に列挙したパッケージ
+  （CLI ツール・GUI アプリ・MacTeX。各ツールの役割は Brewfile 内のコメント参照）
+- VS Code 拡張（リストは [`install.sh`](install.sh) 内。普段は Settings Sync が
+  拡張も同期するが、未ログインでも最低限動くように install.sh でも入れる）
+- 各種設定ファイルの symlink（対象の一覧は [`install.sh`](install.sh) 参照）
+
+install.sh は冪等（何度実行しても安全）に保つ規約で、非冪等になりがちな書き方は
+[`scripts/lint-install.sh`](scripts/lint-install.sh) が検出する（pre-commit hook で自動実行）。
 
 ## VS Code 設定の管理方針
 

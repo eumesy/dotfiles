@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 #
-# 新しい Mac のセットアップスクリプト（冪等：何度実行しても安全）
+# 新しい Mac のセットアップスクリプト
+#
+# 規約: 各ステップは再実行しても安全（冪等）に書く。ステップを追加・変更したら
+#       scripts/lint-install.sh を実行し、「2 回目の実行で何が起こるか」も確認する。
 #
 # 使い方:
 #   xcode-select --install   # 事前に一度だけ
@@ -52,6 +55,8 @@ done
 
 # ---- 6. git ----
 git config --global credential.helper osxkeychain
+# リポジトリ同梱の git hooks を有効化（pre-commit で install.sh の冪等性 lint）
+git config core.hooksPath scripts/githooks
 
 # ---- 7. Claude Code: グローバル CLAUDE.md / skills を symlink ----
 mkdir -p "$HOME/.claude"

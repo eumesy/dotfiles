@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# pre-commit hook: install.sh がステージされていたら冪等性 lint を実行
+# （install.sh が git config core.hooksPath scripts/githooks で有効化する）
+set -euo pipefail
+cd "$(git rev-parse --show-toplevel)"
+if git diff --cached --name-only | grep -qx 'install.sh'; then
+  scripts/lint-install.sh
+fi
