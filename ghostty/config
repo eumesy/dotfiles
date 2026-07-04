@@ -1,0 +1,7 @@
+# Ghostty 設定
+# install.sh により ~/.config/ghostty/config に symlink される。
+# background-opacity の変更は Ghostty の完全再起動が必要。
+
+# 背景の半透明 + ブラー（値は好みで調整: opacity 0〜1, blur は強度）
+background-opacity = 0.85
+background-blur = 20

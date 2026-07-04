@@ -80,6 +80,19 @@ mkdir -p "$HOME/Library/Services"
 cp -R macos/*.workflow "$HOME/Library/Services/"
 /System/Library/CoreServices/pbs -update 2>/dev/null || true
 
+# ---- 11. Ghostty 設定を symlink ----
+mkdir -p "$HOME/.config/ghostty"
+if [ -f "$HOME/.config/ghostty/config" ] && [ ! -L "$HOME/.config/ghostty/config" ]; then
+  echo "==> Backing up existing ghostty config -> config.bak"
+  mv "$HOME/.config/ghostty/config" "$HOME/.config/ghostty/config.bak"
+fi
+ln -sfn "$PWD/ghostty/config" "$HOME/.config/ghostty/config"
+
+# ---- 12. Dock に Ghostty を追加（dockutil、既にあれば何もしない）----
+if command -v dockutil >/dev/null 2>&1; then
+  dockutil --find Ghostty >/dev/null 2>&1 || dockutil --add /Applications/Ghostty.app
+fi
+
 echo ""
 echo "done. 残りの手動ステップ:"
 echo "  1. VS Code を起動し Settings Sync にログイン（設定・拡張の自動同期）"
