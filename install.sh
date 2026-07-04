@@ -69,6 +69,9 @@ for pair in "zsh/zshrc:.zshrc" "zsh/zprofile:.zprofile"; do
   ln -sfn "$PWD/$src" "$HOME/$dst"
 done
 
+# ---- 9. ~/dotfiles symlink（実体は ghq 配下）----
+[ -e "$HOME/dotfiles" ] || ln -s "$PWD" "$HOME/dotfiles"
+
 echo ""
 echo "done. 残りの手動ステップ:"
 echo "  1. VS Code を起動し Settings Sync にログイン（設定・拡張の自動同期）"
