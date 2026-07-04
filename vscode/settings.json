@@ -7,8 +7,13 @@
   "latex-workshop.latex.tools": [
     {
       "name": "latexmk",
-      "command": "latexmk",
-      "args": ["-cd", "-interaction=nonstopmode", "%DOC%"]
+      "command": "/Library/TeX/texbin/latexmk",
+      "args": ["-cd", "-interaction=nonstopmode", "%DOC%"],
+      // GUI 起動の VS Code は TeX の PATH を持たないため明示
+      // (latexmk が内部で呼ぶ platex/dvipdfmx の解決にも必要)
+      "env": {
+        "PATH": "/Library/TeX/texbin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+      }
     }
   ],
   // 保存 (C-x C-s / ⌘S) で自動ビルド → Overleaf と同じ操作感
