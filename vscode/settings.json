@@ -40,6 +40,12 @@
   "chat.disableAIFeatures": true,
   "chat.commandCenter.enabled": false,
 
+  // LaTeX: 長い段落をウィンドウ幅で折り返して表示（Overleaf と同じソフトラップ。
+  // 表示上の折り返しのみで、ファイルに改行が入るわけではない）
+  "[latex]": {
+    "editor.wordWrap": "on"
+  },
+
 "claudeCode.preferredLocation": "panel",
 "terminal.integrated.mouseWheelScrollSensitivity": 3,
 "terminal.integrated.gpuAcceleration": "off"
