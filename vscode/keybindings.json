@@ -19,5 +19,11 @@
       "text": "\u001b\r"
     },
     "when": "terminalFocus"
+  },
+  // Opt+; : 行コメントのトグル（Overleaf / Emacs の M-; と同様）
+  {
+    "key": "alt+;",
+    "command": "editor.action.commentLine",
+    "when": "editorTextFocus && !editorReadonly"
   }
 ]
