@@ -73,6 +73,12 @@ done
 # ---- 9. ~/dotfiles symlink（実体は ghq 配下）----
 [ -e "$HOME/dotfiles" ] || ln -s "$PWD" "$HOME/dotfiles"
 
+# ---- 10. Finder Quick Actions（右クリック → New VS Code Tab/Window Here）----
+# Services は symlink だと認識されないことがあるため cp で配置
+mkdir -p "$HOME/Library/Services"
+cp -R macos/*.workflow "$HOME/Library/Services/"
+/System/Library/CoreServices/pbs -update 2>/dev/null || true
+
 echo ""
 echo "done. 残りの手動ステップ:"
 echo "  1. VS Code を起動し Settings Sync にログイン（設定・拡張の自動同期）"
