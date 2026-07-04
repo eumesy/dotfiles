@@ -38,14 +38,15 @@ if command -v code >/dev/null 2>&1; then
   code --install-extension tuttieee.emacs-mcx
 fi
 
-# ---- 5. VS Code settings（存在しない場合のみ配置。Settings Sync が優先）----
+# ---- 5. VS Code settings を symlink ----
 VSCODE_USER="$HOME/Library/Application Support/Code/User"
 mkdir -p "$VSCODE_USER"
 for f in settings.json keybindings.json; do
-  if [ ! -f "$VSCODE_USER/$f" ] && [ -f "vscode/$f" ]; then
-    echo "==> Placing vscode/$f"
-    cp "vscode/$f" "$VSCODE_USER/$f"
+  if [ -f "$VSCODE_USER/$f" ] && [ ! -L "$VSCODE_USER/$f" ]; then
+    echo "==> Backing up existing $f -> $f.bak"
+    mv "$VSCODE_USER/$f" "$VSCODE_USER/$f.bak"
   fi
+  ln -sfn "$PWD/vscode/$f" "$VSCODE_USER/$f"
 done
 
 # ---- 6. git ----
