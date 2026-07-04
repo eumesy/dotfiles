@@ -34,5 +34,11 @@
     "**/*.fdb_latexmk": true,
     "**/*.bbl": true,
     "**/*.blg": true
-  }
+  },
+
+  // VS Code 組み込みの Copilot/Chat UI を無効化（AI は Claude Code 拡張を使う）
+  "chat.disableAIFeatures": true,
+  "chat.commandCenter.enabled": false,
+
+  "claudeCode.preferredLocation": "panel"
 }
