@@ -1,0 +1,8 @@
+[
+  // Overleaf と同じ ⌘Enter で再コンパイル（⌘S/C-x C-s の保存時ビルドと併用）
+  {
+    "key": "cmd+enter",
+    "command": "latex-workshop.build",
+    "when": "editorLangId == 'latex'"
+  }
+]

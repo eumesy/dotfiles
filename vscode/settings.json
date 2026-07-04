@@ -1,0 +1,31 @@
+{
+  // ===== LaTeX Workshop =====
+  // ビルドはプロジェクトごとの latexmkrc に一元化（Overleaf と同一設定）
+  "latex-workshop.latex.recipes": [
+    { "name": "latexmk", "tools": ["latexmk"] }
+  ],
+  "latex-workshop.latex.tools": [
+    {
+      "name": "latexmk",
+      "command": "latexmk",
+      "args": ["-cd", "-interaction=nonstopmode", "%DOC%"]
+    }
+  ],
+  // 保存 (C-x C-s / ⌘S) で自動ビルド → Overleaf と同じ操作感
+  "latex-workshop.latex.autoBuild.run": "onSave",
+  // エディタ横のタブに PDF 表示（⌘click で PDF⇔ソース相互ジャンプ）
+  "latex-workshop.view.pdf.viewer": "tab",
+  "latex-workshop.synctex.afterBuild.enabled": true,
+
+  // 中間ファイルをエクスプローラーから隠す
+  "files.exclude": {
+    "**/*.aux": true,
+    "**/*.log": true,
+    "**/*.dvi": true,
+    "**/*.synctex.gz": true,
+    "**/*.fls": true,
+    "**/*.fdb_latexmk": true,
+    "**/*.bbl": true,
+    "**/*.blg": true
+  }
+}
