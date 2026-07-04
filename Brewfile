@@ -5,6 +5,7 @@ brew "ghq"   # リポジトリを ~/ghq/github.com/<user>/<repo> に統一配置
 brew "fzf"   # インクリメンタル検索（ghq のリポジトリ選択などに使用）
 brew "dockutil"  # Dock の項目を CLI で管理
 brew "zoxide"    # 訪れたディレクトリを frecency で記録・ジャンプ
+brew "eza"       # ls の現代的代替（色・git 状態・tree 表示）
 
 # Apps
 cask "visual-studio-code"

@@ -41,3 +41,27 @@ function fzf-zoxide() {
 }
 zle -N fzf-zoxide
 bindkey '^l' fzf-zoxide
+
+# 補完を有効化し、候補にファイル種別の色を付ける（LS_COLORS は 2021 年設定を踏襲）
+autoload -Uz compinit && compinit
+export LS_COLORS='di=01;36:ln=01;35:ex=01;32'
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
+
+# ls: eza（exa 後継のモダン ls。色・git 状態・tree 表示）。無ければ BSD ls で代替
+if command -v eza >/dev/null 2>&1; then
+  alias ls='eza -A'                   # 隠しファイル込み（2021 年の ls -A を踏襲）
+  alias ll='eza -lhA --git'           # 詳細表示 + git 状態（旧 ll='ls -lhGAF' 相当）
+  alias lt='eza -A --tree --level=2'  # 2 階層のツリー表示
+else
+  alias ls='ls -AGF'
+  alias ll='ls -lhAGF'
+fi
+
+# cd 直後に ls を自動実行（2021 年の chpwd() を踏襲。zoxide のフックと共存できる add-zsh-hook 方式）
+# ※ 直前で定義した ls エイリアス（= eza）がこの関数の定義時に展開される
+# ※ eza は「引数なし + stdin が非端末」だと stdin からパス一覧を読む仕様のため、明示的に . を渡す
+autoload -Uz add-zsh-hook
+function ls-on-chpwd() {
+  ls .
+}
+add-zsh-hook chpwd ls-on-chpwd
