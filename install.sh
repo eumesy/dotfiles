@@ -36,6 +36,7 @@ if command -v code >/dev/null 2>&1; then
   echo "==> Installing VS Code extensions..."
   code --install-extension James-Yu.latex-workshop
   code --install-extension tuttieee.emacs-mcx
+  code --install-extension anthropic.claude-code
 fi
 
 # ---- 5. VS Code settings を symlink ----

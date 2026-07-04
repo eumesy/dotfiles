@@ -30,6 +30,18 @@ git clone https://github.com/eumesy/dotfiles.git ~/ghq/github.com/eumesy/dotfile
   `~/.claude/CLAUDE.md` はそこへの symlink（install.sh が作成）
 - GitHub Web で直接編集したら、各端末で `git -C ~/dotfiles pull` して反映する
 
+## Finder の右クリックメニュー
+
+Finder でフォルダを右クリックすると、以下のアクションで直接開ける:
+
+- **New VS Code Window Here** — このリポジトリ同梱の Quick Action
+  （`macos/*.workflow`、install.sh が ~/Library/Services に配置）
+- **New iTerm2 Tab/Window Here** — iTerm2 が同梱する Service（iTerm2 を入れると自動で出る）
+- **New Terminal at Folder / New Terminal Tab at Folder** — macOS 標準
+
+出ない場合: System Settings → Keyboard → Keyboard Shortcuts → Services →
+Files and Folders で該当項目を有効化する。
+
 ## LaTeX プロジェクトの方針
 
 - ビルド設定は各プロジェクトの `latexmkrc` に一元化
