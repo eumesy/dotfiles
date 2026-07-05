@@ -32,6 +32,7 @@
 - ~/.zshrc, ~/.claude/CLAUDE.md, VS Code の settings.json / keybindings.json 等は
   dotfiles への symlink なので、これらの編集も同ルールの対象。
 - Claude の恒久設定（グローバル CLAUDE.md、~/.claude/skills/ 配下のスキル等）は dotfiles（claude/）に実体を置き、symlink で参照する。新規作成時も ~/.claude 直下に直接作らず dotfiles 側に作成し、その場で commit & push まで行う（~/.claude/skills → dotfiles/claude/skills に symlink 済み）。
+- **ドキュメントも同時に更新する:** 挙動・構成が変わる編集（ツールや拡張の追加・削除、キーバインド、運用ルールの変更等）では、同じタイミングで dotfiles の README.md（またはそこからリンクされるドキュメント）も更新し、ドキュメントと実態を乖離させない。些末な変更（コメント修正等）は不要。
 
 ## [全場面] ファイル更新は before/after の diff を明示して確認をとる
 ユーザーのファイル（プロジェクトファイル、設定ファイル等）を変更する際は、before/after の
