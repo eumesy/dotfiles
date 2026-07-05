@@ -57,6 +57,14 @@ done
 git config --global credential.helper osxkeychain
 # リポジトリ同梱の git hooks を有効化（pre-commit で install.sh の冪等性 lint）
 git config core.hooksPath scripts/githooks
+# GitHub への push だけ HTTPS 経由にする（fetch/clone は従来どおり ssh のまま）。
+# ssh はプロキシ型サンドボックス（Claude Code 等）を通れないことがあるため。
+# 認証は gh auth login で Keychain に保存したトークンを使う。gh auth setup-git は
+# github.com 限定の credential helper を追加するだけで、上の osxkeychain（全ホスト用、
+# Overleaf 等）とは共存する。トークンが Keychain にある都合上、サンドボックス内からは
+# 取り出せないので、Claude からの push はサンドボックス外実行（要承認）になる
+git config --global url."https://github.com/".pushInsteadOf "git@github.com:"
+gh auth setup-git 2>/dev/null || echo "==> gh 未ログインのため credential helper 未設定（gh auth login 後に再実行）"
 # グローバル gitignore（.DS_Store 等）。core.excludesFile 未設定時に git が
 # 標準で読む ~/.config/git/ignore へ symlink する
 mkdir -p "$HOME/.config/git"
