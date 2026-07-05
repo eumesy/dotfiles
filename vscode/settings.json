@@ -49,6 +49,8 @@
   "claudeCode.preferredLocation": "panel",
 
   // ===== 統合ターミナル =====
+  // eza --icons 等の Nerd Font グリフを表示（フォントは Brewfile の font-jetbrains-mono-nerd-font）
+  "terminal.integrated.fontFamily": "JetBrainsMono Nerd Font",
   // マウスホイールのスクロール量を上げる（既定 1）
   "terminal.integrated.mouseWheelScrollSensitivity": 3,
   // GPU 描画の不具合（文字欠け/ちらつき）回避のため無効化

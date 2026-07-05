@@ -12,5 +12,8 @@ cask "visual-studio-code"
 cask "iterm2"
 cask "ghostty"  # ターミナル（GPU 描画・Claude Code の Shift+Enter/通知に無設定で対応）
 
+# Fonts
+cask "font-jetbrains-mono-nerd-font"  # eza --icons 等の Nerd Font グリフ表示用（VS Code ターミナルで使用）
+
 # TeX (MacTeX / TeX Live, GUI アプリなし)
 cask "mactex-no-gui"

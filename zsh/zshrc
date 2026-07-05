@@ -47,11 +47,14 @@ autoload -Uz compinit && compinit
 export LS_COLORS='di=01;36:ln=01;35:ex=01;32'
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 
-# ls: eza（exa 後継のモダン ls。色・git 状態・tree 表示）。無ければ BSD ls で代替
+# ls: eza（exa 後継のモダン ls。色・git 状態・tree 表示・アイコン）。無ければ BSD ls で代替
+# --icons=auto: 出力が端末のときだけ Nerd Font グリフのアイコンを付ける（パイプ時は付かない）。
+# 表示には Nerd Font が必要（Ghostty は内蔵。VS Code ターミナルは vscode/settings.json の
+# terminal.integrated.fontFamily + Brewfile の font-jetbrains-mono-nerd-font で対応）
 if command -v eza >/dev/null 2>&1; then
-  alias ls='eza -A'                   # 隠しファイル込み（2021 年の ls -A を踏襲）
-  alias ll='eza -lhA --git'           # 詳細表示 + git 状態（旧 ll='ls -lhGAF' 相当）
-  alias lt='eza -A --tree --level=2'  # 2 階層のツリー表示
+  alias ls='eza -A --icons=auto'                   # 隠しファイル込み（2021 年の ls -A を踏襲）
+  alias ll='eza -lhA --git --icons=auto'           # 詳細表示 + git 状態（旧 ll='ls -lhGAF' 相当）
+  alias lt='eza -A --tree --level=2 --icons=auto'  # 2 階層のツリー表示
 else
   alias ls='ls -AGF'
   alias ll='ls -lhAGF'
