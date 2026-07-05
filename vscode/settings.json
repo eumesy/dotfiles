@@ -47,6 +47,11 @@
   // VS Code 組み込みの Copilot/Chat UI を無効化（AI は Claude Code 拡張を使う）
   "chat.disableAIFeatures": true,
   "chat.commandCenter.enabled": false,
+  // 拡張機能の「おすすめ」通知を出さない。直接のきっかけは vscode-pdf の推薦
+  // （LaTeX Workshop と競合するため導入禁止 → README「拡張機能の依存・競合メモ」参照）。
+  // ※ vscode-pdf に限らず、他のすべての拡張のおすすめ通知も出なくなる点に注意。
+  //    拡張は自分の意思で（おすすめ経由でなく）入れる方針
+  "extensions.ignoreRecommendations": true,
 
   // LaTeX: 長い段落をウィンドウ幅で折り返して表示（Overleaf と同じソフトラップ。
   // 表示上の折り返しのみで、ファイルに改行が入るわけではない）
