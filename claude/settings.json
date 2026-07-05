@@ -1,0 +1,12 @@
+{
+  "theme": "dark",
+  "tui": "fullscreen",
+  "model": "claude-fable-5[1m]",
+  "effortLevel": "high",
+  "permissions": {
+    "allow": [
+      "WebFetch",
+      "Read"
+    ]
+  }
+}
