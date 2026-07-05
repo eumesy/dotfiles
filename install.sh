@@ -57,6 +57,14 @@ done
 git config --global credential.helper osxkeychain
 # リポジトリ同梱の git hooks を有効化（pre-commit で install.sh の冪等性 lint）
 git config core.hooksPath scripts/githooks
+# グローバル gitignore（.DS_Store 等）。core.excludesFile 未設定時に git が
+# 標準で読む ~/.config/git/ignore へ symlink する
+mkdir -p "$HOME/.config/git"
+if [ -f "$HOME/.config/git/ignore" ] && [ ! -L "$HOME/.config/git/ignore" ]; then
+  echo "==> Backing up existing ~/.config/git/ignore -> ignore.bak"
+  mv "$HOME/.config/git/ignore" "$HOME/.config/git/ignore.bak"
+fi
+ln -sfn "$PWD/git/ignore" "$HOME/.config/git/ignore"
 
 # ---- 7. Claude Code: 設定リポジトリ (eumesy/claude) を clone して symlink ----
 # 実体は https://github.com/eumesy/claude（CLAUDE.md / settings.json / skills）。

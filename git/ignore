@@ -1,0 +1,10 @@
+# グローバル gitignore（全リポジトリ共通で無視するファイル）
+# 実体: dotfiles リポジトリの git/ignore。install.sh が ~/.config/git/ignore へ symlink する
+# （core.excludesFile 未設定時に git が標準で読むパス）
+
+# macOS が自動生成するファイル
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon?
+._*
