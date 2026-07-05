@@ -1,4 +1,5 @@
 export PATH="$HOME/.local/bin:$PATH"
+typeset -U path PATH  # PATH の重複エントリを自動排除（zshrc を再 source しても増えない）
 
 # fzf のキーバインド・補完 (Ctrl-R 履歴検索など)
 source <(fzf --zsh)
@@ -77,3 +78,26 @@ function ls-on-chpwd() {
   ls .
 }
 add-zsh-hook chpwd ls-on-chpwd
+
+# ~/.zshrc（の実体）が更新されていたら、次のプロンプト表示前に自動で再読み込み
+# （dotfiles の編集・pull 後、開いている各ターミナルは Enter を打つだけで反映される）
+# ※ source の重ね掛けのため設定の「削除」は反映されない。完全リセットは reload（下記）
+zmodload -F zsh/stat b:zstat   # fork せずに mtime を取れる組み込み stat（毎プロンプト実行のため）
+_zshrc_mtime=$(zstat +mtime ~/.zshrc)
+function source-zshrc-if-updated() {
+  local mtime=$(zstat +mtime ~/.zshrc)
+  (( mtime == _zshrc_mtime )) && return
+  _zshrc_mtime=$mtime
+  # 壊れた設定を開いている全ターミナルに波及させないよう、構文チェックが通ったときだけ読み込む
+  if zsh -n ~/.zshrc 2>/dev/null; then
+    source ~/.zshrc
+    print "(~/.zshrc を再読み込みしました)"
+  else
+    print "(~/.zshrc に構文エラーがあるため再読み込みをスキップしました)"
+  fi
+}
+add-zsh-hook precmd source-zshrc-if-updated
+
+# reload: シェルを丸ごと再起動して設定をクリーンに読み直す
+# （自動リロードと違い、設定の削除も反映される。カレントディレクトリ・履歴は保持）
+alias reload='exec zsh'
