@@ -29,7 +29,9 @@
   "latex-workshop.view.pdf.internal.synctex.keybinding": "double-click",
   // 数式プレビュー（MathJax）が解釈できないパッケージ由来コマンドの代替定義（実ビルドには無関係）
   "latex-workshop.hover.preview.newcommand.newcommandFile": "/Users/sho/dotfiles/vscode/latex-preview-macros.tex",
-  // mathtools 系コマンド（\coloneqq 等）もプレビューで解釈させる
+  // mathtools 系コマンド（\coloneqq 等）もプレビューで解釈させる。
+  // 拡張の内部既定（baseExtensions）にも mathtools は含まれるが、公式ドキュメント上の
+  // 既定ロード（ams, color, newcommand, noerrors, noundefined）には無いため明示しておく
   "latex-workshop.hover.preview.mathjax.extensions": ["mathtools"],
 
   // 中間ファイルをエクスプローラーから隠す

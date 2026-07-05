@@ -3,3 +3,20 @@
 % プレビューにのみ効き、実際の LaTeX ビルドには一切読み込まれない。
 \newcommand{\mathds}[1]{\mathbb{#1}}  % dsfont 由来．黒板太字で代替
 \newcommand{\textsc}[1]{\mathrm{#1}}  % 小型大文字．MathJax に SC フォントが無いため立体で代替
+
+% --- MathJax SVG 出力の左右端クリップ対策 ---
+% 行頭・行末の負スペースや幅 0（lap）コマンドがあると、MathJax は viewBox 幅を縮めつつ
+% グリフを viewBox 外（負の x）に描くため、数式の端が見切れる。プレビューでは無効化する。
+% 意図的トレードオフ: プレビューの字間・幅は実 PDF より恒常的に広めになる。
+\renewcommand{\!}{}
+\renewcommand{\negthinspace}{}
+\renewcommand{\negmedspace}{}
+\renewcommand{\negthickspace}{}
+\renewcommand{\llap}[1]{#1}
+\renewcommand{\rlap}[1]{#1}
+\renewcommand{\clap}[1]{#1}
+\renewcommand{\mathllap}[1]{#1}
+\renewcommand{\mathrlap}[1]{#1}
+\renewcommand{\mathclap}[1]{#1}
+% 既知の限界: 負の \hspace / \mkern / \kern は引数の符号でマクロ分岐できないため対象外。
+% \smash は [t]/[b] 省略可能引数を壊すため見送り。クリップしたら個別対処。
