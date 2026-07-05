@@ -108,6 +108,15 @@ mkdir -p "$HOME/.vscode/extensions"
 ln -sfn "$PWD/vscode/extensions/latex-auto-mathpreview" \
         "$HOME/.vscode/extensions/eumesy.latex-auto-mathpreview-0.0.1"
 
+# ---- 14. iTerm2: Dynamic Profile を symlink し、デフォルトプロファイルに設定 ----
+# プロファイルの実体は iterm2/profiles.json（Nerd Font 指定など）。iTerm2 は
+# DynamicProfiles ディレクトリを監視するので、JSON の変更は起動中でも即時反映される。
+# ※ defaults write は iTerm2 起動中に実行すると終了時に上書きされうるため、
+#    iTerm2 を終了してから実行するのが安全
+mkdir -p "$HOME/Library/Application Support/iTerm2/DynamicProfiles"
+ln -sfn "$PWD/iterm2/profiles.json" "$HOME/Library/Application Support/iTerm2/DynamicProfiles/profiles.json"
+defaults write com.googlecode.iterm2 "Default Bookmark Guid" -string "dotfiles-default-profile"
+
 echo ""
 echo "done. 残りの手動ステップ:"
 echo "  1. VS Code を起動し Settings Sync にログイン（設定・拡張の自動同期）"

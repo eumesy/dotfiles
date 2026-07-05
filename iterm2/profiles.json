@@ -1,0 +1,10 @@
+{
+  "Profiles": [
+    {
+      "Name": "dotfiles",
+      "Guid": "dotfiles-default-profile",
+      "Dynamic Profile Parent Name": "Default",
+      "Normal Font": "JetBrainsMonoNF-Regular 12"
+    }
+  ]
+}
