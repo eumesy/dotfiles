@@ -27,6 +27,10 @@
   "latex-workshop.synctex.afterBuild.enabled": true,
   // PDF 上のダブルクリックでソースの該当行へジャンプ（Overleaf と同じ操作感）
   "latex-workshop.view.pdf.internal.synctex.keybinding": "double-click",
+  // 数式プレビュー（MathJax）が解釈できないパッケージ由来コマンドの代替定義（実ビルドには無関係）
+  "latex-workshop.hover.preview.newcommand.newcommandFile": "/Users/sho/dotfiles/vscode/latex-preview-macros.tex",
+  // mathtools 系コマンド（\coloneqq 等）もプレビューで解釈させる
+  "latex-workshop.hover.preview.mathjax.extensions": ["mathtools"],
 
   // 中間ファイルをエクスプローラーから隠す
   "files.exclude": {

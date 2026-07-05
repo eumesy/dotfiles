@@ -1,0 +1,5 @@
+% LaTeX Workshop の数式プレビュー（Hover / Math Preview Panel = MathJax）専用の追加マクロ定義。
+% settings.json の latex-workshop.hover.preview.newcommand.newcommandFile から参照される。
+% プレビューにのみ効き、実際の LaTeX ビルドには一切読み込まれない。
+\newcommand{\mathds}[1]{\mathbb{#1}}  % dsfont 由来．黒板太字で代替
+\newcommand{\textsc}[1]{\mathrm{#1}}  % 小型大文字．MathJax に SC フォントが無いため立体で代替
