@@ -60,6 +60,15 @@ else
   alias ll='ls -lhAGF'
 fi
 
+# less: bat（syntax highlight 付き cat/pager）を前処理にして less 内でハイライト表示
+# LESSOPEN: less がファイルを開くときに bat で色付けする（`cmd | less` のパイプ入力は対象外）
+# LESS=-R: 色の ANSI エスケープをそのまま解釈して表示
+# --style=plain: 行番号や枠を付けない（less らしい見た目のまま。コピーも汚れない）
+if command -v bat >/dev/null 2>&1; then
+  export LESSOPEN='| bat --color=always --style=plain %s'
+  export LESS='-R'
+fi
+
 # cd 直後に ls を自動実行（2021 年の chpwd() を踏襲。zoxide のフックと共存できる add-zsh-hook 方式）
 # ※ 直前で定義した ls エイリアス（= eza）がこの関数の定義時に展開される
 # ※ eza は「引数なし + stdin が非端末」だと stdin からパス一覧を読む仕様のため、明示的に . を渡す
