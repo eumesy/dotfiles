@@ -58,18 +58,24 @@ git config --global credential.helper osxkeychain
 # リポジトリ同梱の git hooks を有効化（pre-commit で install.sh の冪等性 lint）
 git config core.hooksPath scripts/githooks
 
-# ---- 7. Claude Code: グローバル CLAUDE.md / skills を symlink ----
+# ---- 7. Claude Code: 設定リポジトリ (eumesy/claude) を clone して symlink ----
+# 実体は https://github.com/eumesy/claude（CLAUDE.md / settings.json / skills）。
+# ghq get -u は未 clone なら clone、clone 済みなら pull（冪等）。
+ghq get -u github.com/eumesy/claude
+CLAUDE_REPO="$(ghq root)/github.com/eumesy/claude"
 mkdir -p "$HOME/.claude"
-if [ -f "$HOME/.claude/CLAUDE.md" ] && [ ! -L "$HOME/.claude/CLAUDE.md" ]; then
-  echo "==> Backing up existing ~/.claude/CLAUDE.md -> CLAUDE.md.bak"
-  mv "$HOME/.claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md.bak"
-fi
-ln -sfn "$PWD/claude/CLAUDE.md" "$HOME/.claude/CLAUDE.md"
+for f in CLAUDE.md settings.json; do
+  if [ -f "$HOME/.claude/$f" ] && [ ! -L "$HOME/.claude/$f" ]; then
+    echo "==> Backing up existing ~/.claude/$f -> $f.bak"
+    mv "$HOME/.claude/$f" "$HOME/.claude/$f.bak"
+  fi
+  ln -sfn "$CLAUDE_REPO/$f" "$HOME/.claude/$f"
+done
 if [ -d "$HOME/.claude/skills" ] && [ ! -L "$HOME/.claude/skills" ]; then
   echo "==> Backing up existing ~/.claude/skills -> skills.bak"
   mv "$HOME/.claude/skills" "$HOME/.claude/skills.bak"
 fi
-ln -sfn "$PWD/claude/skills" "$HOME/.claude/skills"
+ln -sfn "$CLAUDE_REPO/skills" "$HOME/.claude/skills"
 
 # ---- 8. zsh 設定を symlink ----
 for pair in "zsh/zshrc:.zshrc" "zsh/zprofile:.zprofile"; do

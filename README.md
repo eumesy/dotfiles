@@ -38,11 +38,10 @@ install.sh は冪等（何度実行しても安全）に保つ規約で、非冪
   （そのコマンド `latex-workshop.showMathPreviewPanel` を呼ぶだけの薄いラッパー）。
   LaTeX Workshop が無い環境では何もしない（エラーにもならない）
 
-## Claude Code グローバル設定 (CLAUDE.md)
+## Claude Code グローバル設定
 
-- 実体は `claude/CLAUDE.md`（このリポジトリ内）、
-  `~/.claude/CLAUDE.md` はそこへの symlink（install.sh が作成）
-- GitHub Web で直接編集したら、各端末で `git -C ~/dotfiles pull` して反映する
+- 実体は別リポジトリ [eumesy/claude](https://github.com/eumesy/claude)（CLAUDE.md・settings.json・skills/）。install.sh が `ghq get` で `~/ghq/github.com/eumesy/claude` に clone し、`~/.claude/` 配下から symlink を張る
+- GitHub Web で直接編集したら、各端末で `git -C ~/ghq/github.com/eumesy/claude pull` して反映する
 
 ## Finder の右クリックメニュー
 
@@ -65,4 +64,4 @@ Files and Folders で該当項目を有効化する。
 - **PDF 表示**: LaTeX Workshop のタブ内ビューアに一本化（前述の「拡張機能の依存・競合メモ」参照）
 - **数式プレビュー**: 数式にマウスホバーでポップアップ表示（LaTeX Workshop 標準）。さらに自作拡張 `latex-auto-mathpreview`（`vscode/extensions/`）が、.tex を開いたとき Math Preview Panel を自動で開いて **.tex エディタの直下**に配置し（右列の PDF を侵食しない）、フォーカスをエディタに戻す。カーソルが数式内にある間、パネルにライブレンダリングされる
 - **Overleaf 同期**: git bridge で同期（`git clone https://git.overleaf.com/<projectId>`）。co-author が Overleaf 上でコメント・添削している間は push を凍結する（コメントは git で運ばれず、push で位置ずれ・消失しうるため）
-- **バージョン管理**: 1 指示 1 commit。GitHub ミラー remote へは commit ごと自動 push、Overleaf への push のみ都度確認。規約の実体は Claude skill [`claude/skills/latex-git-workflow/`](claude/skills/latex-git-workflow/SKILL.md)
+- **バージョン管理**: 1 指示 1 commit。GitHub ミラー remote へは commit ごと自動 push、Overleaf への push のみ都度確認。規約の実体は Claude skill [`skills/latex-git-workflow/`（eumesy/claude リポジトリ内）](https://github.com/eumesy/claude/blob/main/skills/latex-git-workflow/SKILL.md)
