@@ -1,0 +1,10 @@
+{
+  "name": "latex-auto-mathpreview",
+  "displayName": "LaTeX Auto Math Preview",
+  "description": "Open LaTeX Workshop's math preview panel automatically when a LaTeX file is opened",
+  "publisher": "eumesy",
+  "version": "0.0.1",
+  "engines": { "vscode": "^1.90.0" },
+  "main": "./extension.js",
+  "activationEvents": ["onLanguage:latex"]
+}

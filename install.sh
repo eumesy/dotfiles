@@ -103,6 +103,11 @@ if command -v dockutil >/dev/null 2>&1; then
   dockutil --find Ghostty >/dev/null 2>&1 || dockutil --add /Applications/Ghostty.app
 fi
 
+# ---- 13. 自作 VS Code 拡張を symlink（.tex を開くと数式プレビュー自動起動）----
+mkdir -p "$HOME/.vscode/extensions"
+ln -sfn "$PWD/vscode/extensions/latex-auto-mathpreview" \
+        "$HOME/.vscode/extensions/eumesy.latex-auto-mathpreview-0.0.1"
+
 echo ""
 echo "done. 残りの手動ステップ:"
 echo "  1. VS Code を起動し Settings Sync にログイン（設定・拡張の自動同期）"
