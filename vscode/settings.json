@@ -18,6 +18,10 @@
   ],
   // 保存 (C-x C-s / ⌘S) で自動ビルド → Overleaf と同じ操作感
   "latex-workshop.latex.autoBuild.run": "onSave",
+  // ビルド失敗をポップアップ通知しない（Overleaf 同様、静かに失敗させる）。
+  // 失敗はステータスバーの ✗ と Problems パネル（⇧⌘M）で確認できる
+  "latex-workshop.message.error.show": false,
+  "latex-workshop.message.warning.show": false,
   // エディタ横のタブに PDF 表示（⌘click で PDF⇔ソース相互ジャンプ）
   "latex-workshop.view.pdf.viewer": "tab",
   "latex-workshop.synctex.afterBuild.enabled": true,
