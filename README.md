@@ -29,6 +29,15 @@ install.sh は冪等（何度実行しても安全）に保つ規約で、非冪
   VS Code の設定ディレクトリからは symlink（install.sh が作成）。
   設定変更は自動的に git 管理下に入るので、手動コピーは不要
 
+### 拡張機能の依存・競合メモ
+
+- **PDF 表示は LaTeX Workshop に一本化**（ビルド後のプレビュー・サイドバーからの
+  PDF 表示・SyncTeX ジャンプすべて）。**vscode-pdf (tomoki1207.pdf) は入れない**こと。
+  LaTeX Workshop と競合して警告が出る（2026-07 に一度入れて削除した実績あり）
+- 自作拡張 `latex-auto-mathpreview`（`vscode/extensions/`）は **LaTeX Workshop 依存**
+  （そのコマンド `latex-workshop.showMathPreviewPanel` を呼ぶだけの薄いラッパー）。
+  LaTeX Workshop が無い環境では何もしない（エラーにもならない）
+
 ## Claude Code グローバル設定 (CLAUDE.md)
 
 - 実体は `claude/CLAUDE.md`（このリポジトリ内）、
