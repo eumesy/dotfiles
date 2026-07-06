@@ -1,5 +1,13 @@
+# 対話ツール（fzf/zoxide、compinit が呼ぶ mv）は brew の /opt/homebrew/bin と system の /bin を
+# 前提にするが、それらを通すのはログイン専用の ~/.zprofile（brew shellenv）と /etc/zprofile
+# （path_helper）だけ。自動リロード（下の precmd 再 source）や非ログイン対話シェルはそれらを
+# 再実行しないため、欠けているときだけ冪等に補う（通過済みのログインシェルには足さない）。
+# system は path_helper（PATH 全体を macOS 標準順に再構成する）ではなく末尾追記で補い、既存の
+# .local/bin → brew → system の順序を保つ（brew だけ残り /bin 欠落という稀状態でも降格させない）。
+[[ ":$PATH:" == *":/bin:"* ]] || path+=(/usr/bin /bin /usr/sbin /sbin)   # system（mv 等）
+[[ -x /opt/homebrew/bin/brew && ":$PATH:" != *":/opt/homebrew/bin:"* ]] && eval "$(/opt/homebrew/bin/brew shellenv)"  # /opt/homebrew/bin（fzf, zoxide）
 export PATH="$HOME/.local/bin:$PATH"
-typeset -U path PATH  # PATH の重複エントリを自動排除（zshrc を再 source しても増えない）
+typeset -U path PATH  # 重複エントリを自動排除（再 source・上の通し直しでも増えない）
 
 # ここから下は対話 shell 専用。非対話 shell（スクリプト・Claude Code 等のエージェントが
 # 打つコマンド）に、対話用エイリアス（ls=eza など）・chpwd 自動 ls・fzf/zoxide・補完を
@@ -7,8 +15,8 @@ typeset -U path PATH  # PATH の重複エントリを自動排除（zshrc を再
 # 手戻りになる（BSD ls とは -t 等の意味が違う）。PATH は上で通済みなのでここで抜ける。
 [[ -o interactive ]] || return 0
 
-# fzf のキーバインド・補完 (Ctrl-R 履歴検索など)
-source <(fzf --zsh)
+# fzf のキーバインド・補完 (Ctrl-R 履歴検索など)。未インストール／PATH 欠落時のエラー抑止に command -v でガード
+command -v fzf >/dev/null 2>&1 && source <(fzf --zsh)
 
 # Ctrl-] : ghq 管理下のリポジトリを fzf でインクリメンタル検索して cd
 function ghq-fzf() {
@@ -35,8 +43,8 @@ bindkey '^P' history-beginning-search-backward-end
 bindkey '^N' history-beginning-search-forward-end
 
 # zoxide: 訪れたディレクトリを frecency（頻度 + 新しさ）で自動記録
-# `z <キーワード>` でジャンプ、`zi` で対話選択（fzf 使用）
-eval "$(zoxide init zsh)"
+# `z <キーワード>` でジャンプ、`zi` で対話選択（fzf 使用）。fzf と同様 command -v でガード
+command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh)"
 
 # Ctrl-L : 過去に訪れたディレクトリを fzf で検索して cd（frecency 順）
 function fzf-zoxide() {
