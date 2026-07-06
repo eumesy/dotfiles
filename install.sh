@@ -219,6 +219,20 @@ if [ -f "$CLAUDE_APP_CONFIG" ]; then
     || echo "==> Claude.app のダークモード設定に失敗（config.json が不正?）。スキップします"
 fi
 
+# ---- 18. 自作 CLI（bin/）を ~/.local/bin へ symlink ----
+# bin/ 配下は PATH から呼ぶ自作コマンド（例: show-diff = ターミナルに横二列 diff を表示）。
+# ~/.local/bin は zsh/zshrc の先頭で PATH に通している（ステップ 7 の Claude CLI と同じ場所）
+mkdir -p "$HOME/.local/bin"
+for f in bin/*; do
+  [ -e "$f" ] || continue  # bin/ が空のとき glob がリテラル bin/* のまま回るのを防ぐ
+  name="$(basename "$f")"
+  if [ -f "$HOME/.local/bin/$name" ] && [ ! -L "$HOME/.local/bin/$name" ]; then
+    echo "==> Backing up existing ~/.local/bin/$name -> $name.bak"
+    mv "$HOME/.local/bin/$name" "$HOME/.local/bin/$name.bak"
+  fi
+  ln -sfn "$PWD/$f" "$HOME/.local/bin/$name"
+done
+
 echo ""
 echo "done. 残りの手動ステップ（詳細は README の該当節。資格情報は端末ローカルで repo 非同期）:"
 # 手順の実体は MANUAL_STEPS.tsv（SSOT）。README の該当節も同じ TSV から生成している。

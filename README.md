@@ -132,6 +132,12 @@ Files and Folders で該当項目を有効化する。
 - トークンが Keychain にある都合上、Claude のサンドボックス内からは取り出せず、Claude からの push は承認つきのサンドボックス外実行になる（許容している既知の制限）
 - **diff 表示は git-split-diffs**（Brewfile の `git-split-diffs`）。install.sh の「6. git」が `core.pager` に `git-split-diffs --color | less -RFX` を設定し、`git diff` / `git show` / `git log -p` がターミナル内で GitHub 風の 2 カラム・シンタックスハイライト表示になる（VS Code を開かず端末内で完結）。delta から乗り換えた既存マシンでは、install.sh 再実行で旧 delta 設定（`interactive.diffFilter` / `delta.*`）を撤去する。素の diff に戻したいときは `git --no-pager diff`、長い差分は less でスクロール（`q` で終了）。配色は既定が `dark`。git config の `split-diffs.theme-name`（`github-dark-dimmed` / `arctic` 等）で変えられる
 
+## 自作 CLI（bin/）
+
+`bin/` 配下は PATH から呼ぶ自作コマンドで、install.sh の「18. 自作 CLI」が `~/.local/bin` へ symlink する。
+
+- **show-diff**: stdin で受けた patch を、実行中のターミナルアプリの機能で色付き横二列表示する（`git diff | show-diff`）。Ghostty では AppleScript で現在タブを下分割（`--tab` で新規タブ）して git-split-diffs + less で表示し、less を `q` で抜けるとペインごと閉じる。cmux では内蔵の `cmux diff` viewer に委譲。主用途は Claude Code セッションでの diff レビュー（Claude Code の TUI は Bash 出力の ANSI 色を strip し side-by-side 表示も未対応 = 上流 issue #18728 ほか。ターミナル側で表示する回避策）。運用規約は eumesy/claude の CLAUDE.md「diff の見せ方」、Ghostty AppleScript の gotcha は skill `ghostty-terminal-automation` を参照
+
 ## LaTeX 執筆環境
 
 執筆は VS Code + LaTeX Workshop で、Overleaf 同等の操作感になるよう設定してある。

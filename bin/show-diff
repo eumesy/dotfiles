@@ -1,0 +1,162 @@
+#!/bin/zsh
+# show-diff — 実行中のターミナルアプリに色付き横二列 (side-by-side) diff を表示する
+#
+# 背景:
+#   Claude Code の TUI は Bash 出力の ANSI 色を strip し、side-by-side diff 表示も持たない
+#   （上流 issue #18728 は open、#57061/#18138 は not planned で close）。そこで diff の表示は
+#   ターミナルアプリ側の機能（ペイン分割・タブ・内蔵 viewer）で行う。
+#
+# 処理の流れ:
+#   1. stdin から unified diff (patch) を読み、一時ファイルに保存する
+#   2. 実行中のターミナルアプリを環境変数 __CFBundleIdentifier で判別する
+#   3. backend へ振り分ける:
+#      - Ghostty: AppleScript で現在のタブをペイン分割（--tab なら現在ウィンドウの新規タブ）し、
+#                 git-split-diffs + less で表示。less を q で抜けるとペイン/タブごと閉じる
+#      - cmux:    cmux diff <patch> --layout split（cmux 内蔵の diff viewer）
+#      - その他:  エラー終了（チャットへの fenced diff 等、別の手段で見せる）
+#
+# 使い方:
+#   git diff | show-diff
+#   git -C ~/repo show HEAD | show-diff --title "課題名 — 対象の説明"
+#   git diff main...topic | show-diff --tab --match "タブタイトルの断片"
+#
+# オプション:
+#   --title <text>     表示タイトル（タブのタイトル・cmux diff のタイトル。既定: "diff"）。
+#                      「<セッションの課題> — <diff の対象>」の形を推奨（機械的な repo@branch は
+#                      並行セッション下で識別に役立たないことを確認済み）
+#   --tab              Ghostty: ペイン分割でなく現在ウィンドウの新規タブで開く
+#   --direction <dir>  Ghostty: 分割方向 down|right|up|left（既定: down。横二列 diff は幅が
+#                      要るので、全幅を保てる down を既定にする）
+#   --match <substr>   Ghostty: タブタイトルに <substr> を含むターミナルを分割対象にする
+#                      （既定: 最前面ウィンドウのフォーカス中ターミナル）
+#   -h, --help         このヘルプを表示して終了
+#
+# 依存: git-split-diffs (Brewfile), less, osascript (macOS 標準), Ghostty 1.3+（AppleScript 対応）
+#
+# 注意:
+#   - Claude Code のサンドボックス内からは osascript / cmux の Unix ソケットが遮断されるため、
+#     Claude が呼ぶときはサンドボックス外実行（要承認）になる。
+#   - Ghostty 1.3.1 実測: AppleScript サーフェスを command 指定で作ると、コマンド終了後も
+#     ペインが残る（wait after command:false を明示しても効かない）。本スクリプトは通常シェル
+#     起動＋ initial input（末尾 ; exit）方式でこれを回避している。詳細は skill
+#     `ghostty-terminal-automation` を参照。
+
+emulate -L zsh
+set -eu -o pipefail
+
+# ---- CONFIG ----
+DEFAULT_TITLE="diff"
+DEFAULT_DIRECTION="down"
+RENDER_CMD="git-split-diffs --color"  # patch を横二列に整形するコマンド
+# less に -F は付けない（1 画面に収まる diff で即終了→ペインが一瞬で閉じるため）。
+# command プレフィックスは対話 shell の alias による shadow を避けるため（inner はユーザーの対話 zsh で走る）
+PAGER_CMD="command less -R"
+CMUX_BIN_FALLBACK="/Applications/cmux.app/Contents/Resources/bin/cmux"
+
+usage() {
+  print -r -- "usage: <diff producer> | show-diff [--title <text>] [--tab] [--direction down|right|up|left] [--match <substr>]"
+  print -r -- "  e.g. git diff | show-diff --title 'session topic - what this diff is'"
+  print -r -- "  details: see the header comment of this script"
+}
+
+# ---- 引数 ----
+title="$DEFAULT_TITLE"
+direction="$DEFAULT_DIRECTION"
+mode="split"
+match=""
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --title)     [ $# -ge 2 ] || { usage; exit 2 }; title="$2"; shift 2 ;;
+    --tab)       mode="tab"; shift ;;
+    --direction) [ $# -ge 2 ] || { usage; exit 2 }; direction="$2"; shift 2 ;;
+    --match)     [ $# -ge 2 ] || { usage; exit 2 }; match="$2"; shift 2 ;;
+    -h|--help)   usage; exit 0 ;;
+    *) print -ru2 -- "show-diff: unknown option: $1"; exit 2 ;;
+  esac
+done
+case "$direction" in down|right|up|left) ;; *) print -ru2 -- "show-diff: --direction must be down|right|up|left"; exit 2 ;; esac
+
+# ---- stdin から patch を受ける ----
+if [ -t 0 ]; then
+  print -ru2 -- "show-diff: no diff on stdin (usage: git diff | show-diff)"
+  exit 2
+fi
+# mktemp テンプレートの X 群は末尾に置く（BSD mktemp は末尾の X しか乱数化しない。
+# ".patch" 等の suffix を後置すると literal 固定名になり、2 回目の起動が File exists で失敗する。実測済み）
+patch="$(mktemp "${TMPDIR:-/tmp}/show-diff.XXXXXX")"
+cat > "$patch"
+if [ ! -s "$patch" ]; then
+  rm -f "$patch"
+  print -ru2 -- "show-diff: empty diff; nothing to show"
+  exit 1
+fi
+
+# ---- backend 判別 ----
+case "${__CFBundleIdentifier:-}" in
+
+  com.mitchellh.ghostty)
+    # ペイン/タブ内で実行する 1 行を組み立てる（通常シェルへの initial input として流す）。
+    # 行頭の HISTFILE= はこの行を zsh 履歴ファイルに残さないため、clear は起動プロンプトの
+    # 消去、末尾の exit がシェル終了＝ペイン自動クローズの本体。${(q)...} で安全に引用する。
+    inner=" HISTFILE=; clear; printf '\\033]2;%s\\007' ${(q)title}; ${RENDER_CMD} < ${(q)patch} | ${PAGER_CMD}; command rm -f ${(q)patch}; exit"
+    # osascript は作成した surface の id を stdout に返すが、CLI としてはノイズなので捨てる。
+    # 成功時の patch 削除はペイン側（inner 末尾の rm）に委譲している（ペインが非同期に読むため
+    # ここで trap EXIT すると競合削除になる）。失敗時（ウィンドウ 0 枚・Ghostty 非 scriptable 等）
+    # だけこちらで片付ける
+    if ! osascript - "$inner" "$mode" "$direction" "$match" >/dev/null <<'EOS'
+on run argv
+  set innerCmd to (item 1 of argv) & linefeed
+  set mode to item 2 of argv
+  set dirText to item 3 of argv
+  set matchText to item 4 of argv
+  tell application "Ghostty"
+    if mode is "tab" then
+      new tab in front window with configuration {initial input:innerCmd}
+    else
+      set target to missing value
+      if matchText is not "" then
+        try
+          set target to first terminal whose name contains matchText
+        end try
+      end if
+      if target is missing value then set target to focused terminal of selected tab of front window
+      if dirText is "right" then
+        split target direction right with configuration {initial input:innerCmd}
+      else if dirText is "left" then
+        split target direction left with configuration {initial input:innerCmd}
+      else if dirText is "up" then
+        split target direction up with configuration {initial input:innerCmd}
+      else
+        split target direction down with configuration {initial input:innerCmd}
+      end if
+    end if
+  end tell
+end run
+EOS
+    then
+      rm -f "$patch"
+      print -ru2 -- "show-diff: could not drive Ghostty via AppleScript (no window open, or Ghostty not scriptable)"
+      exit 3
+    fi
+    ;;
+
+  com.cmuxterm.app)
+    # cmux は AI エージェント向けの diff viewer を内蔵している（Unix ソケット CLI）。
+    cmux_bin="$(command -v cmux 2>/dev/null || true)"
+    [ -z "$cmux_bin" ] && [ -x "$CMUX_BIN_FALLBACK" ] && cmux_bin="$CMUX_BIN_FALLBACK"
+    if [ -z "$cmux_bin" ]; then
+      rm -f "$patch"
+      print -ru2 -- "show-diff: cmux CLI not found"
+      exit 3
+    fi
+    "$cmux_bin" diff "$patch" --layout split --title "$title"
+    # cmux が patch を読み終えるタイミングが不明なため、ここでは削除しない（TMPDIR は OS が掃除する）
+    ;;
+
+  *)
+    rm -f "$patch"
+    print -ru2 -- "show-diff: unsupported terminal (__CFBundleIdentifier='${__CFBundleIdentifier:-}')."
+    print -ru2 -- "show-diff: supported: Ghostty (com.mitchellh.ghostty), cmux (com.cmuxterm.app)."
+    exit 3
+    ;;
+esac
