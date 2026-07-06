@@ -40,6 +40,7 @@ install.sh は冪等（何度実行しても安全）に保つ規約で、非冪
 
 ## Claude Code グローバル設定
 
+- CLI は自己更新型のため brew 管理外とし、install.sh が公式 native installer で導入する（デスクトップ版 Claude.app は通常どおり [`Brewfile`](Brewfile) の cask）
 - 実体は別リポジトリ [eumesy/claude](https://github.com/eumesy/claude)（CLAUDE.md・settings.json・skills/）。install.sh が `ghq get` で `~/ghq/github.com/eumesy/claude` に clone し、`~/.claude/` 配下から symlink を張る
 - GitHub Web で直接編集したら、各端末で `git -C ~/ghq/github.com/eumesy/claude pull` して反映する
 

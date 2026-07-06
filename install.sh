@@ -74,7 +74,16 @@ if [ -f "$HOME/.config/git/ignore" ] && [ ! -L "$HOME/.config/git/ignore" ]; the
 fi
 ln -sfn "$PWD/git/ignore" "$HOME/.config/git/ignore"
 
-# ---- 7. Claude Code: 設定リポジトリ (eumesy/claude) を clone して symlink ----
+# ---- 7. Claude Code: CLI 本体と設定リポジトリ ----
+# CLI は公式 native installer で ~/.local/bin/claude に導入する（自己更新型なので
+# brew 管理外。デスクトップ版 Claude.app は Brewfile の cask "claude" で導入済み）。
+# PATH は zsh/zshrc の先頭行で ~/.local/bin を通している。導入済みなら何もしない
+# （installer が rc ファイルへ PATH を追記するのを避ける意味でも guard する）。
+if [ ! -x "$HOME/.local/bin/claude" ] && ! command -v claude >/dev/null 2>&1; then
+  echo "==> Installing Claude Code CLI..."
+  curl -fsSL https://claude.ai/install.sh | bash
+fi
+# 設定リポジトリ (eumesy/claude) を clone して symlink。
 # 実体は https://github.com/eumesy/claude（CLAUDE.md / settings.json / skills）。
 # ghq get -u は未 clone なら clone、clone 済みなら pull（冪等）。
 ghq get -u github.com/eumesy/claude
