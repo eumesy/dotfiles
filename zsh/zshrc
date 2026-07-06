@@ -1,6 +1,12 @@
 export PATH="$HOME/.local/bin:$PATH"
 typeset -U path PATH  # PATH の重複エントリを自動排除（zshrc を再 source しても増えない）
 
+# ここから下は対話 shell 専用。非対話 shell（スクリプト・Claude Code 等のエージェントが
+# 打つコマンド）に、対話用エイリアス（ls=eza など）・chpwd 自動 ls・fzf/zoxide・補完を
+# 読み込ませない。漏れると ls=eza のソート指定やフラグ差でコマンドが期待どおり動かず
+# 手戻りになる（BSD ls とは -t 等の意味が違う）。PATH は上で通済みなのでここで抜ける。
+[[ -o interactive ]] || return 0
+
 # fzf のキーバインド・補完 (Ctrl-R 履歴検索など)
 source <(fzf --zsh)
 
