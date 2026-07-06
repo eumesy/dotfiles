@@ -101,3 +101,13 @@ add-zsh-hook precmd source-zshrc-if-updated
 # reload: シェルを丸ごと再起動して設定をクリーンに読み直す
 # （自動リロードと違い、設定の削除も反映される。カレントディレクトリ・履歴は保持）
 alias reload='exec zsh'
+
+# starship: モダンなプロンプト（デフォルト設定のまま使用。~/.config/starship.toml は不要）
+# 目的は「打ったコマンド」と「その出力(stdout)」の視認性向上。デフォルトで効くのは次の 2 点:
+#   - 各プロンプトの前に空行を挿入 → 「コマンド + 出力」が 1 ブロックに視覚的にまとまる
+#   - プロンプト記号 ❯ に色（直前コマンドが失敗すると赤）→ 入力開始位置と成否が一目で分かる
+# ※「前後コマンドへのジャンプ」は Ghostty 自身の shell integration（zsh へ OSC 133 を自動注入）で
+#   別途成立しており、starship の効果ではない（starship はデフォルトで OSC 133 を出さない）。
+if command -v starship >/dev/null 2>&1; then
+  eval "$(starship init zsh)"
+fi

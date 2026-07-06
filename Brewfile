@@ -7,6 +7,7 @@ brew "dockutil"  # Dock の項目を CLI で管理
 brew "zoxide"    # 訪れたディレクトリを frecency で記録・ジャンプ
 brew "eza"       # ls の現代的代替（色・git 状態・tree 表示）
 brew "bat"       # syntax highlight 付き cat/pager（less のハイライトにも使用: zshrc の LESSOPEN）
+brew "starship"  # モダンなプロンプト（空行区切り＋色付き ❯ で入力/出力を見分けやすく。zshrc で init）
 
 # Apps
 cask "visual-studio-code"
