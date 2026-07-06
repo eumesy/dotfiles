@@ -114,6 +114,10 @@ alias reload='exec zsh'
 #   - プロンプト記号 ❯ に色（直前コマンドが失敗すると赤）→ 入力開始位置と成否が一目で分かる
 # ※「前後コマンドへのジャンプ」は Ghostty 自身の shell integration（zsh へ OSC 133 を自動注入）で
 #   別途成立しており、starship の効果ではない（starship はデフォルトで OSC 133 を出さない）。
-if command -v starship >/dev/null 2>&1; then
+# ※ 自動リロード（precmd での再 source）で init が繰り返されると starship の zle-keymap-select
+#   widget が累積ラップされ自己再帰しうるため、非 export フラグで「そのシェルで一度だけ」に絞る。
+#   （starship が export する STARSHIP_SHELL は exec zsh=reload に引き継がれ init を握り潰すので使わない）
+if command -v starship >/dev/null 2>&1 && [[ -z ${_STARSHIP_INITED:-} ]]; then
   eval "$(starship init zsh)"
+  _STARSHIP_INITED=1
 fi
