@@ -112,7 +112,7 @@ fi
 ln -sfn "$CLAUDE_REPO/skills" "$HOME/.claude/skills"
 
 # ---- 8. zsh 設定を symlink ----
-for pair in "zsh/zshrc:.zshrc" "zsh/zprofile:.zprofile"; do
+for pair in "zsh/zshenv:.zshenv" "zsh/zshrc:.zshrc" "zsh/zprofile:.zprofile"; do
   src="${pair%%:*}"; dst="${pair##*:}"
   if [ -f "$HOME/$dst" ] && [ ! -L "$HOME/$dst" ]; then
     echo "==> Backing up existing ~/$dst -> $dst.bak"

@@ -1,0 +1,14 @@
+# ~/.zshenv (install.sh が symlink)。zsh の全起動（対話・非対話・スクリプト）で最初に読まれる。
+# ここにはロケール等、全 shell で一貫させたい基盤の環境変数だけを置く。
+# 対話専用の設定（alias・fzf 等）は zsh/zshrc（対話ガードあり）に置くこと。
+
+# CLI のメッセージ言語を英語に固定する（GUI の AppleLanguages=en-JP,ja-JP と方向を揃える）。
+# LANG は基準ロケール 1 つ（文字種・照合順など）、LANGUAGE は gettext 対応ツール（wget・
+# gpg 等。macOS 標準の BSD 系ツールは無視）が見る言語の優先順位リスト。
+# 注意: 英語は原文で翻訳カタログ(.mo)を持たないため、LANGUAGE に ja を混ぜると gettext が
+# カタログのない en を飛ばして「カタログのある ja」に落ち、それらのツールが日本語化する
+# （実測: LANGUAGE=en_US:ja_JP で wget が「URLがありません」）。英語優先を保つため ja は
+# 入れず en で止める。
+# 既に明示指定された値（例: 出力安定化の LANG=C）は尊重する（:- 既定で上書きしない）。
+export LANG="${LANG:-en_US.UTF-8}"
+export LANGUAGE="${LANGUAGE:-en_US:en}"

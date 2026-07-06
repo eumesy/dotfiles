@@ -98,6 +98,10 @@ Files and Folders で該当項目を有効化する。
 
 `zsh/zshrc`（実体は install.sh が `~/.zshrc` へ symlink）は、先頭で PATH を通した直後に `[[ -o interactive ]] || return 0` を置き、**対話 shell 以外では以降を読み込まない**。エイリアス（`ls`=eza など）・fzf/zoxide・補完・`chpwd` 自動 ls といった対話用の設定は、スクリプトや Claude Code 等のエージェントが打つ非対話 shell には不要で、むしろ有害（eza は BSD `ls` の drop-in ではなくソート・フラグ差でコマンドが期待どおり動かず手戻りになる）なため。
 
+`zsh/zshenv`（実体は install.sh が `~/.zshenv` へ symlink）は、対話・非対話・スクリプトを問わず**全 zsh 起動で最初に読まれる**。ロケール（`LANG`／`LANGUAGE`）のように全 shell で一貫させたい基盤の環境変数だけを置く。CLI のメッセージ言語は英語に固定（`LANGUAGE=en_US:en`）しており、GUI アプリの言語順（macOS の `AppleLanguages=en-JP,ja-JP` = 英語優先）と方向を揃えている。`LANGUAGE` を参照するのは gettext 対応ツール（wget・gpg 等）だけで、macOS 標準の BSD 系ツールは無視する。
+
+- **なぜ ja を入れないか:** 英語は原文で翻訳カタログ(.mo)を持たないため、`LANGUAGE` に `ja_JP` を混ぜると gettext がカタログのない `en` を飛ばして「カタログのある `ja`」に落ち、ja 訳を同梱するツール（wget・gpg 等）が日本語表示になる（実測: `LANGUAGE=en_US:ja_JP` で `wget` が「URLがありません」）。英語優先を保つには `en` で止める。`LANG`/`LANGUAGE` は `:-` 既定で書き、`LANG=C cmd` のような明示指定は尊重する。
+
 - **編集時の約束:** スクリプト・非対話 shell にも必要な `export`（PATH 等）は必ずガード行より**上**に置く。ガードより下に書くと非対話 shell には反映されない。
 - **反映タイミング:** Claude Code は起動時に `~/.zshrc` を非対話 source して alias/関数をスナップショット（`~/.claude/shell-snapshots/`）に焼き、各コマンド shell はそれを読む。zshrc を変えても効くのは次のセッション（スナップショット再生成後）から。即時反映したいときは当該スナップショットを削除する。
 
