@@ -17,6 +17,7 @@ cask "ghostty"  # ターミナル（GPU 描画・Claude Code の Shift+Enter/通
 cask "cmux"     # Ghostty ベースのターミナル。AI エージェント並走用（ワークスペース管理・入力待ち通知・Agent Teams 統合）
 cask "claude"   # Claude.app（Claude Code のデスクトップ版もこのアプリ。CLI は自己更新型のため install.sh で導入）
 cask "codex"    # OpenAI Codex CLI（cask 配布の CLI。Claude Code から検証用 agent として呼ぶ。導入・認証・秘密情報の扱いは README「OpenAI Codex CLI（検証用 agent）」参照）
+cask "chatgpt"  # ChatGPT.app（OpenAI 公式デスクトップ版）。auto_updates の GUI cask なので版更新はアプリ自己更新に任せ、brew は宣言・初回 install のみ担う
 
 # Fonts
 cask "font-jetbrains-mono-nerd-font"  # eza --icons 等の Nerd Font グリフ表示用（VS Code ターミナルで使用）
