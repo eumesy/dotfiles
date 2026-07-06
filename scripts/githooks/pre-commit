@@ -1,8 +1,31 @@
 #!/usr/bin/env bash
-# pre-commit hook: install.sh がステージされていたら冪等性 lint を実行
-# （install.sh が git config core.hooksPath scripts/githooks で有効化する）
+# pre-commit hook（install.sh が git config core.hooksPath scripts/githooks で有効化する）:
+#   - install.sh がステージされていたら冪等性 lint を実行
+#   - 手動ステップ関連がステージされていたら README と MANUAL_STEPS.tsv の同期を検査
 set -euo pipefail
 cd "$(git rev-parse --show-toplevel)"
-if git diff --cached --name-only | grep -qx 'install.sh'; then
+# here-string で渡す（`echo | grep -q` は pipefail 下で grep 早期終了時に echo が
+# SIGPIPE になり、マッチしても pipeline が非0になって検査を素通りしうるため）
+staged="$(git diff --cached --name-only)"
+if grep -qx 'install.sh' <<< "$staged"; then
   scripts/lint-install.sh
+fi
+if grep -qxE 'MANUAL_STEPS\.tsv|README\.md|scripts/gen-manual-steps\.sh' <<< "$staged"; then
+  # 作業ツリーではなく index（実際に commit される内容）で同期を検査する。TSV・README・
+  # generator のどれを partial staging しても commit 断面のズレを捕まえるため、3 つとも
+  # index 版を一時ディレクトリへ展開し、その staged generator を実行する。
+  # 3 つのいずれかが index に無い（削除中など）ときは検査対象外としてスキップ。
+  # pathspec ":FILE" は cwd 相対だが、冒頭の cd でルートへ移動済みなのでルート相対で解決される。
+  if git cat-file -e :MANUAL_STEPS.tsv 2>/dev/null \
+     && git cat-file -e :README.md 2>/dev/null \
+     && git cat-file -e :scripts/gen-manual-steps.sh 2>/dev/null; then
+    tmpdir="$(mktemp -d)"
+    trap 'rm -rf "$tmpdir"' EXIT
+    mkdir -p "$tmpdir/scripts"
+    git show :MANUAL_STEPS.tsv > "$tmpdir/MANUAL_STEPS.tsv"
+    git show :README.md > "$tmpdir/README.md"
+    git show :scripts/gen-manual-steps.sh > "$tmpdir/scripts/gen-manual-steps.sh"
+    MANUAL_STEPS_TSV="$tmpdir/MANUAL_STEPS.tsv" MANUAL_STEPS_README="$tmpdir/README.md" \
+      bash "$tmpdir/scripts/gen-manual-steps.sh" --check
+  fi
 fi

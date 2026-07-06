@@ -21,6 +21,23 @@ git clone https://github.com/eumesy/dotfiles.git ~/ghq/github.com/eumesy/dotfile
 install.sh は冪等（何度実行しても安全）に保つ規約で、非冪等になりがちな書き方は
 [`scripts/lint-install.sh`](scripts/lint-install.sh) が検出する（pre-commit hook で自動実行）。
 
+### install.sh 完了後の手動ステップ
+
+ログイン資格情報は端末ローカルに保存され、この repo では同期されないため、各端末で初回に一度だけ次を実施する。手順の実体は [`MANUAL_STEPS.tsv`](MANUAL_STEPS.tsv)（SSOT）で、下記リストと install.sh の完了メッセージはどちらもそこから生成しているため二重管理にならない（下記は手で編集せず、TSV を直して [`scripts/gen-manual-steps.sh`](scripts/gen-manual-steps.sh) で再生成する。pre-commit hook が同期を検査する）。
+
+<!-- MANUAL_STEPS:BEGIN 自動生成: scripts/gen-manual-steps.sh。手で編集しない -->
+
+1. VS Code で Settings Sync にログイン（詳細: 本 README「VS Code 設定の管理方針」節）
+2. gh auth login（詳細: 本 README「git」節）
+3. claude を起動してログイン（詳細: 本 README「Claude Code グローバル設定」節）
+4. codex login（詳細: 本 README「OpenAI Codex CLI（検証用 agent）」節）
+5. Overleaf を clone: git clone https://git.overleaf.com/<projectId>（詳細: 本 README「LaTeX 執筆環境」節）
+6. Claude.app 未起動ならダークモード未適用: 起動後に install.sh 再実行、または Settings → Appearance → Dark（詳細: 本 README「Claude Code グローバル設定」節）
+
+<!-- MANUAL_STEPS:END -->
+
+各ステップの背景・詳細は本 README の該当節（VS Code / Claude Code / Codex / LaTeX 等）を参照。
+
 ## 複数 Mac での運用（変更の同期）
 
 セットアップ後の日常運用。同期チャネルは 3 系統: この repo、[eumesy/claude](https://github.com/eumesy/claude)（Claude Code 設定）、VS Code Settings Sync（後述「VS Code 設定の管理方針」）。

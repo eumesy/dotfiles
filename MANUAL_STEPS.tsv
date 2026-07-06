@@ -1,0 +1,17 @@
+# install.sh 完了後に各端末で一度だけ実施する手動ステップの SSOT（single source of truth）。
+# ログイン資格情報は端末ローカルに保存され、この repo では同期されないため自動化できない。
+#
+# このファイルから 2 つの出力を生成する（重複して手書きしない）:
+#   - install.sh の完了メッセージ（action 列だけを実行時に描画）
+#   - README「install.sh 完了後の手動ステップ」節（action + detail、scripts/gen-manual-steps.sh が生成）
+# 編集したら scripts/gen-manual-steps.sh を実行して README を再生成する
+# （pre-commit hook が README との同期を --check で検査し、ずれていれば commit を止める）。
+#
+# 形式: TAB 区切り 2 列。# 始まりの行と空行は無視される。
+#   action  <TAB>  detail（詳細を書いた README の節見出し。空でも可）
+VS Code で Settings Sync にログイン	VS Code 設定の管理方針
+gh auth login	git
+claude を起動してログイン	Claude Code グローバル設定
+codex login	OpenAI Codex CLI（検証用 agent）
+Overleaf を clone: git clone https://git.overleaf.com/<projectId>	LaTeX 執筆環境
+Claude.app 未起動ならダークモード未適用: 起動後に install.sh 再実行、または Settings → Appearance → Dark	Claude Code グローバル設定

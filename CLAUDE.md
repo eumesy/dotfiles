@@ -5,6 +5,7 @@
 - Brewfile / install.sh の内容（パッケージ名・VS Code 拡張名など）を README に列挙しない。[`Brewfile`](Brewfile) のような相対リンクで実体ファイルを参照する。
   - 理由: 列挙は更新に追随せず腐る。single source of truth は各ファイル本体。
 - README に書くのは、コードから読み取れない方針・手順（Settings Sync の主従関係、Overleaf の push 凍結など）に限る。
+- 例外的に README が一覧を持つのは、その一覧を SSOT から生成している場合に限る。install.sh 完了後の手動ステップは [`MANUAL_STEPS.tsv`](MANUAL_STEPS.tsv) が SSOT で、README の該当ブロックと install.sh の完了メッセージを [`scripts/gen-manual-steps.sh`](scripts/gen-manual-steps.sh) が生成する（手書きの列挙ではないので腐らない）。TSV を編集したら再生成し、README の `MANUAL_STEPS:BEGIN`〜`END` ブロックは手で編集しない（pre-commit hook が同期を検査する）。
 
 ## Brewfile
 

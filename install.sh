@@ -199,13 +199,12 @@ if [ -f "$CLAUDE_APP_CONFIG" ]; then
 fi
 
 echo ""
-echo "done. 残りの手動ステップ（ログイン資格情報は端末ローカル。repo では同期されない）:"
-echo "  1. VS Code を起動し Settings Sync にログイン（設定・拡張の自動同期）"
-echo "  2. gh auth login  (GitHub CLI)"
-echo "  3. claude を起動してログイン（Claude Code CLI。ブラウザ OAuth → Keychain 保存）"
-echo "  4. codex login  (OpenAI Codex CLI。ChatGPT アカウント。README「OpenAI Codex CLI」参照)"
-echo "  5. Overleaf プロジェクトを clone:"
-echo "     git clone https://git.overleaf.com/<projectId>"
-echo "     （トークンは Overleaf Account Settings → Git integration tokens）"
-echo "  6. Claude.app を初回起動していない場合、ダークモードは未適用。起動後に install.sh を"
-echo "     再実行するか、Claude.app の Settings → Appearance → Dark で設定する"
+echo "done. 残りの手動ステップ（詳細は README の該当節。資格情報は端末ローカルで repo 非同期）:"
+# 手順の実体は MANUAL_STEPS.tsv（SSOT）。README の該当節も同じ TSV から生成している。
+# ここでは action 列だけを実行時に描画する（# 始まりの行・空行は無視）。
+n=0
+while IFS=$'\t' read -r action _detail || [ -n "$action" ]; do
+  case "$action" in ''|'#'*) continue ;; esac
+  n=$((n + 1))
+  printf '  %d. %s\n' "$n" "$action"
+done < MANUAL_STEPS.tsv
