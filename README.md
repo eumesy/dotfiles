@@ -90,6 +90,8 @@ install.sh は冪等（何度実行しても安全）に保つ規約で、非冪
 - **認証**: 各マシンで初回に `claude` を起動しブラウザでログインする。資格情報は macOS Keychain に保存され、repo では同期されない（Codex 同様、資格情報はこの repo にも eumesy/claude にも入れない）
 - 実体は別リポジトリ [eumesy/claude](https://github.com/eumesy/claude)（CLAUDE.md・settings.json・skills/・themes/）。install.sh が `ghq get` で `~/ghq/github.com/eumesy/claude` に clone し、`~/.claude/` 配下から symlink を張る
 - 他端末や GitHub Web での編集を取り込む手順は前述「複数 Mac での運用（変更の同期）」参照（pull すれば symlink 経由で反映される）
+- **安全の床の SSOT と生成器**: 秘密パス（`~/.ssh` 等）と exfil 遮断ドメインは eumesy/claude の `shared/SECRET_PATHS.txt`・`shared/EXFIL_DOMAINS.txt` を唯一の情報源とし、`scripts/generate_safety.py` が `settings.json` の該当箇所（sandbox の denyRead/deniedDomains・permissions.deny の Read/WebFetch ルール）と Codex 用断片を生成する。値の追加・変更はこの 2 テキストだけを編集して `python3 scripts/generate_safety.py` で再生成する（settings.json 側は手編集しない）。方針・脅威モデルは同 repo の `shared/SAFETY.md`
+- install.sh は eumesy/claude が clone 済みなら `generate_safety.py --check` を実行し、settings.json が SSOT と乖離していれば警告する（install 自体は止めない）
 - **カスタムテーマ**: `themes/highlight-you.json` は自分の依頼（ユーザーメッセージ）の背景を濃いアンバー（琥珀）で塗って、長いアシスタント応答の中で自分の発言を遡って見つけやすくするテーマ。`settings.json` の `theme` を `custom:highlight-you` にするか、CLI で `/theme` から選ぶと有効になる（`~/.claude/themes/` はファイル保存でホットリロードされる想定。symlink 経由で反映されないときは `/theme` で選び直すか Claude Code を再起動する）。背景色を変えたいときは同ファイルの `overrides.userMessageBackground`（16 進カラー）1 箇所だけ直す。この背景塗りは `tui: "fullscreen"` 時のみ有効（背景トークンは全画面レンダラー専用）。文字色は全体の `text`（既定は明色）を使うため、背景は文字が読める濃色にする
 
 ## OpenAI Codex CLI（検証用 agent）

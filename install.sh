@@ -114,6 +114,27 @@ for d in skills themes; do
   fi
   ln -sfn "$CLAUDE_REPO/$d" "$HOME/.claude/$d"
 done
+# 安全の床の SSOT 検証: settings.json の生成対象（sandbox denyRead/deniedDomains・
+# permissions.deny の Read/WebFetch）が shared/SECRET_PATHS.txt・shared/EXFIL_DOMAINS.txt から
+# 再生成した結果と一致するか確認する（乖離＝手編集や取り込み漏れの兆候）。読み取り専用の
+# --check で、install.sh 全体は止めない（乖離時は警告して再生成を促す）。
+# 前提の可視化: 共有 settings.json は絶対パス（/Users/sho/...）を静的に埋め込むため、
+# $HOME が /Users/sho でないマシンでは denyRead/Read deny が実在しないパスを指し、
+# その端末の実 ~/.ssh 等が遮断対象から外れる（安全の床が無効化される）。自動で
+# per-machine 生成はしない（settings.json を書くと working tree が汚れるため）ので、
+# username が異なる環境では警告を出す。
+if [ -f "$CLAUDE_REPO/scripts/generate_safety.py" ]; then
+  if [ "$HOME" != "/Users/sho" ]; then
+    echo "==> 警告: \$HOME=$HOME は /Users/sho ではありません。共有 settings.json の"
+    echo "    安全の床（denyRead / permissions.deny の Read パス）は /Users/sho 固定で、"
+    echo "    この端末の実際の秘密パスを保護しません。"
+    echo "    'python3 $CLAUDE_REPO/scripts/generate_safety.py --home \"\$HOME\"' で再生成が必要です。"
+  fi
+  if ! python3 "$CLAUDE_REPO/scripts/generate_safety.py" --check; then
+    echo "==> 警告: eumesy/claude の安全の床 SSOT と settings.json が乖離しています。"
+    echo "    'python3 $CLAUDE_REPO/scripts/generate_safety.py' で再生成し、内容を確認して commit してください。"
+  fi
+fi
 
 # ---- 8. zsh 設定を symlink ----
 for pair in "zsh/zshenv:.zshenv" "zsh/zshrc:.zshrc" "zsh/zprofile:.zprofile"; do
