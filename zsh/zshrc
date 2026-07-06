@@ -97,9 +97,9 @@ function source-zshrc-if-updated() {
   # 壊れた設定を開いている全ターミナルに波及させないよう、構文チェックが通ったときだけ読み込む
   if zsh -n ~/.zshrc 2>/dev/null; then
     source ~/.zshrc
-    print "(~/.zshrc を再読み込みしました)"
+    print "(reloaded ~/.zshrc)"
   else
-    print "(~/.zshrc に構文エラーがあるため再読み込みをスキップしました)"
+    print "(skipped reload: syntax error in ~/.zshrc)"
   fi
 }
 add-zsh-hook precmd source-zshrc-if-updated
