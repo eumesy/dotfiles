@@ -183,6 +183,21 @@ if [ -f "$HOME/.config/cmux/cmux.json" ] && [ ! -L "$HOME/.config/cmux/cmux.json
 fi
 ln -sfn "$PWD/cmux/cmux.json" "$HOME/.config/cmux/cmux.json"
 
+# ---- 17. Claude.app（デスクトップ版）をダークモードにする ----
+# 外観は ~/Library/Application Support/Claude/config.json の "userThemeMode" キー
+# （MCP 設定の claude_desktop_config.json とは別ファイル）。この JSON には OAuth トークン等の
+# 秘密情報が同居するため、symlink で repo に持ち込めない（トークンが漏れる）。そこで該当キー
+# だけを plutil で in-place 書き換えする。plutil は macOS 標準（依存なし）で JSON 形式を保ち、
+# 他キー・トークンは保持、何度実行しても結果は同じ（冪等）。config.json はアプリ初回起動時に
+# 作られるので、未起動の新規端末では存在せずスキップされる（下の手動ステップで再実行を促す）。
+# ※ Claude.app 起動中に書き換えると終了時に上書きされうるため、Claude.app を終了してから
+#    実行するのが安全（反映は次回起動時）。
+CLAUDE_APP_CONFIG="$HOME/Library/Application Support/Claude/config.json"
+if [ -f "$CLAUDE_APP_CONFIG" ]; then
+  plutil -replace userThemeMode -string dark "$CLAUDE_APP_CONFIG" \
+    || echo "==> Claude.app のダークモード設定に失敗（config.json が不正?）。スキップします"
+fi
+
 echo ""
 echo "done. 残りの手動ステップ（ログイン資格情報は端末ローカル。repo では同期されない）:"
 echo "  1. VS Code を起動し Settings Sync にログイン（設定・拡張の自動同期）"
@@ -192,3 +207,5 @@ echo "  4. codex login  (OpenAI Codex CLI。ChatGPT アカウント。README「O
 echo "  5. Overleaf プロジェクトを clone:"
 echo "     git clone https://git.overleaf.com/<projectId>"
 echo "     （トークンは Overleaf Account Settings → Git integration tokens）"
+echo "  6. Claude.app を初回起動していない場合、ダークモードは未適用。起動後に install.sh を"
+echo "     再実行するか、Claude.app の Settings → Appearance → Dark で設定する"
