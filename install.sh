@@ -93,7 +93,7 @@ if [ ! -x "$HOME/.local/bin/claude" ] && ! command -v claude >/dev/null 2>&1; th
   curl -fsSL https://claude.ai/install.sh | bash
 fi
 # 設定リポジトリ (eumesy/claude) を clone して symlink。
-# 実体は https://github.com/eumesy/claude（CLAUDE.md / settings.json / skills）。
+# 実体は https://github.com/eumesy/claude（CLAUDE.md / settings.json / skills / themes）。
 # ghq get -u は未 clone なら clone、clone 済みなら pull（冪等）。
 ghq get -u github.com/eumesy/claude
 CLAUDE_REPO="$(ghq root)/github.com/eumesy/claude"
@@ -105,11 +105,15 @@ for f in CLAUDE.md settings.json; do
   fi
   ln -sfn "$CLAUDE_REPO/$f" "$HOME/.claude/$f"
 done
-if [ -d "$HOME/.claude/skills" ] && [ ! -L "$HOME/.claude/skills" ]; then
-  echo "==> Backing up existing ~/.claude/skills -> skills.bak"
-  mv "$HOME/.claude/skills" "$HOME/.claude/skills.bak"
-fi
-ln -sfn "$CLAUDE_REPO/skills" "$HOME/.claude/skills"
+for d in skills themes; do
+  # repo 側に実体が無ければ symlink を張らない（themes/ 未 push の端末で壊れた symlink を作らない）
+  [ -d "$CLAUDE_REPO/$d" ] || continue
+  if [ -d "$HOME/.claude/$d" ] && [ ! -L "$HOME/.claude/$d" ]; then
+    echo "==> Backing up existing ~/.claude/$d -> $d.bak"
+    mv "$HOME/.claude/$d" "$HOME/.claude/$d.bak"
+  fi
+  ln -sfn "$CLAUDE_REPO/$d" "$HOME/.claude/$d"
+done
 
 # ---- 8. zsh 設定を symlink ----
 for pair in "zsh/zshenv:.zshenv" "zsh/zshrc:.zshrc" "zsh/zprofile:.zprofile"; do
