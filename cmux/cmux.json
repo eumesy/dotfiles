@@ -1,0 +1,20 @@
+{
+  "$schema": "https://raw.githubusercontent.com/manaflow-ai/cmux/main/web/data/cmux.schema.json",
+  "schemaVersion": 1,
+
+  // cmux の app UI 設定（install.sh により ~/.config/cmux/cmux.json に symlink される）。
+  // ターミナル部分の見た目（背景色・半透明・ブラー・フォント等）は cmux も
+  // ~/.config/ghostty/config を読むため Ghostty と自動的に揃う（このファイルでは管理しない）。
+  // ここに書いたキーは「ファイル管理」となり、cmux の Settings UI での変更より優先される。
+  // 反映: cmux reload-config（Ghostty config とこのファイルの両方を再読込。app 再起動不要）。
+
+  // UI テーマを常にダークに（既定 "system" は macOS ライトモード時に UI が白くなる）
+  "app": {
+    "appearance": "dark"
+  },
+
+  // サイドバーの背景をターミナルの背景色に合わせる（全体を Ghostty/iTerm に近い黒基調へ）
+  "sidebarAppearance": {
+    "matchTerminalBackground": true
+  }
+}

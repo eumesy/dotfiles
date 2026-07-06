@@ -159,6 +159,17 @@ launchctl bootout "gui/$(id -u)/com.eumesy.dotfiles-auto-sync" 2>/dev/null || tr
 launchctl bootstrap "gui/$(id -u)" "$HOME/Library/LaunchAgents/com.eumesy.dotfiles-auto-sync.plist" \
   || echo "==> LaunchAgent の登録に失敗（GUI セッション外?）。自動同期は停止したままなので、ログイン後に install.sh を再実行してください"
 
+# ---- 16. cmux 設定を symlink ----
+# ターミナル部分の見た目（背景・半透明・ブラー等）は cmux も ~/.config/ghostty/config を
+# 読むため Ghostty と共通。ここでは app UI 側の設定（cmux/cmux.json）を管理する。
+# 反映は `cmux reload-config`（起動中でも可）
+mkdir -p "$HOME/.config/cmux"
+if [ -f "$HOME/.config/cmux/cmux.json" ] && [ ! -L "$HOME/.config/cmux/cmux.json" ]; then
+  echo "==> Backing up existing cmux.json -> cmux.json.bak"
+  mv "$HOME/.config/cmux/cmux.json" "$HOME/.config/cmux/cmux.json.bak"
+fi
+ln -sfn "$PWD/cmux/cmux.json" "$HOME/.config/cmux/cmux.json"
+
 echo ""
 echo "done. 残りの手動ステップ:"
 echo "  1. VS Code を起動し Settings Sync にログイン（設定・拡張の自動同期）"
