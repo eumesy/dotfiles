@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- dotfiles / eumesy-claude リポジトリを 1 時間ごとに pull する
+	     （実体は scripts/auto-sync.sh。install.sh がこの plist を配置・登録する） -->
+	<key>Label</key>
+	<string>com.eumesy.dotfiles-auto-sync</string>
+	<!-- launchd は plist 内で $HOME を展開しないため、sh 経由で展開する（マシン非依存にする）。
+	     ログも同じ理由で sh 側のリダイレクトで ~/Library/Logs に書く -->
+	<key>ProgramArguments</key>
+	<array>
+		<string>/bin/sh</string>
+		<string>-c</string>
+		<string>exec "$HOME/ghq/github.com/eumesy/dotfiles/scripts/auto-sync.sh" >>"$HOME/Library/Logs/com.eumesy.dotfiles-auto-sync.log" 2>&amp;1</string>
+	</array>
+	<key>StartInterval</key>
+	<integer>3600</integer>
+	<!-- ログイン直後（と install.sh の登録直後）にも 1 回同期する -->
+	<key>RunAtLoad</key>
+	<true/>
+</dict>
+</plist>

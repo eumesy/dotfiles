@@ -148,6 +148,17 @@ mkdir -p "$HOME/Library/Application Support/iTerm2/DynamicProfiles"
 ln -sfn "$PWD/iterm2/profiles.json" "$HOME/Library/Application Support/iTerm2/DynamicProfiles/profiles.json"
 defaults write com.googlecode.iterm2 "Default Bookmark Guid" -string "dotfiles-default-profile"
 
+# ---- 15. 自動同期 LaunchAgent（1 時間ごとに dotfiles / claude repo を pull）----
+# 実体は scripts/auto-sync.sh（README「複数 Mac での運用」参照）。
+# LaunchAgents は symlink だと launchctl に読まれないことがあるため cp で配置。
+# 登録は legacy な load/unload でなく bootstrap/bootout を使う（bootout → bootstrap で冪等）。
+# GUI セッション外（ssh 等）だと bootstrap は失敗しうるので、install.sh 全体は止めず警告に留める
+mkdir -p "$HOME/Library/LaunchAgents"
+cp macos/com.eumesy.dotfiles-auto-sync.plist "$HOME/Library/LaunchAgents/"
+launchctl bootout "gui/$(id -u)/com.eumesy.dotfiles-auto-sync" 2>/dev/null || true
+launchctl bootstrap "gui/$(id -u)" "$HOME/Library/LaunchAgents/com.eumesy.dotfiles-auto-sync.plist" \
+  || echo "==> LaunchAgent の登録に失敗（GUI セッション外?）。自動同期は停止したままなので、ログイン後に install.sh を再実行してください"
+
 echo ""
 echo "done. 残りの手動ステップ:"
 echo "  1. VS Code を起動し Settings Sync にログイン（設定・拡張の自動同期）"

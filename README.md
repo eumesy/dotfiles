@@ -21,6 +21,34 @@ git clone https://github.com/eumesy/dotfiles.git ~/ghq/github.com/eumesy/dotfile
 install.sh は冪等（何度実行しても安全）に保つ規約で、非冪等になりがちな書き方は
 [`scripts/lint-install.sh`](scripts/lint-install.sh) が検出する（pre-commit hook で自動実行）。
 
+## 複数 Mac での運用（変更の同期）
+
+セットアップ後の日常運用。同期チャネルは 3 系統: この repo、[eumesy/claude](https://github.com/eumesy/claude)（Claude Code 設定）、VS Code Settings Sync（後述「VS Code 設定の管理方針」）。
+
+### 変更した端末側
+
+- commit したら**その場で push** する。未 push のまま放置すると、他端末での変更とのコンフリクトの温床になる。
+- 設定ファイルの実体は repo 内にあり各所から symlink で参照されているので、アプリの設定画面や手編集で設定を変えた場合も差分は repo の working tree に現れる。`git status` で気づいたら commit & push する。
+
+### 他の端末側（変更を受け取る）
+
+受け取りは自動。LaunchAgent（[`macos/com.eumesy.dotfiles-auto-sync.plist`](macos/com.eumesy.dotfiles-auto-sync.plist)、install.sh が配置・登録）が 1 時間ごとに [`scripts/auto-sync.sh`](scripts/auto-sync.sh) を実行し、この repo と eumesy/claude を pull する。全端末が常時電源オンでも人の操作なしで同期される。
+
+- 設定ファイルの**内容**の変更（zshrc の中身など）は symlink 経由なので pull だけで反映される。Settings Sync などが書き込んだ未 commit の差分は autostash が退避・復元する。
+- **Claude 設定（eumesy/claude）は無人で全端末に反映される**設計（自分専用 repo であることを前提に許容）。その代わり、反映されたことは下記の通知で必ず知らせる。
+- 人の対応・確認が要る事象だけ macOS 通知が出る:
+  - **構成**が変わる更新（install.sh / Brewfile の変更）を取り込んだとき → install.sh を再実行する（冪等。TeX 環境がある端末では tlmgr の更新に sudo パスワードと時間を要する）。
+  - Claude 設定（settings.json / skills / CLAUDE.md）の更新を取り込んだとき → `git log` で内容を確認する。
+  - pull がコンフリクトしたとき → 手動で解消する。`vscode/` 配下は Settings Sync が同期した側（新しい方）を正として解消し、commit し直す。それ以外は通常どおり内容を見て解消する。
+- main にいる端末だけ pull する（作業ブランチ・detached HEAD の端末では何もしない）。fetch できない（オフライン等）ときは何もせず、記録は `~/Library/Logs/com.eumesy.dotfiles-auto-sync.log` に残る。
+- 次の実行を待たずに今すぐ反映したいときは手動で:
+
+  ```sh
+  git -C ~/dotfiles pull --rebase --autostash && ~/dotfiles/install.sh
+  ```
+
+  （eumesy/claude は install.sh 内の `ghq get -u` が pull を兼ねる。`--autostash` は未 commit 差分があると素の pull --rebase が失敗するため）
+
 ## VS Code 設定の管理方針
 
 - **主**: VS Code 内蔵の **Settings Sync**（GitHub アカウントでログイン）が
@@ -42,7 +70,7 @@ install.sh は冪等（何度実行しても安全）に保つ規約で、非冪
 
 - CLI は自己更新型のため brew 管理外とし、install.sh が公式 native installer で導入する（デスクトップ版 Claude.app は通常どおり [`Brewfile`](Brewfile) の cask）
 - 実体は別リポジトリ [eumesy/claude](https://github.com/eumesy/claude)（CLAUDE.md・settings.json・skills/）。install.sh が `ghq get` で `~/ghq/github.com/eumesy/claude` に clone し、`~/.claude/` 配下から symlink を張る
-- GitHub Web で直接編集したら、各端末で `git -C ~/ghq/github.com/eumesy/claude pull` して反映する
+- 他端末や GitHub Web での編集を取り込む手順は前述「複数 Mac での運用（変更の同期）」参照（pull すれば symlink 経由で反映される）
 
 ## Finder の右クリックメニュー
 
