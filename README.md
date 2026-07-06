@@ -98,6 +98,7 @@ Files and Folders で該当項目を有効化する。
 
 - **GitHub への push は HTTPS、fetch/clone は ssh**（`url.<https>.pushInsteadOf` で push だけ透過的に迂回。install.sh の「6. git」参照）。ssh がプロキシ型サンドボックス（Claude Code 等）を通れないことがあるため。認証は `gh auth login` で取得したトークン（macOS Keychain 保存）を gh の credential helper が供給する。github.com 限定の helper なので、全ホスト用の osxkeychain（Overleaf 等）とは共存する
 - トークンが Keychain にある都合上、Claude のサンドボックス内からは取り出せず、Claude からの push は承認つきのサンドボックス外実行になる（許容している既知の制限）
+- **diff 表示は delta**（Brewfile の `git-delta`）。install.sh の「6. git」が `core.pager=delta` と `delta.side-by-side=true` 等を設定し、`git diff` / `git show` / `git log -p` がターミナル内で 2 カラム・シンタックスハイライト表示になる（VS Code を開かず端末内でレビューできる）。表示を切り替えたいときは `git --no-pager diff`（delta を通さない素の diff）や `git -c delta.side-by-side=false diff`（1 カラム）で個別に上書きできる
 
 ## LaTeX 執筆環境
 

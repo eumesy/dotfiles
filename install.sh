@@ -65,6 +65,15 @@ git config core.hooksPath scripts/githooks
 # 取り出せないので、Claude からの push はサンドボックス外実行（要承認）になる
 git config --global url."https://github.com/".pushInsteadOf "git@github.com:"
 gh auth setup-git 2>/dev/null || echo "==> gh 未ログインのため credential helper 未設定（gh auth login 後に再実行）"
+# delta（Brewfile の git-delta）を git の pager にして diff/show を side-by-side・
+# シンタックスハイライト表示にする。core.pager は全ホスト共通、interactive.diffFilter は
+# git add -p 等の対話表示にも delta を使う。表示オプション（delta.*）は、ページャ内で
+# n/N によるファイル間ジャンプ（navigate）・2 カラム表示（side-by-side）・行番号（line-numbers）
+git config --global core.pager delta
+git config --global interactive.diffFilter "delta --color-only"
+git config --global delta.navigate true
+git config --global delta.side-by-side true
+git config --global delta.line-numbers true
 # グローバル gitignore（.DS_Store 等）。core.excludesFile 未設定時に git が
 # 標準で読む ~/.config/git/ignore へ symlink する
 mkdir -p "$HOME/.config/git"
