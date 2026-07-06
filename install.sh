@@ -65,15 +65,15 @@ git config core.hooksPath scripts/githooks
 # 取り出せないので、Claude からの push はサンドボックス外実行（要承認）になる
 git config --global url."https://github.com/".pushInsteadOf "git@github.com:"
 gh auth setup-git 2>/dev/null || echo "==> gh 未ログインのため credential helper 未設定（gh auth login 後に再実行）"
-# delta（Brewfile の git-delta）を git の pager にして diff/show を side-by-side・
-# シンタックスハイライト表示にする。core.pager は全ホスト共通、interactive.diffFilter は
-# git add -p 等の対話表示にも delta を使う。表示オプション（delta.*）は、ページャ内で
-# n/N によるファイル間ジャンプ（navigate）・2 カラム表示（side-by-side）・行番号（line-numbers）
-git config --global core.pager delta
-git config --global interactive.diffFilter "delta --color-only"
-git config --global delta.navigate true
-git config --global delta.side-by-side true
-git config --global delta.line-numbers true
+# git-split-diffs（Brewfile）を git の pager にして diff/show/log -p を GitHub 風の
+# side-by-side・シンタックスハイライト表示にする。ターミナル内で完結する（VS Code を開かない）。
+# less -RFX で色を保ちつつ、1 画面に収まる差分はページャを介さず表示する（git-split-diffs 公式の推奨）。
+# 旧 delta 設定（interactive.diffFilter / delta.*）は既存マシンに残ると、delta 削除後に
+# git add -p 等が壊れるため撤去する（--unset-all/--remove-section はキー不在時 exit 5 で
+# set -e を殺すので || true でガード。未設定の新規マシンでは no-op）
+git config --global --unset-all interactive.diffFilter 2>/dev/null || true
+git config --global --remove-section delta 2>/dev/null || true
+git config --global core.pager 'git-split-diffs --color | less -RFX'
 # グローバル gitignore（.DS_Store 等）。core.excludesFile 未設定時に git が
 # 標準で読む ~/.config/git/ignore へ symlink する
 mkdir -p "$HOME/.config/git"
