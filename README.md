@@ -72,6 +72,15 @@ install.sh は冪等（何度実行しても安全）に保つ規約で、非冪
 - 実体は別リポジトリ [eumesy/claude](https://github.com/eumesy/claude)（CLAUDE.md・settings.json・skills/）。install.sh が `ghq get` で `~/ghq/github.com/eumesy/claude` に clone し、`~/.claude/` 配下から symlink を張る
 - 他端末や GitHub Web での編集を取り込む手順は前述「複数 Mac での運用（変更の同期）」参照（pull すれば symlink 経由で反映される）
 
+## OpenAI Codex CLI（検証用 agent）
+
+Claude Code が生成した成果物のレビューを別プロバイダのモデルに検証させる（cross-provider review）ための CLI。呼び出し方の規約は Claude skill [`skills/agent-review/`（eumesy/claude リポジトリ内）](https://github.com/eumesy/claude/blob/main/skills/agent-review/SKILL.md) が正。
+
+- **導入**: [`Brewfile`](Brewfile) の `cask "codex"`（Claude Code CLI と違い自己更新型ではないので brew で更新する）
+- **認証**: 各マシンで初回に `codex login` を実行し、ブラウザで ChatGPT アカウント（有料プラン。本人は Plus を契約）にログインする。資格情報は `~/.codex/auth.json` に保存される
+- **秘密情報の扱い**: `~/.codex/auth.json` はパスワード同等の秘密情報。**この repo にも eumesy/claude にも絶対に入れない**（symlink 管理の対象外）。マシン新調時は `codex login` をやり直すのが正規手順。API キー認証は使わない方針（ChatGPT プランで足りる）。将来 API キーが必要になった場合も、git 管理外のファイルか macOS Keychain に置き、repo には置かない
+- **設定**: `~/.codex/config.toml` は現状既定のまま（repo 管理なし）。恒久設定を持ちたくなったら、auth.json と分離されていることを確認したうえで dotfiles 管理に載せる
+
 ## Finder の右クリックメニュー
 
 Finder でフォルダを右クリックすると、以下のアクションで直接開ける:
