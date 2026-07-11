@@ -2,6 +2,13 @@
 # install.sh により ~/.config/ghostty/config に symlink される。
 # background-opacity の変更は Ghostty の完全再起動が必要。
 
+# フォント（Brewfile の font-plemol-jp-nf）。日本語グリフを持つ半角:全角=1:2 の
+# 等幅合成フォント（IBM Plex Mono + IBM Plex Sans JP、Nerd Font グリフ付き）。
+# 未指定だと既定の JetBrains Mono が日本語グリフを持たず CoreText フォールバックに
+# 落ち（AppleLanguages が en 優先のため中国語フォントが選ばれうる）、かなの字形・
+# 幅が崩れる。cmux もこの config を読むため設定は共通で効く。
+font-family = PlemolJP Console NF
+
 # 背景の半透明 + ブラー（値は好みで調整: opacity 0〜1, blur は強度）
 background-opacity = 0.85
 background-blur = 20
