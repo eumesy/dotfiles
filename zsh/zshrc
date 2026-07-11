@@ -47,7 +47,20 @@ bindkey '^N' history-beginning-search-forward-end
 
 # zoxide: 訪れたディレクトリを frecency（頻度 + 新しさ）で自動記録
 # `z <キーワード>` でジャンプ、`zi` で対話選択（fzf 使用）。fzf と同様 command -v でガード
-command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh)"
+if command -v zoxide >/dev/null 2>&1; then
+  eval "$(zoxide init zsh)"
+  # 記録は chpwd（cd 時）フックのみなので、Finder の「Ghostty で開く」等で最初から
+  # 目的ディレクトリで起動した shell は記録されない → 起動時の場所も明示的に記録する。
+  # ・$HOME は除外（通常の新規ターミナルは毎回 ~ で始まり、~ のスコアだけ膨らむため）。
+  #   :A の実体パス比較で、symlink 経由で home にいる場合も除外する
+  # ・自動リロード（precmd での再 source）のたびに加算しないよう、starship と同じ
+  #   非 export フラグで「そのシェルで一度だけ」に絞る（exec zsh=reload・新規起動では記録される）
+  # ・パスは chpwd フックと同じ __zoxide_pwd で取得（_ZO_RESOLVE_SYMLINKS を使っても DB が割れない）
+  if [[ -z ${_ZOXIDE_STARTUP_ADDED:-} && "${PWD:A}" != "${HOME:A}" ]]; then
+    command zoxide add -- "$(__zoxide_pwd)"
+    _ZOXIDE_STARTUP_ADDED=1
+  fi
+fi
 
 # Ctrl-L : 過去に訪れたディレクトリを fzf で検索して cd（frecency 順）
 # zoxide/fzf が無い環境ではキー押下時の command not found を避けるため、両方あるときだけ定義・bind
