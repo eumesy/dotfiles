@@ -81,6 +81,9 @@ else
   alias ll='ls -lhAGF'
 fi
 
+# of: カレントディレクトリを macOS の Finder で開く（open + Finder の頭文字）
+alias of='open .'
+
 # less: bat（syntax highlight 付き cat/pager）を前処理にして less 内でハイライト表示
 # LESSOPEN: less がファイルを開くときに bat で色付けする（`cmd | less` のパイプ入力は対象外）
 # LESS=-R: 色の ANSI エスケープをそのまま解釈して表示
