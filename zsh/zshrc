@@ -45,6 +45,10 @@ zle -N history-beginning-search-forward-end history-search-end
 bindkey '^P' history-beginning-search-backward-end
 bindkey '^N' history-beginning-search-forward-end
 
+# ディレクトリ名だけの単一ワード入力（`../`・`..`・相対/絶対パス。引数を伴わない場合のみ）で cd する
+# エイリアス・関数・組み込み・PATH 上のコマンドとして実行できる名前が優先されるため、同名ディレクトリで誤爆はしない
+setopt auto_cd
+
 # zoxide: 訪れたディレクトリを frecency（頻度 + 新しさ）で自動記録
 # `z <キーワード>` でジャンプ、`zi` で対話選択（fzf 使用）。fzf と同様 command -v でガード
 if command -v zoxide >/dev/null 2>&1; then
