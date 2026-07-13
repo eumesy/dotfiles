@@ -6,7 +6,7 @@
 
 - [ ] 色（COLOR）関係の設定を一箇所（SSOT）で集中管理したい。現状は複数箇所に分散している:
   - Claude Code カスタムテーマ: `eumesy/claude/themes/highlight-you.json` の `overrides.userMessageBackground`（現 `#33260f` amber。自分の依頼メッセージ背景を強調。fullscreen 時のみ有効）。
-  - Ghostty: `dotfiles/ghostty/config`（現状は `background-opacity`/`background-blur` のみ。テーマ/パレットは端末既定に委任）。
+  - Ghostty: `dotfiles/ghostty/config`（`background-opacity`/`background-blur` と `theme = Monokai Remastered`。テーマは Ghostty 同梱定義に委任、2026-07-13 設定）。
   - git-split-diffs 配色: git config `split-diffs.theme-name`（既定 `dark`。dotfiles install.sh「6. git」が設定）。
   - Claude.app のダークモード: install.sh が `plutil` で config.json の `userThemeMode` を設定。
   - 必要に応じ VS Code テーマ・iTerm2 プロファイルの配色も対象に含める。

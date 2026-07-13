@@ -12,3 +12,6 @@ font-family = PlemolJP Console NF
 # 背景の半透明 + ブラー（値は好みで調整: opacity 0〜1, blur は強度）
 background-opacity = 0.85
 background-blur = 20
+
+# カラーテーマ（Ghostty 同梱。一覧とライブプレビューは `ghostty +list-themes`）
+theme = Monokai Remastered
