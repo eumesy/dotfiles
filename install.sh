@@ -40,6 +40,7 @@ if command -v code >/dev/null 2>&1; then
   code --install-extension James-Yu.latex-workshop
   code --install-extension tuttieee.emacs-mcx
   code --install-extension anthropic.claude-code
+  code --install-extension openai.chatgpt  # Codex - OpenAI's coding agent
 fi
 
 # ---- 5. VS Code settings を symlink ----
