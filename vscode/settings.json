@@ -63,6 +63,18 @@
 
   "claudeCode.preferredLocation": "panel",
 
+  // ===== エディタ表示 =====
+  // カーソル行の強調。Dark 2026 の既定は背景 #121314 に対し行ハイライト #242526 で差がわずかしかない。
+  // テーマのアクセント青 (#3994bc) を 25% で敷き、境界線も付ける。範囲選択中は VS Code の仕様で行ハイライトが消える（設定では制御不可）。
+  // 色はテーマを変えたら要再調整なので [Dark 2026] にスコープ（テーマの settingsId と完全一致が必要。不一致だと黙って無効になる）
+  "editor.renderLineHighlight": "all", // 行本体に加え行番号ガターも強調（既定 "line"）。この 1 行だけはテーマスコープ不可で全テーマ・全マシンに効く
+  "workbench.colorCustomizations": {
+    "[Dark 2026]": {
+      "editor.lineHighlightBackground": "#3994bc40",
+      "editor.lineHighlightBorder": "#3994bc59"
+    }
+  },
+
   // ===== 統合ターミナル =====
   // 日本語対応（半角:全角=1:2）＋ eza --icons 等の Nerd Font グリフを表示（フォントは Brewfile の font-plemol-jp-nf、Ghostty/cmux と共通）。
   // 後続はフォント未導入マシンに Settings Sync で設定だけ先に届いた場合のフォールバック
