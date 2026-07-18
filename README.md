@@ -134,9 +134,40 @@ Files and Folders で該当項目を有効化する。
 
 ## 自作 CLI（bin/）
 
-`bin/` 配下は PATH から呼ぶ自作コマンドで、install.sh の「18. 自作 CLI」が `~/.local/bin` へ symlink する。
+`bin/` 配下は PATH から呼ぶ自作コマンド。install.sh の「18. 自作 CLI」が `~/.local/bin`（zsh/zshrc の先頭で PATH に通している）へ symlink するので、インストール後はコマンド名だけで呼べる。
 
-- **show-diff**: stdin で受けた patch を、実行中のターミナルアプリの機能で色付き横二列表示する（`git diff | show-diff`）。Ghostty では AppleScript で現在タブを下分割（`--tab` で新規タブ）して git-split-diffs + less で表示し、less を `q` で抜けるとペインごと閉じる。cmux では内蔵の `cmux diff` viewer に委譲。主用途は Claude Code セッションでの diff レビュー（Claude Code の TUI は Bash 出力の ANSI 色を strip し side-by-side 表示も未対応 = 上流 issue #18728 ほか。ターミナル側で表示する回避策）。運用規約は eumesy/claude の CLAUDE.md「diff の見せ方」、Ghostty AppleScript の gotcha は skill `ghostty-terminal-automation` を参照
+### show-diff — ターミナルに色付き横二列 diff を表示する
+
+stdin で受けた patch を、実行中のターミナルアプリの機能で色付き横二列（side-by-side）表示する。主用途は Claude Code セッションでの diff レビュー: Claude Code の TUI は Bash 出力の ANSI 色を strip し side-by-side 表示も未対応（上流 issue #18728 ほか）のため、ターミナル側で表示する。Ghostty では AppleScript で**現在タブを下分割**（`--tab` なら現在ウィンドウの新規タブ）して git-split-diffs + less で表示し、cmux では内蔵の `cmux diff` viewer に委譲する。
+
+**使い方:**
+
+```sh
+git diff | show-diff                                      # 作業ツリーの diff を下ペインに
+git show HEAD | show-diff --title "課題名 — HEAD の diff"  # タイトル付き（タブ一覧で識別できる）
+git diff main...topic | show-diff --tab                   # 大きい diff は新規タブで
+```
+
+**表示中の操作（ペイン/タブの中身は less）:**
+
+- スクロール: `j`/`k`・スペース、検索: `/<パターン>`
+- **閉じる: `q`**。less 終了と同時にシェルが `exit` し、ペイン/タブごと自動で閉じる（閉じ忘れて残っているペインも `q` でよい。万一 less が終わってシェルだけ残っていたら `exit` で閉じる）
+
+**オプション**（正確な仕様は `show-diff --help` とスクリプト冒頭コメントが正）:
+
+- `--title <text>`: タブタイトル・cmux diff タイトル。「<セッションの課題> — <diff の対象>」の形を推奨（repo@branch のような機械的な名前は並行セッション下で識別に役立たない）
+- `--tab`: ペイン分割でなく現在ウィンドウの新規タブで開く（大きい diff 向け）
+- `--direction down|right|up|left`: 分割方向（既定 down。横二列 diff は幅が要るので全幅を保つ下分割が既定）
+- `--match <substr>`: タブタイトルに <substr> を含むターミナルの隣に開く（既定は最前面ウィンドウのフォーカス中ターミナル。Claude Code はタブタイトルに会話要約を付けるので、セッションを指名して開ける）
+
+**前提・注意:**
+
+- 対応端末は Ghostty 1.3+（AppleScript 対応版）と cmux。それ以外では exit 3 でエラーメッセージを出して終わる（その場合はチャットの fenced diff 等で代替）
+- Claude Code から呼ぶ場合はサンドボックス外実行（要承認）になる（osascript / cmux ソケットがサンドボックス遮断のため）
+- patch は `$TMPDIR` の一時ファイル経由で受け渡す。通常はペイン側が表示後に削除し、cmux 経路など残った分も OS の TMPDIR 掃除で消える
+- Ghostty のウィンドウが 1 枚も無いと `could not drive Ghostty via AppleScript` で exit 3（先にウィンドウを開いてから使う）
+
+運用規約（いつ・どう使うか、開く前のチャット宣言）は eumesy/claude の CLAUDE.md「diff の見せ方」、Ghostty AppleScript の実装 gotcha は skill `ghostty-terminal-automation` を参照。
 
 ## LaTeX 執筆環境
 
