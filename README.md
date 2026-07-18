@@ -33,6 +33,7 @@ install.sh は冪等（何度実行しても安全）に保つ規約で、非冪
 4. codex login（詳細: 本 README「OpenAI Codex CLI（検証用 agent）」節）
 5. Overleaf を clone: git clone https://git.overleaf.com/<projectId>（詳細: 本 README「LaTeX 執筆環境」節）
 6. Claude.app 未起動ならダークモード未適用: 起動後に install.sh 再実行、または Settings → Appearance → Dark（詳細: 本 README「Claude Code グローバル設定」節）
+7. Karabiner-Elements を初回起動し、ドライバ（システム機能拡張）の承認と Input Monitoring の許可を行う
 
 <!-- MANUAL_STEPS:END -->
 

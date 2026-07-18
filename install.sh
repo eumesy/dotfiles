@@ -164,9 +164,18 @@ if [ -f "$HOME/.config/ghostty/config" ] && [ ! -L "$HOME/.config/ghostty/config
 fi
 ln -sfn "$PWD/ghostty/config" "$HOME/.config/ghostty/config"
 
-# ---- 12. Dock に Ghostty を追加（dockutil、既にあれば何もしない）----
+# ---- 12. Dock に Ghostty / Karabiner-Elements を追加（dockutil、既にあれば何もしない）----
+# app 不在時は dockutil --add の失敗が set -e でスクリプト全体を止めるため、
+# 存在を確認してから追加する（無ければ警告してスキップ）
 if command -v dockutil >/dev/null 2>&1; then
-  dockutil --find Ghostty >/dev/null 2>&1 || dockutil --add /Applications/Ghostty.app
+  for app in /Applications/Ghostty.app /Applications/Karabiner-Elements.app; do
+    label="$(basename "$app" .app)"
+    if [ -d "$app" ]; then
+      dockutil --find "$label" >/dev/null 2>&1 || dockutil --add "$app"
+    else
+      echo "==> $app が無いため Dock 追加をスキップ（brew bundle 失敗?）"
+    fi
+  done
 fi
 
 # ---- 13. 自作 VS Code 拡張を symlink（.tex を開くと数式プレビュー自動起動）----

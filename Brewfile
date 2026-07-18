@@ -18,6 +18,7 @@ cask "cmux"     # Ghostty ベースのターミナル。AI エージェント並
 cask "claude"   # Claude.app（Claude Code のデスクトップ版もこのアプリ。CLI は自己更新型のため install.sh で導入）
 cask "codex"    # OpenAI Codex CLI（cask 配布の CLI。Claude Code から検証用 agent として呼ぶ。導入・認証・秘密情報の扱いは README「OpenAI Codex CLI（検証用 agent）」参照）
 cask "chatgpt"  # ChatGPT.app（OpenAI 公式デスクトップ版）。auto_updates の GUI cask なので版更新はアプリ自己更新に任せ、brew は宣言・初回 install のみ担う
+cask "karabiner-elements"  # キーボードカスタマイズ（キー remap）。install.sh が Dock にも追加
 
 # Fonts
 cask "font-jetbrains-mono-nerd-font"  # Nerd Font グリフ付き JetBrains Mono（iTerm2 プロファイルで使用）

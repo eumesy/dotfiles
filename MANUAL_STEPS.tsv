@@ -15,3 +15,4 @@ claude を起動してログイン	Claude Code グローバル設定
 codex login	OpenAI Codex CLI（検証用 agent）
 Overleaf を clone: git clone https://git.overleaf.com/<projectId>	LaTeX 執筆環境
 Claude.app 未起動ならダークモード未適用: 起動後に install.sh 再実行、または Settings → Appearance → Dark	Claude Code グローバル設定
+Karabiner-Elements を初回起動し、ドライバ（システム機能拡張）の承認と Input Monitoring の許可を行う
